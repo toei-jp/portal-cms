@@ -2,5 +2,9 @@
 ## git ignore
 ##
 
+# docker
+/docker/mysql/data
+/docker/phpmyadmin/sessions
+
 # git
 !.gitkeep
