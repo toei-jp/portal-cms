@@ -31,7 +31,7 @@ $settings['view'] = [
  * @link https://docs.zendframework.com/zend-session/config/
  */
 $settings['session'] = [
-    'name' => 'toho_admin',
+    'name' => 'toei_admin',
 ];
 
 
