@@ -1,0 +1,144 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}一覧 | NEWS・インフォメーション{% endblock %}
+
+{% block javascript %}
+<script src="/js/news/list.js"></script>
+{% endblock %}
+
+{% block breadcrumb %}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">ダッシュボード</li>
+    <li class="breadcrumb-item">NEWS・インフォメーション</li>
+    <li class="breadcrumb-item active">一覧</li>
+</ol>
+{% endblock %}
+
+{% block container %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <form name="find_news" method="get" action="{{ path_for('news_list') }}">
+                <div class="card-header">
+                    検索
+                </div>
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">期間</label>
+                        <div class="col-md-9 col-form-label">
+                            {% for value, text in form.getTermChoices() %}
+                            <div class="form-check form-check-inline mr-1">
+                                <input class="form-check-input{% if errors.term %} is-invalid{% endif %}" type="checkbox" id="term-{{ value }}" name="term[]" value="{{ value }}" {{ value in values.term ? 'checked' : '' }} />
+                                <label class="form-check-label" for="term-{{ value }}">{{ text }}</label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <input type="hidden" class="form-control {% if errors.term %} is-invalid{% endif %}" />
+                        <div class="invalid-feedback">
+                            {% for messages in errors.term %}
+                                {% for message in messages %}
+                                    {{ message }}
+                                    {% if not loop.last %}<br />{% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">投稿カテゴリ</label>
+                        <div class="col-md-9 col-form-label">
+                        {% for value, text in form.getCategoryChoices() %}
+                            <div class="form-check form-check-inline mr-1">
+                                <input type="radio" class="form-check-input{% if errors.category %} is-invalid{% elseif is_validated %} is-valid{% endif %}" id="category-{{ value }}" name="category" value="{{ value }}"  {{ value == values.category ? 'checked' : '' }}>
+                                <label class="form-check-label" for="category-{{ value }}">{{ text }}</label>
+                            </div>
+                        {% endfor %}
+                        </div>
+                    </div>
+                    
+                    <div class="form-group row">
+                        {% include 'include/form/field_multi_checkbox.html.twig' with {
+                            label: '掲出箇所：ページ',
+                            name: 'page',
+                            choices: form.getPageChoices(),
+                            value: values.page,
+                            error: errors.page,
+                            is_validated: is_validated,
+                            with_assist: false,
+                        } only %}
+                    </div>
+                    
+                    <div class="form-group row">
+                        {% include 'include/form/field_multi_checkbox.html.twig' with {
+                            label: '掲出箇所：劇場',
+                            name: 'theater',
+                            choices: form.getTheaterChoices(),
+                            value: values.theater,
+                            error: errors.theater,
+                            is_validated: is_validated,
+                            with_assist: true,
+                        } only %}
+                    </div>
+                    
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">検索</button>
+                </div>
+            </form>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                一覧
+            </div>
+            <div class="card-body">
+                <table class="table table-responsive-md">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>タイトル</th>
+                            <th>掲出開始日</th>
+                            <th>掲出終了日</th>
+                            <th>掲出場所</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for news in pagenater.getResultsInPage() %}
+                        <tr>
+                            <th>{{ news.getId() }}</th>
+                            <th>
+                                <img src="{{ blob_url(news.getImage().getBlobContainer(), news.getImage().getName()) }}" width="100" alt="画像" />
+                                <a href="{{ path_for('news_edit', { id: news.getId() }) }}">{{ news.getHeadline() }}</a>
+                            </th>
+                            <th>{{ news.getStartDt().format('Y/m/d') }}</th>
+                            <th>{{ news.getEndDt().format('Y/m/d') }}</th>
+                            <th>
+                                {% for target in news.getPublishedTargets() %}
+                                    {{ target.getNameJa() }}
+                                    {% if not loop.last %}、{% endif %}
+                                {% endfor %}
+                            </th>
+                            <th>
+                                <a href="{{ path_for('news_delete', { id: news.getId() }) }}" class="btn btn-sm btn-danger confirm-delete" role="button">削除</a>
+                            </th>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                
+                <hr>
+                
+                {% include 'include/pagination.html.twig' with {
+                    'pagenater': pagenater,
+                    'route_name': 'news_list',
+                    'params': params
+                } only %}
+                
+            </div>
+            <div class="card-footer">
+                {{ pagenater.getFirstIndice() }}-{{ pagenater.getLastIndice() }} / {{ pagenater.getNumResults() }} 件
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

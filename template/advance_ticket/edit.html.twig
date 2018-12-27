@@ -1,0 +1,181 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}編集 | 前売券情報{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="/css/vendor/jquery.flexdatalist.min.css">
+<link rel="stylesheet" href="/css/vendor/jquery.datetimepicker.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.css">
+{% endblock %}
+
+{% block javascript %}
+<script src="/js/vendor/jquery.flexdatalist.min.js"></script>
+<script src="/js/vendor/jquery.datetimepicker.full.min.js"></script>
+<script src="/js/vendor/jsrender.min.js"></script>
+<script src="/js/api.js"></script>
+<script src="/js/form.js?v=20181009"></script>
+<script src="/js/modal/select-title.js?v=20180919"></script>
+<script src="/js/advance_ticket/form.js?v=20180918"></script>
+{% endblock %}
+
+{% block breadcrumb %}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">ダッシュボード</li>
+    <li class="breadcrumb-item">前売券情報</li>
+    <li class="breadcrumb-item active">編集</li>
+</ol>
+{% endblock %}
+
+{% block container %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <form name="advance_sale" method="post" enctype="multipart/form-data" action="{{ path_for('advance_ticket_update', { id: advanceSale.getId() }) }}">
+                <input type="hidden" name="id" value="{{ values.id }}">
+                <div class="card-header">
+                    編集
+                </div>
+                <div class="card-body">
+                    {% if errors %}
+                    <div class="alert alert-danger" role="alert">
+                        入力エラーがあります。
+                    </div>
+                    {% endif %}
+                
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">劇場</label>
+                    {% if user.isTheater() %}
+                        <div class="col-md-9">
+                            <input type="hidden" name="theater" value="{{ advanceSale.getTheater().getId() }}">
+                            <p class="form-control-static">{{ advanceSale.getTheater().getNameJa() }}</p>
+                        </div>
+                    {% else %}
+                        <div class="col-md-9">
+                            <select name="theater" class="form-control col-md-4">
+                            {% for value, text in form.getTheaterChoices() %}
+                                <option value="{{ value }}" {{ value == values.theater ? 'selected' : '' }}>{{ text }}</text>
+                            {% endfor %}
+                            </select>
+                            <div class="invalid-feedback">
+                                {% for message in errors.theater %}
+                                    {{ message }}
+                                    {% if not loop.last %}<br />{% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+                    </div>
+                    
+                    <div class="form-group row title">
+                        <label class="col-md-3 col-form-label">作品名</label>
+                        <div class="col-md-9">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p class="form-control-static title-name">{{ values.title_name }}</p>
+                                    <input type="hidden" name="title_name" value="{{ values.title_name }}">
+                                    <input type="hidden" name="title_id" class="form-control{% if errors.title_id %} is-invalid{% endif %}" value="{{ values.title_id }}">
+                                    <div class="invalid-feedback">
+                                        {% for message in errors.title_id %}
+                                            {{ message }}
+                                            {% if not loop.last %}<br />{% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#selectTitleModal">作品選択</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">作品公開予定日</label>
+                        <div class="col-md-3">
+                            <div class="input-group">
+                                <input type="text" name="publishing_expected_date" class="form-control datepicker{% if errors.publishing_expected_date %} is-invalid{% elseif is_validated %} is-valid{% endif %}"  value="{{ values.publishing_expected_date }}">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        <i class="icon-calendar"></i>
+                                    </span>
+                                </div>
+                                <div class="invalid-feedback">
+                                    {% for message in errors.publishing_expected_date %}
+                                        {{ message }}
+                                        {% if not loop.last %}<br />{% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="col-form-label">
+                                <div class="form-check form-check">
+                                    <input type="hidden" name="not_exist_publishing_expected_date" value="0">
+                                    <input class="form-check-input" type="checkbox" id="not_exist_publishing_expected_date" name="not_exist_publishing_expected_date" value="1" {{ '1' == values.not_exist_publishing_expected_date ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="not_exist_publishing_expected_date">未定</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">上書き表記</span>
+                                </div>
+                                <input type="text" name="publishing_expected_date_text" class="form-control{% if errors.publishing_expected_date_text %} is-invalid{% elseif is_validated %} is-valid{% endif %}"  value="{{ values.publishing_expected_date_text }}">
+                                <div class="invalid-feedback">
+                                    {% for message in errors.publishing_expected_date_text %}
+                                        {{ message }}
+                                        {% if not loop.last %}<br />{% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-body">
+                            {% for id in values.delete_tickets %}
+                                {# @see form.jsの削除処理 #}
+                                <input type="hidden" name="delete_tickets[]" value="{{ id }}">
+                            {% endfor %}
+                            
+                            <div id="tickets">
+                            {% for index, ticket in values.tickets %}
+                                {% set advance_ticket = null %}
+                                {% if ticket.id %}
+                                    {% set advance_ticket = advanceSale.getAdvanceTickets().get(ticket.id) %}
+                                {% endif %}
+                                
+                                {% include 'advance_ticket/include/fieldset_ticket.html.twig' with {
+                                    index: loop.index0,
+                                    form: form,
+                                    values: ticket,
+                                    errors: errors.tickets[index],
+                                    advance_ticket: advance_ticket
+                                } only %}
+                            {% endfor %}
+                            </div>
+                            
+                            <div class="col-md-12">
+                                <button type="button" class="btn btn-success btn-add-fieldset">前売券情報追加</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card-footer">
+                    <button type="button" class="btn btn-link" onclick="location.href='{{ path_for('advance_ticket_list') }}'">一覧へ戻る</button>
+                    <button type="submit" class="btn btn-primary">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script id="ticketFiledsetTmpl" type="text/x-jsrender">
+{% include 'advance_ticket/include/fieldset_ticket.html.twig' with {
+    index: '{{:index}}',
+    form: form
+} only %}
+</script>
+
+{% include 'include/modal/select_title.html.twig' only %}
+{% endblock %}

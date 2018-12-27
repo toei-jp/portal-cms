@@ -1,0 +1,100 @@
+<div class="sidebar">
+    <nav class="sidebar-nav ps">
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path_for('homepage') }}">ダッシュボード</a>
+            </li>
+            
+        {% if not user.isTheater() %}
+            <li class="nav-item nav-dropdown">
+                <a class="nav-link nav-dropdown-toggle" href="#">
+                    作品マスター
+                </a>
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path_for('title_new') }}">新規追加</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path_for('title_list') }}">一覧</a>
+                    </li>
+                </ul>
+            </li>
+        {% endif %}
+            
+        {% if not user.isTheater() %}
+            <li class="nav-item nav-dropdown">
+                <a class="nav-link nav-dropdown-toggle" href="#">
+                    上映情報
+                </a>
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path_for('schedule_new') }}">新規追加</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path_for('schedule_list') }}">一覧</a>
+                    </li>
+                </ul>
+            </li>
+        {% endif %}
+            
+        {% if not user.isTheater() %}
+            <li class="nav-item nav-dropdown">
+                <a class="nav-link nav-dropdown-toggle" href="#">
+                    メインバナー
+                </a>
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path_for('main_banner_new') }}">新規追加</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path_for('main_banner_list') }}">一覧</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path_for('main_banner_publication') }}">表示順管理</a>
+                    </li>
+                </ul>
+            </li>
+        {% endif %}
+            
+            <li class="nav-item nav-dropdown">
+                <a class="nav-link nav-dropdown-toggle" href="#">
+                    NEWS・インフォメーション
+                </a>
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path_for('news_new') }}">新規追加</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path_for('news_list') }}">一覧</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path_for('news_publication') }}">表示順管理</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item nav-dropdown">
+                <a class="nav-link nav-dropdown-toggle" href="#">
+                    前売券情報
+                </a>
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path_for('advance_ticket_new') }}">新規追加</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path_for('advance_ticket_list') }}">一覧</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item nav-dropdown">
+                <a class="nav-link nav-dropdown-toggle" href="#">
+                    劇場情報
+                </a>
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path_for('opening_hour') }}">開館時間管理</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+</div>

@@ -1,0 +1,67 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}編集 | 開館時間管理 | 劇場情報{% endblock %}
+
+{% block breadcrumb %}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">ダッシュボード</li>
+    <li class="breadcrumb-item">劇場情報</li>
+    <li class="breadcrumb-item">開館時間管理</li>
+    <li class="breadcrumb-item active">編集</li>
+</ol>
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="/css/vendor/jquery.datetimepicker.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.css">
+{% endblock %}
+
+{% block javascript %}
+<script src="/js/vendor/jquery.datetimepicker.full.min.js"></script>
+<script src="/js/vendor/jsrender.min.js"></script>
+<script src="/js/form.js?v=20181009"></script>
+<script src="/js/theater_meta/opening_hour/form.js?v=20180918"></script>
+{% endblock %}
+
+{% block container %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <form name="opening_hour" method="post" action="{{ path_for('opening_hour_update', { id: theater.getId() }) }}">
+                <div class="card-header">
+                    {{ theater.getNameJa() }}
+                </div>
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">開館時間</label>
+                        <div class="col-md-9">
+                            <div id="hours">
+                            {% for index, hour in values.hours %}
+                                {% include 'theater_meta/opening_hour/include/fieldset.html.twig' with {
+                                    index: loop.index0,
+                                    fieldset: form.getOpeingHourFieldset(),
+                                    values: hour,
+                                    errors: errors.hours[index],
+                                } only %}
+                            {% endfor %}
+                            </div>
+                            <button type="button" class="btn btn-success btn-add-fieldset">時間追加</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="button" class="btn btn-link" onclick="location.href='{{ path_for('opening_hour') }}'">一覧へ戻る</button>
+                    <button type="submit" class="btn btn-primary">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script id="filedsetTmpl" type="text/x-jsrender">
+{% include 'theater_meta/opening_hour/include/fieldset.html.twig' with {
+    index: '{{:index}}',
+    fieldset: form.getOpeingHourFieldset(),
+} only %}
+</script>
+{% endblock %}
