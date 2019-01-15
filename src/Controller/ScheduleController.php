@@ -19,20 +19,6 @@ use Toei\PortalAdmin\ORM\Entity;
 class ScheduleController extends BaseController
 {
     /**
-     * {@inheritDoc}
-     */
-    protected function preExecute($request, $response): void
-    {
-        $user = $this->auth->getUser();
-        
-        if ($user->isTheater()) {
-            throw new ForbiddenException();
-        }
-        
-        parent::preExecute($request, $response);
-    }
-    
-    /**
      * list action
      * 
      * @param \Slim\Http\Request  $request
