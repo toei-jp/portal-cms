@@ -191,6 +191,27 @@ class Theater extends AbstractEntity implements NewsPublicationInterface, MainBa
     }
     
     /**
+     * get display_order
+     *
+     * @return int
+     */
+    public function getDisplayOrder()
+    {
+        return $this->displayOrder;
+    }
+    
+    /**
+     * set display_order
+     *
+     * @param int $displayOrder
+     * @return void
+     */
+    public function setDisplayOrder(int $displayOrder)
+    {
+        $this->displayOrder = $displayOrder;
+    }
+    
+    /**
      * get meta
      *
      * @return TheaterMeta
