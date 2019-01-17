@@ -8,6 +8,7 @@
 use Toei\PortalAdmin\Controller\AdminUserController;
 use Toei\PortalAdmin\Controller\AuthController;
 use Toei\PortalAdmin\Controller\AdvanceTicketController;
+use Toei\PortalAdmin\Controller\CampaignController;
 use Toei\PortalAdmin\Controller\IndexController;
 use Toei\PortalAdmin\Controller\MainBannerController;
 use Toei\PortalAdmin\Controller\NewsController;
@@ -15,6 +16,7 @@ use Toei\PortalAdmin\Controller\ScheduleController;
 use Toei\PortalAdmin\Controller\TheaterMetaController;
 use Toei\PortalAdmin\Controller\TitleController;
 
+use Toei\PortalAdmin\Controller\API\CampaignController as CampaignApiController;
 use Toei\PortalAdmin\Controller\API\EditorController as EditorApiController;
 use Toei\PortalAdmin\Controller\API\MainBannerController as MainBannerApiController;
 use Toei\PortalAdmin\Controller\API\NewsController as NewsApiController;
@@ -59,6 +61,17 @@ $app->group('', function () {
         $this->get('/{id}/delete', MainBannerController::class . ':delete')->setName('main_banner_delete');
     });
     
+    $this->group('/campaign', function() {
+        $this->get('/publication', CampaignController::class . ':publication')->setName('campaign_publication');
+        $this->post('/publication/update/{target}', CampaignController::class . ':publicationUpdate')->setName('campaign_publication_update');
+        $this->get('/list', CampaignController::class . ':list')->setName('campaign_list');
+        $this->get('/new', CampaignController::class . ':new')->setName('campaign_new');
+        $this->post('/create', CampaignController::class . ':create')->setName('campaign_create');
+        $this->get('/{id}/edit', CampaignController::class . ':edit')->setName('campaign_edit');
+        $this->post('/{id}/update', CampaignController::class . ':update')->setName('campaign_update');
+        $this->get('/{id}/delete', CampaignController::class . ':delete')->setName('campaign_delete');
+    });
+    
     $this->group('/news', function() {
         $this->get('/publication', NewsController::class . ':publication')->setName('news_publication');
         $this->post('/publication/update/{target}', NewsController::class . ':publicationUpdate')->setName('news_publication_update');
@@ -99,6 +112,10 @@ $app->group('', function () {
         
         $this->group('/main_banner', function() {
             $this->get('/list', MainBannerApiController::class . ':list');
+        });
+        
+        $this->group('/campaign', function() {
+            $this->get('/list', CampaignApiController::class . ':list');
         });
         
         $this->group('/news', function() {

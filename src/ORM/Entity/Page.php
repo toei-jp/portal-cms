@@ -20,7 +20,7 @@ use Toei\PortalAdmin\ORM\Entity\AbstractEntity;
  * @ORM\Table(name="page", options={"collate"="utf8mb4_general_ci"})
  * @ORM\HasLifecycleCallbacks
  */
-class Page extends AbstractEntity implements NewsPublicationInterface, MainBannerPublicationInterface
+class Page extends AbstractEntity implements CampaignPublicationInterface, NewsPublicationInterface, MainBannerPublicationInterface
 {
     use SoftDeleteTrait;
     use TimestampableTrait;
@@ -52,6 +52,15 @@ class Page extends AbstractEntity implements NewsPublicationInterface, MainBanne
     protected $nameJa;
     
     /**
+     * campaigns
+     *
+     * @var Collection
+     * @ORM\OneToMany(targetEntity="PageCampaign", mappedBy="page", orphanRemoval=true)
+     * @ORM\OrderBy({"displayOrder" = "ASC"})
+     */
+    protected $campaigns;
+    
+    /**
      * news_list
      *
      * @var Collection
@@ -77,6 +86,7 @@ class Page extends AbstractEntity implements NewsPublicationInterface, MainBanne
     public function __construct(int $id)
     {
         $this->id = $id;
+        $this->campaigns = new ArrayCollection();
         $this->newsList =  new ArrayCollection();
         $this->mainBanners = new ArrayCollection();
     }
@@ -131,6 +141,16 @@ class Page extends AbstractEntity implements NewsPublicationInterface, MainBanne
     public function setNameJa(string $nameJa)
     {
         $this->nameJa = $nameJa;
+    }
+    
+    /**
+     * get campaigns
+     *
+     * @return Collection
+     */
+    public function getCampaigns() : Collection
+    {
+        return $this->campaigns;
     }
     
     /**

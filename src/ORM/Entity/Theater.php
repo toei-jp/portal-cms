@@ -20,7 +20,7 @@ use Toei\PortalAdmin\ORM\Entity\AbstractEntity;
  * @ORM\Table(name="theater", options={"collate"="utf8mb4_general_ci"})
  * @ORM\HasLifecycleCallbacks
  */
-class Theater extends AbstractEntity implements NewsPublicationInterface, MainBannerPublicationInterface
+class Theater extends AbstractEntity implements CampaignPublicationInterface, NewsPublicationInterface, MainBannerPublicationInterface
 {
     use SoftDeleteTrait;
     use TimestampableTrait;
@@ -87,6 +87,15 @@ class Theater extends AbstractEntity implements NewsPublicationInterface, MainBa
     protected $adminUsers;
     
     /**
+     * campaigns
+     *
+     * @var Collection
+     * @ORM\OneToMany(targetEntity="TheaterCampaign", mappedBy="theater", orphanRemoval=true)
+     * @ORM\OrderBy({"displayOrder" = "ASC"})
+     */
+    protected $campaigns;
+    
+    /**
      * news_list
      *
      * @var Collection
@@ -113,6 +122,7 @@ class Theater extends AbstractEntity implements NewsPublicationInterface, MainBa
     {
         $this->id = $id;
         $this->adminUsers = new ArrayCollection();
+        $this->campaigns = new ArrayCollection();
         $this->newsList =  new ArrayCollection();
         $this->mainBanners = new ArrayCollection();
     }
@@ -229,6 +239,16 @@ class Theater extends AbstractEntity implements NewsPublicationInterface, MainBa
     public function getAdminUsers()
     {
         return $this->adminUsers;
+    }
+    
+    /**
+     * get campaigns
+     *
+     * @return Collection
+     */
+    public function getCampaigns() : Collection
+    {
+        return $this->campaigns;
     }
     
     /**
