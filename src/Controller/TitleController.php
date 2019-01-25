@@ -116,8 +116,8 @@ class TitleController extends BaseController
             // rename
             $newName = Entity\File::createName($image['name']);
             
-            // SASAKI-245
-            $imageStream = $this->resizeImage($image['tmp_name'], null, 1920);
+            // TOEI-150
+            $imageStream = $this->resizeImage($image['tmp_name'], 1280);
             
             // upload storage
             // @todo storageと同期するような仕組みをFileへ
@@ -273,8 +273,8 @@ class TitleController extends BaseController
             // rename
             $newName = Entity\File::createName($image['name']);
             
-            // SASAKI-245
-            $imageStream = $this->resizeImage($image['tmp_name'], null, 1920);
+            // TOEI-150
+            $imageStream = $this->resizeImage($image['tmp_name'], 1280);
             
             // upload storage
             // @todo storageと同期するような仕組みをFileへ
