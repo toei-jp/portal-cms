@@ -9,7 +9,7 @@ $(function(){
         url: '/api/title/autocomplete',
         noResultsText: '「{keyword}」は見つかりませんでした。',
         resultsProperty: 'data',
-        searchIn: ['name', 'name_kana', 'name_original'],
+        searchIn: ['name', 'name_kana', 'sub_title'],
         searchContain: true,
         textProperty: 'name',
     });

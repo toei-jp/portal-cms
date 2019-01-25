@@ -35,7 +35,7 @@ class TitleForm extends BaseForm
         ]);
         
         $this->add([
-            'name' => 'name_original',
+            'name' => 'sub_title',
             'type' => 'Text',
         ]);
         
@@ -118,7 +118,7 @@ class TitleForm extends BaseForm
         ]);
         
         $inputFilter->add([
-            'name' => 'name_original',
+            'name' => 'sub_title',
             'required' => true,
         ]);
         

@@ -70,9 +70,9 @@ class TitleController extends BaseController
             /** @var Entity\Title $title */
             
             $data[] = [
-                'name'          => $title->getName(),
-                'name_kana'     => $title->getNameKana(),
-                'name_original' => $title->getNameOriginal(),
+                'name'      => $title->getName(),
+                'name_kana' => $title->getNameKana(),
+                'sub_title' => $title->getSubTitle(),
             ];
         }
         

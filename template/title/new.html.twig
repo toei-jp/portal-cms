@@ -68,11 +68,11 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label">英名（原題）</label>
+                        <label class="col-md-3 col-form-label">サブタイトル</label>
                         <div class="col-md-9">
-                            <input type="text" name="name_original" class="form-control{% if errors.name_original %} is-invalid{% elseif is_validated %} is-valid{% endif %}" value="{{ values.name_original }}" />
+                            <input type="text" name="sub_title" class="form-control{% if errors.sub_title %} is-invalid{% elseif is_validated %} is-valid{% endif %}" value="{{ values.sub_title }}" />
                             <div class="invalid-feedback">
-                                {% for message in errors.name_original %}
+                                {% for message in errors.sub_title %}
                                     {{ message }}
                                     {% if not loop.last %}<br />{% endif %}
                                 {% endfor %}

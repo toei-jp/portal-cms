@@ -40,7 +40,7 @@ class ScheduleRepository extends EntityRepository
                 ->andWhere($qb->expr()->orX(
                     $qb->expr()->like('t.name', ':name'),
                     $qb->expr()->like('t.nameKana', ':name'),
-                    $qb->expr()->like('t.nameOriginal', ':name')
+                    $qb->expr()->like('t.subTitle', ':name')
                 ))
                 ->setParameter('name', '%' . $params['title_name'] . '%');
         }

@@ -59,13 +59,13 @@ class Title extends AbstractEntity
      */
     protected $nameKana;
     
-    /** 
-     * name_original
-     * 
+    /**
+     * sub_title
+     *
      * @var string
-     * @ORM\Column(type="string", name="name_original")
+     * @ORM\Column(type="string", name="sub_title", nullable=true)
      */
-    protected $nameOriginal;
+    protected $subTitle;
     
     /**
      * credit
@@ -242,24 +242,24 @@ class Title extends AbstractEntity
     }
     
     /**
-     * get name_original
+     * get sub_title
      *
-     * @return string
+     * @return string|null
      */
-    public function getNameOriginal()
+    public function getSubTitle()
     {
-        return $this->nameOriginal;
+        return $this->subTitle;
     }
     
     /**
-     * set name_original
+     * set sub_title
      *
-     * @param string $nameOriginal
+     * @param string|null $subTitle
      * @return void
      */
-    public function setNameOriginal(string $nameOriginal)
+    public function setSubTitle(?string $subTitle)
     {
-        $this->nameOriginal = $nameOriginal;
+        $this->subTitle = $subTitle;
     }
     
     /**
