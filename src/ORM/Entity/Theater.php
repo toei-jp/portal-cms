@@ -63,6 +63,14 @@ class Theater extends AbstractEntity implements CampaignPublicationInterface, Ne
     protected $area;
     
     /**
+     * master_code
+     *
+     * @var string
+     * @ORM\Column(type="string", name="master_code", length=3, options={"fixed":true})
+     */
+    protected $masterCode;
+    
+    /**
      * display_order
      *
      * @var int
@@ -198,6 +206,27 @@ class Theater extends AbstractEntity implements CampaignPublicationInterface, Ne
     public function setArea($area)
     {
         $this->area = $area;
+    }
+    
+    /**
+     * get master_code
+     *
+     * @return string
+     */
+    public function getMasterCode()
+    {
+        return $this->masterCode;
+    }
+    
+    /**
+     * set master_code
+     *
+     * @param string $masterCode
+     * @return void
+     */
+    public function setMasterCode($masterCode)
+    {
+        $this->masterCode = $masterCode;
     }
     
     /**
