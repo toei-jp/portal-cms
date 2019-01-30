@@ -24,6 +24,11 @@ class Title extends AbstractEntity
     use SoftDeleteTrait;
     use TimestampableTrait;
     
+    const RATING_G    = 1;
+    const RATING_PG12 = 2;
+    const RATING_R15  = 3;
+    const RATING_R18  = 4;
+    
     /**
      * id
      * 
@@ -145,10 +150,10 @@ class Title extends AbstractEntity
      * @var array
      */
     protected static $ratingTypes = [
-        '1' => 'G',
-        '2' => 'PG12',
-        '3' => 'R15+',
-        '4' => 'R18+',
+        self::RATING_G    => 'G',
+        self::RATING_PG12 => 'PG12',
+        self::RATING_R15  => 'R15+',
+        self::RATING_R18  => 'R18+',
     ];
     
     /**
