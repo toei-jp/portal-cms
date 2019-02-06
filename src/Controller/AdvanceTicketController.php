@@ -20,6 +20,19 @@ class AdvanceTicketController extends BaseController
     use ImageManagerTrait;
     
     /**
+     * return entity
+     *
+     * @param int $id
+     * @return Entity\AdvanceSale
+     */
+    protected function getEntity(int $id): Entity\AdvanceSale
+    {
+        return $this->em
+            ->getRepository(Entity\AdvanceSale::class)
+            ->findOneById($id);
+    }
+    
+    /**
      * list action
      * 
      * @param \Slim\Http\Request  $request
@@ -203,7 +216,7 @@ class AdvanceTicketController extends BaseController
      */
     public function executeEdit($request, $response, $args)
     {
-        $advanceSale = $this->em->getRepository(Entity\AdvanceSale::class)->findOneById($args['id']);
+        $advanceSale = $this->getEntity($args['id']);
         
         if (is_null($advanceSale)) {
             throw new NotFoundException($request, $response);
@@ -276,7 +289,7 @@ class AdvanceTicketController extends BaseController
      */
     public function executeUpdate($request, $response, $args)
     {
-        $advanceSale = $this->em->getRepository(Entity\AdvanceSale::class)->findOneById($args['id']);
+        $advanceSale = $this->getEntity($args['id']);
         
         if (is_null($advanceSale)) {
             throw new NotFoundException($request, $response);
