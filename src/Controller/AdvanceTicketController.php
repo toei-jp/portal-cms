@@ -216,6 +216,18 @@ class AdvanceTicketController extends BaseController
         $form = $this->getForm(Form\AdvanceSaleForm::TYPE_EDIT);
         $this->data->set('form', $form);
         
+        $values = $this->entityToArray($advanceSale);
+        $this->data->set('values', $values);
+    }
+    
+    /**
+     * AdvanceSale entity to array
+     *
+     * @param Entity\AdvanceSale $advanceSale
+     * @return array
+     */
+    protected function entityToArray(Entity\AdvanceSale $advanceSale): array
+    {
         $values = [
             'id'         => $advanceSale->getId(),
             'theater'    => $advanceSale->getTheater()->getId(),
@@ -251,7 +263,7 @@ class AdvanceTicketController extends BaseController
             $values['tickets'][] = $ticket;
         }
         
-        $this->data->set('values', $values);
+        return $values;
     }
     
     /**
