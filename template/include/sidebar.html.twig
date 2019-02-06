@@ -94,9 +94,11 @@
                     前売券情報
                 </a>
                 <ul class="nav-dropdown-items">
+                {% if not user.isTheater() %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path_for('advance_ticket_new') }}">新規追加</a>
                     </li>
+                {% endif %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path_for('advance_ticket_list') }}">一覧</a>
                     </li>

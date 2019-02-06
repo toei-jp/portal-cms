@@ -83,6 +83,10 @@ class AdvanceTicketController extends BaseController
      */
     public function executeNew($request, $response, $args)
     {
+        if ($this->auth->getUser()->isTheater()) {
+            throw new ForbiddenException();
+        }
+        
         $form = $this->getForm(Form\AdvanceSaleForm::TYPE_NEW);
         $this->data->set('form', $form);
     }
@@ -97,6 +101,10 @@ class AdvanceTicketController extends BaseController
      */
     public function executeCreate($request, $response, $args)
     {
+        if ($this->auth->getUser()->isTheater()) {
+            throw new ForbiddenException();
+        }
+        
         // Zend_Formの都合で$request->getUploadedFiles()ではなく$_FILESを使用する
         $params = Form\BaseForm::buildData($request->getParams(), $_FILES);
         
