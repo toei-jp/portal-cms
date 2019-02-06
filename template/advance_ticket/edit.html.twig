@@ -139,9 +139,10 @@
                             
                             <div id="tickets">
                             {% for index, ticket in values.tickets %}
-                                {% set advance_ticket = null %}
+                                {% set specialGiftImage = null %}
                                 {% if ticket.id %}
                                     {% set advance_ticket = advanceSale.getAdvanceTickets().get(ticket.id) %}
+                                    {% set special_gift_image = advance_ticket.getSpecialGiftImage() %}
                                 {% endif %}
                                 
                                 {% include 'advance_ticket/include/fieldset_ticket.html.twig' with {
@@ -149,7 +150,7 @@
                                     form: form,
                                     values: ticket,
                                     errors: errors.tickets[index],
-                                    advance_ticket: advance_ticket
+                                    special_gift_image: special_gift_image
                                 } only %}
                             {% endfor %}
                             </div>

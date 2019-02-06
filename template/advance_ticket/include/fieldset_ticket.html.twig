@@ -8,6 +8,7 @@
  # * form
  # * values
  # * errors
+ # * special_gift_image
  #}
 {% set index = 'i' ~ index %} {# マージするため添字は文字列にする #}
 <div class="card ticket">
@@ -150,10 +151,9 @@
         <div class="form-group row">
             <label class="col-md-3 col-form-label">特典画像</label>
             <div class="col-md-9">
-                {% if advance_ticket and advance_ticket.getSpecialGiftImage() %}
-                {% set image = advance_ticket.getSpecialGiftImage() %}
+            {% if special_gift_image %}
                 <div class="col-md-12">
-                    <img src="{{ blob_url(image.getBlobContainer(), image.getName()) }}" width="200">
+                    <img src="{{ blob_url(special_gift_image.getBlobContainer(), special_gift_image.getName()) }}" width="200">
                 </div>
                 <div class="col-md-12 col-form-label">
                     <div class="form-check form-check">
@@ -162,7 +162,7 @@
                         <label class="form-check-label" for="tickets-{{ index }}-delete-special-gift-image">削除</label>
                     </div>
                 </div>
-                {% endif %}
+            {% endif %}
                 <input type="file" name="tickets[{{ index }}][special_gift_image]" class="form-control{% if errors.special_gift_image %} is-invalid{% elseif is_validated %} is-valid{% endif %}">
                 <span class="help-block">jpg、png、gif形式のみ対応。10MB以内。</span>
                 <div class="invalid-feedback">
