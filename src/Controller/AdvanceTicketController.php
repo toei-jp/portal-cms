@@ -133,16 +133,40 @@ class AdvanceTicketController extends BaseController
             return 'new';
         }
         
+        $advanceSale = $this->doCreate($form);
+        
+        $this->flash->addMessage('alerts', [
+            'type'    => 'info',
+            'message' => '前売券情報を追加しました。',
+        ]);
+        
+        $this->redirect(
+            $this->router->pathFor('advance_ticket_edit', [ 'id' => $advanceSale->getId() ]),
+            303);
+    }
+    
+    /**
+     * do create
+     *
+     * @param Form\AdvanceSaleForm $form
+     * @return Entity\AdvanceSale
+     */
+    protected function doCreate(Form\AdvanceSaleForm $form): Entity\AdvanceSale
+    {
         $cleanData = $form->getData();
         
         $advanceSale = new Entity\AdvanceSale();
         
         /** @var Entity\Theater $theater */
-        $theater = $this->em->getRepository(Entity\Theater::class)->findOneById($cleanData['theater']);
+        $theater = $this->em
+            ->getRepository(Entity\Theater::class)
+            ->findOneById($cleanData['theater']);
         $advanceSale->setTheater($theater);
         
         /** @var Entity\Title $title */
-        $title = $this->em->getRepository(Entity\Title::class)->findOneById($cleanData['title_id']);
+        $title = $this->em
+            ->getRepository(Entity\Title::class)
+            ->findOneById($cleanData['title_id']);
         $advanceSale->setTitle($title);
         
         $advanceSale->setPublishingExpectedDate($cleanData['publishing_expected_date']);
@@ -179,14 +203,7 @@ class AdvanceTicketController extends BaseController
         
         $this->em->flush();
         
-        $this->flash->addMessage('alerts', [
-            'type'    => 'info',
-            'message' => '前売券情報を追加しました。',
-        ]);
-        
-        $this->redirect(
-            $this->router->pathFor('advance_ticket_edit', [ 'id' => $advanceSale->getId() ]),
-            303);
+        return $advanceSale;
     }
     
     /**
