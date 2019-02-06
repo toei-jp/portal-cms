@@ -167,24 +167,7 @@ class AdvanceTicketController extends BaseController
             $file = null;
             
             if ($image['name']) {
-                // rename
-                $newName = Entity\File::createName($image['name']);
-                
-                // upload storage
-                // @todo storageと同期するような仕組みをFileへ
-                $options = new \MicrosoftAzure\Storage\Blob\Models\CreateBlockBlobOptions();
-                $options->setContentType($image['type']);
-                $this->bc->createBlockBlob(
-                    Entity\File::getBlobContainer(),
-                    $newName,
-                    fopen($image['tmp_name'], 'r'),
-                    $options);
-                
-                $file = new Entity\File();
-                $file->setName($newName);
-                $file->setOriginalName($image['name']);
-                $file->setMimeType($image['type']);
-                $file->setSize((int) $image['size']);
+                $file = $this->uploadFile($image);
                 
                 $this->em->persist($file);
             }
@@ -204,6 +187,34 @@ class AdvanceTicketController extends BaseController
         $this->redirect(
             $this->router->pathFor('advance_ticket_edit', [ 'id' => $advanceSale->getId() ]),
             303);
+    }
+    
+    /**
+     * upload file
+     *
+     * @param array $uploadFile
+     * @return Entity\File
+     */
+    protected function uploadFile(array $uploadFile): Entity\File
+    {
+        $newName = Entity\File::createName($uploadFile['name']);
+                
+        // upload storage
+        $options = new \MicrosoftAzure\Storage\Blob\Models\CreateBlockBlobOptions();
+        $options->setContentType($uploadFile['type']);
+        $this->bc->createBlockBlob(
+            Entity\File::getBlobContainer(),
+            $newName,
+            fopen($uploadFile['tmp_name'], 'r'),
+            $options);
+        
+        $file = new Entity\File();
+        $file->setName($newName);
+        $file->setOriginalName($uploadFile['name']);
+        $file->setMimeType($uploadFile['type']);
+        $file->setSize((int) $uploadFile['size']);
+        
+        return $file;
     }
     
     /**
@@ -397,24 +408,7 @@ class AdvanceTicketController extends BaseController
             }
             
             if ($image['name']) {
-                // rename
-                $newName = Entity\File::createName($image['name']);
-                
-                // upload storage
-                // @todo storageと同期するような仕組みをFileへ
-                $options = new \MicrosoftAzure\Storage\Blob\Models\CreateBlockBlobOptions();
-                $options->setContentType($image['type']);
-                $this->bc->createBlockBlob(
-                    Entity\File::getBlobContainer(),
-                    $newName,
-                    fopen($image['tmp_name'], 'r'),
-                    $options);
-                
-                $file = new Entity\File();
-                $file->setName($newName);
-                $file->setOriginalName($image['name']);
-                $file->setMimeType($image['type']);
-                $file->setSize((int) $image['size']);
+                $file = $this->uploadFile($image);
                 
                 $this->em->persist($file);
                 
