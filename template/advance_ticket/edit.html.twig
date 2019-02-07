@@ -139,7 +139,7 @@
                             
                             <div id="tickets">
                             {% for index, ticket in values.tickets %}
-                                {% set specialGiftImage = null %}
+                                {% set special_gift_image = null %}
                                 {% if ticket.id %}
                                     {% set advance_ticket = advanceSale.getAdvanceTickets().get(ticket.id) %}
                                     {% set special_gift_image = advance_ticket.getSpecialGiftImage() %}
