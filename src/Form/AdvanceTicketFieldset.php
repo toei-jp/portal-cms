@@ -107,7 +107,7 @@ class AdvanceTicketFieldset extends Fieldset implements InputFilterProviderInter
         if (!$this->isTheaterUser) {
             $this->add([
                 'name' => 'special_gift',
-                'type' => 'Text',
+                'type' => 'Textarea',
             ]);
         }
         

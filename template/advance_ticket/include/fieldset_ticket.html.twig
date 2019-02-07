@@ -150,11 +150,10 @@
         <div class="form-group row">
             <label class="col-md-3 col-form-label">特典情報</label>
             <div class="col-md-6">
-                <input type="text"
-                    name="tickets[{{ index }}][special_gift]"
+                <textarea name="tickets[{{ index }}][special_gift]"
+                    rows="2"
                     class="form-control{% if errors.special_gift %} is-invalid{% elseif is_validated %} is-valid{% endif %}"
-                    value="{{ values.special_gift }}"
-                    {% if user.isTheater() %}disabled{% endif %}>
+                    {% if user.isTheater() %}disabled{% endif %}>{{ values.special_gift }}</textarea>
                 <div class="invalid-feedback">
                     {% for message in errors.special_gift %}
                         {{ message }}
