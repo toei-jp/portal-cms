@@ -18,6 +18,9 @@ use Toei\PortalAdmin\ORM\Entity\AdvanceTicket;
  */
 class AdvanceTicketFieldset extends Fieldset implements InputFilterProviderInterface
 {
+    /** @var bool */
+    protected $isTheaterUser;
+    
     /** @var array */
     protected $typeChoices;
     
@@ -26,11 +29,14 @@ class AdvanceTicketFieldset extends Fieldset implements InputFilterProviderInter
     
     /**
      * construct
+     * 
+     * @param bool $isTheaterUser
      */
-    public function __construct()
+    public function __construct(bool $isTheaterUser)
     {
         parent::__construct('advance_ticket');
         
+        $this->isTheaterUser = $isTheaterUser;
         $this->typeChoices = AdvanceTicket::getTypes();
         $this->specialGiftStockChoices = AdvanceTicket::getSpecialGiftStockList();
         
@@ -49,47 +55,61 @@ class AdvanceTicketFieldset extends Fieldset implements InputFilterProviderInter
             'type' => 'Hidden',
         ]);
         
-        $this->add([
-            'name' => 'delete_special_gift_image',
-            'type' => 'Hidden',
-        ]);
+        if (!$this->isTheaterUser) {
+            $this->add([
+                'name' => 'delete_special_gift_image',
+                'type' => 'Hidden',
+            ]);
+        }
         
-        $this->add([
-            'name' => 'release_dt',
-            'type' => 'Text', // Datepickerを入れるのでtextにする
-        ]);
+        if (!$this->isTheaterUser) {
+            $this->add([
+                'name' => 'release_dt',
+                'type' => 'Text', // Datepickerを入れるのでtextにする
+            ]);
+        }
         
-        $this->add([
-            'name' => 'release_dt_text',
-            'type' => 'Text',
-        ]);
+        if (!$this->isTheaterUser) {
+            $this->add([
+                'name' => 'release_dt_text',
+                'type' => 'Text',
+            ]);
+        }
         
-        $this->add([
-            'name' => 'is_sales_end',
-            'type' => 'Checkbox',
-            'options' => [
-                'checked_value' => '1',
-                'unchecked_value' => '0',
-            ],
-        ]);
+        if (!$this->isTheaterUser) {
+            $this->add([
+                'name' => 'is_sales_end',
+                'type' => 'Checkbox',
+                'options' => [
+                    'checked_value' => '1',
+                    'unchecked_value' => '0',
+                ],
+            ]);
+        }
         
-        $this->add([
-            'name' => 'type',
-            'type' => 'Radio',
-            'options' => [
-                'value_options' => $this->typeChoices,
-            ],
-        ]);
+        if (!$this->isTheaterUser) {
+            $this->add([
+                'name' => 'type',
+                'type' => 'Radio',
+                'options' => [
+                    'value_options' => $this->typeChoices,
+                ],
+            ]);
+        }
         
-        $this->add([
-            'name' => 'price_text',
-            'type' => 'Text',
-        ]);
+        if (!$this->isTheaterUser) {
+            $this->add([
+                'name' => 'price_text',
+                'type' => 'Text',
+            ]);
+        }
         
-        $this->add([
-            'name' => 'special_gift',
-            'type' => 'Text',
-        ]);
+        if (!$this->isTheaterUser) {
+            $this->add([
+                'name' => 'special_gift',
+                'type' => 'Text',
+            ]);
+        }
         
         $this->add([
             'name' => 'special_gift_stock',
@@ -100,10 +120,12 @@ class AdvanceTicketFieldset extends Fieldset implements InputFilterProviderInter
             ],
         ]);
         
-        $this->add([
-            'name' => 'special_gift_image',
-            'type' => 'File',
-        ]);
+        if (!$this->isTheaterUser) {
+            $this->add([
+                'name' => 'special_gift_image',
+                'type' => 'File',
+            ]);
+        }
     }
     
     /**
@@ -117,7 +139,10 @@ class AdvanceTicketFieldset extends Fieldset implements InputFilterProviderInter
             'id' => [
                 'required' => false,
             ],
-            'release_dt' => [
+        ];
+        
+        if (!$this->isTheaterUser) {
+            $specification['release_dt'] = [
                 'required' => true,
                 'validators' => [
                     [
@@ -127,26 +152,45 @@ class AdvanceTicketFieldset extends Fieldset implements InputFilterProviderInter
                         ],
                     ],
                 ],
-            ],
-            'release_dt_text' => [
+            ];
+        }
+        
+        if (!$this->isTheaterUser) {
+            $specification['release_dt_text'] = [
                 'required' => false,
-            ],
-            'is_sales_end' => [
+            ];
+        }
+        
+        if (!$this->isTheaterUser) {
+            $specification['is_sales_end'] = [
                 'required' => false,
-            ],
-            'type' => [
+            ];
+        }
+        
+        if (!$this->isTheaterUser) {
+            $specification['type'] = [
                 'required' => true,
-            ],
-            'price_text' => [
+            ];
+        }
+        
+        if (!$this->isTheaterUser) {
+            $specification['price_text'] = [
                 'required' => true,
-            ],
-            'special_gift' => [
+            ];
+        }
+        
+        if (!$this->isTheaterUser) {
+            $specification['special_gift'] = [
                 'required' => false,
-            ],
-            'special_gift_stock' => [
-                'required' => false,
-            ],
-            'special_gift_image' => [
+            ];
+        }
+        
+        $specification['special_gift_stock'] = [
+            'required' => false,
+        ];
+        
+        if (!$this->isTheaterUser) {
+            $specification['special_gift_image'] = [
                 'required' => false,
                 'allow_empty' => true,
                 'validators' => [
@@ -163,11 +207,12 @@ class AdvanceTicketFieldset extends Fieldset implements InputFilterProviderInter
                         ],
                     ],
                 ],
-            ],
-            'delete_special_gift_image' => [
+            ];
+            
+            $specification['delete_special_gift_image'] = [
                 'required' => false,
-            ],
-        ];
+            ];
+        }
         
         return $specification;
     }

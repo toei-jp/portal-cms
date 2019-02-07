@@ -15,7 +15,7 @@
 <script src="/js/api.js"></script>
 <script src="/js/form.js?v=20181009"></script>
 <script src="/js/modal/select-title.js?v=20180919"></script>
-<script src="/js/advance_ticket/form.js?v=20180918"></script>
+<script src="/js/advance_ticket/form.js?v=20190206"></script>
 {% endblock %}
 
 {% block breadcrumb %}
@@ -138,6 +138,7 @@
                                     form: form,
                                     values: ticket,
                                     errors: errors.tickets[index],
+                                    user: user,
                                 } only %}
                             {% endfor %}
                             </div>

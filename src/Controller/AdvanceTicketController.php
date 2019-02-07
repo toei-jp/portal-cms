@@ -79,11 +79,20 @@ class AdvanceTicketController extends BaseController
      * return form
      *
      * @param int $type
-     * @return Form\AdvanceSaleForm
+     * @return Form\AdvanceSaleForm|Form\AdvanceSaleForTheaterUserForm
+     * @throws \LogicException
      */
     protected function getForm(int $type)
     {
-        return new Form\AdvanceSaleForm($type, $this->em, $this->auth->getUser());
+        if ($this->auth->getUser()->isTheater()) {
+            if (Form\AbstractAdvanceSaleForm::TYPE_NEW === $type) {
+                throw new \LogicException('Type "NEW" does not exist.');
+            }
+            
+            return new Form\AdvanceSaleForTheaterUserForm($this->em);
+        }
+        
+        return new Form\AdvanceSaleForm($type, $this->em);
     }
     
     /**
@@ -100,7 +109,7 @@ class AdvanceTicketController extends BaseController
             throw new ForbiddenException();
         }
         
-        $form = $this->getForm(Form\AdvanceSaleForm::TYPE_NEW);
+        $form = $this->getForm(Form\AbstractAdvanceSaleForm::TYPE_NEW);
         $this->data->set('form', $form);
     }
     
@@ -121,7 +130,7 @@ class AdvanceTicketController extends BaseController
         // Zend_Formの都合で$request->getUploadedFiles()ではなく$_FILESを使用する
         $params = Form\BaseForm::buildData($request->getParams(), $_FILES);
         
-        $form = $this->getForm(Form\AdvanceSaleForm::TYPE_NEW);
+        $form = $this->getForm(Form\AbstractAdvanceSaleForm::TYPE_NEW);
         $form->setData($params);
         
         if (!$form->isValid()) {
@@ -254,7 +263,7 @@ class AdvanceTicketController extends BaseController
         
         $this->data->set('advanceSale', $advanceSale);
         
-        $form = $this->getForm(Form\AdvanceSaleForm::TYPE_EDIT);
+        $form = $this->getForm(Form\AbstractAdvanceSaleForm::TYPE_EDIT);
         $this->data->set('form', $form);
         
         $values = $this->entityToArray($advanceSale);
@@ -328,7 +337,7 @@ class AdvanceTicketController extends BaseController
         // Zend_Formの都合で$request->getUploadedFiles()ではなく$_FILESを使用する
         $params = Form\BaseForm::buildData($request->getParams(), $_FILES);
         
-        $form = $this->getForm(Form\AdvanceSaleForm::TYPE_EDIT);
+        $form = $this->getForm(Form\AbstractAdvanceSaleForm::TYPE_EDIT);
         $form->setData($params);
         
         if (!$form->isValid()) {
@@ -341,7 +350,11 @@ class AdvanceTicketController extends BaseController
             return 'edit';
         }
         
-        $this->doUpdate($form, $advanceSale);
+        if ($this->auth->getUser()->isTheater()) {
+            $this->doUpdateForTheaterUser($form, $advanceSale);
+        } else {
+            $this->doUpdate($form, $advanceSale);
+        }
         
         $this->flash->addMessage('alerts', [
             'type'    => 'info',
@@ -455,6 +468,42 @@ class AdvanceTicketController extends BaseController
                 
                 $advanceTicket->setSpecialGiftImage($file);
             }
+        }
+        
+        $this->em->flush();
+    }
+    
+    /**
+     * do update for theater user
+     *
+     * @param Form\AdvanceSaleForTheaterUserForm $form
+     * @param Entity\AdvanceSale $advanceSale
+     * @return void
+     */
+    protected function doUpdateForTheaterUser(Form\AdvanceSaleForTheaterUserForm $form, Entity\AdvanceSale $advanceSale)
+    {
+        $cleanData = $form->getData();
+        
+        $advanceSale->setUpdatedUser($this->auth->getUser());
+        
+        $advanceTickets = $advanceSale->getActiveAdvanceTickets();
+        
+        foreach ($cleanData['tickets'] as $ticket) {
+            // 前売券編集
+                
+            // indexByでidをindexにしている
+            $advanceTicket = $advanceTickets->get($ticket['id']);
+            
+            if (
+                !$advanceTicket
+                || $advanceTicket->getId() !== (int) $ticket['id'] // 念のため確認
+            ) {
+                throw new \RuntimeException(sprintf('advance_ticket(%s) dose not eixist.', $ticket['id']));
+            }
+            
+            /** @var Entity\AdvanceTicket $advanceTicket */
+            
+            $advanceTicket->setSpecialGiftStock($ticket['special_gift_stock']);
         }
         
         $this->em->flush();

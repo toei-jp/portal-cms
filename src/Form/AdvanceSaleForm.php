@@ -17,23 +17,8 @@ use Toei\PortalAdmin\ORM\Entity;
 /**
  * AdvanceSale form class
  */
-class AdvanceSaleForm extends BaseForm
+class AdvanceSaleForm extends AbstractAdvanceSaleForm
 {
-    const TYPE_NEW = 1;
-    const TYPE_EDIT = 2;
-    
-    /** @var int */
-    protected $type;
-    
-    /** @var EntityManager */
-    protected $em;
-    
-    /** @var Entity\AdminUser */
-    protected $adminUser;
-    
-    /** @var AdvanceTicketFieldset */
-    protected $ticketFieldset;
-    
     /**@var array */
     protected $theaterChoices = [];
     
@@ -42,14 +27,12 @@ class AdvanceSaleForm extends BaseForm
      * 
      * @param int $type
      * @param EntityManager $em
-     * @param Entity\AdminUser
      */
-    public function __construct(int $type, EntityManager $em, Entity\AdminUser $adminUser)
+    public function __construct(int $type, EntityManager $em)
     {
         $this->type = $type;
         $this->em = $em;
-        $this->adminUser = $adminUser;
-        $this->ticketFieldset = new AdvanceTicketFieldset();
+        $this->ticketFieldset = new AdvanceTicketFieldset(false);
         
         parent::__construct();
         
@@ -76,29 +59,23 @@ class AdvanceSaleForm extends BaseForm
             ]);
         }
         
-        $theaterRepository = $this->em->getRepository(Entity\Theater::class);
         
-        if ($this->adminUser->isTheater()) {
-            $this->add([
-                'name' => 'theater',
-                'type' => 'Hidden',
-            ]);
-        } else {
-            $theaters = $theaterRepository->findActive();
-            
-            foreach ($theaters as $theater) {
-                /** @var Entity\Theater $theater */
-                $this->theaterChoices[$theater->getId()] = $theater->getNameJa();
-            }
-            
-            $this->add([
-                'name' => 'theater',
-                'type' => 'Select',
-                'options' => [
-                    'value_options' => $this->theaterChoices,
-                ],
-            ]);
+        $theaters = $this->em
+            ->getRepository(Entity\Theater::class)
+            ->findActive();
+        
+        foreach ($theaters as $theater) {
+            /** @var Entity\Theater $theater */
+            $this->theaterChoices[$theater->getId()] = $theater->getNameJa();
         }
+        
+        $this->add([
+            'name' => 'theater',
+            'type' => 'Select',
+            'options' => [
+                'value_options' => $this->theaterChoices,
+            ],
+        ]);
         
         $this->add([
             'name' => 'title_id',
@@ -223,25 +200,5 @@ class AdvanceSaleForm extends BaseForm
     public function getTheaterChoices()
     {
         return $this->theaterChoices;
-    }
-    
-    /**
-     * return ticket type choices
-     *
-     * @return array
-     */
-    public function getTicketTypeChoices()
-    {
-        return $this->ticketFieldset->getTypeChoices();
-    }
-    
-    /**
-     * return ticket special_gift_stock choices
-     *
-     * @return array
-     */
-    public function getTicketSpecialGiftStockChoices()
-    {
-        return $this->ticketFieldset->getSpecialGiftStockChoices();
     }
 }

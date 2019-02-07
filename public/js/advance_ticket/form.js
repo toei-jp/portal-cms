@@ -117,7 +117,9 @@ $(function(){
             clearTitle();
         }
         
-        $form.find('input[type="checkbox"][name="not_exist_publishing_expected_date"]').change();
+        if (!$form.find('input[name="publishing_expected_date"]').is(':disabled')) {
+            $form.find('input[type="checkbox"][name="not_exist_publishing_expected_date"]').change();
+        }
     }
     
     execute();
