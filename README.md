@@ -28,3 +28,11 @@ phpmyadmin: http://localhost:8080/
 ```sh
 $ docker-compose up
 ```
+
+## その他
+
+### PHP CodeSniffer
+
+```sh
+vendor/bin/phpcs --standard=phpcs.xml
+```
