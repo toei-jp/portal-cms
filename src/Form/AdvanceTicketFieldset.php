@@ -1,7 +1,7 @@
 <?php
 /**
  * AdvanceTicketFieldset.php
- * 
+ *
  * @author Atsushi Okui <okui@motionpicture.jp>
  */
 
@@ -29,7 +29,7 @@ class AdvanceTicketFieldset extends Fieldset implements InputFilterProviderInter
     
     /**
      * construct
-     * 
+     *
      * @param bool $isTheaterUser
      */
     public function __construct(bool $isTheaterUser)
@@ -130,7 +130,7 @@ class AdvanceTicketFieldset extends Fieldset implements InputFilterProviderInter
     
     /**
      * return inpu filter specification
-     * 
+     *
      * @return array
      */
     public function getInputFilterSpecification()

@@ -1,7 +1,7 @@
 <?php
 /**
  * AdvanceTicket.php
- * 
+ *
  * @author Atsushi Okui <okui@motionpicture.jp>
  */
 
@@ -13,7 +13,7 @@ use Toei\PortalAdmin\ORM\Entity\AbstractEntity;
 
 /**
  * AdvanceTicket entity class
- * 
+ *
  * @ORM\Entity(repositoryClass="Toei\PortalAdmin\ORM\Repository\AdvanceTicketRepository")
  * @ORM\Table(name="advance_ticket", options={"collate"="utf8mb4_general_ci"})
  * @ORM\HasLifecycleCallbacks
@@ -56,7 +56,7 @@ class AdvanceTicket extends AbstractEntity
     
     /**
      * id
-     * 
+     *
      * @var int
      * @ORM\Id
      * @ORM\Column(type="integer", options={"unsigned"=true})
@@ -235,7 +235,7 @@ class AdvanceTicket extends AbstractEntity
     
     /**
      * is salse end
-     * 
+     *
      * alias getIsSalesEnd()
      *
      * @return bool

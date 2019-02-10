@@ -1,7 +1,7 @@
 <?php
 /**
  * MainBanner.php
- * 
+ *
  * @author Atsushi Okui <okui@motionpicture.jp>
  */
 
@@ -15,7 +15,7 @@ use Toei\PortalAdmin\ORM\Entity\AbstractEntity;
 
 /**
  * MainBanner entity class
- * 
+ *
  * @ORM\Entity(repositoryClass="Toei\PortalAdmin\ORM\Repository\MainBannerRepository")
  * @ORM\Table(name="main_banner", options={"collate"="utf8mb4_general_ci"})
  * @ORM\HasLifecycleCallbacks
@@ -37,7 +37,7 @@ class MainBanner extends AbstractEntity
     
     /**
      * id
-     * 
+     *
      * @var int
      * @ORM\Id
      * @ORM\Column(type="integer", options={"unsigned"=true})
@@ -56,7 +56,7 @@ class MainBanner extends AbstractEntity
     
     /**
      * name
-     * 
+     *
      * @var string
      * @ORM\Column(type="string")
      */
@@ -80,7 +80,7 @@ class MainBanner extends AbstractEntity
     
     /**
      * pages
-     * 
+     *
      * @var Collection
      * @ORM\OneToMany(targetEntity="PageMainBanner", mappedBy="mainBanner")
      */

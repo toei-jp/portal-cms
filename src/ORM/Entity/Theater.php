@@ -1,7 +1,7 @@
 <?php
 /**
  * Theater.php
- * 
+ *
  * @author Atsushi Okui <okui@motionpicture.jp>
  */
 
@@ -15,7 +15,7 @@ use Toei\PortalAdmin\ORM\Entity\AbstractEntity;
 
 /**
  * Theater entity class
- * 
+ *
  * @ORM\Entity(repositoryClass="Toei\PortalAdmin\ORM\Repository\TheaterRepository")
  * @ORM\Table(name="theater", options={"collate"="utf8mb4_general_ci"})
  * @ORM\HasLifecycleCallbacks
@@ -30,7 +30,7 @@ class Theater extends AbstractEntity implements CampaignPublicationInterface, Ne
     
     /**
      * id
-     * 
+     *
      * @var int
      * @ORM\Id
      * @ORM\Column(type="smallint", options={"unsigned"=true})
@@ -40,15 +40,15 @@ class Theater extends AbstractEntity implements CampaignPublicationInterface, Ne
     
     /**
      * name
-     * 
+     *
      * @var string
      * @ORM\Column(type="string", unique=true)
      */
     protected $name;
     
-    /** 
+    /**
      * name_ja
-     * 
+     *
      * @var string
      * @ORM\Column(type="string", name="name_ja")
      */
@@ -56,7 +56,7 @@ class Theater extends AbstractEntity implements CampaignPublicationInterface, Ne
     
     /**
      * area
-     * 
+     *
      * @var int
      * @ORM\Column(type="smallint", options={"unsigned"=true})
      */
@@ -88,7 +88,7 @@ class Theater extends AbstractEntity implements CampaignPublicationInterface, Ne
     
     /**
      * admin_users
-     * 
+     *
      * @var ArrayCollection
      * @ORM\OneToMany(targetEntity="AdminUser", mappedBy="theater")
      */
@@ -123,7 +123,7 @@ class Theater extends AbstractEntity implements CampaignPublicationInterface, Ne
     
     /**
      * construct
-     * 
+     *
      * @param int $id
      */
     public function __construct(int $id)

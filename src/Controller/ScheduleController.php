@@ -1,7 +1,7 @@
 <?php
 /**
  * ScheduleController.php
- * 
+ *
  * @author Atsushi Okui <okui@motionpicture.jp>
  */
 
@@ -20,7 +20,7 @@ class ScheduleController extends BaseController
 {
     /**
      * list action
-     * 
+     *
      * @param \Slim\Http\Request  $request
      * @param \Slim\Http\Response $response
      * @param array               $args
@@ -56,7 +56,7 @@ class ScheduleController extends BaseController
     
     /**
      * new action
-     * 
+     *
      * @param \Slim\Http\Request  $request
      * @param \Slim\Http\Response $response
      * @param array               $args
@@ -69,7 +69,7 @@ class ScheduleController extends BaseController
     
     /**
      * create action
-     * 
+     *
      * @param \Slim\Http\Request  $request
      * @param \Slim\Http\Response $response
      * @param array               $args
@@ -135,12 +135,13 @@ class ScheduleController extends BaseController
         
         $this->redirect(
             $this->router->pathFor('schedule_edit', [ 'id' => $schedule->getId() ]),
-            303);
+            303
+        );
     }
     
     /**
      * edit action
-     * 
+     *
      * @param \Slim\Http\Request  $request
      * @param \Slim\Http\Response $response
      * @param array               $args
@@ -191,7 +192,7 @@ class ScheduleController extends BaseController
     
     /**
      * update action
-     * 
+     *
      * @param \Slim\Http\Request  $request
      * @param \Slim\Http\Response $response
      * @param array               $args
@@ -268,12 +269,13 @@ class ScheduleController extends BaseController
         
         $this->redirect(
             $this->router->pathFor('schedule_edit', [ 'id' => $schedule->getId() ]),
-            303);
+            303
+        );
     }
     
     /**
      * delete action
-     * 
+     *
      * @param \Slim\Http\Request  $request
      * @param \Slim\Http\Response $response
      * @param array               $args

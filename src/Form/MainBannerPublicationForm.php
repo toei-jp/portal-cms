@@ -1,7 +1,7 @@
 <?php
 /**
  * MainBannerPublicationForm.php
- * 
+ *
  * @author Atsushi Okui <okui@motionpicture.jp>
  */
 
@@ -31,7 +31,7 @@ class MainBannerPublicationForm extends BaseForm
     
     /**
      * construct
-     * 
+     *
      * @param string $target
      * @param EntityManager $em
      */

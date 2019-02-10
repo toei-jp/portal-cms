@@ -1,7 +1,7 @@
 <?php
 /**
  * CampaignFindForm.php
- * 
+ *
  * @author Atsushi Okui <okui@motionpicture.jp>
  */
 
@@ -31,7 +31,7 @@ class CampaignFindForm extends BaseForm
     
     /**
      * construct
-     * 
+     *
      * @param EntityManager $em
      */
     public function __construct(EntityManager $em)

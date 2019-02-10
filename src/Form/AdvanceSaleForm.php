@@ -1,7 +1,7 @@
 <?php
 /**
  * AdvanceSaleForm.php
- * 
+ *
  * @author Atsushi Okui <okui@motionpicture.jp>
  */
 
@@ -24,7 +24,7 @@ class AdvanceSaleForm extends AbstractAdvanceSaleForm
     
     /**
      * construct
-     * 
+     *
      * @param int $type
      * @param EntityManager $em
      */
@@ -41,7 +41,7 @@ class AdvanceSaleForm extends AbstractAdvanceSaleForm
 
     /**
      * setup
-     * 
+     *
      * @return void
      */
     protected function setup()

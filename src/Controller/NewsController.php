@@ -1,7 +1,7 @@
 <?php
 /**
  * NewsController.php
- * 
+ *
  * @author Atsushi Okui <okui@motionpicture.jp>
  */
 
@@ -21,7 +21,7 @@ class NewsController extends BaseController
     
     /**
      * list action
-     * 
+     *
      * @param \Slim\Http\Request  $request
      * @param \Slim\Http\Response $response
      * @param array               $args
@@ -62,7 +62,7 @@ class NewsController extends BaseController
     
     /**
      * new action
-     * 
+     *
      * @param \Slim\Http\Request  $request
      * @param \Slim\Http\Response $response
      * @param array               $args
@@ -76,7 +76,7 @@ class NewsController extends BaseController
     
     /**
      * create action
-     * 
+     *
      * @param \Slim\Http\Request  $request
      * @param \Slim\Http\Response $response
      * @param array               $args
@@ -117,7 +117,8 @@ class NewsController extends BaseController
             Entity\File::getBlobContainer(),
             $newName,
             $imageStream,
-            $options);
+            $options
+        );
         
         $file = new Entity\File();
         $file->setName($newName);
@@ -156,12 +157,13 @@ class NewsController extends BaseController
         
         $this->redirect(
             $this->router->pathFor('news_edit', [ 'id' => $news->getId() ]),
-            303);
+            303
+        );
     }
     
     /**
      * edit action
-     * 
+     *
      * @param \Slim\Http\Request  $request
      * @param \Slim\Http\Response $response
      * @param array               $args
@@ -203,7 +205,7 @@ class NewsController extends BaseController
     
     /**
      * update action
-     * 
+     *
      * @param \Slim\Http\Request  $request
      * @param \Slim\Http\Response $response
      * @param array               $args
@@ -254,7 +256,8 @@ class NewsController extends BaseController
                 Entity\File::getBlobContainer(),
                 $newName,
                 $imageStream,
-                $options);
+                $options
+            );
             
             $file = new Entity\File();
             $file->setName($newName);
@@ -301,12 +304,13 @@ class NewsController extends BaseController
         
         $this->redirect(
             $this->router->pathFor('news_edit', [ 'id' => $news->getId() ]),
-            303);
+            303
+        );
     }
     
     /**
      * delete action
-     * 
+     *
      * @param \Slim\Http\Request  $request
      * @param \Slim\Http\Response $response
      * @param array               $args
@@ -371,7 +375,6 @@ class NewsController extends BaseController
             
             
             $this->em->getConnection()->commit();
-            
         } catch (\Exception $e) {
             $this->em->getConnection()->rollBack();
             throw $e;
@@ -380,7 +383,7 @@ class NewsController extends BaseController
     
     /**
      * publication action
-     * 
+     *
      * @param \Slim\Http\Request  $request
      * @param \Slim\Http\Response $response
      * @param array               $args
@@ -416,7 +419,7 @@ class NewsController extends BaseController
     
     /**
      * publication update action
-     * 
+     *
      * @param \Slim\Http\Request  $request
      * @param \Slim\Http\Response $response
      * @param array               $args
@@ -444,7 +447,6 @@ class NewsController extends BaseController
                 ->findOneById((int) $cleanData['theater_id']);
             $basePublication = new Entity\TheaterNews();
             $basePublication->setTheater($targetEntity);
-            
         } else if ($target === Form\NewsPublicationForm::TARGET_PAGE) {
             /** @var Entity\Page $targetEntity */
             $targetEntity = $this->em

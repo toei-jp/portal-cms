@@ -1,7 +1,7 @@
 <?php
 /**
  * AzureBlobStorageHandler.php
- * 
+ *
  * @author Atsushi Okui <okui@motionpicture.jp>
  */
 
@@ -57,7 +57,7 @@ class AzureBlobStorageHandler extends AbstractProcessingHandler
         try {
             $this->client->getBlobMetadata($this->container, $this->blob);
         } catch (ServiceException $e) {
-             if ($e->getCode() !== 404) {
+            if ($e->getCode() !== 404) {
                 throw $e;
             }
             

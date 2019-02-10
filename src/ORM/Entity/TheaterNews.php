@@ -1,7 +1,7 @@
 <?php
 /**
  * TheaterNews.php
- * 
+ *
  * @author Atsushi Okui <okui@motionpicture.jp>
  */
 
@@ -13,7 +13,7 @@ use Toei\PortalAdmin\ORM\Entity\AbstractEntity;
 
 /**
  * TheaterNews entity class
- * 
+ *
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="Toei\PortalAdmin\ORM\Repository\TheaterNewsRepository")
  * @ORM\Table(name="theater_news", options={"collate"="utf8mb4_general_ci"})
@@ -25,7 +25,7 @@ class TheaterNews extends AbstractEntity
     
     /**
      * id
-     * 
+     *
      * @var int
      * @ORM\Id
      * @ORM\Column(type="integer", options={"unsigned"=true})
