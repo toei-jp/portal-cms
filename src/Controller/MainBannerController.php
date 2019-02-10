@@ -398,7 +398,7 @@ class MainBannerController extends BaseController
                 ->findOneById((int) $cleanData['theater_id']);
             $basePublication = new Entity\TheaterMainBanner();
             $basePublication->setTheater($targetEntity);
-        } else if ($target === Form\MainBannerPublicationForm::TARGET_PAGE) {
+        } elseif ($target === Form\MainBannerPublicationForm::TARGET_PAGE) {
             /** @var Entity\Page $targetEntity */
             $targetEntity = $this->em
                 ->getRepository(Entity\Page::class)

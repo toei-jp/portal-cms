@@ -423,7 +423,7 @@ class CampaignController extends BaseController
                 ->findOneById((int) $cleanData['theater_id']);
             $basePublication = new Entity\TheaterCampaign();
             $basePublication->setTheater($targetEntity);
-        } else if ($target === Form\CampaignPublicationForm::TARGET_PAGE) {
+        } elseif ($target === Form\CampaignPublicationForm::TARGET_PAGE) {
             /** @var Entity\Page $targetEntity */
             $targetEntity = $this->em
                 ->getRepository(Entity\Page::class)

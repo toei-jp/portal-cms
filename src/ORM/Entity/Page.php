@@ -20,7 +20,10 @@ use Toei\PortalAdmin\ORM\Entity\AbstractEntity;
  * @ORM\Table(name="page", options={"collate"="utf8mb4_general_ci"})
  * @ORM\HasLifecycleCallbacks
  */
-class Page extends AbstractEntity implements CampaignPublicationInterface, NewsPublicationInterface, MainBannerPublicationInterface
+class Page extends AbstractEntity implements
+    CampaignPublicationInterface,
+    NewsPublicationInterface,
+    MainBannerPublicationInterface
 {
     use SoftDeleteTrait;
     use TimestampableTrait;

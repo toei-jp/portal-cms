@@ -61,7 +61,7 @@ class MainBannerPublicationForm extends BaseForm
                 'name' => 'page_id',
                 'type' => 'Hidden',
             ]);
-        } else if ($this->target === self::TARGET_TEATER) {
+        } elseif ($this->target === self::TARGET_TEATER) {
             $this->add([
                 'name' => 'theater_id',
                 'type' => 'Hidden',
@@ -101,7 +101,7 @@ class MainBannerPublicationForm extends BaseForm
                     ],
                 ],
             ]);
-        } else if ($this->target === self::TARGET_TEATER) {
+        } elseif ($this->target === self::TARGET_TEATER) {
             $theaterIds = [];
             $theaters = $this->em->getRepository(Entity\Theater::class)->findActive();
             

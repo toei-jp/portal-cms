@@ -447,7 +447,7 @@ class NewsController extends BaseController
                 ->findOneById((int) $cleanData['theater_id']);
             $basePublication = new Entity\TheaterNews();
             $basePublication->setTheater($targetEntity);
-        } else if ($target === Form\NewsPublicationForm::TARGET_PAGE) {
+        } elseif ($target === Form\NewsPublicationForm::TARGET_PAGE) {
             /** @var Entity\Page $targetEntity */
             $targetEntity = $this->em
                 ->getRepository(Entity\Page::class)
