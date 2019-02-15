@@ -49,6 +49,14 @@ class Title extends AbstractEntity
     protected $image;
     
     /**
+     * chever_code
+     *
+     * @var string|null
+     * @ORM\Column(name="chever_code", type="string", length=100, unique=true, nullable=true)
+     */
+    protected $cheverCode;
+    
+    /**
      * name
      *
      * @var string
@@ -202,6 +210,27 @@ class Title extends AbstractEntity
     public function setImage($image)
     {
         $this->image = $image;
+    }
+    
+    /**
+     * get chever_code
+     *
+     * @return string|null
+     */
+    public function getCheverCode()
+    {
+        return $this->cheverCode;
+    }
+    
+    /**
+     * set chever_code
+     *
+     * @param string|null $cheverCode
+     * @return void
+     */
+    public function setCheverCode(?string $cheverCode)
+    {
+        $this->cheverCode = $cheverCode;
     }
     
     /**
