@@ -114,7 +114,7 @@ class TitleForm extends BaseForm
         
         $inputFilter->add([
             'name' => 'name_kana',
-            'required' => true,
+            'required' => false,
         ]);
         
         $inputFilter->add([

@@ -67,8 +67,8 @@ class Title extends AbstractEntity
     /**
      * name_kana
      *
-     * @var string
-     * @ORM\Column(type="string", name="name_kana")
+     * @var string|null
+     * @ORM\Column(type="string", name="name_kana", nullable=true)
      */
     protected $nameKana;
     
@@ -257,7 +257,7 @@ class Title extends AbstractEntity
     /**
      * get name_kana
      *
-     * @return string
+     * @return string|null
      */
     public function getNameKana()
     {
@@ -267,10 +267,10 @@ class Title extends AbstractEntity
     /**
      * set name_kana
      *
-     * @param string $nameKana
+     * @param string|null $nameKana
      * @return void
      */
-    public function setNameKana(string $nameKana)
+    public function setNameKana(?string $nameKana)
     {
         $this->nameKana = $nameKana;
     }
