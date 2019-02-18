@@ -41,6 +41,18 @@ class TitleResponder extends BaseResponder
     }
     
     /**
+     * import
+     *
+     * @param Response   $response
+     * @param Collection $data
+     * @return Response
+     */
+    public function import(Response $response, Collection $data)
+    {
+        return $this->view->render($response, 'title/import.html.twig', $data->all());
+    }
+    
+    /**
      * edit
      *
      * @param Response   $response

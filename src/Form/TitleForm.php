@@ -106,6 +106,11 @@ class TitleForm extends BaseForm
             ],
         ]);
         
+        $this->add([
+            'name' => 'chever_code',
+            'type' => 'Text',
+        ]);
+        
         $inputFilter = new InputFilter();
         $inputFilter->add([
             'name' => 'name',
@@ -202,6 +207,11 @@ class TitleForm extends BaseForm
         
         $inputFilter->add([
             'name' => 'universal',
+            'required' => false,
+        ]);
+        
+        $inputFilter->add([
+            'name' => 'chever_code',
             'required' => false,
         ]);
         

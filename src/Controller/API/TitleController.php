@@ -8,6 +8,7 @@
 namespace Toei\PortalAdmin\Controller\API;
 
 use Toei\PortalAdmin\ORM\Entity;
+use Toei\PortalAdmin\Form;
 
 /**
  * Title API controller
@@ -48,6 +49,88 @@ class TitleController extends BaseController
         }
         
         $this->data->set('data', $data);
+    }
+
+    /**
+     * find imported title action
+     *
+     * @param \Slim\Http\Request  $request
+     * @param \Slim\Http\Response $response
+     * @param array               $args
+     * @return string|void
+     */
+    public function executeFindImported($request, $response, $args)
+    {
+        $ids = json_decode($request->getParam('ids'));
+        $data = [];
+        
+        if ($ids !== NULL) {
+            $titles = $this->em
+                ->getRepository(Entity\Title::class)
+                ->findForFindImportedApi($ids);
+            
+                
+            foreach ($titles as $title) {
+                /** @var Entity\Title $title */
+                
+                array_push($data, $title->getCheverCode());
+            }
+        }
+        
+        $this->data->set('data', $data);
+    }
+
+    /**
+     * import title action
+     *
+     * @param \Slim\Http\Request  $request
+     * @param \Slim\Http\Response $response
+     * @param array               $args
+     * @return string|void
+     */
+    public function executeImportTitles($request, $response, $args)
+    {
+        /**@var Entity\Title $title */
+        $data = $request->getParams();
+        $errors = [];
+        foreach ($data['titles'] as $title) {
+            $form = new Form\TitleForm();
+            $ratings = $form->getRatingChoices();
+            $i = array_search($title['rating'], $ratings);
+            if ($i !== false) {
+                $title['rating'] = $i;
+            } else {
+                unset($title['rating']);
+            }
+            $params = Form\BaseForm::buildData($title, []);
+            $form->setData($params);
+            
+            if (!$form->isValid()) {
+                array_push($errors, $form->getMessages());
+            } else {
+                $cleanData = $form->getData();
+                $title = new Entity\Title();
+                $title->setName($cleanData['name']);
+                if (!empty($cleanData['sub_title'])) {
+                    $title->setSubTitle($cleanData['sub_title']);
+                }
+                $title->setCheverCode($cleanData['chever_code']);
+                $title->setPublishingExpectedDate($cleanData['publishing_expected_date']);
+                $title->setRating((int) $cleanData['rating']);
+                $title->setUniversal([]);
+                $title->setCreatedUser($this->auth->getUser());
+                $title->setUpdatedUser($this->auth->getUser());
+                
+                $this->em->persist($title);
+                $this->em->flush();
+            }
+        }
+        if (count($errors) > 0) {
+            $this->data->set('status', 'fail');
+            $this->data->set('errors', $errors);
+        } else {
+            $this->data->set('status', 'success');
+        }
     }
     
     /**

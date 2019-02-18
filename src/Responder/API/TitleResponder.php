@@ -27,6 +27,30 @@ class TitleResponder extends BaseResponder
     {
         return $response->withJson($data->all());
     }
+
+    /**
+     * find imported title
+     *
+     * @param Response   $response
+     * @param Collection $data
+     * @return Response
+     */
+    public function findImported(Response $response, Collection $data)
+    {
+        return $response->withJson($data->all());
+    }
+
+    /**
+     * import titles
+     *
+     * @param Response   $response
+     * @param Collection $data
+     * @return Response
+     */
+    public function importTitles(Response $response, Collection $data)
+    {
+        return $response->withJson($data->all());
+    }
     
     /**
      * autocomplete

@@ -81,6 +81,27 @@ class TitleRepository extends EntityRepository
     }
     
     /**
+     * find for find imported API
+     *
+     * @param array $ids
+     * @return Title[]
+     */
+    public function findForFindImportedApi($ids)
+    {
+        if (gettype($ids) !== 'array') {
+            throw new \InvalidArgumentException('invalid "ids".');
+        }
+        
+        $qb = $this->createQueryBuilder('t');
+        $qb
+            ->where('t.isDeleted = false')
+            ->andWhere($qb->expr()->in('t.cheverCode', $ids))
+            ->orderBy('t.createdAt', 'DESC');
+        
+        return $qb->getQuery()->getResult();
+    }
+    
+    /**
      * find for autocomplete
      *
      * @param array $params
