@@ -8,7 +8,6 @@
 namespace Toei\PortalAdmin\Controller\API;
 
 use Toei\PortalAdmin\ORM\Entity;
-use Toei\PortalAdmin\Form;
 
 /**
  * Title API controller
@@ -93,35 +92,33 @@ class TitleController extends BaseController
         $data = $request->getParams();
         $errors = [];
         foreach ($data['titles'] as $title) {
-            $form = new Form\TitleForm();
-            $ratings = $form->getRatingChoices();
+            $ratings = Entity\Title::getRatingTypes();
             $i = array_search($title['rating'], $ratings);
             if ($i !== false) {
                 $title['rating'] = $i;
             } else {
-                unset($title['rating']);
+                $title['rating'] = null;
             }
-            $params = Form\BaseForm::buildData($title, []);
-            $form->setData($params);
-            
-            if (!$form->isValid()) {
-                array_push($errors, $form->getMessages());
-            } else {
-                $cleanData = $form->getData();
-                $title = new Entity\Title();
-                $title->setName($cleanData['name']);
-                if (!empty($cleanData['sub_title'])) {
-                    $title->setSubTitle($cleanData['sub_title']);
+            try {
+                $newTitle = new Entity\Title();
+                $newTitle->setName($title['name']);
+                if (!empty($title['sub_title'])) {
+                    $newTitle->setSubTitle($title['sub_title']);
                 }
-                $title->setCheverCode($cleanData['chever_code']);
-                $title->setPublishingExpectedDate($cleanData['publishing_expected_date']);
-                $title->setRating((int) $cleanData['rating']);
-                $title->setUniversal([]);
-                $title->setCreatedUser($this->auth->getUser());
-                $title->setUpdatedUser($this->auth->getUser());
+                $newTitle->setCheverCode($title['chever_code']);
+                if (isset($title['not_exist_publishing_expected_date']) &&
+                    $title['not_exist_publishing_expected_date'] !== '1') {
+                    $newTitle->setPublishingExpectedDate($title['publishing_expected_date']);
+                }
+                $newTitle->setRating((int) $title['rating']);
+                $newTitle->setUniversal([]);
+                $newTitle->setCreatedUser($this->auth->getUser());
+                $newTitle->setUpdatedUser($this->auth->getUser());
                 
-                $this->em->persist($title);
+                $this->em->persist($newTitle);
                 $this->em->flush();
+            } catch (\Exception $e) {
+                array_push($errors, $e->getMessage());
             }
         }
         if (count($errors) > 0) {
