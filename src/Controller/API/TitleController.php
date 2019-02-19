@@ -64,12 +64,11 @@ class TitleController extends BaseController
         $ids = json_decode($request->getParam('ids'));
         $data = [];
         
-        if ($ids !== NULL) {
+        if ($ids !== null) {
             $titles = $this->em
                 ->getRepository(Entity\Title::class)
                 ->findForFindImportedApi($ids);
             
-                
             foreach ($titles as $title) {
                 /** @var Entity\Title $title */
                 
