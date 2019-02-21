@@ -88,7 +88,6 @@ class TitleController extends BaseController
      */
     public function executeImportTitles($request, $response, $args)
     {
-        /**@var Entity\Title $title */
         $data = $request->getParams();
         $errors = [];
         foreach ($data['titles'] as $title) {
@@ -118,6 +117,7 @@ class TitleController extends BaseController
                 $this->em->persist($newTitle);
                 $this->em->flush();
             } catch (\Exception $e) {
+                $this->logger->error($e);
                 array_push($errors, $e->getMessage());
             }
         }
