@@ -7,3 +7,7 @@
 .sidebar .nav-dropdown-items .nav-link {
     padding-left: 30px;
 }
+
+.sidebar .nav-dropdown-items .nav-link:not(.active) {
+    background: #20a7d82a;
+}
