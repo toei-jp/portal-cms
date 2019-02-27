@@ -10,3 +10,11 @@ $(function(){
         return confirm('削除します。よろしいですか？');
     });
 });
+
+function showLoader() {
+    $('.load').css({ display: 'inline-block' });
+}
+
+function hideLoader() {
+    $('.load').hide();
+}

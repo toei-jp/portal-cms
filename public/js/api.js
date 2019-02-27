@@ -22,6 +22,37 @@ $(function(){
         });
     };
     
+    /**
+     * find imported title
+     * 
+     * @param {Array} ids
+     * @returns {jqXHR}
+     */
+    api.title.findImported = function(ids) {
+        return $.ajax({
+            url: '/api/title/findImported',
+            data: {
+                'ids': JSON.stringify(ids)
+            }
+        });
+    };
+    
+    /**
+     * import titles
+     * 
+     * @param {Array} titles
+     * @returns {jqXHR}
+     */
+    api.title.importTitles = function(titles) {
+        return $.ajax({
+            method: 'POST',
+            url: '/api/title/importTitles',
+            data: {
+                titles: titles
+            }
+        });
+    };
+    
     api.campaign = {};
     
     /**

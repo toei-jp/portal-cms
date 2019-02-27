@@ -34,6 +34,7 @@ $app->group('', function () {
     $this->group('/title', function () {
         $this->get('/list', TitleController::class . ':list')->setName('title_list');
         $this->get('/new', TitleController::class . ':new')->setName('title_new');
+        $this->get('/import', TitleController::class . ':import')->setName('title_import');
         $this->post('/create', TitleController::class . ':create')->setName('title_create');
         $this->get('/{id}/edit', TitleController::class . ':edit')->setName('title_edit');
         $this->post('/{id}/update', TitleController::class . ':update')->setName('title_update');
@@ -113,6 +114,8 @@ $app->group('', function () {
         $this->group('/title', function () {
             $this->get('/list', TitleApiController::class . ':list');
             $this->get('/autocomplete', TitleApiController::class . ':autocomplete');
+            $this->get('/findImported', TitleApiController::class . ':findImported');
+            $this->post('/importTitles', TitleApiController::class . ':importTitles');
         });
         
         $this->group('/main_banner', function () {
