@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %} - CMS管理画面</title>
+    
+    <link rel="stylesheet" href="/css/vendor/coreui.min.css">
+    <link rel="stylesheet" href="/css/common.css?v=20190226">
+    
+    {% block css %}{% endblock %}
+</head>
+<body class="app header-fixed sidebar-show">
+    
+    {% include 'include/header.html.twig' %}
+    
+    <div class="app-body">
+        {% include 'include/sidebar.html.twig' %}
+        
+        <main class="main">
+            {% block breadcrumb %}{% endblock %}
+            
+            <div class="container">
+                {% for alert in alerts %}
+                    {% if alert %}
+                    <div class="alert alert-{{ alert.type }}" role="alert">
+                        {{ alert.message }}
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            
+                {% block container %}{% endblock %}
+            </div>
+        </main>
+    </div>
+    
+    {% include 'include/footer.html.twig' %}
+    
+    <script src="/js/vendor/jquery-3.3.1.min.js"></script>
+    <script src="/js/vendor/popper.min.js"></script>
+    <script src="/js/vendor/bootstrap.min.js"></script>
+    <script src="/js/vendor/coreui.min.js"></script>
+    <script src="/js/common.js?v=20181027"></script>
+    
+    {% block javascript %}{% endblock %}
+</body>
+</html>

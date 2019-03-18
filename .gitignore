@@ -1,0 +1,22 @@
+##
+## git ignore
+##
+
+# application
+/cache
+/public/.htaccess
+/report/*
+/src/ORM/Proxy
+.env
+
+# composer
+composer.phar
+composer.bat
+/vendor/
+
+# docker
+/docker/mysql/data
+/docker/phpmyadmin/sessions
+
+# git
+!.gitkeep

@@ -1,0 +1,112 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}「{{ mainBanner.getName() }}」編集 | メインバナー{% endblock %}
+
+{% block breadcrumb %}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">ダッシュボード</li>
+    <li class="breadcrumb-item">メインバナー</li>
+    <li class="breadcrumb-item active">「{{ mainBanner.getName() }}」編集</li>
+</ol>
+{% endblock %}
+
+{% block javascript %}
+<script src="/js/main_banner/form.js"></script>
+{% endblock %}
+
+{% block container %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <form name="main_banner" method="post" enctype="multipart/form-data" action="{{ path_for('main_banner_update', { id: mainBanner.getId() }) }}">
+                <div class="card-header">
+                    「{{ mainBanner.getName() }}」編集
+                </div>
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">ID</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static">{{ values.id }}</p>
+                            <input type="hidden" name="id" value="{{ values.id }}">
+                            <div class="invalid-feedback"></div>
+                            <span class="help-block">※自動でIDが付与されます。</span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">バナータイトル</label>
+                        <div class="col-md-9">
+                            <input type="text" name="name" class="form-control{% if errors.name %} is-invalid{% elseif is_validated %} is-valid{% endif %}" value="{{ values.name }}">
+                            <div class="invalid-feedback">
+                                {% for message in errors.name %}
+                                    {{ message }}
+                                    {% if not loop.last %}<br>{% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">リンク設定</label>
+                        <div class="col-md-9">
+                            <div class="row">
+                                <div class="col-md-12 col-form-label">
+                                {% for value, text in form.getLinkTypeChoices() %}
+                                    <div class="form-check form-check-inline mr-1">
+                                        <input type="radio" class="form-check-input{% if errors.link_type %} is-invalid{% elseif is_validated %} is-valid{% endif %}" id="link-type-{{ loop.index }}" name="link_type" value="{{ value }}" {{ value == values.link_type ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="link-type-{{ loop.index }}">{{ text }}</label>
+                                    </div>
+                                {% endfor %}
+                                    {##
+                                     # インラインの項目でエラーを表示するためのhidden
+                                     # input.is-invalidの隣に.invalid-feedbackがないと表示されないみたいだが、
+                                     # それをやると見た目が良くないので。
+                                     #}
+                                    <input type="hidden" class="form-control{% if errors.link_type %} is-invalid{% endif %}">
+                                    <div class="invalid-feedback">
+                                        {% for message in errors.link_type %}
+                                            {{ message }}
+                                            {% if not loop.last %}<br>{% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="col-md-12 field-link-url">
+                                    <input type="url" name="link_url" class="form-control{% if errors.link_url %} is-invalid{% elseif is_validated %} is-valid{% endif %}" value="{{ values.link_url }}">
+                                    <div class="invalid-feedback">
+                                        {% for message in errors.link_url %}
+                                            {{ message }}
+                                            {% if not loop.last %}<br>{% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">画像</label>
+                        <div class="col-md-9">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <img src="{{ blob_url(mainBanner.getImage().getBlobContainer(), mainBanner.getImage().getName()) }}" width="200">
+                                </div>
+                                <div class="col-md-12">
+                                    <input type="file" name="image" class="form-control{% if errors.image %} is-invalid{% elseif is_validated %} is-valid{% endif %}">
+                                    <span class="help-block">jpg、png、gif形式のみ対応。10MB以内。</span>
+                                    <div class="invalid-feedback">
+                                        {% for message in errors.image %}
+                                            {{ message }}
+                                            {% if not loop.last %}<br />{% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="button" class="btn btn-link" onclick="location.href='{{ path_for('main_banner_list') }}'">一覧へ戻る</button>
+                    <button type="submit" class="btn btn-primary">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

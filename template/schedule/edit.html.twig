@@ -1,0 +1,198 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}「{{ schedule.getTitle().getName() }}」上映情報編集 | 上映情報{% endblock %}
+
+{% block breadcrumb %}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">ダッシュボード</li>
+    <li class="breadcrumb-item">上映情報</li>
+    <li class="breadcrumb-item active">「{{ schedule.getTitle().getName() }}」上映情報編集</li>
+</ol>
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="/css/vendor/jquery.flexdatalist.min.css">
+<link rel="stylesheet" href="/css/vendor/jquery.datetimepicker.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.css">
+{% endblock %}
+
+{% block javascript %}
+<script src="/js/vendor/jquery.flexdatalist.min.js"></script>
+<script src="/js/vendor/jquery.datetimepicker.full.min.js"></script>
+<script src="/js/vendor/jsrender.min.js"></script>
+<script src="/js/api.js"></script>
+<script src="/js/form.js?v=20181009"></script>
+<script src="/js/modal/select-title.js?v=20180919"></script>
+<script src="/js/schedule/form.js?v=20180919"></script>
+{% endblock %}
+
+{% block container %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <form name="schedule" method="post" action="{{ path_for('schedule_update', { id: schedule.getId() }) }}">
+                <div class="card-header">
+                    「{{ schedule.getTitle().getName() }}」上映情報編集
+                </div>
+                <div class="card-body">
+                    {% if errors %}
+                    <div class="alert alert-danger" role="alert">
+                        入力エラーがあります。
+                    </div>
+                    {% endif %}
+                    
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">上映情報ID</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static">{{ values.id }}</p>
+                            <input type="hidden" name="id" value="{{ values.id }}">
+                            <span class="help-block">※自動でIDが付与されます。</span>
+                        </div>
+                    </div>
+                    <div class="form-group row title">
+                        <label class="col-md-3 col-form-label">該当作品</label>
+                        <div class="col-md-9">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p class="form-control-static title-name">{{ values.title_name }}</p>
+                                    <input type="hidden" name="title_name" value="{{ values.title_name }}">
+                                    <input type="hidden" name="title_id" class="form-control{% if errors.title_id %} is-invalid{% endif %}" value="{{ values.title_id }}">
+                                    <div class="invalid-feedback">
+                                        {% for message in errors.title_id %}
+                                            {{ message }}
+                                            {% if not loop.last %}<br />{% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#selectTitleModal">作品選択</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">掲出期間</label>
+                        <div class="col-md-6">
+                            <div class="form-inline input-group">
+                                <input type="text" name="public_start_dt" class="form-control datetimepicker{% if errors.public_start_dt %} is-invalid{% elseif is_validated %} is-valid{% endif %}" value="{{ values.public_start_dt }}">
+                                <div class="input-group-addon">
+                                    <span class="input-group-text">～</span>
+                                </div>
+                                <input type="text" name="public_end_dt" class="form-control datetimepicker{% if errors.public_end_dt %} is-invalid{% elseif is_validated %} is-valid{% endif %}" value="{{ values.public_end_dt }}">
+                            </div>
+                            {# mergeだと同じキーは上書きされるが、同じメッセージは表示されないのでこれで良い #}
+                            {% set termErrors = [] %}
+                            {% if errors.public_start_dt %}
+                                {% set termErrors = termErrors|merge(errors.public_start_dt) %}
+                            {% endif %}
+                            {% if errors.public_end_dt %}
+                                {% set termErrors = termErrors|merge(errors.public_end_dt) %}
+                            {% endif %}
+                            
+                            {##
+                             # エラーを表示するためのhidden
+                             # input.is-invalidの隣に.invalid-feedbackがないと表示されないみたいだが、
+                             # それをやると見た目が良くないので。
+                             #}
+                            <input type="hidden" class="form-control {% if termErrors %} is-invalid{% endif %}">
+                            <div class="invalid-feedback">
+                                {% for message in termErrors %}
+                                    {{ message }}
+                                    {% if not loop.last %}<br />{% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">上映期間</label>
+                        <div class="col-md-6">
+                            <div class="form-inline input-group">
+                                <input type="text" name="start_date" class="form-control datepicker{% if errors.start_date %} is-invalid{% elseif is_validated %} is-valid{% endif %}" value="{{ values.start_date }}">
+                                <div class="input-group-addon">
+                                    <span class="input-group-text">～</span>
+                                </div>
+                                <input type="text" name="end_date" class="form-control datepicker{% if errors.end_date %} is-invalid{% elseif is_validated %} is-valid{% endif %}" value="{{ values.end_date }}">
+                            </div>
+                            {# mergeだと同じキーは上書きされるが、同じメッセージは表示されないのでこれで良い #}
+                            {% set termErrors = [] %}
+                            {% if errors.start_date %}
+                                {% set termErrors = termErrors|merge(errors.start_date) %}
+                            {% endif %}
+                            {% if errors.end_date %}
+                                {% set termErrors = termErrors|merge(errors.end_date) %}
+                            {% endif %}
+                            
+                            {##
+                             # エラーを表示するためのhidden
+                             # input.is-invalidの隣に.invalid-feedbackがないと表示されないみたいだが、
+                             # それをやると見た目が良くないので。
+                             #}
+                            <input type="hidden" class="form-control {% if termErrors %} is-invalid{% endif %}">
+                            <div class="invalid-feedback">
+                                {% for message in termErrors %}
+                                    {{ message }}
+                                    {% if not loop.last %}<br />{% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">備考</label>
+                        <div class="col-md-9">
+                            <textarea name="remark" rows="6" class="form-control{% if errors.remark %} is-invalid{% elseif is_validated %} is-valid{% endif %}">{{ values.remark }}</textarea>
+                            <div class="invalid-feedback">
+                                {% for message in errors.remark %}
+                                    {{ message }}
+                                    {% if not loop.last %}<br />{% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group row">
+                        {% include 'include/form/field_multi_checkbox.html.twig' with {
+                            label: '対象劇場',
+                            name: 'theater',
+                            choices: form.getTheaterChoices(),
+                            value: values.theater,
+                            error: errors.theater,
+                            is_validated: is_validated,
+                            with_assist: true,
+                        } only %}
+                    </div>
+                    
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">上映方式</label>
+                        <div class="col-md-9">
+                            <div id="formats">
+                            {% for index, format in values.formats %}
+                                {% include 'schedule/include/fieldset_format.html.twig' with {
+                                    index: loop.index0,
+                                    fieldset: form.getShowingFormatFieldset(),
+                                    values: format,
+                                    errors: errors.formats[index],
+                                } only %}
+                            {% endfor %}
+                            </div>
+                            <button type="button" class="btn btn-success btn-add-format-fieldset">上映方式追加</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="button" class="btn btn-link" onclick="location.href='{{ path_for('schedule_list') }}'">一覧へ戻る</button>
+                    <button type="submit" class="btn btn-primary">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script id="formatFiledsetTmpl" type="text/x-jsrender">
+{% include 'schedule/include/fieldset_format.html.twig' with {
+    index: '{{:index}}',
+    fieldset: form.getShowingFormatFieldset(),
+} only %}
+</script>
+
+{% include 'include/modal/select_title.html.twig' only %}
+{% endblock %}
