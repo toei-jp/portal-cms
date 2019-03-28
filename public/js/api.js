@@ -125,4 +125,21 @@ $(function(){
             data: data
         });
     }
+
+    api.auth = {};
+
+    /**
+     * auth token
+     * 
+     * @returns {jqXHR}
+     */
+    api.auth.token = function() {
+        var options = {
+            dataType: 'json',
+            url: '/api/auth/token',
+            type: 'POST',
+            timeout: 10000
+        };
+        return $.ajax(options);
+    }
 });

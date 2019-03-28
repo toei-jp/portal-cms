@@ -2,48 +2,16 @@
  * title/import.js
  */
 var cinerino = window.cinerino;
-/**
- * WARNING
- * API_ENDPOINTは各プロジェクトごとに変更する
- */
-var API_ENDPOINT = 'https://toei-cinerino-api-development.azurewebsites.net';
-var CLIENT_ID = '3acp6i998hvi810lcv2svq2lsh';
-var CLIENT_SECRET = 'a4kp1rrqa2a4mve0o23h1339o37hjdtequtgpib3b82l690rvml';
+var API_ENDPOINT;
+ 
 var TIMEZONE = 9; // JST Timezone
-
-/**
- * 認証情報取得
- * WARNING
- * サーバーサイドにAPIとして実装する
- * clientId,clientSecret,authorizationServerDomainは各プロジェクトごとに変更する
- */
-function getCredentials() {
-    var clientId = CLIENT_ID;
-    var clientSecret = CLIENT_SECRET;
-    var authorization = 'Basic ' + btoa(clientId + ':' + clientSecret);
-    var authorizationServerDomain = 'toei-cinerino-development.auth.ap-northeast-1.amazoncognito.com';
-    var options = {
-        dataType: 'json',
-        url: 'https://' + authorizationServerDomain + '/oauth2/token',
-        type: 'POST',
-        timeout: 10000,
-        contentType: 'application/x-www-form-urlencoded',
-        headers: {
-            Authorization: authorization
-        },
-        data: {
-            'grant_type': 'client_credentials'
-        }
-    };
-    return $.ajax(options);
-}
 
 /**
  * 設定作成
  * @param {string} accessToken 
  */
 function createOptions(accessToken) {
-    const option = {
+    var option = {
         domain: '',
         clientId: '',
         redirectUri: '',
@@ -56,11 +24,13 @@ function createOptions(accessToken) {
     };
     var auth = cinerino.createAuthInstance(option);
     auth.setCredentials({ accessToken: accessToken });
+
     return {
         endpoint: API_ENDPOINT,
         auth: auth
     }
 }
+
 /**
  * 表示日付の修正
  */
@@ -73,6 +43,7 @@ function displayDateCorrection(date) {
         return '';
     }
 }
+
 /**
  * 作品一覧取得パラメター
  */
@@ -97,8 +68,8 @@ function getMovies(from, through) {
     showLoader();
     $('.search-result').hide();
     var days = ['日', '月', '火', '水', '木', '金', '土'];
-    getCredentials().then(function (credentials) {
-        var accessToken = credentials.access_token;
+    api.auth.token().then(function (res) {
+        var accessToken = res.data.access_token;
         var options = createOptions(accessToken);
         var creativeWorkService = new cinerino.service.CreativeWork(options);
         var searchConditions = {};
@@ -214,8 +185,8 @@ function importTitles() {
 }
 
 $(function(){
+    API_ENDPOINT = $('input[name=API_ENDPOINT]').val();
     var $form = $('form[name="cinerino_title_find"]');
-    
     $form.find('.datetimepicker').datetimepicker(datepickerOption);
     $form.find('button').click(function() {
         $('.alert').hide();
