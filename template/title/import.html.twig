@@ -17,6 +17,7 @@
 {% endblock %}
 
 {% block javascript %}
+<script src="/js/polyfills.js"></script>
 <script src="/js/vendor/jquery.datetimepicker.full.min.js"></script>
 <script src="/js/form.js?v=20181009"></script>
 <script src="/js/api.js"></script>
@@ -80,5 +81,6 @@
         </div>
     </div>
 </div>
+<input type="hidden" name="API_ENDPOINT" value="{{ mp_api_endpoint() }}">
 {% include 'include/loader.html.twig' %}
 {% endblock %}

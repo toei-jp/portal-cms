@@ -16,6 +16,7 @@ use Toei\PortalAdmin\Controller\ScheduleController;
 use Toei\PortalAdmin\Controller\TheaterMetaController;
 use Toei\PortalAdmin\Controller\TitleController;
 
+use Toei\PortalAdmin\Controller\API\AuthController as AuthApiController;
 use Toei\PortalAdmin\Controller\API\CampaignController as CampaignApiController;
 use Toei\PortalAdmin\Controller\API\EditorController as EditorApiController;
 use Toei\PortalAdmin\Controller\API\MainBannerController as MainBannerApiController;
@@ -132,6 +133,10 @@ $app->group('', function () {
         
         $this->group('/editor', function () {
             $this->post('/upload', EditorApiController::class . ':upload');
+        });
+
+        $this->group('/auth', function () {
+            $this->post('/token', AuthApiController::class . ':token');
         });
     });
 })->add(new AuthMiddleware($container));
