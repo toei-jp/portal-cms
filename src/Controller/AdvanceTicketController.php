@@ -9,6 +9,7 @@ namespace Toei\PortalAdmin\Controller;
 
 use Slim\Exception\NotFoundException;
 
+use Toei\PortalAdmin\Exception\ForbiddenException;
 use Toei\PortalAdmin\Form;
 use Toei\PortalAdmin\ORM\Entity;
 
@@ -545,6 +546,6 @@ class AdvanceTicketController extends BaseController
             'message' => '前売券情報を削除しました。',
         ]);
         
-        return $this->redirect($this->router->pathFor('advance_ticket_list'), 303);
+        $this->redirect($this->router->pathFor('advance_ticket_list'), 303);
     }
 }

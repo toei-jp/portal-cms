@@ -335,7 +335,7 @@ class NewsController extends BaseController
             'message' => sprintf('NEWS・インフォメーション「%s」を削除しました。', $news->getHeadline()),
         ]);
         
-        return $this->redirect($this->router->pathFor('news_list'), 303);
+        $this->redirect($this->router->pathFor('news_list'), 303);
     }
     
     /**
@@ -487,6 +487,6 @@ class NewsController extends BaseController
             'message' => sprintf('%sの表示順を保存しました。', $targetEntity->getNameJa()),
         ]);
         
-        return $this->redirect($this->router->pathFor('news_publication'), 303);
+        $this->redirect($this->router->pathFor('news_publication'), 303);
     }
 }

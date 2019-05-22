@@ -10,7 +10,7 @@ namespace Toei\PortalAdmin\ORM\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
-use Toei\PortalAdmin\ORM\Entity\Theater;
+use Toei\PortalAdmin\ORM\Entity\TheaterMeta;
 
 /**
  * TheaterMeta repository class
