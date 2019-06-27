@@ -264,7 +264,7 @@ class ScheduleController extends BaseController
         
         $this->flash->addMessage('alerts', [
             'type'    => 'info',
-            'message' => sprintf('「%s」の上映情報を追加しました。', $schedule->getTitle()->getName()),
+            'message' => sprintf('「%s」の上映情報を編集しました。', $schedule->getTitle()->getName()),
         ]);
         
         $this->redirect(
