@@ -19,13 +19,13 @@ use Toei\PortalAdmin\Responder\AbstractResponder as Responder;
 /**
  * Abstract controller
  *
- * @property \Toei\PortalAdmin\Auth $auth
- * @property \MicrosoftAzure\Storage\Blob\BlobRestProxy $bc
- * @property \Doctrine\ORM\EntityManager $em
- * @property \Slim\Flash\Messages $flash
- * @property \Monolog\Logger $logger
- * @property \Toei\PortalAdmin\Session\SessionManager $sm
- * @property \Slim\Views\Twig $view
+ * @property-read \Toei\PortalAdmin\Auth $auth
+ * @property-read \MicrosoftAzure\Storage\Blob\BlobRestProxy $bc
+ * @property-read \Doctrine\ORM\EntityManager $em
+ * @property-read \Slim\Flash\Messages $flash
+ * @property-read \Monolog\Logger $logger
+ * @property-read \Toei\PortalAdmin\Session\SessionManager $sm
+ * @property-read \Slim\Views\Twig $view
  */
 abstract class AbstractController
 {
