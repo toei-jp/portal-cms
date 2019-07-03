@@ -24,6 +24,8 @@ use Toei\PortalAdmin\Responder\AbstractResponder as Responder;
  * @property-read \Doctrine\ORM\EntityManager $em
  * @property-read \Slim\Flash\Messages $flash
  * @property-read \Monolog\Logger $logger
+ * @property-read \Slim\Interfaces\RouterInterface $router
+ * @property-read array $settings
  * @property-read \Toei\PortalAdmin\Session\SessionManager $sm
  * @property-read \Slim\Views\Twig $view
  */
