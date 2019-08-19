@@ -8,7 +8,6 @@
 namespace Toei\PortalAdmin\Controller\API;
 
 use GuzzleHttp\Client as HttpClient;
-use Twig\Extension\StringLoaderExtension;
 
 /**
  * Auth controller
