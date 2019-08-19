@@ -17,13 +17,13 @@ class AuthController extends BaseController
 {
     /** @var string */
     protected $authServer;
-    
+
     /** @var string */
     protected $authClientId;
-    
+
     /** @var string */
     protected $authClientSecret;
-    
+
     /**
      * pre execute
      *
@@ -35,14 +35,14 @@ class AuthController extends BaseController
     protected function preExecute($request, $response): void
     {
         $settings = $this->settings['api'];
-        
+
         $this->authServer = $settings['auth_server'];
         $this->authClientId = $settings['auth_client_id'];
         $this->authClientSecret = $settings['auth_client_secret'];
-        
+
         parent::preExecute($request, $response);
     }
-    
+
     /**
      * token action
      *
@@ -59,15 +59,15 @@ class AuthController extends BaseController
             'name' => 'Authorization Token',
         ];
         $this->data->set('meta', $meta);
-        
+
         $response = $this->requestToken();
-        
+
         $rawData = $response->getBody()->getContents();
         $data = json_decode($rawData, true);
-        
+
         $this->data->set('data', $data);
     }
-    
+
     /**
      * request Token
      *
@@ -85,16 +85,16 @@ class AuthController extends BaseController
         $params = [
             'grant_type' => 'client_credentials',
         ];
-        
+
         $httpClient = $this->createHttpClient();
         $response = $httpClient->post($endpoint, [
             'headers' => $headers,
             'form_params' => $params,
         ]);
-        
+
         return $response;
     }
-    
+
     /**
      * create HTTP Client
      *
@@ -107,22 +107,22 @@ class AuthController extends BaseController
             'connect_timeout' => 5, // ひとまず5秒
             'http_errors' => true,
         ];
-        
+
         $config['base_uri'] = 'https://' . $this->authServer;
-        
+
         return new HttpClient($config);
     }
-    
+
     /**
      * create Authorization string
      *
-     * @return String
+     * @return string
      */
-    protected function createAuthStr(): String
+    protected function createAuthStr(): string
     {
         $clientId = $this->authClientId;
         $clientSecret = $this->authClientSecret;
-        
+
         return 'Basic ' . base64_encode($clientId . ':' . $clientSecret);
     }
 }
