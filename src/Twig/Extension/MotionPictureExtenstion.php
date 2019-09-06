@@ -7,16 +7,19 @@
 
 namespace Toei\PortalAdmin\Twig\Extension;
 
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
+
 use Psr\Container\ContainerInterface;
 
 /**
  * MotionPicture twig extension class
  */
-class MotionPictureExtenstion extends \Twig_Extension
+class MotionPictureExtenstion extends AbstractExtension
 {
     /** @var array */
     protected $settings;
-    
+
     /**
      * construct
      *
@@ -26,7 +29,7 @@ class MotionPictureExtenstion extends \Twig_Extension
     {
         $this->settings = $container->get('settings')['mp'];
     }
-    
+
     /**
      * get functions
      *
@@ -35,10 +38,10 @@ class MotionPictureExtenstion extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_Function('mp_api_endpoint', [$this, 'getApiEndpoint'])
+            new TwigFunction('mp_api_endpoint', [$this, 'getApiEndpoint'])
         ];
     }
-    
+
     /**
      * return API endpoint
      *
