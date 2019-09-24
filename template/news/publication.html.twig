@@ -2,10 +2,6 @@
 
 {% block title %}表示順管理 | NEWS・インフォメーション{% endblock %}
 
-{% block css %}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.css">
-{% endblock %}
-
 {% block javascript %}
 <script src="/js/vendor/Sortable.min.js"></script>
 <script src="/js/vendor/jsrender.min.js"></script>
@@ -25,7 +21,7 @@
 {% block container %}
 <div class="row">
     <div class="col-md-12">
-    
+
     {% if pages %}
         <div class="card">
             <div class="card-header">
@@ -64,7 +60,7 @@
             </div>
         </div>
     {% endif %}
-    
+
         <div class="card">
             <div class="card-header">
                 劇場
@@ -101,7 +97,7 @@
                 {% endfor %}
             </div>
         </div>
-        
+
     </div>
 </div>
 
