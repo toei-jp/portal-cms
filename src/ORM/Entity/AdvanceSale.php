@@ -10,6 +10,7 @@ namespace Toei\PortalAdmin\ORM\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
+
 use Doctrine\ORM\Mapping as ORM;
 
 use Toei\PortalAdmin\ORM\Entity\AbstractEntity;
@@ -26,7 +27,7 @@ class AdvanceSale extends AbstractEntity
     use SavedUserTrait;
     use SoftDeleteTrait;
     use TimestampableTrait;
-    
+
     /**
      * id
      *
@@ -36,7 +37,7 @@ class AdvanceSale extends AbstractEntity
      * @ORM\GeneratedValue
      */
     protected $id;
-    
+
     /**
      * theater
      *
@@ -45,7 +46,7 @@ class AdvanceSale extends AbstractEntity
      * @ORM\JoinColumn(name="theater_id", referencedColumnName="id", onDelete="RESTRICT")
      */
     protected $theater;
-    
+
     /**
      * title
      *
@@ -54,7 +55,7 @@ class AdvanceSale extends AbstractEntity
      * @ORM\JoinColumn(name="title_id", referencedColumnName="id", onDelete="RESTRICT")
      */
     protected $title;
-    
+
     /**
      * publishing_expected_date
      *
@@ -62,7 +63,7 @@ class AdvanceSale extends AbstractEntity
      * @ORM\Column(type="date", name="publishing_expected_date", nullable=true)
      */
     protected $publishingExpectedDate;
-    
+
     /**
      * publishing_expected_date_text
      *
@@ -70,7 +71,7 @@ class AdvanceSale extends AbstractEntity
      * @ORM\Column(type="string", name="publishing_expected_date_text", nullable=true)
      */
     protected $publishingExpectedDateText;
-    
+
     /**
      * advance_tickets
      *
@@ -78,8 +79,8 @@ class AdvanceSale extends AbstractEntity
      * @ORM\OneToMany(targetEntity="AdvanceTicket", mappedBy="advanceSale", indexBy="id")
      */
     protected $advanceTickets;
-    
-    
+
+
     /**
      * construct
      */
@@ -87,7 +88,7 @@ class AdvanceSale extends AbstractEntity
     {
         $this->advanceTickets = new ArrayCollection();
     }
-    
+
     /**
      * get id
      *
@@ -97,7 +98,7 @@ class AdvanceSale extends AbstractEntity
     {
         return $this->id;
     }
-    
+
     /**
      * get tehater
      *
@@ -107,7 +108,7 @@ class AdvanceSale extends AbstractEntity
     {
         return $this->theater;
     }
-    
+
     /**
      * set theater
      *
@@ -118,7 +119,7 @@ class AdvanceSale extends AbstractEntity
     {
         $this->theater = $theater;
     }
-    
+
     /**
      * get title
      *
@@ -128,7 +129,7 @@ class AdvanceSale extends AbstractEntity
     {
         return $this->title;
     }
-    
+
     /**
      * set title
      *
@@ -139,7 +140,7 @@ class AdvanceSale extends AbstractEntity
     {
         $this->title = $title;
     }
-    
+
     /**
      * get publishing_expected_date
      *
@@ -149,7 +150,7 @@ class AdvanceSale extends AbstractEntity
     {
         return $this->publishingExpectedDate;
     }
-    
+
     /**
      * set publishing_dxpected_date
      *
@@ -158,13 +159,13 @@ class AdvanceSale extends AbstractEntity
      */
     public function setPublishingExpectedDate($publishingExpectedDate)
     {
-        if (is_null($publishingExpectedDate) || ($publishingExpectedDate instanceof \Datetime)) {
+        if (is_null($publishingExpectedDate) || ($publishingExpectedDate instanceof \DateTime)) {
             $this->publishingExpectedDate = $publishingExpectedDate;
         } else {
             $this->publishingExpectedDate = new \DateTime($publishingExpectedDate);
         }
     }
-    
+
     /**
      * get publishing_expected_date_text
      *
@@ -174,7 +175,7 @@ class AdvanceSale extends AbstractEntity
     {
         return $this->publishingExpectedDateText;
     }
-    
+
     /**
      * set publishing_expected_date_text
      *
@@ -185,7 +186,7 @@ class AdvanceSale extends AbstractEntity
     {
         $this->publishingExpectedDateText = $publishingExpectedDateText;
     }
-    
+
     /**
      * get advance_tickets
      *
@@ -195,7 +196,7 @@ class AdvanceSale extends AbstractEntity
     {
         return $this->advanceTickets;
     }
-    
+
     /**
      * get active advance_tickets
      *
@@ -205,21 +206,21 @@ class AdvanceSale extends AbstractEntity
     {
         $criteria = Criteria::create()
             ->where(Criteria::expr()->eq('isDeleted', false));
-        
+
         /**
          * matching()を使うとindexByオプションの設定が消えてしまう
          * https://github.com/doctrine/doctrine2/issues/4693
          */
         $tmpResults = $this->getAdvanceTickets()->matching($criteria);
-        
+
         // idをindexにしたcollectionを作り直す
         $results = new ArrayCollection();
-        
+
         foreach ($tmpResults as $tmp) {
             /** @var AdvanceTicket $tmp */
             $results->set($tmp->getId(), $tmp);
         }
-        
+
         return $results;
     }
 }

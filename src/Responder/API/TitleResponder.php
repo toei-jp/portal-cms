@@ -8,8 +8,7 @@
 namespace Toei\PortalAdmin\Responder\API;
 
 use Slim\Collection;
-
-use Psr\Http\Message\ResponseInterface as Response;
+use Slim\Http\Response;
 
 /**
  * Title responder
@@ -51,7 +50,7 @@ class TitleResponder extends BaseResponder
     {
         return $response->withJson($data->all());
     }
-    
+
     /**
      * autocomplete
      *

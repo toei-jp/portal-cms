@@ -23,12 +23,12 @@ class Title extends AbstractEntity
     use SavedUserTrait;
     use SoftDeleteTrait;
     use TimestampableTrait;
-    
+
     const RATING_G    = 1;
     const RATING_PG12 = 2;
     const RATING_R15  = 3;
     const RATING_R18  = 4;
-    
+
     /**
      * id
      *
@@ -38,7 +38,7 @@ class Title extends AbstractEntity
      * @ORM\GeneratedValue
      */
     protected $id;
-    
+
     /**
      * image
      *
@@ -47,7 +47,7 @@ class Title extends AbstractEntity
      * @ORM\JoinColumn(name="image_file_id", referencedColumnName="id", nullable=true, onDelete="RESTRICT")
      */
     protected $image;
-    
+
     /**
      * chever_code
      *
@@ -55,7 +55,7 @@ class Title extends AbstractEntity
      * @ORM\Column(name="chever_code", type="string", length=100, unique=true, nullable=true)
      */
     protected $cheverCode;
-    
+
     /**
      * name
      *
@@ -63,7 +63,7 @@ class Title extends AbstractEntity
      * @ORM\Column(type="string")
      */
     protected $name;
-    
+
     /**
      * name_kana
      *
@@ -71,7 +71,7 @@ class Title extends AbstractEntity
      * @ORM\Column(type="string", name="name_kana", nullable=true)
      */
     protected $nameKana;
-    
+
     /**
      * sub_title
      *
@@ -79,7 +79,7 @@ class Title extends AbstractEntity
      * @ORM\Column(type="string", name="sub_title", nullable=true)
      */
     protected $subTitle;
-    
+
     /**
      * credit
      *
@@ -87,7 +87,7 @@ class Title extends AbstractEntity
      * @ORM\Column(type="string", nullable=true)
      */
     protected $credit;
-    
+
     /**
      * catchcopy
      *
@@ -95,7 +95,7 @@ class Title extends AbstractEntity
      * @ORM\Column(type="text", nullable=true)
      */
     protected $catchcopy;
-    
+
     /**
      * introduction
      *
@@ -103,7 +103,7 @@ class Title extends AbstractEntity
      * @ORM\Column(type="text", nullable=true)
      */
     protected $introduction;
-    
+
     /**
      * director
      *
@@ -111,7 +111,7 @@ class Title extends AbstractEntity
      * @ORM\Column(type="string", nullable=true)
      */
     protected $director;
-    
+
     /**
      * cast
      *
@@ -119,7 +119,7 @@ class Title extends AbstractEntity
      * @ORM\Column(type="string", nullable=true)
      */
     protected $cast;
-    
+
     /**
      * publishing_expected_date
      *
@@ -127,7 +127,7 @@ class Title extends AbstractEntity
      * @ORM\Column(type="date", name="publishing_expected_date", nullable=true)
      */
     protected $publishingExpectedDate;
-    
+
     /**
      * official_site
      *
@@ -135,7 +135,7 @@ class Title extends AbstractEntity
      * @ORM\Column(type="string", name="official_site", nullable=true)
      */
     protected $officialSite;
-    
+
     /**
      * rating
      *
@@ -143,7 +143,7 @@ class Title extends AbstractEntity
      * @ORM\Column(type="smallint", nullable=true, options={"unsigned"=true})
      */
     protected $rating;
-    
+
     /**
      * universal
      *
@@ -151,7 +151,7 @@ class Title extends AbstractEntity
      * @ORM\Column(type="json", nullable=true)
      */
     protected $universal;
-    
+
     /**
      * レイティング区分
      *
@@ -163,7 +163,7 @@ class Title extends AbstractEntity
         self::RATING_R15  => 'R15+',
         self::RATING_R18  => 'R18+',
     ];
-    
+
     /**
      * ユニバーサル区分
      *
@@ -173,14 +173,14 @@ class Title extends AbstractEntity
         '1' => '音声上映',
         '2' => '字幕上映',
     ];
-    
+
     /**
      * construct
      */
     public function __construct()
     {
     }
-    
+
     /**
      * get id
      *
@@ -190,7 +190,7 @@ class Title extends AbstractEntity
     {
         return $this->id;
     }
-    
+
     /**
      * get image
      *
@@ -200,7 +200,7 @@ class Title extends AbstractEntity
     {
         return $this->image;
     }
-    
+
     /**
      * set image
      *
@@ -211,7 +211,7 @@ class Title extends AbstractEntity
     {
         $this->image = $image;
     }
-    
+
     /**
      * get chever_code
      *
@@ -221,7 +221,7 @@ class Title extends AbstractEntity
     {
         return $this->cheverCode;
     }
-    
+
     /**
      * set chever_code
      *
@@ -232,7 +232,7 @@ class Title extends AbstractEntity
     {
         $this->cheverCode = $cheverCode;
     }
-    
+
     /**
      * get name
      *
@@ -242,7 +242,7 @@ class Title extends AbstractEntity
     {
         return $this->name;
     }
-    
+
     /**
      * set name
      *
@@ -253,7 +253,7 @@ class Title extends AbstractEntity
     {
         $this->name = $name;
     }
-    
+
     /**
      * get name_kana
      *
@@ -263,7 +263,7 @@ class Title extends AbstractEntity
     {
         return $this->nameKana;
     }
-    
+
     /**
      * set name_kana
      *
@@ -274,7 +274,7 @@ class Title extends AbstractEntity
     {
         $this->nameKana = $nameKana;
     }
-    
+
     /**
      * get sub_title
      *
@@ -284,7 +284,7 @@ class Title extends AbstractEntity
     {
         return $this->subTitle;
     }
-    
+
     /**
      * set sub_title
      *
@@ -295,7 +295,7 @@ class Title extends AbstractEntity
     {
         $this->subTitle = $subTitle;
     }
-    
+
     /**
      * credit
      *
@@ -305,7 +305,7 @@ class Title extends AbstractEntity
     {
         return $this->credit;
     }
-    
+
     /**
      * set credit
      *
@@ -316,7 +316,7 @@ class Title extends AbstractEntity
     {
         $this->credit = $credit;
     }
-    
+
     /**
      * get catchcopy
      *
@@ -326,7 +326,7 @@ class Title extends AbstractEntity
     {
         return $this->catchcopy;
     }
-    
+
     /**
      * set catchcopy
      *
@@ -337,7 +337,7 @@ class Title extends AbstractEntity
     {
         $this->catchcopy = $catchcopy;
     }
-    
+
     /**
      * get introduction
      *
@@ -347,7 +347,7 @@ class Title extends AbstractEntity
     {
         return $this->introduction;
     }
-    
+
     /**
      * set introduction
      *
@@ -358,7 +358,7 @@ class Title extends AbstractEntity
     {
         $this->introduction = $introduction;
     }
-    
+
     /**
      * get director
      *
@@ -368,7 +368,7 @@ class Title extends AbstractEntity
     {
         return $this->director;
     }
-    
+
     /**
      * set director
      *
@@ -379,7 +379,7 @@ class Title extends AbstractEntity
     {
         $this->director = $director;
     }
-    
+
     /**
      * get cast
      *
@@ -389,7 +389,7 @@ class Title extends AbstractEntity
     {
         return $this->cast;
     }
-    
+
     /**
      * set cast
      *
@@ -400,7 +400,7 @@ class Title extends AbstractEntity
     {
         $this->cast = $cast;
     }
-    
+
     /**
      * get publishing_expected_date
      *
@@ -410,7 +410,7 @@ class Title extends AbstractEntity
     {
         return $this->publishingExpectedDate;
     }
-    
+
     /**
      * set publishing_dxpected_date
      *
@@ -419,13 +419,13 @@ class Title extends AbstractEntity
      */
     public function setPublishingExpectedDate($publishingExpectedDate)
     {
-        if (is_null($publishingExpectedDate) || ($publishingExpectedDate instanceof \Datetime)) {
+        if (is_null($publishingExpectedDate) || ($publishingExpectedDate instanceof \DateTime)) {
             $this->publishingExpectedDate = $publishingExpectedDate;
         } else {
             $this->publishingExpectedDate = new \DateTime($publishingExpectedDate);
         }
     }
-    
+
     /**
      * get official_site
      *
@@ -435,7 +435,7 @@ class Title extends AbstractEntity
     {
         return $this->officialSite;
     }
-    
+
     /**
      * set official_site
      *
@@ -446,7 +446,7 @@ class Title extends AbstractEntity
     {
         $this->officialSite = $officialSite;
     }
-    
+
     /**
      * get rating
      *
@@ -456,7 +456,7 @@ class Title extends AbstractEntity
     {
         return $this->rating;
     }
-    
+
     /**
      * set rating
      *
@@ -467,7 +467,7 @@ class Title extends AbstractEntity
     {
         $this->rating = $rating;
     }
-    
+
     /**
      * get universal
      *
@@ -477,7 +477,7 @@ class Title extends AbstractEntity
     {
         return $this->universal;
     }
-    
+
     /**
      * get univarsal label
      *
@@ -488,16 +488,16 @@ class Title extends AbstractEntity
         $univarsal = $this->getUniversal();
         $types = self::getUniversalTypes();
         $labels = [];
-        
+
         foreach ($univarsal as $value) {
             if (isset($types[$value])) {
                 $labels[] = $types[$value];
             }
         }
-        
+
         return $labels;
     }
-    
+
     /**
      * set universal
      *
@@ -508,7 +508,7 @@ class Title extends AbstractEntity
     {
         $this->universal = $universal;
     }
-    
+
     /**
      * get レイティング区分
      *
@@ -518,7 +518,7 @@ class Title extends AbstractEntity
     {
         return self::$ratingTypes;
     }
-    
+
     /**
      * get ユニバーサル区分
      *
