@@ -23,19 +23,18 @@ class AdvanceSaleForTheaterUserForm extends AbstractAdvanceSaleForm
      * construct
      *
      * @param EntityManager $em
-     * @param Entity\AdminUser
      */
     public function __construct(EntityManager $em)
     {
         $this->type = self::TYPE_EDIT;
         $this->em = $em;
         $this->ticketFieldset = new AdvanceTicketFieldset(true);
-        
+
         parent::__construct();
-        
+
         $this->setup();
     }
-    
+
     /**
      * setup
      *
@@ -47,7 +46,7 @@ class AdvanceSaleForTheaterUserForm extends AbstractAdvanceSaleForm
             'name' => 'id',
             'type' => 'Hidden',
         ]);
-        
+
         $this->add([
             'name' => 'tickets',
             'type' => 'Collection',
@@ -55,16 +54,16 @@ class AdvanceSaleForTheaterUserForm extends AbstractAdvanceSaleForm
                 'target_element' => $this->ticketFieldset,
             ],
         ]);
-        
-        
+
+
         $inputFilter = new InputFilter();
-        
+
         // fieldsetのinputfilterが消えてしまう？ので設定しない
         // 1件以上必要な場合はどうする？
         // $inputFilter->add([
         //     'name' => 'tickets',
         // ]);
-        
+
         $this->setInputFilter($inputFilter);
     }
 }

@@ -28,7 +28,6 @@ class AuthController extends BaseController
      *
      * @param \Slim\Http\Request  $request
      * @param \Slim\Http\Response $response
-     * @param array               $args
      * @return void
      */
     protected function preExecute($request, $response): void
