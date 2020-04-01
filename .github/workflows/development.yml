@@ -21,16 +21,21 @@ jobs:
       - name: Validate composer.json and composer.lock
         run: composer validate
 
-      - name: Composer install (with dev)
-        run: composer install --prefer-dist --no-progress --no-suggest
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: |
+          echo "::set-output name=dir::$(composer config cache-files-dir)"
 
-      - name: Cache vendor
+      - name: Cache Composer Directory
         uses: actions/cache@v1
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: |
             ${{ runner.os }}-composer-
+
+      - name: Composer install (with dev)
+        run: composer install --prefer-dist --no-progress --no-suggest
 
       - uses: actions/upload-artifact@v1
         with:
