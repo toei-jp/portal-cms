@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    name: build
+    name: Build
     runs-on: ubuntu-latest
     steps:
       - name: Setup PHP
@@ -30,30 +30,37 @@ jobs:
         uses: actions/cache@v1
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          key: ${{ runner.os }}-composer-dev-${{ hashFiles('**/composer.lock') }}
           restore-keys: |
-            ${{ runner.os }}-composer-
+            ${{ runner.os }}-composer-dev-
 
       - name: Composer install (with dev)
         run: composer install --prefer-dist --no-progress --no-suggest
 
-      - uses: actions/upload-artifact@v1
+      - name: Run phpcs
+        run: composer run-script phpcs
+
+      - name: Run phpstan
+        run: composer run-script phpstan
+
+      - name: ZIP archive
+        run: zip -r app_dev.zip . -x \*.git\* \*.github\* \*analysis\* \*docker\* \*report\* .gitignore composer.\* docker-compose.yml phpcs.xml phpstan.neon .editorconfig \*.env \*.user.ini public/sample.htaccess public/sample.Web.config
+
+      - name: Upload application
+        uses: actions/upload-artifact@v1
         with:
           name: application
-          path: .
-
-  test:
-    name: test
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Test
-        run: echo Test
+          path: app_dev.zip
 
   deploy:
     name: Deploy
-    needs: test
+    needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Download applicatoin
+        uses: actions/download-artifact@v1
+        with:
+          name: application
+
       - name: Deploy
-        run: echo Deploy
+        run: echo TODO
