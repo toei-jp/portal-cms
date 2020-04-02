@@ -7,8 +7,8 @@
 
 namespace Toei\PortalAdmin\Form;
 
-use Zend\InputFilter\InputFilter;
-use Zend\Validator;
+use Laminas\InputFilter\InputFilter;
+use Laminas\Validator;
 
 use Doctrine\ORM\EntityManager;
 

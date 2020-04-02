@@ -7,8 +7,8 @@
 
 namespace Toei\PortalAdmin\Form;
 
-use Zend\InputFilter\InputFilter;
-use Zend\Validator;
+use Laminas\InputFilter\InputFilter;
+use Laminas\Validator;
 
 use Doctrine\ORM\EntityManager;
 
@@ -21,7 +21,7 @@ class AdvanceSaleForm extends AbstractAdvanceSaleForm
 {
     /**@var array */
     protected $theaterChoices = [];
-    
+
     /**
      * construct
      *
@@ -33,9 +33,9 @@ class AdvanceSaleForm extends AbstractAdvanceSaleForm
         $this->type = $type;
         $this->em = $em;
         $this->ticketFieldset = new AdvanceTicketFieldset(false);
-        
+
         parent::__construct();
-        
+
         $this->setup();
     }
 
@@ -51,24 +51,24 @@ class AdvanceSaleForm extends AbstractAdvanceSaleForm
                 'name' => 'id',
                 'type' => 'Hidden',
             ]);
-            
+
             // 削除する前売券のid（デフォルトで配列が返るのがベスト）
             $this->add([
                 'name' => 'delete_tickets',
                 'type' => 'Hidden', // Collectionかもしれない
             ]);
         }
-        
-        
+
+
         $theaters = $this->em
             ->getRepository(Entity\Theater::class)
             ->findActive();
-        
+
         foreach ($theaters as $theater) {
             /** @var Entity\Theater $theater */
             $this->theaterChoices[$theater->getId()] = $theater->getNameJa();
         }
-        
+
         $this->add([
             'name' => 'theater',
             'type' => 'Select',
@@ -76,23 +76,23 @@ class AdvanceSaleForm extends AbstractAdvanceSaleForm
                 'value_options' => $this->theaterChoices,
             ],
         ]);
-        
+
         $this->add([
             'name' => 'title_id',
             'type' => 'Hidden',
         ]);
-        
+
         // 作品名を表示するため
         $this->add([
             'name' => 'title_name',
             'type' => 'Hidden',
         ]);
-        
+
         $this->add([
             'name' => 'publishing_expected_date',
             'type' => 'Text', // Datepickerを入れるのでtextにする
         ]);
-        
+
         $this->add([
             'name' => 'not_exist_publishing_expected_date',
             'type' => 'Checkbox',
@@ -101,12 +101,12 @@ class AdvanceSaleForm extends AbstractAdvanceSaleForm
                 'unchecked_value' => '0',
             ],
         ]);
-        
+
         $this->add([
             'name' => 'publishing_expected_date_text',
             'type' => 'Text',
         ]);
-        
+
         $this->add([
             'name' => 'tickets',
             'type' => 'Collection',
@@ -114,71 +114,71 @@ class AdvanceSaleForm extends AbstractAdvanceSaleForm
                 'target_element' => $this->ticketFieldset,
             ],
         ]);
-        
-        
+
+
         $inputFilter = new InputFilter();
-        
+
         if ($this->type === self::TYPE_EDIT) {
             $inputFilter->add([
                 'name' => 'id',
                 'required' => true,
             ]);
-            
+
             $inputFilter->add([
                 'name' => 'delete_tickets',
                 'required' => false,
             ]);
         }
-        
+
         $inputFilter->add([
             'name' => 'theater',
             'required' => true,
         ]);
-        
+
         $inputFilter->add([
             'name' => 'title_id',
             'required' => true,
         ]);
-        
+
         $inputFilter->add([
             'name' => 'title_name',
             'required' => false, // 表示用なのでfalse
         ]);
-        
+
         $inputFilter->add([
             'name' => 'publishing_expected_date',
             'required' => true, // 未定の場合はfalse
         ]);
-        
+
         $inputFilter->add([
             'name' => 'not_exist_publishing_expected_date',
             'required' => false,
         ]);
-        
+
         $inputFilter->add([
             'name' => 'publishing_expected_date_text',
             'required' => false,
         ]);
-        
+
         // fieldsetのinputfilterが消えてしまう？ので設定しない
         // 1件以上必要な場合はどうする？
         // $inputFilter->add([
         //     'name' => 'tickets',
         // ]);
-        
+
         $this->setInputFilter($inputFilter);
     }
-    
+
     /**
      * {@inheritDoc}
      */
     public function isValid()
     {
         $this->preValidator($this->data);
-        
+
         return parent::isValid();
     }
-    
+
     /**
      * pre validator
      *
@@ -191,7 +191,7 @@ class AdvanceSaleForm extends AbstractAdvanceSaleForm
             $this->getInputFilter()->get('publishing_expected_date')->setRequired(false);
         }
     }
-    
+
     /**
      * return theater choices
      *

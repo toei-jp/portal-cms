@@ -7,7 +7,7 @@
 
 namespace Toei\PortalAdmin\Form;
 
-use Zend\InputFilter\InputFilter;
+use Laminas\InputFilter\InputFilter;
 
 use Toei\PortalAdmin\ValidatorTranslator;
 
@@ -22,28 +22,28 @@ class LoginForm extends BaseForm
     public function __construct()
     {
         parent::__construct();
-        
+
         $this->add([
             'name' => 'name',
             'type' => 'Text',
         ]);
-        
+
         $this->add([
             'name' => 'password',
             'type' => 'Password',
         ]);
-        
+
         $inputFilter = new InputFilter();
         $inputFilter->add([
             'name' => 'name',
             'required' => true,
         ]);
-        
+
         $inputFilter->add([
             'name' => 'password',
             'required' => true,
         ]);
-        
+
         $this->setInputFilter($inputFilter);
     }
 }
