@@ -1,13 +1,10 @@
-name: Development
+name: Test
 
-on:
-  push:
-    branches-ignore:
-     - master
+on: push
 
 jobs:
-  build:
-    name: Build
+  test:
+    name: Test
     runs-on: ubuntu-latest
     steps:
       - name: Setup PHP
@@ -46,7 +43,7 @@ jobs:
       - name: Run phpstan
         run: composer run-script phpstan > ./report/phpstan_result.txt
 
-      - name: Upload report
+      - name: Upload test report
         uses: actions/upload-artifact@v1
         with:
           name: report
@@ -54,25 +51,3 @@ jobs:
 
       - name: Remove .env file
         run: rm .env
-
-      # - name: ZIP archive
-      #   run: zip -r app_dev.zip . -x \*.git\* \*.github\* \*analysis\* \*docker\* \*report\* .gitignore composer.\* docker-compose.yml phpcs.xml phpstan.neon .editorconfig \*.env \*.user.ini public/sample.htaccess public/sample.Web.config
-
-      # - name: Upload application
-      #   uses: actions/upload-artifact@v1
-      #   with:
-      #     name: application
-      #     path: app_dev.zip
-
-  # deploy:
-  #   name: Deploy
-  #   needs: build
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Download applicatoin
-  #       uses: actions/download-artifact@v1
-  #       with:
-  #         name: application
-
-  #     - name: Deploy
-  #       run: echo TODO
