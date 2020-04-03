@@ -44,7 +44,13 @@ jobs:
         run: composer run-script phpcs
 
       - name: Run phpstan
-        run: composer run-script phpstan
+        run: composer run-script phpstan > ./report/phpstan_result.txt
+
+      - name: Upload report
+        uses: actions/upload-artifact@v1
+        with:
+          name: report
+          path: ./report
 
       - name: Remove .env file
         run: rm .env
