@@ -7,9 +7,9 @@
 
 namespace Toei\PortalAdmin\Form;
 
-use Zend\Form\Fieldset;
-use Zend\InputFilter\InputFilterProviderInterface;
-use Zend\Validator;
+use Laminas\Form\Fieldset;
+use Laminas\InputFilter\InputFilterProviderInterface;
+use Laminas\Validator;
 
 use Toei\PortalAdmin\ORM\Entity\ShowingFormat;
 
@@ -20,23 +20,23 @@ class ShowingFormatFieldset extends Fieldset implements InputFilterProviderInter
 {
     /** @var array */
     protected $systemChoices;
-    
+
     /** @var array */
     protected $voiceChoices;
-    
+
     /**
      * construct
      */
     public function __construct()
     {
         parent::__construct('showing');
-        
+
         $this->systemChoices = ShowingFormat::getSystemList();
         $this->voiceChoices = ShowingFormat::getVoiceList();
-        
+
         $this->setup();
     }
-    
+
     /**
      * setup
      *
@@ -52,7 +52,7 @@ class ShowingFormatFieldset extends Fieldset implements InputFilterProviderInter
                 'value_options' => $this->systemChoices,
             ],
         ]);
-        
+
         $this->add([
             'name' => 'voice',
             'type' => 'Select',
@@ -62,7 +62,7 @@ class ShowingFormatFieldset extends Fieldset implements InputFilterProviderInter
             ],
         ]);
     }
-    
+
     /**
      * return inpu filter specification
      *
@@ -79,7 +79,7 @@ class ShowingFormatFieldset extends Fieldset implements InputFilterProviderInter
             ],
         ];
     }
-    
+
     /**
      * return system choices
      *
@@ -89,7 +89,7 @@ class ShowingFormatFieldset extends Fieldset implements InputFilterProviderInter
     {
         return $this->systemChoices;
     }
-    
+
     /**
      * return voice choices
      *

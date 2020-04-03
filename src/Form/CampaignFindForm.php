@@ -7,8 +7,8 @@
 
 namespace Toei\PortalAdmin\Form;
 
-use Zend\InputFilter\InputFilter;
-use Zend\Validator;
+use Laminas\InputFilter\InputFilter;
+use Laminas\Validator;
 
 use Doctrine\ORM\EntityManager;
 
@@ -21,14 +21,14 @@ class CampaignFindForm extends BaseForm
 {
     /** @var EntityManager */
     protected $em;
-    
+
     protected $statusChoices = [
         '1' => 'キャンペーン中',
         '2' => 'キャンペーン終了',
     ];
     protected $pageChoices = [];
     protected $theaterChoices = [];
-    
+
     /**
      * construct
      *
@@ -37,12 +37,12 @@ class CampaignFindForm extends BaseForm
     public function __construct(EntityManager $em)
     {
         $this->em = $em;
-        
+
         parent::__construct();
-        
+
         $this->setup();
     }
-    
+
     /**
      * setup
      *
@@ -57,14 +57,14 @@ class CampaignFindForm extends BaseForm
                 'value_options' => $this->statusChoices,
             ],
         ]);
-        
+
         $pages = $this->em->getRepository(Entity\Page::class)->findActive();
-        
+
         foreach ($pages as $page) {
             /** @var Entity\Page $page */
             $this->pageChoices[$page->getId()] = $page->getNameJa();
         }
-        
+
         $this->add([
             'name' => 'page',
             'type' => 'MultiCheckbox',
@@ -72,14 +72,14 @@ class CampaignFindForm extends BaseForm
                 'value_options' => $this->pageChoices,
             ],
         ]);
-        
+
         $theaters = $this->em->getRepository(Entity\Theater::class)->findActive();
-        
+
         foreach ($theaters as $theater) {
             /** @var Entity\Theater $theater */
             $this->theaterChoices[$theater->getId()] = $theater->getNameJa();
         }
-        
+
         $this->add([
             'name' => 'theater',
             'type' => 'MultiCheckbox',
@@ -87,27 +87,27 @@ class CampaignFindForm extends BaseForm
                 'value_options' => $this->theaterChoices,
             ],
         ]);
-        
-        
+
+
         $inputFilter = new InputFilter();
         $inputFilter->add([
             'name' => 'status',
             'required' => false,
         ]);
-        
+
         $inputFilter->add([
             'name' => 'page',
             'required' => false,
         ]);
-        
+
         $inputFilter->add([
             'name' => 'theater',
             'required' => false,
         ]);
-        
+
         $this->setInputFilter($inputFilter);
     }
-    
+
     /**
      * return status choices
      *
@@ -117,7 +117,7 @@ class CampaignFindForm extends BaseForm
     {
         return $this->statusChoices;
     }
-    
+
     /**
      * return page choices
      *
@@ -127,7 +127,7 @@ class CampaignFindForm extends BaseForm
     {
         return $this->pageChoices;
     }
-    
+
     /**
      * return theater choices
      *
