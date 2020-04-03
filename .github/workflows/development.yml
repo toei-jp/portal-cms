@@ -37,30 +37,36 @@ jobs:
       - name: Composer install (with dev)
         run: composer install --prefer-dist --no-progress --no-suggest
 
+      - name: Create .env file
+        run: cp .env.test .env
+
       - name: Run phpcs
         run: composer run-script phpcs
 
       - name: Run phpstan
         run: composer run-script phpstan
 
-      - name: ZIP archive
-        run: zip -r app_dev.zip . -x \*.git\* \*.github\* \*analysis\* \*docker\* \*report\* .gitignore composer.\* docker-compose.yml phpcs.xml phpstan.neon .editorconfig \*.env \*.user.ini public/sample.htaccess public/sample.Web.config
+      - name: Remove .env file
+        run: rm .env
 
-      - name: Upload application
-        uses: actions/upload-artifact@v1
-        with:
-          name: application
-          path: app_dev.zip
+      # - name: ZIP archive
+      #   run: zip -r app_dev.zip . -x \*.git\* \*.github\* \*analysis\* \*docker\* \*report\* .gitignore composer.\* docker-compose.yml phpcs.xml phpstan.neon .editorconfig \*.env \*.user.ini public/sample.htaccess public/sample.Web.config
 
-  deploy:
-    name: Deploy
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download applicatoin
-        uses: actions/download-artifact@v1
-        with:
-          name: application
+      # - name: Upload application
+      #   uses: actions/upload-artifact@v1
+      #   with:
+      #     name: application
+      #     path: app_dev.zip
 
-      - name: Deploy
-        run: echo TODO
+  # deploy:
+  #   name: Deploy
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Download applicatoin
+  #       uses: actions/download-artifact@v1
+  #       with:
+  #         name: application
+
+  #     - name: Deploy
+  #       run: echo TODO
