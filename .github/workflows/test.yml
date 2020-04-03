@@ -1,0 +1,53 @@
+name: Test
+
+on: push
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.2'
+
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Validate composer.json and composer.lock
+        run: composer validate
+
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: |
+          echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - name: Cache Composer Directory
+        uses: actions/cache@v1
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-dev-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-dev-
+
+      - name: Composer install (with dev)
+        run: composer install --prefer-dist --no-progress --no-suggest
+
+      - name: Create .env file
+        run: cp .env.test .env
+
+      - name: Run phpcs
+        run: composer run-script phpcs
+
+      - name: Run phpstan
+        run: composer run-script phpstan > ./report/phpstan_result.txt
+
+      - name: Upload test report
+        uses: actions/upload-artifact@v1
+        with:
+          name: report
+          path: ./report
+
+      - name: Remove .env file
+        run: rm .env
