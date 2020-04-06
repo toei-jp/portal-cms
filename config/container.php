@@ -30,7 +30,10 @@ $container['view'] = function ($container) {
 
     // add Extension
     $view->addExtension(new \Twig\Extension\DebugExtension());
-    $view->addExtension(new \Toei\PortalAdmin\Twig\Extension\AzureStorageExtension($container));
+    $view->addExtension(new \Toei\PortalAdmin\Twig\Extension\AzureStorageExtension(
+        $container->get('bc'),
+        $container->get('settings')['storage']['public_endpoint']
+    ));
     $view->addExtension(new \Toei\PortalAdmin\Twig\Extension\MotionPictureExtenstion($container));
 
     return $view;

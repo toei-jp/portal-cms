@@ -7,6 +7,7 @@
 
 namespace Toei\PortalAdmin\Controller\API;
 
+use Toei\PortalAdmin\Controller\Traits\AzureBlobStorage;
 use Toei\PortalAdmin\Form;
 use Toei\PortalAdmin\Form\API as ApiForm;
 
@@ -15,6 +16,8 @@ use Toei\PortalAdmin\Form\API as ApiForm;
  */
 class EditorController extends BaseController
 {
+    use AzureBlobStorage;
+
     /**
      * Blob Container name
      *
@@ -70,7 +73,7 @@ class EditorController extends BaseController
             $options
         );
 
-        $url = $this->createBlobUrl($this->blobContainer, $blobName);
+        $url = $this->getBlobUrl($this->blobContainer, $blobName);
 
         $data = [
             'name' => $blobName,
@@ -78,28 +81,5 @@ class EditorController extends BaseController
         ];
 
         $this->data->set('data', $data);
-    }
-
-    /**
-     * create Blob URL
-     *
-     * Blobへのpublicアクセスを許可する必要があります。
-     *
-     * @param string $container
-     * @param string $blob
-     * @return string
-     */
-    protected function createBlobUrl(string $container, string $blob)
-    {
-        $settings = $this->container->get('settings')['storage'];
-        $protocol = $settings['secure'] ? 'https' : 'http';
-
-        return sprintf(
-            '%s://%s.blob.core.windows.net/%s/%s',
-            $protocol,
-            $settings['account']['name'],
-            $container,
-            $blob
-        );
     }
 }
