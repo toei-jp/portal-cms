@@ -7,19 +7,16 @@
 
 namespace Toei\PortalAdmin\Controller;
 
-use Slim\Exception\NotFoundException;
-
 use Toei\PortalAdmin\Exception\ForbiddenException;
 use Toei\PortalAdmin\Form;
 use Toei\PortalAdmin\ORM\Entity;
+use Slim\Exception\NotFoundException;
 
 /**
  * MainBanner controller
  */
 class MainBannerController extends BaseController
 {
-    use ImageManagerTrait;
-
     /**
      * {@inheritDoc}
      */

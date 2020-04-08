@@ -7,18 +7,18 @@
 
 namespace Toei\PortalAdmin\Controller;
 
-use Slim\Exception\NotFoundException;
-
+use Toei\PortalAdmin\Controller\Traits\ImageResize;
 use Toei\PortalAdmin\Exception\ForbiddenException;
 use Toei\PortalAdmin\Form;
 use Toei\PortalAdmin\ORM\Entity;
+use Slim\Exception\NotFoundException;
 
 /**
  * Title controller
  */
 class TitleController extends BaseController
 {
-    use ImageManagerTrait;
+    use ImageResize;
 
     /**
      * {@inheritDoc}
