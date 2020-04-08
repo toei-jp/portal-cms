@@ -22,7 +22,7 @@
         "laminas/laminas-i18n-resources": "^2.6",
         "laminas/laminas-session": "^2.9",
         "laminas/laminas-uri": "^2.7",
-        "microsoft/azure-storage-blob": "^1.4",
+        "microsoft/azure-storage-blob": "^1.5",
         "intervention/image": "^2.5"
     },
     "require-dev": {

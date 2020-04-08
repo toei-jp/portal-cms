@@ -25,7 +25,7 @@
 
 ※ AzureはWindowsサーバですが、こちらはLinuxサーバです。
 
-※ StorageはAzureプラットフォームで別途作成してください。
+※ Storageエミュレーターはpreview版です。必要に応じてAzureプラットフォームで別途作成してください。
 
 web: http://localhost:8000/
 

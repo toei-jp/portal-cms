@@ -7,19 +7,16 @@
 
 namespace Toei\PortalAdmin\Controller;
 
-use Slim\Exception\NotFoundException;
-
 use Toei\PortalAdmin\Exception\ForbiddenException;
 use Toei\PortalAdmin\Form;
 use Toei\PortalAdmin\ORM\Entity;
+use Slim\Exception\NotFoundException;
 
 /**
  * AdvanceTicket controller
  */
 class AdvanceTicketController extends BaseController
 {
-    use ImageManagerTrait;
-
     /**
      * return entity
      *

@@ -7,17 +7,17 @@
 
 namespace Toei\PortalAdmin\Controller;
 
-use Slim\Exception\NotFoundException;
-
+use Toei\PortalAdmin\Controller\Traits\ImageResize;
 use Toei\PortalAdmin\Form;
 use Toei\PortalAdmin\ORM\Entity;
+use Slim\Exception\NotFoundException;
 
 /**
  * News controller
  */
 class NewsController extends BaseController
 {
-    use ImageManagerTrait;
+    use ImageResize;
 
     /**
      * list action
