@@ -25,16 +25,16 @@ class MainBanner extends AbstractEntity
     use SavedUserTrait;
     use SoftDeleteTrait;
     use TimestampableTrait;
-    
-    const LINK_TYPE_NONE = 1;
-    const LINK_TYPE_URL = 2;
-    
+
+    public const LINK_TYPE_NONE = 1;
+    public const LINK_TYPE_URL = 2;
+
     /** @var array */
     protected static $linkTypes = [
         self::LINK_TYPE_NONE => 'リンクなし',
         self::LINK_TYPE_URL  => 'URL',
     ];
-    
+
     /**
      * id
      *
@@ -44,7 +44,7 @@ class MainBanner extends AbstractEntity
      * @ORM\GeneratedValue
      */
     protected $id;
-    
+
     /**
      * image
      *
@@ -53,7 +53,7 @@ class MainBanner extends AbstractEntity
      * @ORM\JoinColumn(name="image_file_id", referencedColumnName="id", nullable=false, onDelete="RESTRICT")
      */
     protected $image;
-    
+
     /**
      * name
      *
@@ -61,7 +61,7 @@ class MainBanner extends AbstractEntity
      * @ORM\Column(type="string")
      */
     protected $name;
-    
+
     /**
      * link_type
      *
@@ -69,7 +69,7 @@ class MainBanner extends AbstractEntity
      * @ORM\Column(type="smallint", name="link_type", options={"unsigned"=true})
      */
     protected $linkType;
-    
+
     /**
      * link_url
      *
@@ -77,7 +77,7 @@ class MainBanner extends AbstractEntity
      * @ORM\Column(type="string", name="link_url", nullable=true)
      */
     protected $linkUrl;
-    
+
     /**
      * pages
      *
@@ -85,7 +85,7 @@ class MainBanner extends AbstractEntity
      * @ORM\OneToMany(targetEntity="PageMainBanner", mappedBy="mainBanner")
      */
     protected $pages;
-    
+
     /**
      * theaters
      *
@@ -93,7 +93,7 @@ class MainBanner extends AbstractEntity
      * @ORM\OneToMany(targetEntity="TheaterMainBanner", mappedBy="mainBanner")
      */
     protected $theaters;
-    
+
     /**
      * return link types
      *
@@ -103,7 +103,7 @@ class MainBanner extends AbstractEntity
     {
         return self::$linkTypes;
     }
-    
+
     /**
      * construct
      */
@@ -112,7 +112,7 @@ class MainBanner extends AbstractEntity
         $this->pages = new ArrayCollection();
         $this->theaters = new ArrayCollection();
     }
-    
+
     /**
      * get id
      *
@@ -122,7 +122,7 @@ class MainBanner extends AbstractEntity
     {
         return $this->id;
     }
-    
+
     /**
      * get image
      *
@@ -132,7 +132,7 @@ class MainBanner extends AbstractEntity
     {
         return $this->image;
     }
-    
+
     /**
      * set image
      *
@@ -143,7 +143,7 @@ class MainBanner extends AbstractEntity
     {
         $this->image = $image;
     }
-    
+
     /**
      * get name
      *
@@ -153,7 +153,7 @@ class MainBanner extends AbstractEntity
     {
         return $this->name;
     }
-    
+
     /**
      * set name
      *
@@ -164,7 +164,7 @@ class MainBanner extends AbstractEntity
     {
         $this->name = $name;
     }
-    
+
     /**
      * get link_type
      *
@@ -174,7 +174,7 @@ class MainBanner extends AbstractEntity
     {
         return $this->linkType;
     }
-    
+
     /**
      * set link_type
      *
@@ -185,7 +185,7 @@ class MainBanner extends AbstractEntity
     {
         $this->linkType = $linkType;
     }
-    
+
     /**
      * get link_url
      *
@@ -195,7 +195,7 @@ class MainBanner extends AbstractEntity
     {
         return $this->linkUrl;
     }
-    
+
     /**
      * set link_url
      *
@@ -206,7 +206,7 @@ class MainBanner extends AbstractEntity
     {
         $this->linkUrl = $linkUrl;
     }
-    
+
     /**
      * get pages
      *
@@ -216,7 +216,7 @@ class MainBanner extends AbstractEntity
     {
         return $this->pages;
     }
-    
+
     /**
      * get theaters
      *

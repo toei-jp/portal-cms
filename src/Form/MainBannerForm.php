@@ -17,8 +17,8 @@ use Toei\PortalAdmin\ORM\Entity\MainBanner;
  */
 class MainBannerForm extends BaseForm
 {
-    const TYPE_NEW = 1;
-    const TYPE_EDIT = 2;
+    public const TYPE_NEW = 1;
+    public const TYPE_EDIT = 2;
 
     /** @var int */
     protected $type;

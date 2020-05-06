@@ -24,10 +24,10 @@ class Title extends AbstractEntity
     use SoftDeleteTrait;
     use TimestampableTrait;
 
-    const RATING_G    = 1;
-    const RATING_PG12 = 2;
-    const RATING_R15  = 3;
-    const RATING_R18  = 4;
+    public const RATING_G    = 1;
+    public const RATING_PG12 = 2;
+    public const RATING_R15  = 3;
+    public const RATING_R18  = 4;
 
     /**
      * id

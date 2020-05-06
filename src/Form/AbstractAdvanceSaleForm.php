@@ -15,21 +15,21 @@ use Doctrine\ORM\EntityManager;
  */
 abstract class AbstractAdvanceSaleForm extends BaseForm
 {
-    const TYPE_NEW = 1;
-    const TYPE_EDIT = 2;
-    
+    public const TYPE_NEW = 1;
+    public const TYPE_EDIT = 2;
+
     /** @var int */
     protected $type;
-    
+
     /** @var EntityManager */
     protected $em;
-    
+
     /** @var AdvanceTicketFieldset */
     protected $ticketFieldset;
-    
+
     /**@var array */
     protected $theaterChoices = [];
-    
+
     /**
      * return ticket type choices
      *
@@ -39,7 +39,7 @@ abstract class AbstractAdvanceSaleForm extends BaseForm
     {
         return $this->ticketFieldset->getTypeChoices();
     }
-    
+
     /**
      * return ticket special_gift_stock choices
      *

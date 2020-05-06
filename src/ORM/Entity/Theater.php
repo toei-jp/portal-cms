@@ -27,10 +27,10 @@ class Theater extends AbstractEntity implements
 {
     use SoftDeleteTrait;
     use TimestampableTrait;
-    
-    const MASTER_VERSION_V1 = 1;
-    const MASTER_VERSION_V2 = 2;
-    
+
+    public const MASTER_VERSION_V1 = 1;
+    public const MASTER_VERSION_V2 = 2;
+
     /**
      * id
      *
@@ -40,7 +40,7 @@ class Theater extends AbstractEntity implements
      * @ORM\GeneratedValue(strategy="NONE")
      */
     protected $id;
-    
+
     /**
      * name
      *
@@ -48,7 +48,7 @@ class Theater extends AbstractEntity implements
      * @ORM\Column(type="string", unique=true)
      */
     protected $name;
-    
+
     /**
      * name_ja
      *
@@ -56,7 +56,7 @@ class Theater extends AbstractEntity implements
      * @ORM\Column(type="string", name="name_ja")
      */
     protected $nameJa;
-    
+
     /**
      * area
      *
@@ -64,7 +64,7 @@ class Theater extends AbstractEntity implements
      * @ORM\Column(type="smallint", options={"unsigned"=true})
      */
     protected $area;
-    
+
     /**
      * master_code
      *
@@ -72,7 +72,7 @@ class Theater extends AbstractEntity implements
      * @ORM\Column(type="string", name="master_code", length=3, options={"fixed":true})
      */
     protected $masterCode;
-    
+
     /**
      * display_order
      *
@@ -80,7 +80,7 @@ class Theater extends AbstractEntity implements
      * @ORM\Column(type="smallint", name="display_order", options={"unsigned"=true})
      */
     protected $displayOrder;
-    
+
     /**
      * meta
      *
@@ -88,7 +88,7 @@ class Theater extends AbstractEntity implements
      * @ORM\OneToOne(targetEntity="TheaterMeta", mappedBy="theater")
      */
     protected $meta;
-    
+
     /**
      * admin_users
      *
@@ -96,7 +96,7 @@ class Theater extends AbstractEntity implements
      * @ORM\OneToMany(targetEntity="AdminUser", mappedBy="theater")
      */
     protected $adminUsers;
-    
+
     /**
      * campaigns
      *
@@ -105,7 +105,7 @@ class Theater extends AbstractEntity implements
      * @ORM\OrderBy({"displayOrder" = "ASC"})
      */
     protected $campaigns;
-    
+
     /**
      * news_list
      *
@@ -114,7 +114,7 @@ class Theater extends AbstractEntity implements
      * @ORM\OrderBy({"displayOrder" = "ASC"})
      */
     protected $newsList;
-    
+
     /**
      * main_banners
      *
@@ -123,7 +123,7 @@ class Theater extends AbstractEntity implements
      * @ORM\OrderBy({"displayOrder" = "ASC"})
      */
     protected $mainBanners;
-    
+
     /**
      * construct
      *
@@ -137,7 +137,7 @@ class Theater extends AbstractEntity implements
         $this->newsList =  new ArrayCollection();
         $this->mainBanners = new ArrayCollection();
     }
-    
+
     /**
      * get id
      *
@@ -147,7 +147,7 @@ class Theater extends AbstractEntity implements
     {
         return $this->id;
     }
-    
+
     /**
      * get name
      *
@@ -157,7 +157,7 @@ class Theater extends AbstractEntity implements
     {
         return $this->name;
     }
-    
+
     /**
      * set name
      *
@@ -168,7 +168,7 @@ class Theater extends AbstractEntity implements
     {
         $this->name = $name;
     }
-    
+
     /**
      * get name_ja
      *
@@ -178,7 +178,7 @@ class Theater extends AbstractEntity implements
     {
         return $this->nameJa;
     }
-    
+
     /**
      * set name_ja
      *
@@ -189,7 +189,7 @@ class Theater extends AbstractEntity implements
     {
         $this->nameJa = $nameJa;
     }
-    
+
     /**
      * get area
      *
@@ -199,7 +199,7 @@ class Theater extends AbstractEntity implements
     {
         return $this->area;
     }
-    
+
     /**
      * set area
      *
@@ -210,7 +210,7 @@ class Theater extends AbstractEntity implements
     {
         $this->area = $area;
     }
-    
+
     /**
      * get master_code
      *
@@ -220,7 +220,7 @@ class Theater extends AbstractEntity implements
     {
         return $this->masterCode;
     }
-    
+
     /**
      * set master_code
      *
@@ -231,7 +231,7 @@ class Theater extends AbstractEntity implements
     {
         $this->masterCode = $masterCode;
     }
-    
+
     /**
      * get display_order
      *
@@ -241,7 +241,7 @@ class Theater extends AbstractEntity implements
     {
         return $this->displayOrder;
     }
-    
+
     /**
      * set display_order
      *
@@ -252,7 +252,7 @@ class Theater extends AbstractEntity implements
     {
         $this->displayOrder = $displayOrder;
     }
-    
+
     /**
      * get meta
      *
@@ -262,7 +262,7 @@ class Theater extends AbstractEntity implements
     {
         return $this->meta;
     }
-    
+
     /**
      * get admin_users
      *
@@ -272,7 +272,7 @@ class Theater extends AbstractEntity implements
     {
         return $this->adminUsers;
     }
-    
+
     /**
      * get campaigns
      *
@@ -282,7 +282,7 @@ class Theater extends AbstractEntity implements
     {
         return $this->campaigns;
     }
-    
+
     /**
      * get news_list
      *
@@ -292,7 +292,7 @@ class Theater extends AbstractEntity implements
     {
         return $this->newsList;
     }
-    
+
     /**
      * get main_banners
      *

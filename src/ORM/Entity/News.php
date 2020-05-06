@@ -26,7 +26,7 @@ class News extends AbstractEntity
     use SoftDeleteTrait;
     use TimestampableTrait;
 
-    const CATEGORY_TOPICS = 1;
+    public const CATEGORY_TOPICS = 1;
 
     /** @var array */
     public static $categories = [

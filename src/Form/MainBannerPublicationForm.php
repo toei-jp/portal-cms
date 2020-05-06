@@ -19,8 +19,8 @@ use Toei\PortalAdmin\ORM\Entity;
  */
 class MainBannerPublicationForm extends BaseForm
 {
-    const TARGET_PAGE          = 'page';
-    const TARGET_TEATER        = 'theater';
+    public const TARGET_PAGE          = 'page';
+    public const TARGET_TEATER        = 'theater';
 
     /** @var string */
     protected $target;
