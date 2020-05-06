@@ -89,7 +89,7 @@ class Campaign extends AbstractEntity
     /**
      * pages
      *
-     * @var Collection
+     * @var Collection<PageCampaign>
      * @ORM\OneToMany(targetEntity="PageCampaign", mappedBy="campaign")
      */
     protected $pages;
@@ -97,7 +97,7 @@ class Campaign extends AbstractEntity
     /**
      * theaters
      *
-     * @var Collection
+     * @var Collection<TheaterCampaign>
      * @ORM\OneToMany(targetEntity="TheaterCampaign", mappedBy="campaign")
      */
     protected $theaters;

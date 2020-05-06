@@ -84,7 +84,9 @@ class Theater extends AbstractEntity implements
     /**
      * meta
      *
-     * @var TheaterMeta
+     * 設計の問題でnullを許容する形になってしまったが、nullにならないようデータで調整する。
+     *
+     * @var TheaterMeta|null
      * @ORM\OneToOne(targetEntity="TheaterMeta", mappedBy="theater")
      */
     protected $meta;
@@ -92,7 +94,7 @@ class Theater extends AbstractEntity implements
     /**
      * admin_users
      *
-     * @var ArrayCollection
+     * @var Collection<AdminUser>
      * @ORM\OneToMany(targetEntity="AdminUser", mappedBy="theater")
      */
     protected $adminUsers;
@@ -100,7 +102,7 @@ class Theater extends AbstractEntity implements
     /**
      * campaigns
      *
-     * @var Collection
+     * @var Collection<TheaterCampaign>
      * @ORM\OneToMany(targetEntity="TheaterCampaign", mappedBy="theater", orphanRemoval=true)
      * @ORM\OrderBy({"displayOrder" = "ASC"})
      */
@@ -109,7 +111,7 @@ class Theater extends AbstractEntity implements
     /**
      * news_list
      *
-     * @var Collection
+     * @var Collection<TheaterNews>
      * @ORM\OneToMany(targetEntity="TheaterNews", mappedBy="theater", orphanRemoval=true)
      * @ORM\OrderBy({"displayOrder" = "ASC"})
      */
@@ -118,7 +120,7 @@ class Theater extends AbstractEntity implements
     /**
      * main_banners
      *
-     * @var Collection
+     * @var Collection<TheaterMainBanner>
      * @ORM\OneToMany(targetEntity="TheaterMainBanner", mappedBy="theater", orphanRemoval=true)
      * @ORM\OrderBy({"displayOrder" = "ASC"})
      */

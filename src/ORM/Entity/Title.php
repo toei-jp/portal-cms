@@ -42,7 +42,7 @@ class Title extends AbstractEntity
     /**
      * image
      *
-     * @var File
+     * @var File|null
      * @ORM\OneToOne(targetEntity="File")
      * @ORM\JoinColumn(name="image_file_id", referencedColumnName="id", nullable=true, onDelete="RESTRICT")
      */
@@ -139,7 +139,7 @@ class Title extends AbstractEntity
     /**
      * rating
      *
-     * @var string|null
+     * @var int|null
      * @ORM\Column(type="smallint", nullable=true, options={"unsigned"=true})
      */
     protected $rating;
