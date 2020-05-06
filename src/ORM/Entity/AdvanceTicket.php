@@ -93,7 +93,7 @@ class AdvanceTicket extends AbstractEntity
      * is_sales_end
      *
      * @var bool
-     * @ORM\Column(type="boolean", name="is_sales_end")
+     * @ORM\Column(type="boolean", name="is_sales_end", options={"default":false})
      */
     protected $isSalesEnd;
 
