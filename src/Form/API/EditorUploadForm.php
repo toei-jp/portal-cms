@@ -1,4 +1,5 @@
 <?php
+
 /**
  * EditorUploadForm.php
  *
@@ -9,7 +10,6 @@ namespace Toei\PortalAdmin\Form\API;
 
 use Laminas\InputFilter\InputFilter;
 use Laminas\Validator;
-
 use Toei\PortalAdmin\Form\BaseForm;
 
 /**

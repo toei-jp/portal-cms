@@ -1,4 +1,5 @@
 <?php
+
 /**
  * AbstractAdvanceSaleForm.php
  *

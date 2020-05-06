@@ -1,4 +1,5 @@
 <?php
+
 /**
  * TitleController.php
  *
@@ -105,8 +106,10 @@ class TitleController extends BaseController
                     $newTitle->setSubTitle($title['sub_title']);
                 }
                 $newTitle->setCheverCode($title['chever_code']);
-                if (!isset($title['not_exist_publishing_expected_date']) ||
-                    $title['not_exist_publishing_expected_date'] !== '1') {
+                if (
+                    !isset($title['not_exist_publishing_expected_date']) ||
+                    $title['not_exist_publishing_expected_date'] !== '1'
+                ) {
                     $newTitle->setPublishingExpectedDate($title['publishing_expected_date']);
                 }
                 $newTitle->setRating((int) $title['rating']);

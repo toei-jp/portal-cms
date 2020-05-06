@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PageCampaignRepository.php
  *
@@ -8,7 +9,6 @@
 namespace Toei\PortalAdmin\ORM\Repository;
 
 use Doctrine\ORM\EntityRepository;
-
 use Toei\PortalAdmin\ORM\Entity\Campaign;
 use Toei\PortalAdmin\ORM\Entity\PageCampaign;
 

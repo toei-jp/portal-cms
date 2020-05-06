@@ -1,4 +1,5 @@
 <?php
+
 /**
  * AdminUserController.php
  *
@@ -8,7 +9,6 @@
 namespace Toei\PortalAdmin\Controller;
 
 use Toei\PortalAdmin\Form\LoginForm;
-
 use Toei\PortalAdmin\Exception\ForbiddenException;
 use Toei\PortalAdmin\Form;
 use Toei\PortalAdmin\ORM\Entity;

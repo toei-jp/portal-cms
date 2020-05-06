@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Auth.php
  *
@@ -8,7 +9,6 @@
 namespace Toei\PortalAdmin;
 
 use Psr\Container\ContainerInterface;
-
 use Toei\PortalAdmin\ORM\Entity\AdminUser;
 
 class Auth

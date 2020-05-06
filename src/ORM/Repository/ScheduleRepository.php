@@ -1,15 +1,14 @@
 <?php
+
 /**
  * ScheduleRepository.php
  *
  * @author Atsushi Okui <okui@motionpicture.jp>
  */
 
-
 namespace Toei\PortalAdmin\ORM\Repository;
 
 use Doctrine\ORM\EntityRepository;
-
 use Toei\PortalAdmin\Form\ScheduleFindForm;
 use Toei\PortalAdmin\ORM\Entity\Schedule;
 use Toei\PortalAdmin\Pagination\DoctrinePaginator;

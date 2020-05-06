@@ -1,4 +1,5 @@
 <?php
+
 /**
  * TheaterNewsRepository.php
  *
@@ -8,7 +9,6 @@
 namespace Toei\PortalAdmin\ORM\Repository;
 
 use Doctrine\ORM\EntityRepository;
-
 use Toei\PortalAdmin\ORM\Entity\News;
 use Toei\PortalAdmin\ORM\Entity\TheaterNews;
 

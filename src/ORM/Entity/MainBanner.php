@@ -1,4 +1,5 @@
 <?php
+
 /**
  * MainBanner.php
  *
@@ -10,7 +11,6 @@ namespace Toei\PortalAdmin\ORM\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-
 use Toei\PortalAdmin\ORM\Entity\AbstractEntity;
 
 /**
@@ -212,7 +212,7 @@ class MainBanner extends AbstractEntity
      *
      * @return Collection
      */
-    public function getPages() : Collection
+    public function getPages(): Collection
     {
         return $this->pages;
     }
@@ -222,7 +222,7 @@ class MainBanner extends AbstractEntity
      *
      * @return Collection
      */
-    public function getTheaters() : Collection
+    public function getTheaters(): Collection
     {
         return $this->theaters;
     }

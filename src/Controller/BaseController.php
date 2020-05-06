@@ -1,4 +1,5 @@
 <?php
+
 /**
  * BaseController.php
  *
@@ -9,7 +10,6 @@ namespace Toei\PortalAdmin\Controller;
 
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface as Response;
-
 use Toei\PortalAdmin\Responder;
 
 /**
@@ -24,7 +24,7 @@ abstract class BaseController extends AbstractController
      * @param \Slim\Http\Response $response
      * @return void
      */
-    protected function preExecute($request, $response) : void
+    protected function preExecute($request, $response): void
     {
     }
     
@@ -35,7 +35,7 @@ abstract class BaseController extends AbstractController
      * @param \Slim\Http\Response $response
      * @return void
      */
-    protected function postExecute($request, $response) : void
+    protected function postExecute($request, $response): void
     {
         $this->data->set('user', $this->auth->getUser());
         $this->data->set('alerts', $this->flash->getMessage('alerts'));
@@ -46,7 +46,7 @@ abstract class BaseController extends AbstractController
      *
      * @return Responder\AbstractResponder
      */
-    protected function getResponder() : Responder\AbstractResponder
+    protected function getResponder(): Responder\AbstractResponder
     {
         $path = explode('\\', get_class($this));
         $name = str_replace('Controller', '', array_pop($path));
