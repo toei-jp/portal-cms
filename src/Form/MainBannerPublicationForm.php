@@ -1,4 +1,5 @@
 <?php
+
 /**
  * MainBannerPublicationForm.php
  *
@@ -10,9 +11,7 @@ namespace Toei\PortalAdmin\Form;
 use Laminas\Form\Fieldset;
 use Laminas\InputFilter\InputFilter;
 use Laminas\Validator;
-
 use Doctrine\ORM\EntityManager;
-
 use Toei\PortalAdmin\ORM\Entity;
 
 /**
@@ -20,8 +19,8 @@ use Toei\PortalAdmin\ORM\Entity;
  */
 class MainBannerPublicationForm extends BaseForm
 {
-    const TARGET_PAGE          = 'page';
-    const TARGET_TEATER        = 'theater';
+    public const TARGET_PAGE          = 'page';
+    public const TARGET_TEATER        = 'theater';
 
     /** @var string */
     protected $target;

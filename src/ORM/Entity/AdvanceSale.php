@@ -1,4 +1,5 @@
 <?php
+
 /**
  * AdvanceSale.php
  *
@@ -10,9 +11,7 @@ namespace Toei\PortalAdmin\ORM\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
-
 use Doctrine\ORM\Mapping as ORM;
-
 use Toei\PortalAdmin\ORM\Entity\AbstractEntity;
 
 /**
@@ -43,7 +42,7 @@ class AdvanceSale extends AbstractEntity
      *
      * @var Theater
      * @ORM\ManyToOne(targetEntity="Theater")
-     * @ORM\JoinColumn(name="theater_id", referencedColumnName="id", onDelete="RESTRICT")
+     * @ORM\JoinColumn(name="theater_id", referencedColumnName="id", nullable=false, onDelete="RESTRICT")
      */
     protected $theater;
 
@@ -52,7 +51,7 @@ class AdvanceSale extends AbstractEntity
      *
      * @var Title
      * @ORM\ManyToOne(targetEntity="Title")
-     * @ORM\JoinColumn(name="title_id", referencedColumnName="id", onDelete="RESTRICT")
+     * @ORM\JoinColumn(name="title_id", referencedColumnName="id", nullable=false, onDelete="RESTRICT")
      */
     protected $title;
 
@@ -67,7 +66,7 @@ class AdvanceSale extends AbstractEntity
     /**
      * publishing_expected_date_text
      *
-     * @var string
+     * @var string|null
      * @ORM\Column(type="string", name="publishing_expected_date_text", nullable=true)
      */
     protected $publishingExpectedDateText;
@@ -75,7 +74,7 @@ class AdvanceSale extends AbstractEntity
     /**
      * advance_tickets
      *
-     * @var Collection
+     * @var Collection<AdvanceTicket>
      * @ORM\OneToMany(targetEntity="AdvanceTicket", mappedBy="advanceSale", indexBy="id")
      */
     protected $advanceTickets;
@@ -169,7 +168,7 @@ class AdvanceSale extends AbstractEntity
     /**
      * get publishing_expected_date_text
      *
-     * @return string
+     * @return string|null
      */
     public function getPublishingExpectedDateText()
     {
@@ -179,10 +178,10 @@ class AdvanceSale extends AbstractEntity
     /**
      * set publishing_expected_date_text
      *
-     * @param string $publishingExpectedDateText
+     * @param string|null $publishingExpectedDateText
      * @return void
      */
-    public function setPublishingExpectedDateText(string $publishingExpectedDateText)
+    public function setPublishingExpectedDateText(?string $publishingExpectedDateText)
     {
         $this->publishingExpectedDateText = $publishingExpectedDateText;
     }

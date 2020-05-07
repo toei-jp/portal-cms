@@ -1,4 +1,5 @@
 <?php
+
 /**
  * AdvanceSaleRepository.php
  *
@@ -8,7 +9,6 @@
 namespace Toei\PortalAdmin\ORM\Repository;
 
 use Doctrine\ORM\EntityRepository;
-
 use Toei\PortalAdmin\ORM\Entity\AdvanceSale;
 use Toei\PortalAdmin\Pagination\DoctrinePaginator;
 

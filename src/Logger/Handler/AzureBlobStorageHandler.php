@@ -1,4 +1,5 @@
 <?php
+
 /**
  * AzureBlobStorageHandler.php
  *
@@ -9,7 +10,6 @@ namespace Toei\PortalAdmin\Logger\Handler;
 
 use Monolog\Handler\AbstractProcessingHandler;
 use Monolog\Logger;
-
 use MicrosoftAzure\Storage\Blob\BlobRestProxy;
 use MicrosoftAzure\Storage\Common\Exceptions\ServiceException;
 

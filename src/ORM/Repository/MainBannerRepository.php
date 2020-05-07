@@ -1,4 +1,5 @@
 <?php
+
 /**
  * MainBannerRepository.php
  *
@@ -8,7 +9,6 @@
 namespace Toei\PortalAdmin\ORM\Repository;
 
 use Doctrine\ORM\EntityRepository;
-
 use Toei\PortalAdmin\ORM\Entity\MainBanner;
 use Toei\PortalAdmin\Pagination\DoctrinePaginator;
 

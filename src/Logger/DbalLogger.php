@@ -1,4 +1,5 @@
 <?php
+
 /**
  * DbalLogger.php
  *
@@ -8,7 +9,6 @@
 namespace Toei\PortalAdmin\Logger;
 
 use Doctrine\DBAL\Logging\SQLLogger;
-
 use Monolog\Logger;
 
 /**

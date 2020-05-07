@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Schedule.php
  *
@@ -10,7 +11,6 @@ namespace Toei\PortalAdmin\ORM\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-
 use Toei\PortalAdmin\ORM\Entity\AbstractEntity;
 
 /**
@@ -49,7 +49,7 @@ class Schedule extends AbstractEntity
      * start_date
      *
      * @var \DateTime
-     * @ORM\Column(type="date", nullable=false, name="start_date")
+     * @ORM\Column(type="date", name="start_date")
      */
     protected $startDate;
 
@@ -57,7 +57,7 @@ class Schedule extends AbstractEntity
      * end_date
      *
      * @var \DateTime
-     * @ORM\Column(type="date", nullable=false, name="end_date")
+     * @ORM\Column(type="date", name="end_date")
      */
     protected $endDate;
 
@@ -65,7 +65,7 @@ class Schedule extends AbstractEntity
      * public_start_dt
      *
      * @var \DateTime
-     * @ORM\Column(type="datetime", nullable=false, name="public_start_dt")
+     * @ORM\Column(type="datetime", name="public_start_dt")
      */
     protected $publicStartDt;
 
@@ -73,22 +73,22 @@ class Schedule extends AbstractEntity
      * public_end_dt
      *
      * @var \DateTime
-     * @ORM\Column(type="datetime", nullable=false, name="public_end_dt")
+     * @ORM\Column(type="datetime", name="public_end_dt")
      */
     protected $publicEndDt;
 
     /**
      * remark
      *
-     * @var string
-     * @ORM\Column(type="text")
+     * @var string|null
+     * @ORM\Column(type="text", nullable=true)
      */
     protected $remark;
 
     /**
      * showing_formats
      *
-     * @var Collection
+     * @var Collection<ShowingFormat>
      * @ORM\OneToMany(targetEntity="ShowingFormat", mappedBy="schedule", orphanRemoval=true)
      */
     protected $showingFormats;
@@ -96,7 +96,7 @@ class Schedule extends AbstractEntity
     /**
      * showing_theaters
      *
-     * @var Collection
+     * @var Collection<ShowingTheater>
      * @ORM\OneToMany(targetEntity="ShowingTheater", mappedBy="schedule", orphanRemoval=true)
      */
     protected $showingTheaters;
@@ -244,7 +244,7 @@ class Schedule extends AbstractEntity
     /**
      * get remark
      *
-     * @return string
+     * @return string|null
      */
     public function getRemark()
     {
@@ -254,10 +254,10 @@ class Schedule extends AbstractEntity
     /**
      * set remark
      *
-     * @param string $remark
+     * @param string|null $remark
      * @return void
      */
-    public function setRemark(string $remark)
+    public function setRemark(?string $remark)
     {
         $this->remark = $remark;
     }

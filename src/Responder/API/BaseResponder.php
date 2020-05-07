@@ -1,4 +1,5 @@
 <?php
+
 /**
  * BaseResponder.php
  *
@@ -20,7 +21,7 @@ abstract class BaseResponder extends AbstractResponder
      * @param string $name
      * @return AbstractResponder
      */
-    final public static function factory(string $name) : AbstractResponder
+    final public static function factory(string $name): AbstractResponder
     {
         $className =  __NAMESPACE__  . '\\' . $name . 'Responder';
         

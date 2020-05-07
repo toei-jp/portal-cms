@@ -1,4 +1,5 @@
 <?php
+
 /**
  * LoginForm.php
  *
@@ -8,7 +9,6 @@
 namespace Toei\PortalAdmin\Form;
 
 use Laminas\InputFilter\InputFilter;
-
 use Toei\PortalAdmin\ValidatorTranslator;
 
 /**

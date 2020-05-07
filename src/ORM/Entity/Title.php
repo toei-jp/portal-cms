@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Title.php
  *
@@ -8,7 +9,6 @@
 namespace Toei\PortalAdmin\ORM\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
 use Toei\PortalAdmin\ORM\Entity\AbstractEntity;
 
 /**
@@ -24,10 +24,10 @@ class Title extends AbstractEntity
     use SoftDeleteTrait;
     use TimestampableTrait;
 
-    const RATING_G    = 1;
-    const RATING_PG12 = 2;
-    const RATING_R15  = 3;
-    const RATING_R18  = 4;
+    public const RATING_G    = 1;
+    public const RATING_PG12 = 2;
+    public const RATING_R15  = 3;
+    public const RATING_R18  = 4;
 
     /**
      * id
@@ -42,7 +42,7 @@ class Title extends AbstractEntity
     /**
      * image
      *
-     * @var File
+     * @var File|null
      * @ORM\OneToOne(targetEntity="File")
      * @ORM\JoinColumn(name="image_file_id", referencedColumnName="id", nullable=true, onDelete="RESTRICT")
      */
@@ -139,7 +139,7 @@ class Title extends AbstractEntity
     /**
      * rating
      *
-     * @var string|null
+     * @var int|null
      * @ORM\Column(type="smallint", nullable=true, options={"unsigned"=true})
      */
     protected $rating;

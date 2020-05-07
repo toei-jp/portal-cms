@@ -1,4 +1,5 @@
 <?php
+
 /**
  * routes.php
  *
@@ -15,14 +16,12 @@ use Toei\PortalAdmin\Controller\NewsController;
 use Toei\PortalAdmin\Controller\ScheduleController;
 use Toei\PortalAdmin\Controller\TheaterMetaController;
 use Toei\PortalAdmin\Controller\TitleController;
-
 use Toei\PortalAdmin\Controller\API\AuthController as AuthApiController;
 use Toei\PortalAdmin\Controller\API\CampaignController as CampaignApiController;
 use Toei\PortalAdmin\Controller\API\EditorController as EditorApiController;
 use Toei\PortalAdmin\Controller\API\MainBannerController as MainBannerApiController;
 use Toei\PortalAdmin\Controller\API\NewsController as NewsApiController;
 use Toei\PortalAdmin\Controller\API\TitleController as TitleApiController;
-
 use Toei\PortalAdmin\Middleware\AuthMiddleware;
 
 $app->get('/login', AuthController::class . ':login')->setName('login');

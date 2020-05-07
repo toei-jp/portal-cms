@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ShowingFormat.php
  *
@@ -8,7 +9,6 @@
 namespace Toei\PortalAdmin\ORM\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
 use Toei\PortalAdmin\ORM\Entity\AbstractEntity;
 
 /**
@@ -21,7 +21,7 @@ use Toei\PortalAdmin\ORM\Entity\AbstractEntity;
 class ShowingFormat extends AbstractEntity
 {
     use TimestampableTrait;
-    
+
     /** @var array */
     protected static $systemList = [
         1  => '2D',
@@ -36,14 +36,14 @@ class ShowingFormat extends AbstractEntity
         10 => 'ScreenX', // SASAKI-351
         99 => 'なし',
     ];
-    
+
     /** @var array */
     protected static $voiceList = [
         1 => '字幕',
         2 => '吹替',
         3 => 'なし', // SASAKI-297
     ];
-    
+
     /**
      * id
      *
@@ -53,7 +53,7 @@ class ShowingFormat extends AbstractEntity
      * @ORM\GeneratedValue
      */
     protected $id;
-    
+
     /**
      * schedule
      *
@@ -62,24 +62,24 @@ class ShowingFormat extends AbstractEntity
      * @ORM\JoinColumn(name="schedule_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
     protected $schedule;
-    
+
     /**
      * system
      *
      * @var int
-     * @ORM\Column(type="smallint", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(type="smallint", options={"unsigned"=true})
      */
     protected $system;
-    
+
     /**
      * voice
      *
      * @var int
-     * @ORM\Column(type="smallint", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(type="smallint", options={"unsigned"=true})
      */
     protected $voice;
-    
-    
+
+
     /**
      * return system list
      *
@@ -89,7 +89,7 @@ class ShowingFormat extends AbstractEntity
     {
         return self::$systemList;
     }
-    
+
     /**
      * return voice list
      *
@@ -99,15 +99,15 @@ class ShowingFormat extends AbstractEntity
     {
         return self::$voiceList;
     }
-    
-    
+
+
     /**
      * construct
      */
     public function __construct()
     {
     }
-    
+
     /**
      * get id
      *
@@ -117,7 +117,7 @@ class ShowingFormat extends AbstractEntity
     {
         return $this->id;
     }
-    
+
     /**
      * get schedule
      *
@@ -127,7 +127,7 @@ class ShowingFormat extends AbstractEntity
     {
         return $this->schedule;
     }
-    
+
     /**
      * schedule
      *
@@ -138,7 +138,7 @@ class ShowingFormat extends AbstractEntity
     {
         $this->schedule = $schedule;
     }
-    
+
     /**
      * get system
      *
@@ -148,7 +148,7 @@ class ShowingFormat extends AbstractEntity
     {
         return $this->system;
     }
-    
+
     /**
      * get system label
      *
@@ -158,7 +158,7 @@ class ShowingFormat extends AbstractEntity
     {
         return self::$systemList[$this->getSystem()] ?? null;
     }
-    
+
     /**
      * set system
      *
@@ -169,7 +169,7 @@ class ShowingFormat extends AbstractEntity
     {
         $this->system = $system;
     }
-    
+
     /**
      * get voice
      *
@@ -179,7 +179,7 @@ class ShowingFormat extends AbstractEntity
     {
         return $this->voice;
     }
-    
+
     /**
      * get voice label
      *
@@ -189,7 +189,7 @@ class ShowingFormat extends AbstractEntity
     {
         return self::$voiceList[$this->getVoice()] ?? null;
     }
-    
+
     /**
      * set voice
      *

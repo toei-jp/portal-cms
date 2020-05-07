@@ -1,4 +1,5 @@
 <?php
+
 /**
  * BaseResponder.php
  *
@@ -24,7 +25,7 @@ abstract class BaseResponder extends AbstractResponder
      * @param Twig   $view
      * @return AbstractResponder
      */
-    final public static function factory(string $name, Twig $view) : AbstractResponder
+    final public static function factory(string $name, Twig $view): AbstractResponder
     {
         $className =  __NAMESPACE__  . '\\' . $name . 'Responder';
         

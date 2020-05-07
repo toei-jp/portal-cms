@@ -1,4 +1,5 @@
 <?php
+
 /**
  * AdvanceTicket.php
  *
@@ -8,7 +9,6 @@
 namespace Toei\PortalAdmin\ORM\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
 use Toei\PortalAdmin\ORM\Entity\AbstractEntity;
 
 /**
@@ -23,16 +23,16 @@ class AdvanceTicket extends AbstractEntity
     use SoftDeleteTrait;
     use TimestampableTrait;
 
-    const TYPE_MVTK  = 1;
-    const TYPE_PAPER = 2;
+    public const TYPE_MVTK  = 1;
+    public const TYPE_PAPER = 2;
 
-    const SPECIAL_GIFT_STOCK_IN     = 1;
-    const SPECIAL_GIFT_STOCK_FEW    = 2;
-    const SPECIAL_GIFT_STOCK_NOT_IN = 3;
+    public const SPECIAL_GIFT_STOCK_IN     = 1;
+    public const SPECIAL_GIFT_STOCK_FEW    = 2;
+    public const SPECIAL_GIFT_STOCK_NOT_IN = 3;
 
-    const STATUS_PRE_SALE = 1;
-    const STATUS_SALE     = 2;
-    const STATUS_SALE_END = 3;
+    public const STATUS_PRE_SALE = 1;
+    public const STATUS_SALE     = 2;
+    public const STATUS_SALE_END = 3;
 
     /** @var array */
     protected static $types = [
@@ -84,7 +84,7 @@ class AdvanceTicket extends AbstractEntity
     /**
      * release_dt_text
      *
-     * @var string
+     * @var string|null
      * @ORM\Column(type="string", name="release_dt_text", nullable=true)
      */
     protected $releaseDtText;
@@ -93,7 +93,7 @@ class AdvanceTicket extends AbstractEntity
      * is_sales_end
      *
      * @var bool
-     * @ORM\Column(type="boolean", name="is_sales_end")
+     * @ORM\Column(type="boolean", name="is_sales_end", options={"default":false})
      */
     protected $isSalesEnd;
 
@@ -108,7 +108,7 @@ class AdvanceTicket extends AbstractEntity
     /**
      * price_text
      *
-     * @var string
+     * @var string|null
      * @ORM\Column(type="string", name="price_text", nullable=true)
      */
     protected $priceText;
@@ -116,7 +116,7 @@ class AdvanceTicket extends AbstractEntity
     /**
      * special_gift
      *
-     * @var string
+     * @var string|null
      * @ORM\Column(type="string", name="special_gift", nullable=true)
      */
     protected $specialGift;
@@ -205,7 +205,7 @@ class AdvanceTicket extends AbstractEntity
     /**
      * get release_dt_text
      *
-     * @return string
+     * @return string|null
      */
     public function getReleaseDtText()
     {
@@ -215,10 +215,10 @@ class AdvanceTicket extends AbstractEntity
     /**
      * set release_dt_text
      *
-     * @param string $releaseDtText
+     * @param string|null $releaseDtText
      * @return void
      */
-    public function setReleaseDtText(string $releaseDtText)
+    public function setReleaseDtText(?string $releaseDtText)
     {
         $this->releaseDtText = $releaseDtText;
     }
@@ -290,7 +290,7 @@ class AdvanceTicket extends AbstractEntity
     /**
      * get price_text
      *
-     * @return string
+     * @return string|null
      */
     public function getPriceText()
     {
@@ -300,10 +300,10 @@ class AdvanceTicket extends AbstractEntity
     /**
      * set price_text
      *
-     * @param string $priceText
+     * @param string|null $priceText
      * @return void
      */
-    public function setPriceText(string $priceText)
+    public function setPriceText(?string $priceText)
     {
         $this->priceText = $priceText;
     }
@@ -311,7 +311,7 @@ class AdvanceTicket extends AbstractEntity
     /**
      * get special_gift
      *
-     * @return string
+     * @return string|null
      */
     public function getSpecialGift()
     {
@@ -321,10 +321,10 @@ class AdvanceTicket extends AbstractEntity
     /**
      * set special_gift
      *
-     * @param string $specialGift
+     * @param string|null $specialGift
      * @return void
      */
-    public function setSpecialGift(string $specialGift)
+    public function setSpecialGift(?string $specialGift)
     {
         $this->specialGift = $specialGift;
     }
