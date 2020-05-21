@@ -43,6 +43,9 @@ jobs:
       - name: Run phpstan
         run: composer run-script phpstan > ./report/phpstan_result.txt
 
+      - name: Run phpunit
+        run: composer run-script phpunit
+
       - name: Upload test report
         uses: actions/upload-artifact@v1
         with:
