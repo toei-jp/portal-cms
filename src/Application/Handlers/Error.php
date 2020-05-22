@@ -18,10 +18,10 @@ class Error extends BaseHandler
 {
     /** @var Container */
     protected $container;
-    
+
     /** @var \Monolog\Logger */
     protected $logger;
-    
+
     /**
      * construct
      *
@@ -31,10 +31,10 @@ class Error extends BaseHandler
     {
         $this->container = $container;
         $this->logger = $container->get('logger');
-        
+
         parent::__construct($container->get('settings')['displayErrorDetails']);
     }
-    
+
     /**
      *  Write to the error log
      *
@@ -47,7 +47,7 @@ class Error extends BaseHandler
     {
         $this->log($throwable);
     }
-    
+
     /**
      * log
      *
@@ -64,16 +64,16 @@ class Error extends BaseHandler
             'trace' => $exception->getTraceAsString(),
         ]);
     }
-    
+
     /**
      * {@inheritdoc}
      */
     protected function renderHtmlErrorMessage(\Exception $exception)
     {
-        if (APP_ENV === 'dev') {
+        if (APP_DEBUG) {
             return parent::renderHtmlErrorMessage($exception);
         }
-        
+
         return file_get_contents(APP_ROOT . '/error/500.html');
     }
 }

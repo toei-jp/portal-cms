@@ -37,6 +37,9 @@ jobs:
       - name: Create .env file
         run: cp .env.test .env
 
+      - name: Generate ORM proxies
+        run: vendor/bin/doctrine orm:generate-proxies
+
       - name: Run phpcs
         run: composer run-script phpcs
 
