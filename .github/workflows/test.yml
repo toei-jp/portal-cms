@@ -37,11 +37,17 @@ jobs:
       - name: Create .env file
         run: cp .env.test .env
 
+      - name: Generate ORM proxies
+        run: vendor/bin/doctrine orm:generate-proxies
+
       - name: Run phpcs
         run: composer run-script phpcs
 
       - name: Run phpstan
         run: composer run-script phpstan > ./report/phpstan_result.txt
+
+      - name: Run phpunit
+        run: composer run-script phpunit
 
       - name: Upload test report
         uses: actions/upload-artifact@v1
