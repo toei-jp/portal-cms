@@ -29,7 +29,8 @@
         "laminas/laminas-uri": "^2.7",
         "microsoft/azure-storage-blob": "^1.5",
         "intervention/image": "^2.5",
-        "blue32a/monolog-azure-blob": "^0.2.0"
+        "blue32a/monolog-azure-blob": "^0.2.0",
+        "guzzlehttp/guzzle": "^6.5"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "^3.5",

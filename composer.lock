@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7922cf0eaed13af8c9cd688ae5141a69",
+    "content-hash": "f3152ac1ac12a5dbfb39ed8340bd6126",
     "packages": [
         {
             "name": "blue32a/monolog-azure-blob",
