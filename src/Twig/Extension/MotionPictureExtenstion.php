@@ -23,11 +23,11 @@ class MotionPictureExtenstion extends AbstractExtension
     /**
      * construct
      *
-     * @param ContainerInterface $container
+     * @param array $settings
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(array $settings)
     {
-        $this->settings = $container->get('settings')['mp'];
+        $this->settings = $settings;
     }
 
     /**
