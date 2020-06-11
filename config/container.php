@@ -121,8 +121,9 @@ $container['em'] = function ($container) {
  */
 $container['sm'] = function ($container) {
     $settings = $container->get('settings')['session'];
+    $config = new Laminas\Session\Config\SessionConfig($settings);
 
-    return new \Toei\PortalAdmin\Session\SessionManager($settings);
+    return new \Toei\PortalAdmin\Session\SessionManager($config);
 };
 
 /**
