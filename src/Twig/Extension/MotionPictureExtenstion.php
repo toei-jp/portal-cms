@@ -10,7 +10,6 @@ namespace Toei\PortalAdmin\Twig\Extension;
 
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
-use Psr\Container\ContainerInterface;
 
 /**
  * MotionPicture twig extension class
