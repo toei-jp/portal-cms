@@ -35,7 +35,9 @@ $container['view'] = function ($container) {
         $container->get('bc'),
         $container->get('settings')['storage']['public_endpoint']
     ));
-    $view->addExtension(new \Toei\PortalAdmin\Twig\Extension\MotionPictureExtenstion($container));
+    $view->addExtension(new \Toei\PortalAdmin\Twig\Extension\MotionPictureExtenstion(
+        $container->get('settings')['mp']
+    ));
 
     return $view;
 };
@@ -119,8 +121,9 @@ $container['em'] = function ($container) {
  */
 $container['sm'] = function ($container) {
     $settings = $container->get('settings')['session'];
+    $config = new Laminas\Session\Config\SessionConfig($settings);
 
-    return new \Toei\PortalAdmin\Session\SessionManager($settings);
+    return new \Toei\PortalAdmin\Session\SessionManager($config);
 };
 
 /**
