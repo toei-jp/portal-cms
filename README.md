@@ -1,5 +1,7 @@
 # toei-jp/portal-cms
 
+![Test](https://github.com/toei-jp/portal-cms/workflows/Test/badge.svg)
+
 東映ポータルサイトのCMS管理画面
 
 ## システム要件
@@ -41,6 +43,12 @@ $ docker-compose up
 
 ## その他
 
+### PHP Lint
+
+```sh
+$ composer phplint
+```
+
 ### PHP CodeSniffer
 
 ```sh
@@ -51,4 +59,10 @@ $ composer phpcs
 
 ```sh
 $ composer phpstan
+```
+
+### PHPUnit
+
+```sh
+$ composer phpunit
 ```
