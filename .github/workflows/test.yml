@@ -40,6 +40,9 @@ jobs:
       - name: Generate ORM proxies
         run: vendor/bin/doctrine orm:generate-proxies
 
+      - name: Run phplint
+        run: composer run-script phplint
+
       - name: Run phpcs
         run: composer run-script phpcs
 
