@@ -22,9 +22,9 @@ class AdvanceTicketController extends BaseController
      * return entity
      *
      * @param int $id
-     * @return Entity\AdvanceSale
+     * @return Entity\AdvanceSale|null
      */
-    protected function getEntity(int $id): Entity\AdvanceSale
+    protected function getEntity(int $id): ?Entity\AdvanceSale
     {
         return $this->em
             ->getRepository(Entity\AdvanceSale::class)
