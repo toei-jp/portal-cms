@@ -3,7 +3,7 @@
  */
 var cinerino = window.cinerino;
 var API_ENDPOINT;
- 
+
 var TIMEZONE = 9; // JST Timezone
 
 /**
@@ -24,10 +24,15 @@ function createOptions(accessToken) {
     };
     var auth = cinerino.createAuthInstance(option);
     auth.setCredentials({ accessToken: accessToken });
+    var projectId = (/development/.test(location.host)) ? 'toei-development'
+        : (/test/.test(location.host)) ? 'toei-test'
+            : (/production/.test(location.host)) ? 'toei-production'
+                : '';
 
     return {
         endpoint: API_ENDPOINT,
-        auth: auth
+        auth: auth,
+        project: { id: projectId }
     }
 }
 
@@ -83,12 +88,12 @@ function getMovies(from, through) {
         return creativeWorkService.searchMovies(searchConditions);
     }).then(function (movies) {
         // console.log(movies);
-        if (movies.totalCount > 0) {
-            var ids = movies.data.map(function(m) {
+        if (movies.data.length > 0) {
+            var ids = movies.data.map(function (m) {
                 return m.identifier
             });
             api.title.findImported(ids)
-                .done(function(res) {
+                .done(function (res) {
                     console.log(res);
                     var doms = [];
                     movies.data.forEach(function (movie) {
@@ -97,7 +102,7 @@ function getMovies(from, through) {
                         <tr class="' + (isImported ? 'imported' : 'unimported') + '">\
                             <td><input type="checkbox"' + (!isImported ? '' : ' disabled') + '></td>\
                             <td>' + displayDateCorrection(movie.datePublished) + '</td>\
-                            <td'+ (!isImported ? ' style="color: red"' : '') +'>' + (!isImported ? '未反映' : '反映済') + '</td>\
+                            <td'+ (!isImported ? ' style="color: red"' : '') + '>' + (!isImported ? '未反映' : '反映済') + '</td>\
                             <td>' + movie.identifier + '</td>\
                             <td>' + movie.name + '</td>\
                             <td style="display: none">' + movie.headline + '</td>\
@@ -106,7 +111,7 @@ function getMovies(from, through) {
                         doms.push(dom);
                     });
                     $('.search-result table tbody').html(doms.join('\n'));
-                    $('.search-result table tbody tr.unimported').click(function(event) {
+                    $('.search-result table tbody tr.unimported').click(function (event) {
                         if (event.target.nodeName !== 'INPUT') {
                             var checkBoxes = $(this).find('input[type=checkbox]');
                             checkBoxes.prop("checked", !checkBoxes.prop("checked"));
@@ -114,13 +119,13 @@ function getMovies(from, through) {
                     });
                     $('.search-result').show();
                 })
-                .fail(function(err) {
+                .fail(function (err) {
                     console.error(err);
                     $('.alert').html('エラーが発生しました。').addClass('alert-danger').removeClass('alert-info').show();
                     window.scrollTo(0, 0);
                     $('.search-result').hide();
                 })
-                .always(function() {
+                .always(function () {
                     hideLoader();
                 });
         } else {
@@ -139,7 +144,7 @@ function getMovies(from, through) {
 
 function importTitles() {
     var data = [];
-    $('.search-result table tr td input:checked').each(function() {
+    $('.search-result table tr td input:checked').each(function () {
         var td = $(this).parent();
         var title = {};
         // 公開予定日
@@ -158,7 +163,7 @@ function importTitles() {
     showLoader();
     $('.alert').hide();
     api.title.importTitles(data)
-        .done(function(res) {
+        .done(function (res) {
             // console.log(res);
             if (res.status === 'success') {
                 $('.alert').html('取り込み成功です。').addClass('alert-info').removeClass('alert-danger').show();
@@ -176,7 +181,7 @@ function importTitles() {
             getMovies(params.startFrom, params.endThrougth);
             window.scrollTo(0, 0);
         })
-        .fail(function(err) {
+        .fail(function (err) {
             console.error(err);
             $('.alert').html('エラーが発生しました。').addClass('alert-danger').removeClass('alert-info').show();
             window.scrollTo(0, 0);
@@ -184,11 +189,11 @@ function importTitles() {
         });
 }
 
-$(function(){
+$(function () {
     API_ENDPOINT = $('input[name=API_ENDPOINT]').val();
     var $form = $('form[name="cinerino_title_find"]');
     $form.find('.datetimepicker').datetimepicker(datepickerOption);
-    $form.find('button').click(function() {
+    $form.find('button').click(function () {
         $('.alert').hide();
         var params = getMovieParams();
         getMovies(params.startFrom, params.endThrougth);
