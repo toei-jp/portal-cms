@@ -6,7 +6,7 @@
 
 ## システム要件
 
-- PHP: 7.2
+- PHP: 7.3
 - MySQL: 5.7
 - Azure App Service (Windows)
 - Azure Blob Storage
