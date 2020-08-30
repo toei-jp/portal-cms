@@ -344,7 +344,8 @@ class CampaignController extends BaseController
             $campaign->setUpdatedUser($this->auth->getUser());
 
             $this->logger->debug('Soft delete "Campaign".', [
-                'id' => $campaign->getId() ]);
+                'id' => $campaign->getId()
+            ]);
 
             $this->em->flush();
 
@@ -354,7 +355,8 @@ class CampaignController extends BaseController
                 ->deleteByCampaign($campaign);
 
             $this->logger->debug('Delete "PageCampaign"', [
-                'count' => $pageCampaignDeleteCount ]);
+                'count' => $pageCampaignDeleteCount
+            ]);
 
 
             $theaterCampaignDeleteCount = $this->em
@@ -362,7 +364,8 @@ class CampaignController extends BaseController
                 ->deleteByCampaign($campaign);
 
             $this->logger->debug('Delete "TheaterCampaign"', [
-                'count' => $theaterCampaignDeleteCount ]);
+                'count' => $theaterCampaignDeleteCount
+            ]);
 
 
             $this->em->getConnection()->commit();
