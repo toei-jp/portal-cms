@@ -354,7 +354,8 @@ class NewsController extends BaseController
             $news->setUpdatedUser($this->auth->getUser());
 
             $this->logger->debug('Soft delete "News".', [
-                'id' => $news->getId() ]);
+                'id' => $news->getId()
+            ]);
 
             $this->em->flush();
 
@@ -364,7 +365,8 @@ class NewsController extends BaseController
                 ->deleteByNews($news);
 
             $this->logger->debug('Delete "PageNews"', [
-                'count' => $pageNewsDeleteCount ]);
+                'count' => $pageNewsDeleteCount
+            ]);
 
 
             $theaterNewsDeleteCount = $this->em
@@ -372,7 +374,8 @@ class NewsController extends BaseController
                 ->deleteByNews($news);
 
             $this->logger->debug('Delete "TheaterNews"', [
-                'count' => $theaterNewsDeleteCount ]);
+                'count' => $theaterNewsDeleteCount
+            ]);
 
 
             $this->em->getConnection()->commit();
