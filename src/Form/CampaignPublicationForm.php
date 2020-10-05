@@ -19,8 +19,8 @@ use Toei\PortalAdmin\ORM\Entity;
  */
 class CampaignPublicationForm extends BaseForm
 {
-    public const TARGET_PAGE          = 'page';
-    public const TARGET_TEATER        = 'theater';
+    public const TARGET_PAGE   = 'page';
+    public const TARGET_TEATER = 'theater';
 
     /** @var string */
     protected $target;
@@ -31,17 +31,17 @@ class CampaignPublicationForm extends BaseForm
     /**
      * construct
      *
-     * @param string $target
+     * @param string        $target
      * @param EntityManager $em
      */
     public function __construct(string $target, EntityManager $em)
     {
-        if (!in_array($target, [self::TARGET_PAGE, self::TARGET_TEATER])) {
+        if (! in_array($target, [self::TARGET_PAGE, self::TARGET_TEATER])) {
             throw new \InvalidArgumentException('invalid target.');
         }
 
         $this->target = $target;
-        $this->em = $em;
+        $this->em     = $em;
 
         parent::__construct();
 
@@ -77,12 +77,11 @@ class CampaignPublicationForm extends BaseForm
             ],
         ]);
 
-
         $inputFilter = new InputFilter();
 
         if ($this->target === self::TARGET_PAGE) {
             $pageIds = [];
-            $pages = $this->em->getRepository(Entity\Page::class)->findActive();
+            $pages   = $this->em->getRepository(Entity\Page::class)->findActive();
 
             foreach ($pages as $page) {
                 $pageIds[] = $page->getId();
@@ -94,15 +93,13 @@ class CampaignPublicationForm extends BaseForm
                 'validators' => [
                     [
                         'name' => Validator\InArray::class,
-                        'options' => [
-                            'haystack' => $pageIds,
-                        ],
+                        'options' => ['haystack' => $pageIds],
                     ],
                 ],
             ]);
         } elseif ($this->target === self::TARGET_TEATER) {
             $theaterIds = [];
-            $theaters = $this->em->getRepository(Entity\Theater::class)->findActive();
+            $theaters   = $this->em->getRepository(Entity\Theater::class)->findActive();
 
             foreach ($theaters as $theater) {
                 $theaterIds[] = $theater->getId();
@@ -114,9 +111,7 @@ class CampaignPublicationForm extends BaseForm
                 'validators' => [
                     [
                         'name' => Validator\InArray::class,
-                        'options' => [
-                            'haystack' => $theaterIds,
-                        ],
+                        'options' => ['haystack' => $theaterIds],
                     ],
                 ],
             ]);

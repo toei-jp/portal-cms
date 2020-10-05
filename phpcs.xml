@@ -18,13 +18,6 @@
     <arg value="sp"/>
 
     <!-- Base rule -->
-    <rule ref="PSR12"/>
-
-    <!-- Force array element indentation with 4 spaces -->
-    <rule ref="Generic.Arrays.ArrayIndent"/>
-    <!-- Forbid `array(...)` -->
-    <rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
-    <!-- Forbid duplicate classes -->
-    <rule ref="Generic.Classes.DuplicateClassName"/>
+    <rule ref="Motionpicture"/>
 
 </ruleset>

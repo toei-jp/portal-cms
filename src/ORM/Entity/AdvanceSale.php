@@ -79,7 +79,6 @@ class AdvanceSale extends AbstractEntity
      */
     protected $advanceTickets;
 
-
     /**
      * construct
      */

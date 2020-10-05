@@ -51,7 +51,7 @@ class CampaignController extends BaseController
 
         if ($form->isValid()) {
             $cleanValues = $form->getData();
-            $values = $cleanValues;
+            $values      = $cleanValues;
         } else {
             $values = $request->getParams();
             $this->data->set('errors', $form->getMessages());
@@ -95,7 +95,7 @@ class CampaignController extends BaseController
         $form = new Form\CampaignForm(Form\CampaignForm::TYPE_NEW);
         $form->setData($params);
 
-        if (!$form->isValid()) {
+        if (! $form->isValid()) {
             $this->data->set('form', $form);
             $this->data->set('values', $request->getParams());
             $this->data->set('errors', $form->getMessages());
@@ -222,7 +222,7 @@ class CampaignController extends BaseController
         $form = new Form\CampaignForm(Form\CampaignForm::TYPE_EDIT);
         $form->setData($params);
 
-        if (!$form->isValid()) {
+        if (! $form->isValid()) {
             $this->data->set('campaign', $campaign);
             $this->data->set('form', $form);
             $this->data->set('values', $request->getParams());
@@ -262,14 +262,12 @@ class CampaignController extends BaseController
             $oldImage = $campaign->getImage();
             $campaign->setImage($file);
 
-
             // @todo preUpdateで出来ないか？ hasChangedField()
             $this->em->remove($oldImage);
 
             // @todo postRemoveイベントへ
             $this->bc->deleteBlob(Entity\File::getBlobContainer(), $oldImage->getName());
         }
-
 
         $title = null;
 
@@ -344,29 +342,22 @@ class CampaignController extends BaseController
             $campaign->setUpdatedUser($this->auth->getUser());
 
             $this->logger->debug('Soft delete "Campaign".', [
-                'id' => $campaign->getId()
+                'id' => $campaign->getId(),
             ]);
 
             $this->em->flush();
-
 
             $pageCampaignDeleteCount = $this->em
                 ->getRepository(Entity\PageCampaign::class)
                 ->deleteByCampaign($campaign);
 
-            $this->logger->debug('Delete "PageCampaign"', [
-                'count' => $pageCampaignDeleteCount
-            ]);
-
+            $this->logger->debug('Delete "PageCampaign"', ['count' => $pageCampaignDeleteCount]);
 
             $theaterCampaignDeleteCount = $this->em
                 ->getRepository(Entity\TheaterCampaign::class)
                 ->deleteByCampaign($campaign);
 
-            $this->logger->debug('Delete "TheaterCampaign"', [
-                'count' => $theaterCampaignDeleteCount
-            ]);
-
+            $this->logger->debug('Delete "TheaterCampaign"', ['count' => $theaterCampaignDeleteCount]);
 
             $this->em->getConnection()->commit();
         } catch (\Exception $e) {
@@ -409,24 +400,24 @@ class CampaignController extends BaseController
         $form = new Form\CampaignPublicationForm($target, $this->em);
         $form->setData($request->getParams());
 
-        if (!$form->isValid()) {
+        if (! $form->isValid()) {
             throw new \LogicException('invalid parameters.');
         }
 
-        $cleanData = $form->getData();
-        $targetEntity = null;
+        $cleanData       = $form->getData();
+        $targetEntity    = null;
         $basePublication = null;
 
         if ($target === Form\CampaignPublicationForm::TARGET_TEATER) {
             /** @var Entity\Theater $targetEntity */
-            $targetEntity = $this->em
+            $targetEntity    = $this->em
                 ->getRepository(Entity\Theater::class)
                 ->findOneById((int) $cleanData['theater_id']);
             $basePublication = new Entity\TheaterCampaign();
             $basePublication->setTheater($targetEntity);
         } elseif ($target === Form\CampaignPublicationForm::TARGET_PAGE) {
             /** @var Entity\Page $targetEntity */
-            $targetEntity = $this->em
+            $targetEntity    = $this->em
                 ->getRepository(Entity\Page::class)
                 ->findOneById((int) $cleanData['page_id']);
             $basePublication = new Entity\PageCampaign();
@@ -443,7 +434,7 @@ class CampaignController extends BaseController
                 ->getRepository(Entity\Campaign::class)
                 ->findOneById((int) $campaignData['campaign_id']);
 
-            if (!$campaign) {
+            if (! $campaign) {
                 // @todo formで検証したい
                 throw new \LogicException('invalid campaign.');
             }
@@ -457,7 +448,6 @@ class CampaignController extends BaseController
         }
 
         $this->em->flush();
-
 
         $this->flash->addMessage('alerts', [
             'type'    => 'info',

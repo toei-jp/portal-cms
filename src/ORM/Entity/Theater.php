@@ -133,10 +133,10 @@ class Theater extends AbstractEntity implements
      */
     public function __construct(int $id)
     {
-        $this->id = $id;
-        $this->adminUsers = new ArrayCollection();
-        $this->campaigns = new ArrayCollection();
-        $this->newsList =  new ArrayCollection();
+        $this->id          = $id;
+        $this->adminUsers  = new ArrayCollection();
+        $this->campaigns   = new ArrayCollection();
+        $this->newsList    =  new ArrayCollection();
         $this->mainBanners = new ArrayCollection();
     }
 

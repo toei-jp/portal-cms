@@ -24,7 +24,7 @@ class Auth
 
     public function __construct(ContainerInterface $container)
     {
-        $this->em = $container->get('em');
+        $this->em      = $container->get('em');
         $this->session = $container->get('sm')->getContainer('auth');
     }
 
@@ -38,7 +38,7 @@ class Auth
     public function login($name, $password)
     {
         $repository = $this->em->getRepository(AdminUser::class);
-        $adminUser = $repository->findOneByName($name);
+        $adminUser  = $repository->findOneByName($name);
 
         if (is_null($adminUser)) {
             return false;
@@ -46,11 +46,11 @@ class Auth
 
         /** @var AdminUser $adminUser */
 
-        if (!password_verify($password, $adminUser->getPassword())) {
+        if (! password_verify($password, $adminUser->getPassword())) {
             return false;
         }
 
-        $this->user = $adminUser;
+        $this->user               = $adminUser;
         $this->session['user_id'] = $adminUser->getId();
 
         return true;
@@ -86,11 +86,11 @@ class Auth
      */
     public function getUser()
     {
-        if (!$this->isAuthenticated()) {
+        if (! $this->isAuthenticated()) {
             return null;
         }
 
-        if (!$this->user) {
+        if (! $this->user) {
             $repository = $this->em->getRepository(AdminUser::class);
             $this->user = $repository->findOneById($this->session['user_id']);
         }

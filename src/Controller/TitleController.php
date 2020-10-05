@@ -54,7 +54,7 @@ class TitleController extends BaseController
 
         if ($form->isValid()) {
             $cleanValues = $form->getData();
-            $values = $cleanValues;
+            $values      = $cleanValues;
         } else {
             $values = $request->getParams();
             $this->data->set('errors', $form->getMessages());
@@ -111,7 +111,7 @@ class TitleController extends BaseController
         $form = new Form\TitleForm();
         $form->setData($params);
 
-        if (!$form->isValid()) {
+        if (! $form->isValid()) {
             $this->data->set('form', $form);
             $this->data->set('values', $request->getParams());
             $this->data->set('errors', $form->getMessages());
@@ -123,7 +123,7 @@ class TitleController extends BaseController
         $cleanData = $form->getData();
 
         $image = $cleanData['image'];
-        $file = null;
+        $file  = null;
 
         if ($image['name']) {
             // rename
@@ -224,10 +224,10 @@ class TitleController extends BaseController
         $publishingExpectedDate = $title->getPublishingExpectedDate();
 
         if ($publishingExpectedDate instanceof \DateTime) {
-            $values['publishing_expected_date'] = $publishingExpectedDate->format('Y/m/d');
+            $values['publishing_expected_date']           = $publishingExpectedDate->format('Y/m/d');
             $values['not_exist_publishing_expected_date'] = null;
         } else {
-            $values['publishing_expected_date'] = null;
+            $values['publishing_expected_date']           = null;
             $values['not_exist_publishing_expected_date'] = '1';
         }
 
@@ -258,7 +258,7 @@ class TitleController extends BaseController
         $form = new Form\TitleForm();
         $form->setData($params);
 
-        if (!$form->isValid()) {
+        if (! $form->isValid()) {
             $this->data->set('title', $title);
             $this->data->set('form', $form);
             $this->data->set('values', $request->getParams());
@@ -270,7 +270,7 @@ class TitleController extends BaseController
 
         $cleanData = $form->getData();
 
-        $image = $cleanData['image'];
+        $image         = $cleanData['image'];
         $isDeleteImage = $cleanData['delete_image'] || $image['name'];
 
         if ($isDeleteImage && $title->getImage()) {

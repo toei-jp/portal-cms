@@ -17,7 +17,7 @@ use Toei\PortalAdmin\ORM\Entity\MainBanner;
  */
 class MainBannerForm extends BaseForm
 {
-    public const TYPE_NEW = 1;
+    public const TYPE_NEW  = 1;
     public const TYPE_EDIT = 2;
 
     /** @var int */
@@ -33,7 +33,7 @@ class MainBannerForm extends BaseForm
      */
     public function __construct(int $type)
     {
-        $this->type = $type;
+        $this->type            = $type;
         $this->linkTypeChoices = MainBanner::getLinkTypes();
 
         parent::__construct();
@@ -108,9 +108,7 @@ class MainBannerForm extends BaseForm
             'validators' => [
                 [
                     'name' => Validator\File\Size::class,
-                    'options' => [
-                        'max' => '10MB', // SASAKI-245
-                    ],
+                    'options' => ['max' => '10MB'], // SASAKI-245
                 ],
                 [
                     'name' => Validator\File\MimeType::class,

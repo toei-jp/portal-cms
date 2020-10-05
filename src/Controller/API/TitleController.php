@@ -27,16 +27,15 @@ class TitleController extends BaseController
     {
         $name = $request->getParam('name');
         $data = [];
-        
-        if (!empty($name)) {
+
+        if (! empty($name)) {
             $titles = $this->em
                 ->getRepository(Entity\Title::class)
                 ->findForListApi($name);
-            
-                
+
             foreach ($titles as $title) {
                 /** @var Entity\Title $title */
-                
+
                 $data[] = [
                     'id'            => $title->getId(),
                     'name'          => $title->getName(),
@@ -47,7 +46,7 @@ class TitleController extends BaseController
                 ];
             }
         }
-        
+
         $this->data->set('data', $data);
     }
 
@@ -61,21 +60,21 @@ class TitleController extends BaseController
      */
     public function executeFindImported($request, $response, $args)
     {
-        $ids = json_decode($request->getParam('ids'));
+        $ids  = json_decode($request->getParam('ids'));
         $data = [];
-        
+
         if ($ids !== null) {
             $titles = $this->em
                 ->getRepository(Entity\Title::class)
                 ->findForFindImportedApi($ids);
-            
+
             foreach ($titles as $title) {
                 /** @var Entity\Title $title */
-                
+
                 array_push($data, $title->getCheverCode());
             }
         }
-        
+
         $this->data->set('data', $data);
     }
 
@@ -89,11 +88,11 @@ class TitleController extends BaseController
      */
     public function executeImportTitles($request, $response, $args)
     {
-        $data = $request->getParams();
+        $data   = $request->getParams();
         $errors = [];
         foreach ($data['titles'] as $title) {
             $ratings = Entity\Title::getRatingTypes();
-            $i = array_search($title['rating'], $ratings);
+            $i       = array_search($title['rating'], $ratings);
             if ($i !== false) {
                 $title['rating'] = $i;
             } else {
@@ -102,12 +101,12 @@ class TitleController extends BaseController
             try {
                 $newTitle = new Entity\Title();
                 $newTitle->setName($title['name']);
-                if (!empty($title['sub_title'])) {
+                if (! empty($title['sub_title'])) {
                     $newTitle->setSubTitle($title['sub_title']);
                 }
                 $newTitle->setCheverCode($title['chever_code']);
                 if (
-                    !isset($title['not_exist_publishing_expected_date']) ||
+                    ! isset($title['not_exist_publishing_expected_date']) ||
                     $title['not_exist_publishing_expected_date'] !== '1'
                 ) {
                     $newTitle->setPublishingExpectedDate($title['publishing_expected_date']);
@@ -116,7 +115,7 @@ class TitleController extends BaseController
                 $newTitle->setUniversal([]);
                 $newTitle->setCreatedUser($this->auth->getUser());
                 $newTitle->setUpdatedUser($this->auth->getUser());
-                
+
                 $this->em->persist($newTitle);
                 $this->em->flush();
             } catch (\Exception $e) {
@@ -131,7 +130,7 @@ class TitleController extends BaseController
             $this->data->set('status', 'success');
         }
     }
-    
+
     /**
      * autocomplete action
      *
@@ -145,19 +144,19 @@ class TitleController extends BaseController
         $titles = $this->em
                 ->getRepository(Entity\Title::class)
                 ->findForAutocomplete($request->getParams());
-                
+
         $data = [];
-        
+
         foreach ($titles as $title) {
             /** @var Entity\Title $title */
-            
+
             $data[] = [
                 'name'      => $title->getName(),
                 'name_kana' => $title->getNameKana(),
                 'sub_title' => $title->getSubTitle(),
             ];
         }
-        
+
         $this->data->set('data', $data);
     }
 }

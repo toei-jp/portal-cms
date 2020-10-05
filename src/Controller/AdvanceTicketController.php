@@ -49,7 +49,7 @@ class AdvanceTicketController extends BaseController
 
         if ($form->isValid()) {
             $cleanValues = $form->getData();
-            $values = $cleanValues;
+            $values      = $cleanValues;
         } else {
             $values = $request->getParams();
             $this->data->set('errors', $form->getMessages());
@@ -59,9 +59,7 @@ class AdvanceTicketController extends BaseController
 
         if ($user->isTheater()) {
             // ひとまず検索のパラメータとして扱う
-            $cleanValues['theater'] = [
-                $user->getTheater()->getId()
-            ];
+            $cleanValues['theater'] = [$user->getTheater()->getId()];
         }
 
         $this->data->set('form', $form);
@@ -132,7 +130,7 @@ class AdvanceTicketController extends BaseController
         $form = $this->getForm(Form\AbstractAdvanceSaleForm::TYPE_NEW);
         $form->setData($params);
 
-        if (!$form->isValid()) {
+        if (! $form->isValid()) {
             $this->data->set('form', $form);
             $this->data->set('values', $params);
             $this->data->set('errors', $form->getMessages());
@@ -197,7 +195,7 @@ class AdvanceTicketController extends BaseController
             $advanceTicket->setSpecialGiftStock($ticket['special_gift_stock']);
 
             $image = $ticket['special_gift_image'];
-            $file = null;
+            $file  = null;
 
             if ($image['name']) {
                 $file = $this->uploadFile($image);
@@ -291,10 +289,10 @@ class AdvanceTicketController extends BaseController
         $publishingExpectedDate = $advanceSale->getPublishingExpectedDate();
 
         if ($publishingExpectedDate instanceof \DateTime) {
-            $values['publishing_expected_date'] = $publishingExpectedDate->format('Y/m/d');
+            $values['publishing_expected_date']           = $publishingExpectedDate->format('Y/m/d');
             $values['not_exist_publishing_expected_date'] = null;
         } else {
-            $values['publishing_expected_date'] = null;
+            $values['publishing_expected_date']           = null;
             $values['not_exist_publishing_expected_date'] = '1';
         }
 
@@ -341,7 +339,7 @@ class AdvanceTicketController extends BaseController
         $form = $this->getForm(Form\AbstractAdvanceSaleForm::TYPE_EDIT);
         $form->setData($params);
 
-        if (!$form->isValid()) {
+        if (! $form->isValid()) {
             $this->data->set('advanceSale', $advanceSale);
             $this->data->set('form', $form);
             $this->data->set('values', $params);
@@ -372,7 +370,7 @@ class AdvanceTicketController extends BaseController
      * do update
      *
      * @param Form\AdvanceSaleForm $form
-     * @param Entity\AdvanceSale $advanceSale
+     * @param Entity\AdvanceSale   $advanceSale
      */
     protected function doUpdate(Form\AdvanceSaleForm $form, Entity\AdvanceSale $advanceSale)
     {
@@ -404,7 +402,7 @@ class AdvanceTicketController extends BaseController
                 $advanceTicket = $advanceTickets->get($advanceTicketId);
 
                 if (
-                    !$advanceTicket
+                    ! $advanceTicket
                     || $advanceTicket->getId() !== (int) $advanceTicketId // 念のため確認
                 ) {
                     throw new \RuntimeException(sprintf('advance_ticket(%s) dose not eixist.', $advanceTicketId));
@@ -424,7 +422,7 @@ class AdvanceTicketController extends BaseController
                 $advanceTicket = $advanceTickets->get($ticket['id']);
 
                 if (
-                    !$advanceTicket
+                    ! $advanceTicket
                     || $advanceTicket->getId() !== (int) $ticket['id'] // 念のため確認
                 ) {
                     throw new \RuntimeException(sprintf('advance_ticket(%s) dose not eixist.', $ticket['id']));
@@ -447,7 +445,7 @@ class AdvanceTicketController extends BaseController
             $advanceTicket->setSpecialGift($ticket['special_gift']);
             $advanceTicket->setSpecialGiftStock($ticket['special_gift_stock']);
 
-            $image = $ticket['special_gift_image'];
+            $image         = $ticket['special_gift_image'];
             $isDeleteImage = ($ticket['delete_special_gift_image'] == '1') || $image['name'];
 
             if ($isDeleteImage && $advanceTicket->getSpecialGiftImage()) {
@@ -477,7 +475,7 @@ class AdvanceTicketController extends BaseController
      * do update for theater user
      *
      * @param Form\AdvanceSaleForTheaterUserForm $form
-     * @param Entity\AdvanceSale $advanceSale
+     * @param Entity\AdvanceSale                 $advanceSale
      * @return void
      */
     protected function doUpdateForTheaterUser(Form\AdvanceSaleForTheaterUserForm $form, Entity\AdvanceSale $advanceSale)
@@ -495,7 +493,7 @@ class AdvanceTicketController extends BaseController
             $advanceTicket = $advanceTickets->get($ticket['id']);
 
             if (
-                !$advanceTicket
+                ! $advanceTicket
                 || $advanceTicket->getId() !== (int) $ticket['id'] // 念のため確認
             ) {
                 throw new \RuntimeException(sprintf('advance_ticket(%s) dose not eixist.', $ticket['id']));
@@ -529,7 +527,6 @@ class AdvanceTicketController extends BaseController
 
         // 関連データの処理はイベントで対応する
         $advanceTicket->setIsDeleted(true);
-
 
         $advanceSale = $advanceTicket->getAdvanceSale();
         $advanceSale->setUpdatedUser($this->auth->getUser());

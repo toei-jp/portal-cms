@@ -106,7 +106,7 @@ class Schedule extends AbstractEntity
      */
     public function __construct()
     {
-        $this->showingFormats = new ArrayCollection();
+        $this->showingFormats  = new ArrayCollection();
         $this->showingTheaters = new ArrayCollection();
     }
 

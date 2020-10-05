@@ -47,12 +47,11 @@ final class MotionPictureExtenstionTest extends BaseTestCase
     public function testConstruct()
     {
         $targetMock = $this->createTargetMock();
-        $settings = [
-            'foo' => 'bar',
-        ];
+        $settings   = ['foo' => 'bar'];
+
+        $targetRef = $this->createTargetReflection();
 
         // execute constructor
-        $targetRef = $this->createTargetReflection();
         $constructorRef = $targetRef->getConstructor();
         $constructorRef->invoke($targetMock, $settings);
 
@@ -75,11 +74,10 @@ final class MotionPictureExtenstionTest extends BaseTestCase
     {
         $targetMock = $this->createTargetMock();
         $targetMock->makePartial();
-        $settings = [
-            'api_endpoint' => 'example.com/api',
-        ];
+        $settings = ['api_endpoint' => 'example.com/api'];
 
         $targetRef = $this->createTargetReflection();
+
         $settingsPropertyRef = $targetRef->getProperty('settings');
         $settingsPropertyRef->setAccessible(true);
         $settingsPropertyRef->setValue($targetMock, $settings);

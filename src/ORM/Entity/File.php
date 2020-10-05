@@ -23,7 +23,7 @@ use Toei\PortalAdmin\ORM\Entity\AbstractEntity;
 class File extends AbstractEntity
 {
     use TimestampableTrait;
-    
+
     /**
      * id
      *
@@ -33,7 +33,7 @@ class File extends AbstractEntity
      * @ORM\GeneratedValue
      */
     protected $id;
-    
+
     /**
      * name
      *
@@ -41,7 +41,7 @@ class File extends AbstractEntity
      * @ORM\Column(type="string", unique=true)
      */
     protected $name;
-    
+
     /**
      * original_name
      *
@@ -49,7 +49,7 @@ class File extends AbstractEntity
      * @ORM\Column(type="string", name="original_name")
      */
     protected $originalName;
-    
+
     /**
      * mime_type
      *
@@ -57,7 +57,7 @@ class File extends AbstractEntity
      * @ORM\Column(type="string", name="mime_type")
      */
     protected $mimeType;
-    
+
     /**
      * size
      *
@@ -65,21 +65,21 @@ class File extends AbstractEntity
      * @ORM\Column(type="integer", options={"unsigned"=true})
      */
     protected $size;
-    
+
     /**
      * blob container name
      *
      * @var string
      */
     protected static $blobContainer = 'file';
-    
+
     /**
      * construct
      */
     public function __construct()
     {
     }
-    
+
     /**
      * get id
      *
@@ -89,7 +89,7 @@ class File extends AbstractEntity
     {
         return $this->id;
     }
-    
+
     /**
      * get name
      *
@@ -99,7 +99,7 @@ class File extends AbstractEntity
     {
         return $this->name;
     }
-    
+
     /**
      * set name
      *
@@ -110,7 +110,7 @@ class File extends AbstractEntity
     {
         $this->name = $name;
     }
-    
+
     /**
      * get original_name
      *
@@ -120,7 +120,7 @@ class File extends AbstractEntity
     {
         return $this->originalName;
     }
-    
+
     /**
      * set original_name
      *
@@ -131,7 +131,7 @@ class File extends AbstractEntity
     {
         $this->originalName = $originalName;
     }
-    
+
     /**
      * get mime_type
      *
@@ -141,7 +141,7 @@ class File extends AbstractEntity
     {
         return $this->mimeType;
     }
-    
+
     /**
      * set mime_type
      *
@@ -152,7 +152,7 @@ class File extends AbstractEntity
     {
         $this->mimeType = $mimeType;
     }
-    
+
     /**
      * get size
      *
@@ -162,7 +162,7 @@ class File extends AbstractEntity
     {
         return $this->size;
     }
-    
+
     /**
      * set size
      *
@@ -173,7 +173,7 @@ class File extends AbstractEntity
     {
         $this->size = $size;
     }
-    
+
     /**
      * get blob container
      *
@@ -183,7 +183,7 @@ class File extends AbstractEntity
     {
         return self::$blobContainer;
     }
-    
+
     /**
      * create name
      *
@@ -193,7 +193,7 @@ class File extends AbstractEntity
     public static function createName(string $file)
     {
         $info = pathinfo($file);
-        
+
         return md5(uniqid('', true)) . '.' . $info['extension'];
     }
 }

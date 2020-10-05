@@ -23,11 +23,11 @@ abstract class BaseResponder extends AbstractResponder
      */
     final public static function factory(string $name): AbstractResponder
     {
-        $className =  __NAMESPACE__  . '\\' . $name . 'Responder';
-        
+        $className =  __NAMESPACE__ . '\\' . $name . 'Responder';
+
         return new $className();
     }
-    
+
     /**
      * contsruct
      */

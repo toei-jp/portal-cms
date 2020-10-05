@@ -27,7 +27,7 @@ class ScheduleResponder extends BaseResponder
     {
         return $this->view->render($response, 'schedule/list.html.twig', $data->all());
     }
-    
+
     /**
      * new
      *
@@ -39,7 +39,7 @@ class ScheduleResponder extends BaseResponder
     {
         return $this->view->render($response, 'schedule/new.html.twig', $data->all());
     }
-    
+
     /**
      * edit
      *

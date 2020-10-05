@@ -27,9 +27,7 @@ trait ImageResize
      */
     private function createImageManager(): void
     {
-        $this->imageManager = new ImageManager([
-            'driver' => 'gd',
-        ]);
+        $this->imageManager = new ImageManager(['driver' => 'gd']);
     }
 
     /**
@@ -39,7 +37,7 @@ trait ImageResize
      */
     private function getImageManager(): ImageManager
     {
-        if (!$this->imageManager) {
+        if (! $this->imageManager) {
             $this->createImageManager();
         }
 
@@ -59,7 +57,7 @@ trait ImageResize
     protected function resizeImage($data, ?int $width, ?int $height = null)
     {
         $imageManager = $this->getImageManager();
-        $image = $imageManager
+        $image        = $imageManager
             ->make($data)
             ->resize($width, $height, function ($constraint) {
                 $constraint->aspectRatio(); // アスペクト比を固定

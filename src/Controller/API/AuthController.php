@@ -35,8 +35,8 @@ class AuthController extends BaseController
     {
         $settings = $this->settings['api'];
 
-        $this->authServer = $settings['auth_server'];
-        $this->authClientId = $settings['auth_client_id'];
+        $this->authServer       = $settings['auth_server'];
+        $this->authClientId     = $settings['auth_client_id'];
         $this->authClientSecret = $settings['auth_client_secret'];
 
         parent::preExecute($request, $response);
@@ -54,15 +54,13 @@ class AuthController extends BaseController
      */
     public function executeToken($request, $response, $args)
     {
-        $meta = [
-            'name' => 'Authorization Token',
-        ];
+        $meta = ['name' => 'Authorization Token'];
         $this->data->set('meta', $meta);
 
         $response = $this->requestToken();
 
         $rawData = $response->getBody()->getContents();
-        $data = json_decode($rawData, true);
+        $data    = json_decode($rawData, true);
 
         $this->data->set('data', $data);
     }
@@ -77,16 +75,14 @@ class AuthController extends BaseController
     protected function requestToken(): \Psr\Http\Message\ResponseInterface
     {
         $endpoint = '/oauth2/token';
-        $headers = [
+        $headers  = [
             'Authorization' => $this->createAuthStr(),
             'Content-Type' => 'application/x-www-form-urlencoded',
         ];
-        $params = [
-            'grant_type' => 'client_credentials',
-        ];
+        $params   = ['grant_type' => 'client_credentials'];
 
         $httpClient = $this->createHttpClient();
-        $response = $httpClient->post($endpoint, [
+        $response   = $httpClient->post($endpoint, [
             'headers' => $headers,
             'form_params' => $params,
         ]);
@@ -119,7 +115,7 @@ class AuthController extends BaseController
      */
     protected function createAuthStr(): string
     {
-        $clientId = $this->authClientId;
+        $clientId     = $this->authClientId;
         $clientSecret = $this->authClientSecret;
 
         return 'Basic ' . base64_encode($clientId . ':' . $clientSecret);

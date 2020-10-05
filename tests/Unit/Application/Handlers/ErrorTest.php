@@ -60,9 +60,9 @@ final class ErrorTest extends TestCase
         $displayErrorDetails = true;
 
         $targetMock = $this->createTargetMock();
+        $targetRef  = $this->createTargetReflection();
 
         // execute constructor
-        $targetRef = $this->createTargetReflection();
         $errorHandlerConstructor = $targetRef->getConstructor();
         $errorHandlerConstructor->invoke($targetMock, $loggerMock, $displayErrorDetails);
 
@@ -163,6 +163,7 @@ final class ErrorTest extends TestCase
         $targetMock->makePartial();
 
         $targetRef = $this->createTargetReflection();
+
         $renderHtmlErrorMessageMethodRef = $targetRef->getMethod('renderHtmlErrorMessage');
         $renderHtmlErrorMessageMethodRef->setAccessible(true);
 

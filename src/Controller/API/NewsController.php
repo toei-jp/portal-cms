@@ -29,13 +29,12 @@ class NewsController extends BaseController
     public function executeList($request, $response, $args)
     {
         $headline = $request->getParam('headline');
-        $data = [];
+        $data     = [];
 
-        if (!empty($headline)) {
+        if (! empty($headline)) {
             $newsList = $this->em
                 ->getRepository(Entity\News::class)
                 ->findForListApi($headline);
-
 
             foreach ($newsList as $news) {
                 /** @var Entity\News $news */

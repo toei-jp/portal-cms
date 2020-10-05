@@ -36,9 +36,7 @@ class MotionPictureExtenstion extends AbstractExtension
      */
     public function getFunctions()
     {
-        return [
-            new TwigFunction('mp_api_endpoint', [$this, 'getApiEndpoint'])
-        ];
+        return [new TwigFunction('mp_api_endpoint', [$this, 'getApiEndpoint'])];
     }
 
     /**

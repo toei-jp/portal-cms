@@ -24,13 +24,13 @@ class AdvanceSaleForm extends AbstractAdvanceSaleForm
     /**
      * construct
      *
-     * @param int $type
+     * @param int           $type
      * @param EntityManager $em
      */
     public function __construct(int $type, EntityManager $em)
     {
-        $this->type = $type;
-        $this->em = $em;
+        $this->type           = $type;
+        $this->em             = $em;
         $this->ticketFieldset = new AdvanceTicketFieldset(false);
 
         parent::__construct();
@@ -57,7 +57,6 @@ class AdvanceSaleForm extends AbstractAdvanceSaleForm
                 'type' => 'Hidden', // Collectionかもしれない
             ]);
         }
-
 
         $theaters = $this->em
             ->getRepository(Entity\Theater::class)
@@ -113,7 +112,6 @@ class AdvanceSaleForm extends AbstractAdvanceSaleForm
                 'target_element' => $this->ticketFieldset,
             ],
         ]);
-
 
         $inputFilter = new InputFilter();
 

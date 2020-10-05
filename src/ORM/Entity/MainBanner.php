@@ -27,7 +27,7 @@ class MainBanner extends AbstractEntity
     use TimestampableTrait;
 
     public const LINK_TYPE_NONE = 1;
-    public const LINK_TYPE_URL = 2;
+    public const LINK_TYPE_URL  = 2;
 
     /** @var array */
     protected static $linkTypes = [
@@ -109,7 +109,7 @@ class MainBanner extends AbstractEntity
      */
     public function __construct()
     {
-        $this->pages = new ArrayCollection();
+        $this->pages    = new ArrayCollection();
         $this->theaters = new ArrayCollection();
     }
 

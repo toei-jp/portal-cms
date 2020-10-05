@@ -53,7 +53,7 @@ abstract class AbstractController
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
-        $this->data = new Collection();
+        $this->data      = new Collection();
     }
 
     /**
@@ -144,7 +144,7 @@ abstract class AbstractController
      * build response
      *
      * @param Response    $response
-     * @param string|null $method responder method
+     * @param string|null $method   responder method
      * @return Response
      */
     protected function buildResponse(Response $response, string $method = null): Response
@@ -164,7 +164,7 @@ abstract class AbstractController
      * call
      *
      * @param string $name
-     * @param array $argments
+     * @param array  $argments
      * @return mixed
      * @throws \LogicException
      */
@@ -175,7 +175,7 @@ abstract class AbstractController
         $actionMethod = 'execute' . ucfirst($name);
 
         // is_callable()は__call()があると常にtrueとなるので不可
-        if (!method_exists($this, $actionMethod)) {
+        if (! method_exists($this, $actionMethod)) {
             throw new \LogicException(sprintf('The method "%s" dose not exist.', $name));
         }
 

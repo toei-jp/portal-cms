@@ -33,7 +33,7 @@ class BaseForm extends Form
     {
         parent::__construct();
 
-        $translator = new ValidatorTranslator();
+        $translator      = new ValidatorTranslator();
         $translationFile = Resources::getBasePath() . sprintf(Resources::getPatternForValidator(), 'ja');
         $translator->addTranslationFile(
             'phpArray',
@@ -58,7 +58,7 @@ class BaseForm extends Form
     {
         return array_merge_recursive(
             $params,
-            BaseForm::parseUploadedFiles($uploadedFiles)
+            self::parseUploadedFiles($uploadedFiles)
         );
     }
 
@@ -75,7 +75,7 @@ class BaseForm extends Form
         $parsed = [];
 
         foreach ($uploadedFiles as $field => $uploadedFile) {
-            if (!isset($uploadedFile['error'])) {
+            if (! isset($uploadedFile['error'])) {
                 if (is_array($uploadedFile)) {
                     $parsed[$field] = static::parseUploadedFiles($uploadedFile);
                 }
@@ -83,7 +83,7 @@ class BaseForm extends Form
             }
 
             $parsed[$field] = [];
-            if (!is_array($uploadedFile['error'])) {
+            if (! is_array($uploadedFile['error'])) {
                 $parsed[$field] = [
                     'tmp_name' => $uploadedFile['tmp_name'],
                     'name'     => isset($uploadedFile['name']) ? $uploadedFile['name'] : null,
@@ -95,11 +95,11 @@ class BaseForm extends Form
                 $subArray = [];
                 foreach ($uploadedFile['error'] as $fileIdx => $error) {
                     // normalise subarray and re-parse to move the input's keyname up a level
-                    $subArray[$fileIdx]['name'] = $uploadedFile['name'][$fileIdx];
-                    $subArray[$fileIdx]['type'] = $uploadedFile['type'][$fileIdx];
+                    $subArray[$fileIdx]['name']     = $uploadedFile['name'][$fileIdx];
+                    $subArray[$fileIdx]['type']     = $uploadedFile['type'][$fileIdx];
                     $subArray[$fileIdx]['tmp_name'] = $uploadedFile['tmp_name'][$fileIdx];
-                    $subArray[$fileIdx]['error'] = $uploadedFile['error'][$fileIdx];
-                    $subArray[$fileIdx]['size'] = $uploadedFile['size'][$fileIdx];
+                    $subArray[$fileIdx]['error']    = $uploadedFile['error'][$fileIdx];
+                    $subArray[$fileIdx]['size']     = $uploadedFile['size'][$fileIdx];
 
                     $parsed[$field] = static::parseUploadedFiles($subArray);
                 }

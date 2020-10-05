@@ -486,8 +486,8 @@ class Title extends AbstractEntity
     public function getUniversalLabel()
     {
         $univarsal = $this->getUniversal();
-        $types = self::getUniversalTypes();
-        $labels = [];
+        $types     = self::getUniversalTypes();
+        $labels    = [];
 
         foreach ($univarsal as $value) {
             if (isset($types[$value])) {

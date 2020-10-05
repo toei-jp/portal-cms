@@ -27,7 +27,7 @@ class CampaignResponder extends BaseResponder
     {
         return $this->view->render($response, 'campaign/list.html.twig', $data->all());
     }
-    
+
     /**
      * new
      *
@@ -39,7 +39,7 @@ class CampaignResponder extends BaseResponder
     {
         return $this->view->render($response, 'campaign/new.html.twig', $data->all());
     }
-    
+
     /**
      * edit
      *
@@ -51,7 +51,7 @@ class CampaignResponder extends BaseResponder
     {
         return $this->view->render($response, 'campaign/edit.html.twig', $data->all());
     }
-    
+
     /**
      * publication
      *

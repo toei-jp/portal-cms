@@ -42,14 +42,12 @@ class EditorController extends BaseController
         $form = new ApiForm\EditorUploadForm();
         $form->setData($params);
 
-        if (!$form->isValid()) {
-            $errors = [];
+        if (! $form->isValid()) {
+            $errors   = [];
             $messages = $form->getMessages()['file'];
 
             foreach ($messages as $message) {
-                $errors[] = [
-                    'title' => $message,
-                ];
+                $errors[] = ['title' => $message];
             }
 
             $this->data->set('errors', $errors);
@@ -61,7 +59,7 @@ class EditorController extends BaseController
         $file = $cleanData['file'];
 
         // rename
-        $info = pathinfo($file['name']);
+        $info     = pathinfo($file['name']);
         $blobName = md5(uniqid('', true)) . '.' . $info['extension'];
 
         // upload storage

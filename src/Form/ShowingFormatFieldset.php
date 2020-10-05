@@ -32,7 +32,7 @@ class ShowingFormatFieldset extends Fieldset implements InputFilterProviderInter
         parent::__construct('showing');
 
         $this->systemChoices = ShowingFormat::getSystemList();
-        $this->voiceChoices = ShowingFormat::getVoiceList();
+        $this->voiceChoices  = ShowingFormat::getVoiceList();
 
         $this->setup();
     }
@@ -71,12 +71,8 @@ class ShowingFormatFieldset extends Fieldset implements InputFilterProviderInter
     public function getInputFilterSpecification()
     {
         return [
-            'system' => [
-                'required' => true,
-            ],
-            'voice' => [
-                'required' => true,
-            ],
+            'system' => ['required' => true],
+            'voice' => ['required' => true],
         ];
     }
 

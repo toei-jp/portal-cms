@@ -27,7 +27,7 @@ class AdvanceTicketResponder extends BaseResponder
     {
         return $this->view->render($response, 'advance_ticket/list.html.twig', $data->all());
     }
-    
+
     /**
      * new
      *
@@ -39,7 +39,7 @@ class AdvanceTicketResponder extends BaseResponder
     {
         return $this->view->render($response, 'advance_ticket/new.html.twig', $data->all());
     }
-    
+
     /**
      * edit
      *
