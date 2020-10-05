@@ -17,7 +17,7 @@ abstract class BaseResponder extends AbstractResponder
 {
     /** @var Twig view */
     protected $view;
-    
+
     /**
      * factory
      *
@@ -27,11 +27,11 @@ abstract class BaseResponder extends AbstractResponder
      */
     final public static function factory(string $name, Twig $view): AbstractResponder
     {
-        $className =  __NAMESPACE__  . '\\' . $name . 'Responder';
-        
+        $className =  __NAMESPACE__ . '\\' . $name . 'Responder';
+
         return new $className($view);
     }
-    
+
     /**
      * contsruct
      *

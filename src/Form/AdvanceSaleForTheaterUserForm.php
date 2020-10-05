@@ -25,8 +25,8 @@ class AdvanceSaleForTheaterUserForm extends AbstractAdvanceSaleForm
      */
     public function __construct(EntityManager $em)
     {
-        $this->type = self::TYPE_EDIT;
-        $this->em = $em;
+        $this->type           = self::TYPE_EDIT;
+        $this->em             = $em;
         $this->ticketFieldset = new AdvanceTicketFieldset(true);
 
         parent::__construct();
@@ -53,7 +53,6 @@ class AdvanceSaleForTheaterUserForm extends AbstractAdvanceSaleForm
                 'target_element' => $this->ticketFieldset,
             ],
         ]);
-
 
         $inputFilter = new InputFilter();
 

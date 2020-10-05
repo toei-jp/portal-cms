@@ -27,7 +27,7 @@ class MainBannerResponder extends BaseResponder
     {
         return $this->view->render($response, 'main_banner/list.html.twig', $data->all());
     }
-    
+
     /**
      * new
      *
@@ -39,7 +39,7 @@ class MainBannerResponder extends BaseResponder
     {
         return $this->view->render($response, 'main_banner/new.html.twig', $data->all());
     }
-    
+
     /**
      * edit
      *
@@ -51,7 +51,7 @@ class MainBannerResponder extends BaseResponder
     {
         return $this->view->render($response, 'main_banner/edit.html.twig', $data->all());
     }
-    
+
     /**
      * publication
      *

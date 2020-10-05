@@ -107,7 +107,7 @@ class Campaign extends AbstractEntity
      */
     public function __construct()
     {
-        $this->pages = new ArrayCollection();
+        $this->pages    = new ArrayCollection();
         $this->theaters = new ArrayCollection();
     }
 

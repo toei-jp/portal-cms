@@ -27,7 +27,7 @@ class TheaterMetaResponder extends BaseResponder
     {
         return $this->view->render($response, 'theater_meta/opening_hour/list.html.twig', $data->all());
     }
-    
+
     /**
      * opening hour edit
      *

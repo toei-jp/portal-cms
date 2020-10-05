@@ -38,7 +38,7 @@ class NewsController extends BaseController
 
         if ($form->isValid()) {
             $cleanValues = $form->getData();
-            $values = $cleanValues;
+            $values      = $cleanValues;
         } else {
             $values = $request->getParams();
             $this->data->set('errors', $form->getMessages());
@@ -91,7 +91,7 @@ class NewsController extends BaseController
         $form = new Form\NewsForm(Form\NewsForm::TYPE_NEW);
         $form->setData($params);
 
-        if (!$form->isValid()) {
+        if (! $form->isValid()) {
             $this->data->set('form', $form);
             $this->data->set('values', $request->getParams());
             $this->data->set('errors', $form->getMessages());
@@ -228,7 +228,7 @@ class NewsController extends BaseController
         $form = new Form\NewsForm(Form\NewsForm::TYPE_EDIT);
         $form->setData($params);
 
-        if (!$form->isValid()) {
+        if (! $form->isValid()) {
             $this->data->set('news', $news);
             $this->data->set('form', $form);
             $this->data->set('values', $request->getParams());
@@ -271,14 +271,12 @@ class NewsController extends BaseController
             $oldImage = $news->getImage();
             $news->setImage($file);
 
-
             // @todo preUpdateで出来ないか？ hasChangedField()
             $this->em->remove($oldImage);
 
             // @todo postRemoveイベントへ
             $this->bc->deleteBlob(Entity\File::getBlobContainer(), $oldImage->getName());
         }
-
 
         $title = null;
 
@@ -354,29 +352,22 @@ class NewsController extends BaseController
             $news->setUpdatedUser($this->auth->getUser());
 
             $this->logger->debug('Soft delete "News".', [
-                'id' => $news->getId()
+                'id' => $news->getId(),
             ]);
 
             $this->em->flush();
-
 
             $pageNewsDeleteCount = $this->em
                 ->getRepository(Entity\PageNews::class)
                 ->deleteByNews($news);
 
-            $this->logger->debug('Delete "PageNews"', [
-                'count' => $pageNewsDeleteCount
-            ]);
-
+            $this->logger->debug('Delete "PageNews"', ['count' => $pageNewsDeleteCount]);
 
             $theaterNewsDeleteCount = $this->em
                 ->getRepository(Entity\TheaterNews::class)
                 ->deleteByNews($news);
 
-            $this->logger->debug('Delete "TheaterNews"', [
-                'count' => $theaterNewsDeleteCount
-            ]);
-
+            $this->logger->debug('Delete "TheaterNews"', ['count' => $theaterNewsDeleteCount]);
 
             $this->em->getConnection()->commit();
         } catch (\Exception $e) {
@@ -400,7 +391,7 @@ class NewsController extends BaseController
         /** @var Entity\Page[] $pages */
         $pages = [];
 
-        if (!$user->isTheater()) {
+        if (! $user->isTheater()) {
             $pages = $this->em->getRepository(Entity\Page::class)->findActive();
         }
 
@@ -410,9 +401,7 @@ class NewsController extends BaseController
 
         if ($user->isTheater()) {
             /** @var Entity\Theater[] $theaters */
-            $theaters = [
-                $theaterRepository->findOneById($user->getTheater()->getId())
-            ];
+            $theaters = [$theaterRepository->findOneById($user->getTheater()->getId())];
         } else {
             /** @var Entity\Theater[] $theaters */
             $theaters = $theaterRepository->findActive();
@@ -436,24 +425,24 @@ class NewsController extends BaseController
         $form = new Form\NewsPublicationForm($target, $this->em);
         $form->setData($request->getParams());
 
-        if (!$form->isValid()) {
+        if (! $form->isValid()) {
             throw new \LogicException('invalid parameters.');
         }
 
-        $cleanData = $form->getData();
-        $targetEntity = null;
+        $cleanData       = $form->getData();
+        $targetEntity    = null;
         $basePublication = null;
 
         if ($target === Form\NewsPublicationForm::TARGET_TEATER) {
             /** @var Entity\Theater $targetEntity */
-            $targetEntity = $this->em
+            $targetEntity    = $this->em
                 ->getRepository(Entity\Theater::class)
                 ->findOneById((int) $cleanData['theater_id']);
             $basePublication = new Entity\TheaterNews();
             $basePublication->setTheater($targetEntity);
         } elseif ($target === Form\NewsPublicationForm::TARGET_PAGE) {
             /** @var Entity\Page $targetEntity */
-            $targetEntity = $this->em
+            $targetEntity    = $this->em
                 ->getRepository(Entity\Page::class)
                 ->findOneById((int) $cleanData['page_id']);
             $basePublication = new Entity\PageNews();
@@ -470,7 +459,7 @@ class NewsController extends BaseController
                 ->getRepository(Entity\News::class)
                 ->findOneById((int) $newsData['news_id']);
 
-            if (!$news) {
+            if (! $news) {
                 // @todo formで検証したい
                 throw new \LogicException('invalid news.');
             }
@@ -484,7 +473,6 @@ class NewsController extends BaseController
         }
 
         $this->em->flush();
-
 
         $this->flash->addMessage('alerts', [
             'type'    => 'info',

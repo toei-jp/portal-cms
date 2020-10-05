@@ -27,7 +27,7 @@ class AdminUserResponder extends BaseResponder
     {
         return $this->view->render($response, 'admin_user/list.html.twig', $data->all());
     }
-    
+
     /**
      * new
      *

@@ -22,7 +22,7 @@ trait SoftDeleteTrait
      * @ORM\Column(type="boolean", name="is_deleted", options={"default":false})
      */
     protected $isDeleted = false;
-    
+
     /**
      * get is_deleted
      *
@@ -32,7 +32,7 @@ trait SoftDeleteTrait
     {
         return $this->isDeleted;
     }
-    
+
     /**
      * set is_deleted
      *
@@ -43,7 +43,7 @@ trait SoftDeleteTrait
     {
         $this->isDeleted = $isDeleted;
     }
-    
+
     /**
      * is deleted
      *

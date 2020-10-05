@@ -138,7 +138,6 @@ class AdvanceTicket extends AbstractEntity
      */
     protected $specialGiftImage;
 
-
     /**
      * construct
      */

@@ -21,11 +21,11 @@ class CampaignFindForm extends BaseForm
     /** @var EntityManager */
     protected $em;
 
-    protected $statusChoices = [
+    protected $statusChoices  = [
         '1' => 'キャンペーン中',
         '2' => 'キャンペーン終了',
     ];
-    protected $pageChoices = [];
+    protected $pageChoices    = [];
     protected $theaterChoices = [];
 
     /**
@@ -86,7 +86,6 @@ class CampaignFindForm extends BaseForm
                 'value_options' => $this->theaterChoices,
             ],
         ]);
-
 
         $inputFilter = new InputFilter();
         $inputFilter->add([

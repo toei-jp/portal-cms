@@ -79,7 +79,6 @@ class ShowingFormat extends AbstractEntity
      */
     protected $voice;
 
-
     /**
      * return system list
      *
@@ -99,7 +98,6 @@ class ShowingFormat extends AbstractEntity
     {
         return self::$voiceList;
     }
-
 
     /**
      * construct

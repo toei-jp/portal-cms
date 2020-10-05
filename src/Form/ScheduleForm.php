@@ -18,7 +18,7 @@ use Toei\PortalAdmin\ORM\Entity\Theater;
  */
 class ScheduleForm extends BaseForm
 {
-    public const TYPE_NEW = 1;
+    public const TYPE_NEW  = 1;
     public const TYPE_EDIT = 2;
 
     /** @var int */
@@ -42,11 +42,11 @@ class ScheduleForm extends BaseForm
     public function __construct(int $type, EntityManager $em)
     {
         $this->type = $type;
-        $this->em = $em;
+        $this->em   = $em;
 
         parent::__construct();
 
-        $this->theaterChoices = [];
+        $this->theaterChoices        = [];
         $this->showingFormatFieldset = new ShowingFormatFieldset();
 
         $this->setup();
@@ -139,9 +139,7 @@ class ScheduleForm extends BaseForm
             'validators' => [
                 [
                     'name' => Validator\Date::class,
-                    'options' => [
-                        'format' => 'Y/m/d',
-                    ],
+                    'options' => ['format' => 'Y/m/d'],
                 ],
             ],
         ]);
@@ -152,9 +150,7 @@ class ScheduleForm extends BaseForm
             'validators' => [
                 [
                     'name' => Validator\Date::class,
-                    'options' => [
-                        'format' => 'Y/m/d',
-                    ],
+                    'options' => ['format' => 'Y/m/d'],
                 ],
             ],
         ]);
@@ -165,9 +161,7 @@ class ScheduleForm extends BaseForm
             'validators' => [
                 [
                     'name' => Validator\Date::class,
-                    'options' => [
-                        'format' => 'Y/m/d H:i',
-                    ],
+                    'options' => ['format' => 'Y/m/d H:i'],
                 ],
             ],
         ]);
@@ -178,9 +172,7 @@ class ScheduleForm extends BaseForm
             'validators' => [
                 [
                     'name' => Validator\Date::class,
-                    'options' => [
-                        'format' => 'Y/m/d H:i',
-                    ],
+                    'options' => ['format' => 'Y/m/d H:i'],
                 ],
             ],
         ]);

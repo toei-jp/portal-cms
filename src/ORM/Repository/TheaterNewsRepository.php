@@ -25,13 +25,13 @@ class TheaterNewsRepository extends EntityRepository
      */
     public function deleteByNews(News $news)
     {
-        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb    = $this->getEntityManager()->createQueryBuilder();
         $query = $qb
             ->delete($this->getEntityName(), 'tn')
             ->where('tn.news = :news')
             ->setParameter('news', $news->getId())
             ->getQuery();
-        
+
         return $query->execute();
     }
 }

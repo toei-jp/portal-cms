@@ -38,7 +38,7 @@ class AdminUserForm extends BaseForm
 
         parent::__construct();
 
-        $this->groupChoices = Entity\AdminUser::getGroups();
+        $this->groupChoices   = Entity\AdminUser::getGroups();
         $this->theaterChoices = [];
 
         $this->setup();
@@ -73,7 +73,6 @@ class AdminUserForm extends BaseForm
                 'value_options' => $this->groupChoices,
             ],
         ]);
-
 
         $theaters = $this->em->getRepository(Entity\Theater::class)->findActive();
 

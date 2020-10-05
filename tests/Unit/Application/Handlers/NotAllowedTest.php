@@ -58,9 +58,9 @@ final class NotAllowedTest extends TestCase
         $viewMock = $this->createViewMock();
 
         $targetMock = $this->createTargetMock();
+        $targetRef  = $this->createTargetReflection();
 
         // execute constructor
-        $targetRef = $this->createTargetReflection();
         $notAllowedHandlerConstructor = $targetRef->getConstructor();
         $notAllowedHandlerConstructor->invoke($targetMock, $viewMock);
 
@@ -113,7 +113,7 @@ final class NotAllowedTest extends TestCase
     {
         define('APP_DEBUG', false);
 
-        $html = '<html><head><title>Test</title></head><body></body></html>';
+        $html     = '<html><head><title>Test</title></head><body></body></html>';
         $viewMock = $this->createViewMock();
         $viewMock
             ->shouldReceive('fetch')

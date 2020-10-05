@@ -22,7 +22,7 @@ use Toei\PortalAdmin\ORM\Entity\AbstractEntity;
 class TheaterCampaign extends AbstractEntity
 {
     use TimestampableTrait;
-    
+
     /**
      * id
      *
@@ -32,7 +32,7 @@ class TheaterCampaign extends AbstractEntity
      * @ORM\GeneratedValue
      */
     protected $id;
-    
+
     /**
      * campaign
      *
@@ -41,7 +41,7 @@ class TheaterCampaign extends AbstractEntity
      * @ORM\JoinColumn(name="campaign_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
     protected $campaign;
-    
+
     /**
      * theater
      *
@@ -50,7 +50,7 @@ class TheaterCampaign extends AbstractEntity
      * @ORM\JoinColumn(name="theater_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
     protected $theater;
-    
+
     /**
      * display_order
      *
@@ -58,15 +58,14 @@ class TheaterCampaign extends AbstractEntity
      * @ORM\Column(type="smallint", name="display_order", options={"unsigned"=true})
      */
     protected $displayOrder;
-    
-    
+
     /**
      * construct
      */
     public function __construct()
     {
     }
-    
+
     /**
      * get id
      *
@@ -76,7 +75,7 @@ class TheaterCampaign extends AbstractEntity
     {
         return $this->id;
     }
-    
+
     /**
      * get campaign
      *
@@ -86,7 +85,7 @@ class TheaterCampaign extends AbstractEntity
     {
         return $this->campaign;
     }
-    
+
     /**
      * set campaign
      *
@@ -97,7 +96,7 @@ class TheaterCampaign extends AbstractEntity
     {
         $this->campaign = $campaign;
     }
-    
+
     /**
      * get theater
      *
@@ -107,7 +106,7 @@ class TheaterCampaign extends AbstractEntity
     {
         return $this->theater;
     }
-    
+
     /**
      * set theater
      *
@@ -118,7 +117,7 @@ class TheaterCampaign extends AbstractEntity
     {
         $this->theater = $theater;
     }
-    
+
     /**
      * get display_order
      *
@@ -128,7 +127,7 @@ class TheaterCampaign extends AbstractEntity
     {
         return $this->displayOrder;
     }
-    
+
     /**
      * set display_order
      *

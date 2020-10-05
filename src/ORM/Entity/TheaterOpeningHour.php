@@ -49,7 +49,6 @@ class TheaterOpeningHour extends AbstractEntity
      */
     protected $time;
 
-
     /**
      * create
      *
@@ -178,11 +177,13 @@ class TheaterOpeningHour extends AbstractEntity
     public function toArray()
     {
         $array = [];
-        $array['type'] = $this->type;
+
+        $array['type']      = $this->type;
         $array['from_date'] = $this->fromDate->format('Y/m/d');
-        $array['to_date'] = is_null($this->toDate)
-                          ? null : $this->toDate->format('Y/m/d');
-        $array['time'] = $this->time->format('H:i:s');
+        $array['to_date']   = is_null($this->toDate)
+            ? null
+            : $this->toDate->format('Y/m/d');
+        $array['time']      = $this->time->format('H:i:s');
 
         return $array;
     }

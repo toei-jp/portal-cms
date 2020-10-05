@@ -51,7 +51,7 @@ class MainBannerController extends BaseController
 
         if ($form->isValid()) {
             $cleanValues = $form->getData();
-            $values = $cleanValues;
+            $values      = $cleanValues;
         } else {
             $values = $request->getParams();
             $this->data->set('errors', $form->getMessages());
@@ -95,7 +95,7 @@ class MainBannerController extends BaseController
         $form = new Form\MainBannerForm(Form\MainBannerForm::TYPE_NEW);
         $form->setData($params);
 
-        if (!$form->isValid()) {
+        if (! $form->isValid()) {
             $this->data->set('form', $form);
             $this->data->set('values', $request->getParams());
             $this->data->set('errors', $form->getMessages());
@@ -208,7 +208,7 @@ class MainBannerController extends BaseController
         $form = new Form\MainBannerForm(Form\MainBannerForm::TYPE_EDIT);
         $form->setData($params);
 
-        if (!$form->isValid()) {
+        if (! $form->isValid()) {
             $this->data->set('mainBanner', $mainBanner);
             $this->data->set('form', $form);
             $this->data->set('values', $request->getParams());
@@ -247,7 +247,6 @@ class MainBannerController extends BaseController
 
             $oldImage = $mainBanner->getImage();
             $mainBanner->setImage($file);
-
 
             // @todo preUpdateで出来ないか？ hasChangedField()
             $this->em->remove($oldImage);
@@ -319,29 +318,22 @@ class MainBannerController extends BaseController
             $mainBanner->setUpdatedUser($this->auth->getUser());
 
             $this->logger->debug('Soft delete "MainBanner".', [
-                'id' => $mainBanner->getId()
+                'id' => $mainBanner->getId(),
             ]);
 
             $this->em->flush();
-
 
             $pageMainBannerDeleteCount = $this->em
                 ->getRepository(Entity\PageMainBanner::class)
                 ->deleteByMainBanner($mainBanner);
 
-            $this->logger->debug('Delete "PageMainBanner"', [
-                'count' => $pageMainBannerDeleteCount
-            ]);
-
+            $this->logger->debug('Delete "PageMainBanner"', ['count' => $pageMainBannerDeleteCount]);
 
             $theaterMainBannerDeleteCount = $this->em
                 ->getRepository(Entity\TheaterMainBanner::class)
                 ->deleteByMainBanner($mainBanner);
 
-            $this->logger->debug('Delete "TheaterMainBanner"', [
-                'count' => $theaterMainBannerDeleteCount
-            ]);
-
+            $this->logger->debug('Delete "TheaterMainBanner"', ['count' => $theaterMainBannerDeleteCount]);
 
             $this->em->getConnection()->commit();
         } catch (\Exception $e) {
@@ -384,24 +376,24 @@ class MainBannerController extends BaseController
         $form = new Form\MainBannerPublicationForm($target, $this->em);
         $form->setData($request->getParams());
 
-        if (!$form->isValid()) {
+        if (! $form->isValid()) {
             throw new \LogicException('invalid parameters.');
         }
 
-        $cleanData = $form->getData();
-        $targetEntity = null;
+        $cleanData       = $form->getData();
+        $targetEntity    = null;
         $basePublication = null;
 
         if ($target === Form\MainBannerPublicationForm::TARGET_TEATER) {
             /** @var Entity\Theater $targetEntity */
-            $targetEntity = $this->em
+            $targetEntity    = $this->em
                 ->getRepository(Entity\Theater::class)
                 ->findOneById((int) $cleanData['theater_id']);
             $basePublication = new Entity\TheaterMainBanner();
             $basePublication->setTheater($targetEntity);
         } elseif ($target === Form\MainBannerPublicationForm::TARGET_PAGE) {
             /** @var Entity\Page $targetEntity */
-            $targetEntity = $this->em
+            $targetEntity    = $this->em
                 ->getRepository(Entity\Page::class)
                 ->findOneById((int) $cleanData['page_id']);
             $basePublication = new Entity\PageMainBanner();
@@ -418,7 +410,7 @@ class MainBannerController extends BaseController
                 ->getRepository(Entity\MainBanner::class)
                 ->findOneById((int) $mainBannerData['main_banner_id']);
 
-            if (!$mainBanner) {
+            if (! $mainBanner) {
                 // @todo formで検証したい
                 throw new \LogicException('invalid main_banner.');
             }
@@ -432,7 +424,6 @@ class MainBannerController extends BaseController
         }
 
         $this->em->flush();
-
 
         $this->flash->addMessage('alerts', [
             'type'    => 'info',

@@ -27,7 +27,7 @@ abstract class BaseController extends AbstractController
     protected function preExecute($request, $response): void
     {
     }
-    
+
     /**
      * post execute
      *
@@ -40,7 +40,7 @@ abstract class BaseController extends AbstractController
         $this->data->set('user', $this->auth->getUser());
         $this->data->set('alerts', $this->flash->getMessage('alerts'));
     }
-    
+
     /**
      * get responder
      *
@@ -50,7 +50,7 @@ abstract class BaseController extends AbstractController
     {
         $path = explode('\\', get_class($this));
         $name = str_replace('Controller', '', array_pop($path));
-        
+
         return Responder\BaseResponder::factory($name, $this->view);
     }
 }

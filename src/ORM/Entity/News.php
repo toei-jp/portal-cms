@@ -29,9 +29,7 @@ class News extends AbstractEntity
     public const CATEGORY_TOPICS = 1;
 
     /** @var array */
-    public static $categories = [
-        self::CATEGORY_TOPICS    => 'トピックス',
-    ];
+    public static $categories = [self::CATEGORY_TOPICS => 'トピックス'];
 
     /**
      * id
@@ -122,7 +120,7 @@ class News extends AbstractEntity
      */
     public function __construct()
     {
-        $this->pages = new ArrayCollection();
+        $this->pages    = new ArrayCollection();
         $this->theaters = new ArrayCollection();
     }
 

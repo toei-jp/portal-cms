@@ -21,7 +21,7 @@ use Toei\PortalAdmin\ORM\Entity\AbstractEntity;
 class ShowingTheater extends AbstractEntity
 {
     use TimestampableTrait;
-    
+
     /**
      * id
      *
@@ -31,7 +31,7 @@ class ShowingTheater extends AbstractEntity
      * @ORM\GeneratedValue
      */
     protected $id;
-    
+
     /**
      * schedule
      *
@@ -40,7 +40,7 @@ class ShowingTheater extends AbstractEntity
      * @ORM\JoinColumn(name="schedule_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
     protected $schedule;
-    
+
     /**
      * theater
      *
@@ -49,15 +49,14 @@ class ShowingTheater extends AbstractEntity
      * @ORM\JoinColumn(name="theater_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
     protected $theater;
-    
-    
+
     /**
      * construct
      */
     public function __construct()
     {
     }
-    
+
     /**
      * get id
      *
@@ -67,7 +66,7 @@ class ShowingTheater extends AbstractEntity
     {
         return $this->id;
     }
-    
+
     /**
      * get schedule
      *
@@ -77,7 +76,7 @@ class ShowingTheater extends AbstractEntity
     {
         return $this->schedule;
     }
-    
+
     /**
      * set schedule
      *
@@ -88,7 +87,7 @@ class ShowingTheater extends AbstractEntity
     {
         $this->schedule = $schedule;
     }
-    
+
     /**
      * get theater
      *
@@ -98,7 +97,7 @@ class ShowingTheater extends AbstractEntity
     {
         return $this->theater;
     }
-    
+
     /**
      * set theater
      *

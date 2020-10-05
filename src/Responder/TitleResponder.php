@@ -27,7 +27,7 @@ class TitleResponder extends BaseResponder
     {
         return $this->view->render($response, 'title/list.html.twig', $data->all());
     }
-    
+
     /**
      * new
      *
@@ -39,7 +39,7 @@ class TitleResponder extends BaseResponder
     {
         return $this->view->render($response, 'title/new.html.twig', $data->all());
     }
-    
+
     /**
      * import
      *
@@ -51,7 +51,7 @@ class TitleResponder extends BaseResponder
     {
         return $this->view->render($response, 'title/import.html.twig', $data->all());
     }
-    
+
     /**
      * edit
      *

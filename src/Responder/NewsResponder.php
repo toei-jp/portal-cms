@@ -27,7 +27,7 @@ class NewsResponder extends BaseResponder
     {
         return $this->view->render($response, 'news/list.html.twig', $data->all());
     }
-    
+
     /**
      * new
      *
@@ -39,7 +39,7 @@ class NewsResponder extends BaseResponder
     {
         return $this->view->render($response, 'news/new.html.twig', $data->all());
     }
-    
+
     /**
      * edit
      *
@@ -51,7 +51,7 @@ class NewsResponder extends BaseResponder
     {
         return $this->view->render($response, 'news/edit.html.twig', $data->all());
     }
-    
+
     /**
      * publication
      *
