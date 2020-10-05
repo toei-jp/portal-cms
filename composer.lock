@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2eb3f77cbd76f90a95dd4e3e41af011f",
+    "content-hash": "b0ec40dcc125f069e8e3e6a3a88fcdb8",
     "packages": [
         {
             "name": "blue32a/monolog-azure-blob",
@@ -4806,16 +4806,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.12.40",
+            "version": "0.12.48",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "dce7293ad7b59fc09a9ab9b0b5b44902c092ca17"
+                "reference": "d364cfbac9ffd869570cdfea7eaa6541c3dac666"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/dce7293ad7b59fc09a9ab9b0b5b44902c092ca17",
-                "reference": "dce7293ad7b59fc09a9ab9b0b5b44902c092ca17",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/d364cfbac9ffd869570cdfea7eaa6541c3dac666",
+                "reference": "d364cfbac9ffd869570cdfea7eaa6541c3dac666",
                 "shasum": ""
             },
             "require": {
@@ -4858,20 +4858,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-08-26T19:06:20+00:00"
+            "time": "2020-10-01T13:20:16+00:00"
         },
         {
             "name": "phpstan/phpstan-doctrine",
-            "version": "0.12.19",
+            "version": "0.12.20",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-doctrine.git",
-                "reference": "78376cbf68e0c30c2ff16d6e38f3acf1fdd386b4"
+                "reference": "207a6aedf0ca95c57fb041f3b3c82bcb6e66ad27"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-doctrine/zipball/78376cbf68e0c30c2ff16d6e38f3acf1fdd386b4",
-                "reference": "78376cbf68e0c30c2ff16d6e38f3acf1fdd386b4",
+                "url": "https://api.github.com/repos/phpstan/phpstan-doctrine/zipball/207a6aedf0ca95c57fb041f3b3c82bcb6e66ad27",
+                "reference": "207a6aedf0ca95c57fb041f3b3c82bcb6e66ad27",
                 "shasum": ""
             },
             "require": {
@@ -4924,7 +4924,7 @@
                 "MIT"
             ],
             "description": "Doctrine extensions for PHPStan",
-            "time": "2020-07-21T14:46:27+00:00"
+            "time": "2020-09-25T13:34:35+00:00"
         },
         {
             "name": "phpstan/phpstan-mockery",
