@@ -53,7 +53,7 @@ jobs:
         run: composer run-script phpunit
 
       - name: Upload test report
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         with:
           name: report
           path: ./report
