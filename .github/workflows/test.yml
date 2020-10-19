@@ -24,7 +24,7 @@ jobs:
           echo "::set-output name=dir::$(composer config cache-files-dir)"
 
       - name: Cache Composer Directory
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-dev-${{ hashFiles('**/composer.lock') }}
@@ -53,7 +53,7 @@ jobs:
         run: composer run-script phpunit
 
       - name: Upload test report
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         with:
           name: report
           path: ./report
