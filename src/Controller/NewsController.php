@@ -157,7 +157,7 @@ class NewsController extends BaseController
         ]);
 
         $this->redirect(
-            $this->router->pathFor('news_edit', [ 'id' => $news->getId() ]),
+            $this->router->pathFor('news_edit', ['id' => $news->getId()]),
             303
         );
     }
@@ -302,7 +302,7 @@ class NewsController extends BaseController
         ]);
 
         $this->redirect(
-            $this->router->pathFor('news_edit', [ 'id' => $news->getId() ]),
+            $this->router->pathFor('news_edit', ['id' => $news->getId()]),
             303
         );
     }
@@ -327,7 +327,7 @@ class NewsController extends BaseController
 
         $this->doDelete($news);
 
-        $this->logger->info('Delete "News".', [ 'id' => $news->getId() ]);
+        $this->logger->info('Delete "News".', ['id' => $news->getId()]);
 
         $this->flash->addMessage('alerts', [
             'type'    => 'info',

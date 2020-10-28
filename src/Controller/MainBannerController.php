@@ -147,7 +147,7 @@ class MainBannerController extends BaseController
         ]);
 
         $this->redirect(
-            $this->router->pathFor('main_banner_edit', [ 'id' => $mainBanner->getId() ]),
+            $this->router->pathFor('main_banner_edit', ['id' => $mainBanner->getId()]),
             303
         );
     }
@@ -268,7 +268,7 @@ class MainBannerController extends BaseController
         ]);
 
         $this->redirect(
-            $this->router->pathFor('main_banner_edit', [ 'id' => $mainBanner->getId() ]),
+            $this->router->pathFor('main_banner_edit', ['id' => $mainBanner->getId()]),
             303
         );
     }
@@ -293,7 +293,7 @@ class MainBannerController extends BaseController
 
         $this->doDelete($mainBanner);
 
-        $this->logger->info('Delete "MainBanner".', [ 'id' => $mainBanner->getId() ]);
+        $this->logger->info('Delete "MainBanner".', ['id' => $mainBanner->getId()]);
 
         $this->flash->addMessage('alerts', [
             'type'    => 'info',
