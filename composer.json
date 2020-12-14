@@ -2,6 +2,7 @@
     "name": "toei-jp/portal-cms",
     "description": "Toei-Jp Portal CMS",
     "type": "project",
+    "license": "proprietary",
     "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
