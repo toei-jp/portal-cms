@@ -2,6 +2,7 @@
     "name": "toei-jp/portal-cms",
     "description": "Toei-Jp Portal CMS",
     "type": "project",
+    "license": "proprietary",
     "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
@@ -33,14 +34,17 @@
         "guzzlehttp/guzzle": "^6.5"
     },
     "require-dev": {
-        "phpunit/phpunit": "^8.5",
         "mockery/mockery": "^1.3",
-        "phpstan/phpstan": "^0.12.48",
-        "phpstan/phpstan-doctrine": "^0.12.20",
-        "phpstan/phpstan-phpunit": "^0.12.16",
-        "phpstan/phpstan-mockery": "^0.12.7",
+        "mp-okui/php-coding-standard": "v0.3.0-alpha",
         "php-parallel-lint/php-parallel-lint": "^1.2",
-        "mp-okui/php-coding-standard": "v0.2.0-alpha"
+        "phpstan/phpstan": "^0.12.62",
+        "phpstan/phpstan-doctrine": "^0.12.26",
+        "phpstan/phpstan-mockery": "^0.12.10",
+        "phpstan/phpstan-phpunit": "^0.12.17",
+        "phpunit/phpunit": "^8.5"
+    },
+    "config": {
+        "sort-packages": true
     },
     "scripts": {
         "phplint": "vendor/bin/parallel-lint --no-progress --exclude vendor --exclude cache .",
