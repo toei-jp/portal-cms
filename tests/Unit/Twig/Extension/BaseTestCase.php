@@ -2,8 +2,6 @@
 
 /**
  * BaseTestCase.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
  */
 
 declare(strict_types=1);
@@ -33,6 +31,7 @@ abstract class BaseTestCase extends TestCase
      * test getFunctions
      *
      * @test
+     *
      * @return void
      */
     public function testGetFunctions()

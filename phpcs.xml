@@ -20,4 +20,36 @@
     <!-- Base rule -->
     <rule ref="Motionpicture"/>
 
+    <rule ref="SlevomatCodingStandard.Commenting.DocCommentSpacing">
+        <properties>
+            <!-- Add vendor annotations -->
+            <property name="annotationsGroups" type="array">
+                <element value="
+                    @internal,
+                    @deprecated,
+                    @todo,
+                "/>
+                <element value="
+                    @link,
+                    @see,
+                    @uses,
+                "/>
+
+                <element value="@ORM\"/>
+
+                <element value="
+                    @runInSeparateProcess,
+                    @preserveGlobalState,
+                    @test,
+                "/>
+
+                <element value="
+                    @param,
+                    @return,
+                "/>
+                <element value="@throws"/>
+            </property>
+        </properties>
+    </rule>
+
 </ruleset>

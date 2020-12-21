@@ -2,8 +2,6 @@
 
 /**
  * CampaignController.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
  */
 
 namespace Toei\PortalAdmin\Controller\API;

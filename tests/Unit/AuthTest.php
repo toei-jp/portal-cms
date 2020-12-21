@@ -2,8 +2,6 @@
 
 /**
  * AuthTest.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
  */
 
 declare(strict_types=1);
@@ -102,6 +100,7 @@ final class AuthTest extends TestCase
      * test construct
      *
      * @test
+     *
      * @return void
      */
     public function testConstruct()
@@ -169,6 +168,7 @@ final class AuthTest extends TestCase
      * test login invalid user
      *
      * @test
+     *
      * @return void
      */
     public function testLoginInvalidUser()
@@ -203,6 +203,7 @@ final class AuthTest extends TestCase
      * test login invalid password
      *
      * @test
+     *
      * @return void
      */
     public function testLoginInvalidPassword()
@@ -241,6 +242,7 @@ final class AuthTest extends TestCase
      * test login invalid password
      *
      * @test
+     *
      * @return void
      */
     public function testLoginValidUser()
@@ -317,6 +319,7 @@ final class AuthTest extends TestCase
      * test logout
      *
      * @test
+     *
      * @return void
      */
     public function testLogout()
@@ -393,6 +396,7 @@ final class AuthTest extends TestCase
      * test getUser is authenticated
      *
      * @test
+     *
      * @return void
      */
     public function testGetUserIsAuthenticated()
@@ -449,6 +453,7 @@ final class AuthTest extends TestCase
      * test getUser lodaded user
      *
      * @test
+     *
      * @return void
      */
     public function testGetUserLoadedUser()

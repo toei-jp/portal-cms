@@ -2,8 +2,6 @@
 
 /**
  * routes.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
  */
 
 use Toei\PortalAdmin\Controller\AdminUserController;
@@ -23,6 +21,10 @@ use Toei\PortalAdmin\Controller\API\MainBannerController as MainBannerApiControl
 use Toei\PortalAdmin\Controller\API\NewsController as NewsApiController;
 use Toei\PortalAdmin\Controller\API\TitleController as TitleApiController;
 use Toei\PortalAdmin\Middleware\AuthMiddleware;
+
+// phpcs:disable SlevomatCodingStandard.Commenting.InlineDocCommentDeclaration
+/** @var \Slim\App $app */
+// phpcs:enable
 
 $app->get('/login', AuthController::class . ':login')->setName('login');
 $app->post('/auth', AuthController::class . ':auth')->setName('auth');

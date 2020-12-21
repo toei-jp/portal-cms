@@ -2,8 +2,6 @@
 
 /**
  * AbstractController.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
  */
 
 namespace Toei\PortalAdmin\Controller;
@@ -62,7 +60,6 @@ abstract class AbstractController
      * 前後でpreExecute(),postExecute()処理を自動実行するために実装。
      * __call()からの呼び出しを想定。
      *
-     *
      * @param string   $actionMethod
      * @param Request  $request
      * @param Response $response
@@ -81,7 +78,7 @@ abstract class AbstractController
 
             $this->logger->debug('Run {method}().', ['method' => $actionMethod]);
 
-            /** @var string|null */
+            /** @var string|null $method */
             $method = $this->$actionMethod($request, $response, $args);
 
             $this->logger->debug('Run postExecute().');
@@ -133,6 +130,7 @@ abstract class AbstractController
      * @param string|\Psr\Http\Message\UriInterface $url
      * @param int|null                              $status
      * @return void
+     *
      * @throws RedirectException
      */
     protected function redirect($url, $status = null): void
@@ -166,6 +164,7 @@ abstract class AbstractController
      * @param string $name
      * @param array  $argments
      * @return mixed
+     *
      * @throws \LogicException
      */
     public function __call($name, $argments)

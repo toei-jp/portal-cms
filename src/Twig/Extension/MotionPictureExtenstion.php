@@ -2,8 +2,6 @@
 
 /**
  * MotionPictureExtenstion.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
  */
 
 namespace Toei\PortalAdmin\Twig\Extension;

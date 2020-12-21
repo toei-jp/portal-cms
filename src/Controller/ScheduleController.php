@@ -2,8 +2,6 @@
 
 /**
  * ScheduleController.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
  */
 
 namespace Toei\PortalAdmin\Controller;
@@ -149,13 +147,12 @@ class ScheduleController extends BaseController
      */
     public function executeEdit($request, $response, $args)
     {
+        /** @var Entity\Schedule|null $schedule */
         $schedule = $this->em->getRepository(Entity\Schedule::class)->findOneById($args['id']);
 
         if (is_null($schedule)) {
             throw new NotFoundException($request, $response);
         }
-
-        /**@var Entity\Schedule $schedule */
 
         $this->data->set('schedule', $schedule);
 
@@ -200,13 +197,12 @@ class ScheduleController extends BaseController
      */
     public function executeUpdate($request, $response, $args)
     {
+        /** @var Entity\Schedule|null $schedule */
         $schedule = $this->em->getRepository(Entity\Schedule::class)->findOneById($args['id']);
 
         if (is_null($schedule)) {
             throw new NotFoundException($request, $response);
         }
-
-        /**@var Entity\Schedule $schedule */
 
         $form = new Form\ScheduleForm(Form\ScheduleForm::TYPE_EDIT, $this->em);
         $form->setData($request->getParams());
@@ -281,13 +277,12 @@ class ScheduleController extends BaseController
      */
     public function executeDelete($request, $response, $args)
     {
+        /** @var Entity\Schedule|null $schedule */
         $schedule = $this->em->getRepository(Entity\Schedule::class)->findOneById($args['id']);
 
         if (is_null($schedule)) {
             throw new NotFoundException($request, $response);
         }
-
-        /**@var Entity\Schedule $schedule */
 
         $schedule->setIsDeleted(true);
         $schedule->setUpdatedUser($this->auth->getUser());

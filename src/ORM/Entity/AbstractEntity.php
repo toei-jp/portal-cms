@@ -2,8 +2,6 @@
 
 /**
  * AbstractEntity.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
  */
 
 namespace Toei\PortalAdmin\ORM\Entity;

@@ -2,8 +2,6 @@
 
 /**
  * Page.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
  */
 
 namespace Toei\PortalAdmin\ORM\Entity;
@@ -31,53 +29,59 @@ class Page extends AbstractEntity implements
     /**
      * id
      *
-     * @var int
      * @ORM\Id
      * @ORM\Column(type="smallint", options={"unsigned"=true})
      * @ORM\GeneratedValue(strategy="NONE")
+     *
+     * @var int
      */
     protected $id;
 
     /**
      * name
      *
-     * @var string
      * @ORM\Column(type="string", unique=true)
+     *
+     * @var string
      */
     protected $name;
 
     /**
      * name_ja
      *
-     * @var string
      * @ORM\Column(type="string", name="name_ja")
+     *
+     * @var string
      */
     protected $nameJa;
 
     /**
      * campaigns
      *
-     * @var Collection<PageCampaign>
      * @ORM\OneToMany(targetEntity="PageCampaign", mappedBy="page", orphanRemoval=true)
      * @ORM\OrderBy({"displayOrder" = "ASC"})
+     *
+     * @var Collection<PageCampaign>
      */
     protected $campaigns;
 
     /**
      * news_list
      *
-     * @var Collection<PageNews>
      * @ORM\OneToMany(targetEntity="PageNews", mappedBy="page", orphanRemoval=true)
      * @ORM\OrderBy({"displayOrder" = "ASC"})
+     *
+     * @var Collection<PageNews>
      */
     protected $newsList;
 
     /**
      * main_banners
      *
-     * @var Collection<PageMainBanner>
      * @ORM\OneToMany(targetEntity="PageMainBanner", mappedBy="page", orphanRemoval=true)
      * @ORM\OrderBy({"displayOrder" = "ASC"})
+     *
+     * @var Collection<PageMainBanner>
      */
     protected $mainBanners;
 

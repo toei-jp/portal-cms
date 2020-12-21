@@ -2,8 +2,6 @@
 
 /**
  * SavedUserTrait.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
  */
 
 namespace Toei\PortalAdmin\ORM\Entity;
@@ -16,18 +14,20 @@ trait SavedUserTrait
     /**
      * created_user
      *
-     * @var AdminUser|null
      * @ORM\ManyToOne(targetEntity="AdminUser")
      * @ORM\JoinColumn(name="created_user_id", referencedColumnName="id", nullable=true, onDelete="RESTRICT")
+     *
+     * @var AdminUser|null
      */
     protected $createdUser;
 
     /**
      * updated_user
      *
-     * @var AdminUser|null
      * @ORM\ManyToOne(targetEntity="AdminUser")
      * @ORM\JoinColumn(name="updated_user_id", referencedColumnName="id", nullable=true, onDelete="RESTRICT")
+     *
+     * @var AdminUser|null
      */
     protected $updatedUser;
 

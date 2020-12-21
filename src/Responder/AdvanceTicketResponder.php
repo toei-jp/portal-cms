@@ -2,8 +2,6 @@
 
 /**
  * AdvanceTicketResponder.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
  */
 
 namespace Toei\PortalAdmin\Responder;

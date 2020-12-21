@@ -2,8 +2,6 @@
 
 /**
  * SoftDeleteTrait.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
  */
 
 namespace Toei\PortalAdmin\ORM\Entity;
@@ -18,8 +16,9 @@ trait SoftDeleteTrait
     /**
      * is_deleted
      *
-     * @var bool
      * @ORM\Column(type="boolean", name="is_deleted", options={"default":false})
+     *
+     * @var bool
      */
     protected $isDeleted = false;
 

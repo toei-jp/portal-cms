@@ -2,8 +2,6 @@
 
 /**
  * NotAllowed.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
  */
 
 namespace Toei\PortalAdmin\Application\Handlers;
