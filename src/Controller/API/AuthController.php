@@ -1,9 +1,5 @@
 <?php
 
-/**
- * AuthController.php
- */
-
 namespace Toei\PortalAdmin\Controller\API;
 
 use GuzzleHttp\Client as HttpClient;

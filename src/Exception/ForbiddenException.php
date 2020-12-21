@@ -1,9 +1,5 @@
 <?php
 
-/**
- * ForbiddenException.php
- */
-
 namespace Toei\PortalAdmin\Exception;
 
 use Exception;

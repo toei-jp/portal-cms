@@ -1,9 +1,5 @@
 <?php
 
-/**
- * TheaterMetaResponder.php
- */
-
 namespace Toei\PortalAdmin\Responder;
 
 use Slim\Collection;

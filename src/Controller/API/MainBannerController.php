@@ -1,9 +1,5 @@
 <?php
 
-/**
- * MainBannerController.php
- */
-
 namespace Toei\PortalAdmin\Controller\API;
 
 use Toei\PortalAdmin\Controller\Traits\AzureBlobStorage;

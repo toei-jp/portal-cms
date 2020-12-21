@@ -1,9 +1,5 @@
 <?php
 
-/**
- * TheaterMeta.php
- */
-
 namespace Toei\PortalAdmin\ORM\Entity;
 
 use Doctrine\ORM\Mapping as ORM;

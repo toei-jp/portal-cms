@@ -1,9 +1,5 @@
 <?php
 
-/**
- * AuthResponder.php
- */
-
 namespace Toei\PortalAdmin\Responder\API;
 
 use Slim\Collection;

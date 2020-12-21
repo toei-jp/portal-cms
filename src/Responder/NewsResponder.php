@@ -1,9 +1,5 @@
 <?php
 
-/**
- * NewsResponder.php
- */
-
 namespace Toei\PortalAdmin\Responder;
 
 use Slim\Collection;

@@ -1,9 +1,5 @@
 <?php
 
-/**
- * SessionManager.php
- */
-
 namespace Toei\PortalAdmin\Session;
 
 use Laminas\Session\Config\ConfigInterface;

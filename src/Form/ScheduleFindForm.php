@@ -1,9 +1,5 @@
 <?php
 
-/**
- * ScheduleFindForm.php
- */
-
 namespace Toei\PortalAdmin\Form;
 
 use Laminas\InputFilter\InputFilter;

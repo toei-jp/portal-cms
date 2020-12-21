@@ -1,9 +1,5 @@
 <?php
 
-/**
- * CampaignController.php
- */
-
 namespace Toei\PortalAdmin\Controller;
 
 use Toei\PortalAdmin\Exception\ForbiddenException;
@@ -16,9 +12,6 @@ use Slim\Exception\NotFoundException;
  */
 class CampaignController extends BaseController
 {
-    /**
-     * {@inheritDoc}
-     */
     protected function preExecute($request, $response): void
     {
         $user = $this->auth->getUser();

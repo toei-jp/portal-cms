@@ -1,9 +1,5 @@
 <?php
 
-/**
- * NewsController.php
- */
-
 namespace Toei\PortalAdmin\Controller;
 
 use Toei\PortalAdmin\Controller\Traits\ImageResize;

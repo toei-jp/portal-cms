@@ -1,9 +1,5 @@
 <?php
 
-/**
- * AdvanceSaleRepository.php
- */
-
 namespace Toei\PortalAdmin\ORM\Repository;
 
 use Doctrine\ORM\EntityRepository;

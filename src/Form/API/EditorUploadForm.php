@@ -1,9 +1,5 @@
 <?php
 
-/**
- * EditorUploadForm.php
- */
-
 namespace Toei\PortalAdmin\Form\API;
 
 use Laminas\InputFilter\InputFilter;

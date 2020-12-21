@@ -1,9 +1,5 @@
 <?php
 
-/**
- * ScheduleController.php
- */
-
 namespace Toei\PortalAdmin\Controller;
 
 use Slim\Exception\NotFoundException;

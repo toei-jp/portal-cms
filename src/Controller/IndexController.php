@@ -1,9 +1,5 @@
 <?php
 
-/**
- * IndexController.php
- */
-
 namespace Toei\PortalAdmin\Controller;
 
 /**

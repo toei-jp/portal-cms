@@ -1,9 +1,5 @@
 <?php
 
-/**
- * BaseController.php
- */
-
 namespace Toei\PortalAdmin\Controller\API;
 
 use Psr\Container\ContainerInterface;

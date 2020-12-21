@@ -66,9 +66,6 @@ class DoctrinePaginator extends AbstractPaginator
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getResultsInPage()
     {
         return $this->resultsInPage;

@@ -1,9 +1,5 @@
 <?php
 
-/**
- * AdvanceTicketController.php
- */
-
 namespace Toei\PortalAdmin\Controller;
 
 use Toei\PortalAdmin\Exception\ForbiddenException;

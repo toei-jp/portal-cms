@@ -1,9 +1,5 @@
 <?php
 
-/**
- * AzureStorageExtension.php
- */
-
 namespace Toei\PortalAdmin\Twig\Extension;
 
 use MicrosoftAzure\Storage\Blob\BlobRestProxy;

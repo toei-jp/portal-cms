@@ -1,9 +1,5 @@
 <?php
 
-/**
- * NewsPublicationInterface.php
- */
-
 namespace Toei\PortalAdmin\ORM\Entity;
 
 use Doctrine\Common\Collections\Collection;

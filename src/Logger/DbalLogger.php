@@ -1,9 +1,5 @@
 <?php
 
-/**
- * DbalLogger.php
- */
-
 namespace Toei\PortalAdmin\Logger;
 
 use Doctrine\DBAL\Logging\SQLLogger;
@@ -30,9 +26,6 @@ class DbalLogger implements SQLLogger
         $this->logger = $logger;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function startQuery($sql, array $params = null, array $types = null)
     {
         $this->log($sql, [
@@ -41,9 +34,6 @@ class DbalLogger implements SQLLogger
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function stopQuery()
     {
     }

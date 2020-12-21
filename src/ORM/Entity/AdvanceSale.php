@@ -1,9 +1,5 @@
 <?php
 
-/**
- * AdvanceSale.php
- */
-
 namespace Toei\PortalAdmin\ORM\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;

@@ -1,9 +1,5 @@
 <?php
 
-/**
- * NotFound.php
- */
-
 namespace Toei\PortalAdmin\Application\Handlers;
 
 use Slim\Handlers\NotFound as BaseHandler;
@@ -28,9 +24,6 @@ class NotFound extends BaseHandler
         $this->view = $view;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function renderHtmlNotFoundOutput(ServerRequestInterface $request)
     {
         if (APP_DEBUG) {

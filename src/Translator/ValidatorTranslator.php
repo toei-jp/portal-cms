@@ -1,9 +1,5 @@
 <?php
 
-/**
- * ValidatorTranslator.php
- */
-
 namespace Toei\PortalAdmin\Translator;
 
 use Laminas\I18n\Translator\Translator;

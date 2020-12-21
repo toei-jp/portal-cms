@@ -1,9 +1,5 @@
 <?php
 
-/**
- * Auth.php
- */
-
 namespace Toei\PortalAdmin;
 
 use Psr\Container\ContainerInterface;

@@ -1,9 +1,5 @@
 <?php
 
-/**
- * AbstractAdvanceSaleForm.php
- */
-
 namespace Toei\PortalAdmin\Form;
 
 use Doctrine\ORM\EntityManager;

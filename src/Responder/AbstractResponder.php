@@ -1,9 +1,5 @@
 <?php
 
-/**
- * AbstractResponder.php
- */
-
 namespace Toei\PortalAdmin\Responder;
 
 /**

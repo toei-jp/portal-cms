@@ -1,9 +1,5 @@
 <?php
 
-/**
- * CampaignForm.php
- */
-
 namespace Toei\PortalAdmin\Form;
 
 use Laminas\InputFilter\InputFilter;

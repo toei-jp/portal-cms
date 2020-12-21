@@ -1,9 +1,5 @@
 <?php
 
-/**
- * Error.php
- */
-
 namespace Toei\PortalAdmin\Application\Handlers;
 
 use Monolog\Logger;
@@ -60,9 +56,6 @@ class PhpError extends BaseHandler
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function renderHtmlErrorMessage(\Throwable $error)
     {
         if (APP_DEBUG) {

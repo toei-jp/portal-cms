@@ -1,9 +1,5 @@
 <?php
 
-/**
- * ImageResize.php
- */
-
 namespace Toei\PortalAdmin\Controller\Traits;
 
 use Intervention\Image\ImageManager;

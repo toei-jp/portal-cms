@@ -1,9 +1,5 @@
 <?php
 
-/**
- * SavedUserTrait.php
- */
-
 namespace Toei\PortalAdmin\ORM\Entity;
 
 /**

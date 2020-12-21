@@ -1,9 +1,5 @@
 <?php
 
-/**
- * TheaterMetaRepository.php
- */
-
 namespace Toei\PortalAdmin\ORM\Repository;
 
 use Doctrine\ORM\EntityRepository;

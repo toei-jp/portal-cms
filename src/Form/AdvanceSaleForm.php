@@ -1,9 +1,5 @@
 <?php
 
-/**
- * AdvanceSaleForm.php
- */
-
 namespace Toei\PortalAdmin\Form;
 
 use Laminas\InputFilter\InputFilter;
@@ -164,9 +160,6 @@ class AdvanceSaleForm extends AbstractAdvanceSaleForm
         $this->setInputFilter($inputFilter);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function isValid()
     {
         $this->preValidator($this->data);

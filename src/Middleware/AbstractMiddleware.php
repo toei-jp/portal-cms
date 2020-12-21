@@ -1,9 +1,5 @@
 <?php
 
-/**
- * AbstractMiddleware.php
- */
-
 namespace Toei\PortalAdmin\Middleware;
 
 use Psr\Container\ContainerInterface;

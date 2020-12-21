@@ -1,9 +1,5 @@
 <?php
 
-/**
- * TitleController.php
- */
-
 namespace Toei\PortalAdmin\Controller;
 
 use Toei\PortalAdmin\Controller\Traits\ImageResize;
@@ -19,9 +15,6 @@ class TitleController extends BaseController
 {
     use ImageResize;
 
-    /**
-     * {@inheritDoc}
-     */
     protected function preExecute($request, $response): void
     {
         $user = $this->auth->getUser();

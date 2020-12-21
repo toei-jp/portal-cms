@@ -1,9 +1,5 @@
 <?php
 
-/**
- * AzureBlobStorage.php
- */
-
 namespace Toei\PortalAdmin\Controller\Traits;
 
 /**

@@ -1,9 +1,6 @@
 <?php
+
 /**
- * index.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
- *
  * @return \Slim\App
  */
 

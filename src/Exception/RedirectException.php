@@ -1,9 +1,5 @@
 <?php
 
-/**
- * RedirectException.php
- */
-
 namespace Toei\PortalAdmin\Exception;
 
 use Psr\Http\Message\UriInterface;

@@ -1,9 +1,5 @@
 <?php
 
-/**
- * MotionPictureExtenstion.php
- */
-
 namespace Toei\PortalAdmin\Twig\Extension;
 
 use Twig\Extension\AbstractExtension;

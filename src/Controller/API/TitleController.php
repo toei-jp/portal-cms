@@ -1,9 +1,5 @@
 <?php
 
-/**
- * TitleController.php
- */
-
 namespace Toei\PortalAdmin\Controller\API;
 
 use Toei\PortalAdmin\ORM\Entity;

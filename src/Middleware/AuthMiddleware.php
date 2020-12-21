@@ -1,9 +1,5 @@
 <?php
 
-/**
- * AuthMiddleware.php
- */
-
 namespace Toei\PortalAdmin\Middleware;
 
 use Psr\Http\Message\ServerRequestInterface as Request;

@@ -1,9 +1,5 @@
 <?php
 
-/**
- * SoftDeleteTrait.php
- */
-
 namespace Toei\PortalAdmin\ORM\Entity;
 
 /**

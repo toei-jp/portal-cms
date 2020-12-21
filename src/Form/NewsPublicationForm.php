@@ -1,9 +1,5 @@
 <?php
 
-/**
- * NewsPublicationForm.php
- */
-
 namespace Toei\PortalAdmin\Form;
 
 use Laminas\Form\Fieldset;
