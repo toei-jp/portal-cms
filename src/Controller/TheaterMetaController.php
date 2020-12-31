@@ -1,11 +1,5 @@
 <?php
 
-/**
- * TheaterMetaController.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
- */
-
 namespace Toei\PortalAdmin\Controller;
 
 use Slim\Exception\NotFoundException;
@@ -49,13 +43,12 @@ class TheaterMetaController extends BaseController
      */
     public function executeOpeningHourEdit($request, $response, $args)
     {
+        /** @var Entity\Theater|null $theater */
         $theater = $this->em->getRepository(Entity\Theater::class)->findOneById($args['id']);
 
         if (is_null($theater)) {
             throw new NotFoundException($request, $response);
         }
-
-        /**@var Entity\Theater $theater */
 
         $this->data->set('theater', $theater);
 
@@ -88,13 +81,12 @@ class TheaterMetaController extends BaseController
      */
     public function executeOpeningHourUpdate($request, $response, $args)
     {
+        /** @var Entity\Theater|null $theater */
         $theater = $this->em->getRepository(Entity\Theater::class)->findOneById($args['id']);
 
         if (is_null($theater)) {
             throw new NotFoundException($request, $response);
         }
-
-        /**@var Entity\Theater $theater */
 
         $form = new Form\TheaterOpeningHourForm();
         $form->setData($request->getParams());

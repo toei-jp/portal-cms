@@ -1,11 +1,5 @@
 <?php
 
-/**
- * TitleController.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
- */
-
 namespace Toei\PortalAdmin\Controller\API;
 
 use Toei\PortalAdmin\ORM\Entity;

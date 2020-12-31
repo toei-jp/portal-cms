@@ -1,11 +1,5 @@
 <?php
 
-/**
- * IndexController.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
- */
-
 namespace Toei\PortalAdmin\Controller;
 
 /**

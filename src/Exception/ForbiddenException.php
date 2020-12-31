@@ -1,11 +1,5 @@
 <?php
 
-/**
- * ForbiddenException.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
- */
-
 namespace Toei\PortalAdmin\Exception;
 
 use Exception;

@@ -1,11 +1,5 @@
 <?php
 
-/**
- * PageNews.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
- */
-
 namespace Toei\PortalAdmin\ORM\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -26,36 +20,40 @@ class PageNews extends AbstractEntity
     /**
      * id
      *
-     * @var int
      * @ORM\Id
      * @ORM\Column(type="integer", options={"unsigned"=true})
      * @ORM\GeneratedValue
+     *
+     * @var int
      */
     protected $id;
 
     /**
      * news
      *
-     * @var News
      * @ORM\ManyToOne(targetEntity="News", inversedBy="pages")
      * @ORM\JoinColumn(name="news_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     *
+     * @var News
      */
     protected $news;
 
     /**
      * page
      *
-     * @var Page
      * @ORM\ManyToOne(targetEntity="Page", inversedBy="newsList")
      * @ORM\JoinColumn(name="page_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     *
+     * @var Page
      */
     protected $page;
 
     /**
      * display_order
      *
-     * @var int
      * @ORM\Column(type="smallint", name="display_order", options={"unsigned"=true})
+     *
+     * @var int
      */
     protected $displayOrder;
 

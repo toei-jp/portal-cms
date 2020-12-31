@@ -1,11 +1,5 @@
 <?php
 
-/**
- * AuthMiddlewareTest.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
- */
-
 declare(strict_types=1);
 
 namespace Tests\Unit\Middleware;
@@ -99,6 +93,7 @@ final class AuthMiddlewareTest extends TestCase
      * test __invoke (is not authenticated)
      *
      * @test
+     *
      * @return void
      */
     public function testInvokeIsNotAuthenticated()
@@ -160,6 +155,7 @@ final class AuthMiddlewareTest extends TestCase
      * test __invoke (is authenticated)
      *
      * @test
+     *
      * @return void
      */
     public function testInvokeIsAuthenticated()

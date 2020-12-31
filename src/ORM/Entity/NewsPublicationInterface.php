@@ -1,11 +1,5 @@
 <?php
 
-/**
- * NewsPublicationInterface.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
- */
-
 namespace Toei\PortalAdmin\ORM\Entity;
 
 use Doctrine\Common\Collections\Collection;

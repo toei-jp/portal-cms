@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Theater.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
- */
-
 namespace Toei\PortalAdmin\ORM\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -34,50 +28,56 @@ class Theater extends AbstractEntity implements
     /**
      * id
      *
-     * @var int
      * @ORM\Id
      * @ORM\Column(type="smallint", options={"unsigned"=true})
      * @ORM\GeneratedValue(strategy="NONE")
+     *
+     * @var int
      */
     protected $id;
 
     /**
      * name
      *
-     * @var string
      * @ORM\Column(type="string", unique=true)
+     *
+     * @var string
      */
     protected $name;
 
     /**
      * name_ja
      *
-     * @var string
      * @ORM\Column(type="string", name="name_ja")
+     *
+     * @var string
      */
     protected $nameJa;
 
     /**
      * area
      *
-     * @var int
      * @ORM\Column(type="smallint", options={"unsigned"=true})
+     *
+     * @var int
      */
     protected $area;
 
     /**
      * master_code
      *
-     * @var string
      * @ORM\Column(type="string", name="master_code", length=3, options={"fixed":true})
+     *
+     * @var string
      */
     protected $masterCode;
 
     /**
      * display_order
      *
-     * @var int
      * @ORM\Column(type="smallint", name="display_order", options={"unsigned"=true})
+     *
+     * @var int
      */
     protected $displayOrder;
 
@@ -86,43 +86,48 @@ class Theater extends AbstractEntity implements
      *
      * 設計の問題でnullを許容する形になってしまったが、nullにならないようデータで調整する。
      *
-     * @var TheaterMeta|null
      * @ORM\OneToOne(targetEntity="TheaterMeta", mappedBy="theater")
+     *
+     * @var TheaterMeta|null
      */
     protected $meta;
 
     /**
      * admin_users
      *
-     * @var Collection<AdminUser>
      * @ORM\OneToMany(targetEntity="AdminUser", mappedBy="theater")
+     *
+     * @var Collection<AdminUser>
      */
     protected $adminUsers;
 
     /**
      * campaigns
      *
-     * @var Collection<TheaterCampaign>
      * @ORM\OneToMany(targetEntity="TheaterCampaign", mappedBy="theater", orphanRemoval=true)
      * @ORM\OrderBy({"displayOrder" = "ASC"})
+     *
+     * @var Collection<TheaterCampaign>
      */
     protected $campaigns;
 
     /**
      * news_list
      *
-     * @var Collection<TheaterNews>
      * @ORM\OneToMany(targetEntity="TheaterNews", mappedBy="theater", orphanRemoval=true)
      * @ORM\OrderBy({"displayOrder" = "ASC"})
+     *
+     * @var Collection<TheaterNews>
      */
     protected $newsList;
 
     /**
      * main_banners
      *
-     * @var Collection<TheaterMainBanner>
      * @ORM\OneToMany(targetEntity="TheaterMainBanner", mappedBy="theater", orphanRemoval=true)
      * @ORM\OrderBy({"displayOrder" = "ASC"})
+     *
+     * @var Collection<TheaterMainBanner>
      */
     protected $mainBanners;
 

@@ -1,11 +1,5 @@
 <?php
 
-/**
- * EditorResponder.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
- */
-
 namespace Toei\PortalAdmin\Responder\API;
 
 use Slim\Collection;

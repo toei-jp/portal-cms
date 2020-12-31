@@ -1,11 +1,5 @@
 <?php
 
-/**
- * MainBanner.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
- */
-
 namespace Toei\PortalAdmin\ORM\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -38,59 +32,66 @@ class MainBanner extends AbstractEntity
     /**
      * id
      *
-     * @var int
      * @ORM\Id
      * @ORM\Column(type="integer", options={"unsigned"=true})
      * @ORM\GeneratedValue
+     *
+     * @var int
      */
     protected $id;
 
     /**
      * image
      *
-     * @var File
      * @ORM\OneToOne(targetEntity="File")
      * @ORM\JoinColumn(name="image_file_id", referencedColumnName="id", nullable=false, onDelete="RESTRICT")
+     *
+     * @var File
      */
     protected $image;
 
     /**
      * name
      *
-     * @var string
      * @ORM\Column(type="string")
+     *
+     * @var string
      */
     protected $name;
 
     /**
      * link_type
      *
-     * @var int
      * @ORM\Column(type="smallint", name="link_type", options={"unsigned"=true})
+     *
+     * @var int
      */
     protected $linkType;
 
     /**
      * link_url
      *
-     * @var string|null
      * @ORM\Column(type="string", name="link_url", nullable=true)
+     *
+     * @var string|null
      */
     protected $linkUrl;
 
     /**
      * pages
      *
-     * @var Collection<PageMainBanner>
      * @ORM\OneToMany(targetEntity="PageMainBanner", mappedBy="mainBanner")
+     *
+     * @var Collection<PageMainBanner>
      */
     protected $pages;
 
     /**
      * theaters
      *
-     * @var Collection<TheaterMainBanner>
      * @ORM\OneToMany(targetEntity="TheaterMainBanner", mappedBy="mainBanner")
+     *
+     * @var Collection<TheaterMainBanner>
      */
     protected $theaters;
 

@@ -1,11 +1,5 @@
 <?php
 
-/**
- * TheaterMeta.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
- */
-
 namespace Toei\PortalAdmin\ORM\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -25,27 +19,30 @@ class TheaterMeta extends AbstractEntity
     /**
      * id
      *
-     * @var int
      * @ORM\Id
      * @ORM\Column(type="smallint", options={"unsigned"=true})
      * @ORM\GeneratedValue(strategy="NONE")
+     *
+     * @var int
      */
     protected $id;
 
     /**
      * theater
      *
-     * @var Theater
      * @ORM\OneToOne(targetEntity="Theater")
      * @ORM\JoinColumn(name="theater_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     *
+     * @var Theater
      */
     protected $theater;
 
     /**
      * opening_hours
      *
-     * @var array
      * @ORM\Column(type="json", name="opening_hours")
+     *
+     * @var array
      */
     protected $openingHours;
 

@@ -1,11 +1,5 @@
 <?php
 
-/**
- * ImageResize.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
- */
-
 namespace Toei\PortalAdmin\Controller\Traits;
 
 use Intervention\Image\ImageManager;

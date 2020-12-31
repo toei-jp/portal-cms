@@ -1,11 +1,5 @@
 <?php
 
-/**
- * NotFoundTest.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
- */
-
 declare(strict_types=1);
 
 namespace Tests\Unit\Application\Handlers;
@@ -65,6 +59,7 @@ final class NotFoundTest extends TestCase
      * test construct
      *
      * @test
+     *
      * @return void
      */
     public function testConstruct()
@@ -89,8 +84,9 @@ final class NotFoundTest extends TestCase
      *
      * 定数を使うので別プロセスで実行。
      *
-     * @test
      * @runInSeparateProcess
+     * @test
+     *
      * @return void
      */
     public function testRenderHtmlNotFoundOutputDebugOn()
@@ -134,8 +130,9 @@ final class NotFoundTest extends TestCase
      *
      * 定数を使うので別プロセスで実行。
      *
-     * @test
      * @runInSeparateProcess
+     * @test
+     *
      * @return void
      */
     public function testRenderHtmlNotFoundOutputDebugOff()

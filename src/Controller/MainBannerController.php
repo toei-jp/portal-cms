@@ -1,11 +1,5 @@
 <?php
 
-/**
- * MainBannerController.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
- */
-
 namespace Toei\PortalAdmin\Controller;
 
 use Toei\PortalAdmin\Exception\ForbiddenException;
@@ -18,9 +12,6 @@ use Slim\Exception\NotFoundException;
  */
 class MainBannerController extends BaseController
 {
-    /**
-     * {@inheritDoc}
-     */
     protected function preExecute($request, $response): void
     {
         $user = $this->auth->getUser();
@@ -162,13 +153,12 @@ class MainBannerController extends BaseController
      */
     public function executeEdit($request, $response, $args)
     {
+        /** @var Entity\MainBanner|null $mainBanner */
         $mainBanner = $this->em->getRepository(Entity\MainBanner::class)->findOneById($args['id']);
 
         if (is_null($mainBanner)) {
             throw new NotFoundException($request, $response);
         }
-
-        /**@var Entity\MainBanner $mainBanner */
 
         $this->data->set('mainBanner', $mainBanner);
 
@@ -194,13 +184,12 @@ class MainBannerController extends BaseController
      */
     public function executeUpdate($request, $response, $args)
     {
+        /** @var Entity\MainBanner|null $mainBanner */
         $mainBanner = $this->em->getRepository(Entity\MainBanner::class)->findOneById($args['id']);
 
         if (is_null($mainBanner)) {
             throw new NotFoundException($request, $response);
         }
-
-        /**@var Entity\MainBanner $mainBanner */
 
         // Laminas_Formの都合で$request->getUploadedFiles()ではなく$_FILESを使用する
         $params = Form\BaseForm::buildData($request->getParams(), $_FILES);
@@ -283,13 +272,12 @@ class MainBannerController extends BaseController
      */
     public function executeDelete($request, $response, $args)
     {
+        /** @var Entity\MainBanner|null $mainBanner */
         $mainBanner = $this->em->getRepository(Entity\MainBanner::class)->findOneById($args['id']);
 
         if (is_null($mainBanner)) {
             throw new NotFoundException($request, $response);
         }
-
-        /**@var Entity\MainBanner $mainBanner */
 
         $this->doDelete($mainBanner);
 
@@ -352,11 +340,11 @@ class MainBannerController extends BaseController
      */
     public function executePublication($request, $response, $args)
     {
-        /** @var Entity\Page[] */
+        /** @var Entity\Page[] $pages */
         $pages = $this->em->getRepository(Entity\Page::class)->findActive();
         $this->data->set('pages', $pages);
 
-        /** @var Entity\Theater[] */
+        /** @var Entity\Theater[] $theaters */
         $theaters = $this->em->getRepository(Entity\Theater::class)->findActive();
         $this->data->set('theaters', $theaters);
     }
@@ -406,6 +394,7 @@ class MainBannerController extends BaseController
         foreach ($cleanData['main_banners'] as $mainBannerData) {
             $publication = clone $basePublication;
 
+            /** @var Entity\MainBanner|null $mainBanner */
             $mainBanner = $this->em
                 ->getRepository(Entity\MainBanner::class)
                 ->findOneById((int) $mainBannerData['main_banner_id']);
@@ -414,8 +403,6 @@ class MainBannerController extends BaseController
                 // @todo formで検証したい
                 throw new \LogicException('invalid main_banner.');
             }
-
-            /** @var Entity\MainBanner $mainBanner */
 
             $publication->setMainBanner($mainBanner);
             $publication->setDisplayOrder((int) $mainBannerData['display_order']);

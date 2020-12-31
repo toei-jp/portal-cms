@@ -1,11 +1,5 @@
 <?php
 
-/**
- * MotionPictureExtenstionTest.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
- */
-
 declare(strict_types=1);
 
 namespace Tests\Unit\Twig\Extension;
@@ -42,6 +36,7 @@ final class MotionPictureExtenstionTest extends BaseTestCase
      * test construct
      *
      * @test
+     *
      * @return void
      */
     public function testConstruct()
@@ -68,6 +63,7 @@ final class MotionPictureExtenstionTest extends BaseTestCase
      * test getApiEndpoint
      *
      * @test
+     *
      * @return void
      */
     public function testGetApiEndpoint()

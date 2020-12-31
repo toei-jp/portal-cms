@@ -1,11 +1,5 @@
 <?php
 
-/**
- * SessionManager.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
- */
-
 namespace Toei\PortalAdmin\Session;
 
 use Laminas\Session\Config\ConfigInterface;

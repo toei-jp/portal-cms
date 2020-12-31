@@ -1,11 +1,5 @@
 <?php
 
-/**
- * PageNewsRepository.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
- */
-
 namespace Toei\PortalAdmin\ORM\Repository;
 
 use Doctrine\ORM\EntityRepository;

@@ -1,11 +1,5 @@
 <?php
 
-/**
- * MainBannerForm.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
- */
-
 namespace Toei\PortalAdmin\Form;
 
 use Laminas\InputFilter\InputFilter;
@@ -122,9 +116,6 @@ class MainBannerForm extends BaseForm
         $this->setInputFilter($inputFilter);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function isValid()
     {
         $this->preValidator($this->data);

@@ -1,11 +1,5 @@
 <?php
 
-/**
- * MainBannerController.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
- */
-
 namespace Toei\PortalAdmin\Controller\API;
 
 use Toei\PortalAdmin\Controller\Traits\AzureBlobStorage;

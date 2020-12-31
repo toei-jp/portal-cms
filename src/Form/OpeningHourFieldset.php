@@ -1,11 +1,5 @@
 <?php
 
-/**
- * OpeningHourFieldset.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
- */
-
 namespace Toei\PortalAdmin\Form;
 
 use Laminas\Form\Fieldset;

@@ -1,11 +1,5 @@
 <?php
 
-/**
- * AzureBlobStorageHandler.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
- */
-
 namespace Toei\PortalAdmin\Logger\Handler;
 
 use Blue32a\Monolog\Handler\AzureBlobStorageHandler as BaseHandler;
@@ -37,9 +31,6 @@ class AzureBlobStorageHandler extends BaseHandler
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function write(array $record): void
     {
         if (! $this->isBlobCreated) {

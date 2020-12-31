@@ -1,11 +1,5 @@
 <?php
 
-/**
- * AuthController.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
- */
-
 namespace Toei\PortalAdmin\Controller;
 
 use Toei\PortalAdmin\Form\LoginForm;

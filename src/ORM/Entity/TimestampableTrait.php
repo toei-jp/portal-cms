@@ -1,11 +1,5 @@
 <?php
 
-/**
- * TimestampableTrait.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
- */
-
 namespace Toei\PortalAdmin\ORM\Entity;
 
 /**
@@ -18,16 +12,18 @@ trait TimestampableTrait
     /**
      * crated_at
      *
-     * @var \DateTime
      * @ORM\Column(type="datetime", name="created_at")
+     *
+     * @var \DateTime
      */
     protected $createdAt;
 
     /**
      * updated_at
      *
-     * @var \DateTime
      * @ORM\Column(type="datetime", name="updated_at")
+     *
+     * @var \DateTime
      */
     protected $updatedAt;
 
@@ -81,6 +77,7 @@ trait TimestampableTrait
      * persist
      *
      * @ORM\PrePersist
+     *
      * @return void
      */
     public function persistTimestamp()
@@ -93,6 +90,7 @@ trait TimestampableTrait
      * update
      *
      * @ORM\PreUpdate
+     *
      * @return void
      */
     public function updateTimestamp()

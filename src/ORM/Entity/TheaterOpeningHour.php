@@ -1,11 +1,5 @@
 <?php
 
-/**
- * TheaterOpeningHour.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
- */
-
 namespace Toei\PortalAdmin\ORM\Entity;
 
 use Toei\PortalAdmin\ORM\Entity\AbstractEntity;

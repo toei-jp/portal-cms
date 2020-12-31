@@ -1,11 +1,5 @@
 <?php
 
-/**
- * NotAllowed.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
- */
-
 namespace Toei\PortalAdmin\Application\Handlers;
 
 use Slim\Handlers\NotAllowed as BaseHandler;
@@ -29,9 +23,6 @@ class NotAllowed extends BaseHandler
         $this->view = $view;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function renderHtmlNotAllowedMessage($methods)
     {
         if (APP_DEBUG) {

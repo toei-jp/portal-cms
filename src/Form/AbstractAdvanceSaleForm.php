@@ -1,11 +1,5 @@
 <?php
 
-/**
- * AbstractAdvanceSaleForm.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
- */
-
 namespace Toei\PortalAdmin\Form;
 
 use Doctrine\ORM\EntityManager;

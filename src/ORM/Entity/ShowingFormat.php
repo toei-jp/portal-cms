@@ -1,11 +1,5 @@
 <?php
 
-/**
- * ShowingFormat.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
- */
-
 namespace Toei\PortalAdmin\ORM\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -47,35 +41,39 @@ class ShowingFormat extends AbstractEntity
     /**
      * id
      *
-     * @var int
      * @ORM\Id
      * @ORM\Column(type="integer", options={"unsigned"=true})
      * @ORM\GeneratedValue
+     *
+     * @var int
      */
     protected $id;
 
     /**
      * schedule
      *
-     * @var Schedule
      * @ORM\ManyToOne(targetEntity="Schedule")
      * @ORM\JoinColumn(name="schedule_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     *
+     * @var Schedule
      */
     protected $schedule;
 
     /**
      * system
      *
-     * @var int
      * @ORM\Column(type="smallint", options={"unsigned"=true})
+     *
+     * @var int
      */
     protected $system;
 
     /**
      * voice
      *
-     * @var int
      * @ORM\Column(type="smallint", options={"unsigned"=true})
+     *
+     * @var int
      */
     protected $voice;
 

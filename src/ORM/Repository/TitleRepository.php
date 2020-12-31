@@ -1,11 +1,5 @@
 <?php
 
-/**
- * TitleRepository.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
- */
-
 namespace Toei\PortalAdmin\ORM\Repository;
 
 use Doctrine\ORM\EntityRepository;
@@ -103,9 +97,10 @@ class TitleRepository extends EntityRepository
     /**
      * find for autocomplete
      *
+     * @link https://github.com/sergiodlopes/jquery-flexdatalist
+     *
      * @param array $params
      * @return Title[]
-     * @link https://github.com/sergiodlopes/jquery-flexdatalist
      */
     public function findForAutocomplete(array $params)
     {

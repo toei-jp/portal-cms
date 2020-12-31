@@ -1,11 +1,5 @@
 <?php
 
-/**
- * SessionManagerTest.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
- */
-
 declare(strict_types=1);
 
 namespace Tests\Unit\Session;
@@ -26,6 +20,7 @@ final class SessionManagerTest extends TestCase
      * test getContainer
      *
      * @test
+     *
      * @return void
      */
     public function testGetContainer()

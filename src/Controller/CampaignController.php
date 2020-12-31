@@ -1,11 +1,5 @@
 <?php
 
-/**
- * CampaignController.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
- */
-
 namespace Toei\PortalAdmin\Controller;
 
 use Toei\PortalAdmin\Exception\ForbiddenException;
@@ -18,9 +12,6 @@ use Slim\Exception\NotFoundException;
  */
 class CampaignController extends BaseController
 {
-    /**
-     * {@inheritDoc}
-     */
     protected function preExecute($request, $response): void
     {
         $user = $this->auth->getUser();
@@ -170,13 +161,12 @@ class CampaignController extends BaseController
      */
     public function executeEdit($request, $response, $args)
     {
+        /** @var Entity\Campaign|null $campaign */
         $campaign = $this->em->getRepository(Entity\Campaign::class)->findOneById($args['id']);
 
         if (is_null($campaign)) {
             throw new NotFoundException($request, $response);
         }
-
-        /**@var Entity\Campaign $campaign */
 
         $this->data->set('campaign', $campaign);
 
@@ -208,13 +198,12 @@ class CampaignController extends BaseController
      */
     public function executeUpdate($request, $response, $args)
     {
+        /** @var Entity\Campaign|null $campaign */
         $campaign = $this->em->getRepository(Entity\Campaign::class)->findOneById($args['id']);
 
         if (is_null($campaign)) {
             throw new NotFoundException($request, $response);
         }
-
-        /**@var Entity\Campaign $campaign */
 
         // Laminas_Formの都合で$request->getUploadedFiles()ではなく$_FILESを使用する
         $params = Form\BaseForm::buildData($request->getParams(), $_FILES);
@@ -307,13 +296,12 @@ class CampaignController extends BaseController
      */
     public function executeDelete($request, $response, $args)
     {
+        /** @var Entity\Campaign|null $campaign */
         $campaign = $this->em->getRepository(Entity\Campaign::class)->findOneById($args['id']);
 
         if (is_null($campaign)) {
             throw new NotFoundException($request, $response);
         }
-
-        /**@var Entity\Campaign $campaign */
 
         $this->doDelete($campaign);
 
@@ -376,11 +364,11 @@ class CampaignController extends BaseController
      */
     public function executePublication($request, $response, $args)
     {
-        /** @var Entity\Page[] */
+        /** @var Entity\Page[] $pages */
         $pages = $this->em->getRepository(Entity\Page::class)->findActive();
         $this->data->set('pages', $pages);
 
-        /** @var Entity\Theater[] */
+        /** @var Entity\Theater[] $theaters */
         $theaters = $this->em->getRepository(Entity\Theater::class)->findActive();
         $this->data->set('theaters', $theaters);
     }
@@ -430,6 +418,7 @@ class CampaignController extends BaseController
         foreach ($cleanData['campaigns'] as $campaignData) {
             $publication = clone $basePublication;
 
+            /** @var Entity\Campaign|null $campaign */
             $campaign = $this->em
                 ->getRepository(Entity\Campaign::class)
                 ->findOneById((int) $campaignData['campaign_id']);
@@ -438,8 +427,6 @@ class CampaignController extends BaseController
                 // @todo formで検証したい
                 throw new \LogicException('invalid campaign.');
             }
-
-            /** @var Entity\Campaign $campaign */
 
             $publication->setCampaign($campaign);
             $publication->setDisplayOrder((int) $campaignData['display_order']);

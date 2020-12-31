@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Error.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
- */
-
 namespace Toei\PortalAdmin\Application\Handlers;
 
 use Monolog\Logger;
@@ -62,9 +56,6 @@ class PhpError extends BaseHandler
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function renderHtmlErrorMessage(\Throwable $error)
     {
         if (APP_DEBUG) {

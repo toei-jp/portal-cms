@@ -1,11 +1,5 @@
 <?php
 
-/**
- * TitleController.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
- */
-
 namespace Toei\PortalAdmin\Controller;
 
 use Toei\PortalAdmin\Controller\Traits\ImageResize;
@@ -21,9 +15,6 @@ class TitleController extends BaseController
 {
     use ImageResize;
 
-    /**
-     * {@inheritDoc}
-     */
     protected function preExecute($request, $response): void
     {
         $user = $this->auth->getUser();
@@ -193,13 +184,12 @@ class TitleController extends BaseController
      */
     public function executeEdit($request, $response, $args)
     {
+        /** @var Entity\Title|null $title */
         $title = $this->em->getRepository(Entity\Title::class)->findOneById($args['id']);
 
         if (is_null($title)) {
             throw new NotFoundException($request, $response);
         }
-
-        /**@var Entity\Title $title */
 
         $this->data->set('title', $title);
 
@@ -244,13 +234,12 @@ class TitleController extends BaseController
      */
     public function executeUpdate($request, $response, $args)
     {
+        /** @var Entity\Title|null $title */
         $title = $this->em->getRepository(Entity\Title::class)->findOneById($args['id']);
 
         if (is_null($title)) {
             throw new NotFoundException($request, $response);
         }
-
-        /**@var Entity\Title $title */
 
         // Laminas_Formの都合で$request->getUploadedFiles()ではなく$_FILESを使用する
         $params = Form\BaseForm::buildData($request->getParams(), $_FILES);
@@ -352,13 +341,12 @@ class TitleController extends BaseController
      */
     public function executeDelete($request, $response, $args)
     {
+        /** @var Entity\Title|null $title */
         $title = $this->em->getRepository(Entity\Title::class)->findOneById($args['id']);
 
         if (is_null($title)) {
             throw new NotFoundException($request, $response);
         }
-
-        /**@var Entity\Title $title */
 
         $title->setIsDeleted(true);
         $title->setUpdatedUser($this->auth->getUser());

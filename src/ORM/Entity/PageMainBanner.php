@@ -1,11 +1,5 @@
 <?php
 
-/**
- * PageMainBanner.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
- */
-
 namespace Toei\PortalAdmin\ORM\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -26,36 +20,40 @@ class PageMainBanner extends AbstractEntity
     /**
      * id
      *
-     * @var int
      * @ORM\Id
      * @ORM\Column(type="integer", options={"unsigned"=true})
      * @ORM\GeneratedValue
+     *
+     * @var int
      */
     protected $id;
 
     /**
      * main_banner
      *
-     * @var MainBanner
      * @ORM\ManyToOne(targetEntity="MainBanner")
      * @ORM\JoinColumn(name="main_banner_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     *
+     * @var MainBanner
      */
     protected $mainBanner;
 
     /**
      * page
      *
-     * @var Page
      * @ORM\ManyToOne(targetEntity="Page", inversedBy="newsList")
      * @ORM\JoinColumn(name="page_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     *
+     * @var Page
      */
     protected $page;
 
     /**
      * display_order
      *
-     * @var int
      * @ORM\Column(type="smallint", name="display_order", options={"unsigned"=true})
+     *
+     * @var int
      */
     protected $displayOrder;
 

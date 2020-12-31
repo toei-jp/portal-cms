@@ -1,11 +1,5 @@
 <?php
 
-/**
- * AdminUserController.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
- */
-
 namespace Toei\PortalAdmin\Controller;
 
 use Toei\PortalAdmin\Form\LoginForm;
@@ -18,9 +12,6 @@ use Toei\PortalAdmin\ORM\Entity;
  */
 class AdminUserController extends BaseController
 {
-    /**
-     * {@inheritDoc}
-     */
     protected function preExecute($request, $response): void
     {
         $user = $this->auth->getUser();

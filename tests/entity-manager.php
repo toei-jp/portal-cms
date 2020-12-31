@@ -1,8 +1,6 @@
 <?php
 
 /**
- * entity-manager.php
- *
  * @link https://github.com/phpstan/phpstan-doctrine
  */
 

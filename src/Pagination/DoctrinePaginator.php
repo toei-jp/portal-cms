@@ -2,8 +2,6 @@
 
 /**
  * DoctrinePaginator.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
  */
 
 namespace Toei\PortalAdmin\Pagination;
@@ -68,17 +66,11 @@ class DoctrinePaginator extends AbstractPaginator
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getResultsInPage()
     {
         return $this->resultsInPage;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getNumResults(): int
     {
         return $this->numResults;

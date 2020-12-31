@@ -1,11 +1,5 @@
 <?php
 
-/**
- * AbstractMiddlewareTest.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
- */
-
 declare(strict_types=1);
 
 namespace Tests\Unit\Middleware;
@@ -57,6 +51,7 @@ final class AbstractMiddlewareTest extends TestCase
      * test construct
      *
      * @test
+     *
      * @return void
      */
     public function testConstruct()

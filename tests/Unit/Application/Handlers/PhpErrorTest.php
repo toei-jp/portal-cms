@@ -1,11 +1,5 @@
 <?php
 
-/**
- * PhpErrorTest.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
- */
-
 declare(strict_types=1);
 
 namespace Tests\Unit\Application\Handlers;
@@ -51,6 +45,7 @@ final class PhpErrorTest extends TestCase
      * test construct
      *
      * @test
+     *
      * @return void
      */
     public function testConstruct()
@@ -111,6 +106,7 @@ final class PhpErrorTest extends TestCase
      * test log
      *
      * @test
+     *
      * @return void
      */
     public function testLog()
@@ -148,8 +144,9 @@ final class PhpErrorTest extends TestCase
      *
      * 定数を使うので別プロセスで実行。
      *
-     * @test
      * @runInSeparateProcess
+     * @test
+     *
      * @return void
      */
     public function testRenderHtmlErrorMessageDebugOn()
@@ -179,8 +176,9 @@ final class PhpErrorTest extends TestCase
      *
      * 定数を使うので別プロセスで実行。
      *
-     * @test
      * @runInSeparateProcess
+     * @test
+     *
      * @return void
      */
     public function testRenderHtmlErrorMessageDebugOff()

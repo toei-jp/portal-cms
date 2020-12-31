@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Campaign.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
- */
-
 namespace Toei\PortalAdmin\ORM\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -29,76 +23,85 @@ class Campaign extends AbstractEntity
     /**
      * id
      *
-     * @var int
      * @ORM\Id
      * @ORM\Column(type="integer", options={"unsigned"=true})
      * @ORM\GeneratedValue
+     *
+     * @var int
      */
     protected $id;
 
     /**
      * title
      *
-     * @var Title|null
      * @ORM\ManyToOne(targetEntity="Title")
      * @ORM\JoinColumn(name="title_id", referencedColumnName="id", nullable=true, onDelete="RESTRICT")
+     *
+     * @var Title|null
      */
     protected $title;
 
     /**
      * image
      *
-     * @var File
      * @ORM\OneToOne(targetEntity="File")
      * @ORM\JoinColumn(name="image_file_id", referencedColumnName="id", nullable=false, onDelete="RESTRICT")
+     *
+     * @var File
      */
     protected $image;
 
     /**
      * name
      *
-     * @var string
      * @ORM\Column(type="string")
+     *
+     * @var string
      */
     protected $name;
 
     /**
      * start_dt
      *
-     * @var \DateTime
      * @ORM\Column(type="datetime", name="start_dt")
+     *
+     * @var \DateTime
      */
     protected $startDt;
 
     /**
      * end_dt
      *
-     * @var \DateTime
      * @ORM\Column(type="datetime", name="end_dt")
+     *
+     * @var \DateTime
      */
     protected $endDt;
 
     /**
      * url
      *
-     * @var string
      * @ORM\Column(type="string")
+     *
+     * @var string
      */
     protected $url;
 
     /**
      * pages
      *
-     * @var Collection<PageCampaign>
      * @ORM\OneToMany(targetEntity="PageCampaign", mappedBy="campaign")
+     *
+     * @var Collection<PageCampaign>
      */
     protected $pages;
 
     /**
      * theaters
      *
-     * @var Collection<TheaterCampaign>
      * @ORM\OneToMany(targetEntity="TheaterCampaign", mappedBy="campaign")
+     *
+     * @var Collection<TheaterCampaign>
      */
     protected $theaters;
 

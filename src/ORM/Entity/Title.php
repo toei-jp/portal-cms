@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Title.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
- */
-
 namespace Toei\PortalAdmin\ORM\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -32,123 +26,138 @@ class Title extends AbstractEntity
     /**
      * id
      *
-     * @var int
      * @ORM\Id
      * @ORM\Column(type="integer", options={"unsigned"=true})
      * @ORM\GeneratedValue
+     *
+     * @var int
      */
     protected $id;
 
     /**
      * image
      *
-     * @var File|null
      * @ORM\OneToOne(targetEntity="File")
      * @ORM\JoinColumn(name="image_file_id", referencedColumnName="id", nullable=true, onDelete="RESTRICT")
+     *
+     * @var File|null
      */
     protected $image;
 
     /**
      * chever_code
      *
-     * @var string|null
      * @ORM\Column(name="chever_code", type="string", length=100, unique=true, nullable=true)
+     *
+     * @var string|null
      */
     protected $cheverCode;
 
     /**
      * name
      *
-     * @var string
      * @ORM\Column(type="string")
+     *
+     * @var string
      */
     protected $name;
 
     /**
      * name_kana
      *
-     * @var string|null
      * @ORM\Column(type="string", name="name_kana", nullable=true)
+     *
+     * @var string|null
      */
     protected $nameKana;
 
     /**
      * sub_title
      *
-     * @var string|null
      * @ORM\Column(type="string", name="sub_title", nullable=true)
+     *
+     * @var string|null
      */
     protected $subTitle;
 
     /**
      * credit
      *
-     * @var string|null
      * @ORM\Column(type="string", nullable=true)
+     *
+     * @var string|null
      */
     protected $credit;
 
     /**
      * catchcopy
      *
-     * @var string|null
      * @ORM\Column(type="text", nullable=true)
+     *
+     * @var string|null
      */
     protected $catchcopy;
 
     /**
      * introduction
      *
-     * @var string|null
      * @ORM\Column(type="text", nullable=true)
+     *
+     * @var string|null
      */
     protected $introduction;
 
     /**
      * director
      *
-     * @var string|null
      * @ORM\Column(type="string", nullable=true)
+     *
+     * @var string|null
      */
     protected $director;
 
     /**
      * cast
      *
-     * @var string|null
      * @ORM\Column(type="string", nullable=true)
+     *
+     * @var string|null
      */
     protected $cast;
 
     /**
      * publishing_expected_date
      *
-     * @var \DateTime|null
      * @ORM\Column(type="date", name="publishing_expected_date", nullable=true)
+     *
+     * @var \DateTime|null
      */
     protected $publishingExpectedDate;
 
     /**
      * official_site
      *
-     * @var string|null
      * @ORM\Column(type="string", name="official_site", nullable=true)
+     *
+     * @var string|null
      */
     protected $officialSite;
 
     /**
      * rating
      *
-     * @var int|null
      * @ORM\Column(type="smallint", nullable=true, options={"unsigned"=true})
+     *
+     * @var int|null
      */
     protected $rating;
 
     /**
      * universal
      *
-     * @var array|null
      * @ORM\Column(type="json", nullable=true)
+     *
+     * @var array|null
      */
     protected $universal;
 

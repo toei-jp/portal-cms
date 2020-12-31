@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Schedule.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
- */
-
 namespace Toei\PortalAdmin\ORM\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -29,75 +23,84 @@ class Schedule extends AbstractEntity
     /**
      * id
      *
-     * @var int
      * @ORM\Id
      * @ORM\Column(type="integer", options={"unsigned"=true})
      * @ORM\GeneratedValue
+     *
+     * @var int
      */
     protected $id;
 
     /**
      * title
      *
-     * @var Title
      * @ORM\ManyToOne(targetEntity="Title")
      * @ORM\JoinColumn(name="title_id", referencedColumnName="id", nullable=false, onDelete="RESTRICT")
+     *
+     * @var Title
      */
     protected $title;
 
     /**
      * start_date
      *
-     * @var \DateTime
      * @ORM\Column(type="date", name="start_date")
+     *
+     * @var \DateTime
      */
     protected $startDate;
 
     /**
      * end_date
      *
-     * @var \DateTime
      * @ORM\Column(type="date", name="end_date")
+     *
+     * @var \DateTime
      */
     protected $endDate;
 
     /**
      * public_start_dt
      *
-     * @var \DateTime
      * @ORM\Column(type="datetime", name="public_start_dt")
+     *
+     * @var \DateTime
      */
     protected $publicStartDt;
 
     /**
      * public_end_dt
      *
-     * @var \DateTime
      * @ORM\Column(type="datetime", name="public_end_dt")
+     *
+     * @var \DateTime
      */
     protected $publicEndDt;
 
     /**
      * remark
      *
-     * @var string|null
      * @ORM\Column(type="text", nullable=true)
+     *
+     * @var string|null
      */
     protected $remark;
 
     /**
      * showing_formats
      *
-     * @var Collection<ShowingFormat>
      * @ORM\OneToMany(targetEntity="ShowingFormat", mappedBy="schedule", orphanRemoval=true)
+     *
+     * @var Collection<ShowingFormat>
      */
     protected $showingFormats;
 
     /**
      * showing_theaters
      *
-     * @var Collection<ShowingTheater>
      * @ORM\OneToMany(targetEntity="ShowingTheater", mappedBy="schedule", orphanRemoval=true)
+     *
+     * @var Collection<ShowingTheater>
      */
     protected $showingTheaters;
 

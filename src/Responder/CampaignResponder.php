@@ -1,11 +1,5 @@
 <?php
 
-/**
- * CampaignResponder.php
- *
- * @author Atsushi Okui <okui@motionpicture.jp>
- */
-
 namespace Toei\PortalAdmin\Responder;
 
 use Slim\Collection;
