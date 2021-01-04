@@ -32,6 +32,7 @@
         "slim/slim": "^3.12",
         "slim/twig-view": "^2.5",
         "symfony/console": "^4.4",
+        "symfony/filesystem": "^4.4",
         "vlucas/phpdotenv": "^3.6"
     },
     "require-dev": {
