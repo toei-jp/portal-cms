@@ -47,6 +47,12 @@ $ docker-compose up
 $ php bin/console help
 ```
 
+### viewキャッシュ削除
+
+```sh
+$ php bin/console cache:clear:view
+```
+
 ## その他 コマンド
 
 ### PHP Lint
