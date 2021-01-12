@@ -1,0 +1,270 @@
+# CircleCI configuration
+
+version: 2.1
+
+commands:
+  fix_composer_version:
+    description: "Composerのバージョンを固定"
+    steps:
+      - run:
+          name: Using Composer version 2
+          command: sudo composer self-update --2
+
+  file_exists:
+    description: "Checks whether a file exists"
+    parameters:
+      file:
+        type: string
+    steps:
+      - run:
+          name: Checks whether "<< parameters.file >>" exists
+          command: |
+            if [ -e << parameters.file >> ]; then
+              echo "File exists."
+              exit 0
+            else
+              echo "File not exists."
+              exit 1
+            fi
+
+  azure_zip_deploy:
+    description: "Azure ZIP Deploy"
+    parameters:
+      app:
+        type: string
+      user:
+        type: string
+      password:
+        type: string
+      zip:
+        type: string
+      async:
+        type: enum
+        enum: ["true", "false"]
+        default: "false"
+
+    steps:
+      - run:
+          name: Deploy to Azure
+          command: |
+            dir="./deploy"
+            mkdir ${dir}
+
+            deploy_result="${dir}/result.html"
+            deploy_header="${dir}/header.txt"
+            deploy_url="https://<< parameters.app >>.scm.azurewebsites.net/api/zipdeploy?isAsync=<< parameters.async >>"
+
+            deploy_http_code=$(curl -s -X POST -u << parameters.user >>:<< parameters.password >> ${deploy_url} -T << parameters.zip >> -o ${deploy_result} --dump-header ${deploy_header} -w '%{http_code}')
+
+            echo "Deploy HTTP code is ${deploy_http_code}."
+
+            if [ ${deploy_http_code} -eq 200 ]; then
+                echo "Deploy successful."
+                exit 0
+            elif [ ${deploy_http_code} -eq 202 ]; then
+                echo "Deploy accepted."
+            else
+                echo "Deploy failed."
+                exit 1
+            fi
+
+            pollable_url=""
+            regex="^Location:\s(.+)$"
+
+            while read line
+            do
+              if [[ ${line} =~ ${regex} ]]; then
+                pollable_url=$(echo ${BASH_REMATCH[1]} | tr -d "\r\n" | tr -d "\n")
+                break
+              fi
+            done < ${deploy_header}
+
+            if [ ${pollable_url} = "" ]; then
+              echo "Pollable URL not found."
+              exit 1
+            fi
+
+            echo "Polling deployment status."
+
+            polling_count=0
+            polling_wait=30
+
+            while true
+            do
+              polling_count=$((++polling_count))
+              status_result="${dir}/status_${polling_count}.json"
+
+              status_http_code=$(curl -sS -u << parameters.user >>:<< parameters.password >> ${pollable_url} -o ${status_result} -w '%{http_code}')
+
+              echo "Deployment status HTTP code is ${status_http_code}."
+
+              if [ ${status_http_code} -lt 200 -o ${status_http_code} -ge 300 ]; then
+                  echo "Request status failed."
+                  exit 1
+              fi
+
+              result=$(cat ${status_result})
+              complete=$(echo ${result} | jq '.complete')
+              status=$(echo ${result} | jq '.status')
+              status_text=$(echo ${result} | jq -r '.status_text')
+
+              if ${complete}; then
+                if [ ${status} -eq 4 ]; then
+                  break
+                fi
+
+                echo "Deploy failed."
+                echo "${status_text}"
+                exit 1
+              else
+                echo "${status_text}"
+              fi
+
+              sleep ${polling_wait}
+            done
+
+            echo "Deploy successful."
+
+      - store_artifacts:
+          path: ./deploy
+
+executors:
+  build:
+    docker:
+      - image: circleci/php:7.3
+
+  deployment:
+    docker:
+      - image: cimg/base:stable
+
+jobs:
+  build_development:
+    working_directory: ~/development
+    executor: build
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+            - composer-dev-{{ checksum "composer.lock" }}
+            - composer-
+
+      - fix_composer_version
+
+      - run:
+          name: Composer install (with require-dev)
+          command: composer install --dev -n --prefer-dist
+
+      - save_cache:
+          key: composer-dev-{{ checksum "composer.lock" }}
+          paths:
+            - ./vendor
+
+      - run:
+          name: Create .env file
+          command: cp .env.test .env
+
+      - run:
+          name: Generate ORM proxies
+          command: vendor/bin/doctrine orm:generate-proxies
+
+      - run:
+          name: Remove .env file
+          command: rm -v ./.env
+
+      - run:
+          name: Create version file
+          command: echo "${CIRCLE_SHA1}.${CIRCLE_BUILD_NUM}" | tee version.txt
+
+      - run:
+          name: ZIP archive
+          command: >-
+            zip -r development_app.zip
+            azure bin cert config error public src template vendor cli-config.php README.md version.txt
+            -x public/Web.config.example public/Web.config.prod
+
+      - store_artifacts:
+          path: ./development_app.zip
+
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+
+  test:
+    working_directory: ~/development
+    executor: build
+
+    steps:
+      - attach_workspace:
+          at: .
+
+      - run:
+          name: Create .env file
+          command: cp .env.test .env
+
+      - run:
+          name: PHP Lint
+          command: composer phplint
+
+      - run:
+          name: PHP CodeSniffer
+          command: composer phpcs
+
+      - run:
+          name: PHPStan
+          command: composer phpstan > ./report/phpstan_result.txt
+
+      - run:
+          name: PHPUnit
+          command: composer phpunit
+
+      - store_artifacts:
+          path: ./report
+
+      - run:
+          name: remove .env file
+          command: rm -v ./.env
+
+  deploy_to_test:
+    working_directory: ~/development
+    executor: deployment
+    steps:
+      - attach_workspace:
+          at: .
+
+      - file_exists:
+          file: development_app.zip
+
+      - azure_zip_deploy:
+          app: toei-portal-cms-test-new-deployment
+          user: $TEST_AAS_USER
+          password: $TEST_AAS_PASSWORD
+          zip: development_app.zip
+          async: "true"
+
+workflows:
+  version: 2
+
+  deploy_development_feature:
+    jobs:
+      - build_development:
+          filters:
+            branches:
+              ignore:
+                - develop
+                - master
+
+      - test:
+          requires:
+            - build_development
+
+      - deploy_approval:
+          type: approval
+          requires:
+            - build_development
+
+      - deploy_to_test:
+          requires:
+            - deploy_approval
