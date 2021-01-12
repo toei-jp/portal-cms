@@ -238,7 +238,7 @@ jobs:
           file: development_app.zip
 
       - azure_zip_deploy:
-          app: toei-portal-cms-test-new-deployment
+          app: toei-portal-cms-test
           user: $TEST_AAS_USER
           password: $TEST_AAS_PASSWORD
           zip: development_app.zip
