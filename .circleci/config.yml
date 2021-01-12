@@ -227,6 +227,24 @@ jobs:
           name: remove .env file
           command: rm -v ./.env
 
+  deploy_to_dev:
+    working_directory: ~/development
+    executor: deployment
+
+    steps:
+      - attach_workspace:
+          at: .
+
+      - file_exists:
+          file: development_app.zip
+
+      - azure_zip_deploy:
+          app: toei-portal-cms-development
+          user: $DEV_AAS_USER
+          password: $DEV_AAS_PASSWORD
+          zip: development_app.zip
+          async: "true"
+
   deploy_to_test:
     working_directory: ~/development
     executor: deployment
@@ -246,6 +264,21 @@ jobs:
 
 workflows:
   version: 2
+
+  deploy_development:
+    jobs:
+      - build_development:
+          filters:
+            branches:
+              only: develop
+
+      - test:
+          requires:
+            - build_development
+
+      - deploy_to_dev:
+          requires:
+            - build_development
 
   deploy_development_feature:
     jobs:

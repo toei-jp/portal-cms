@@ -10,6 +10,8 @@ toei-jp (Organizations) > portal-cms (Projects) > Project Settings > Environment
 
 | Name | Value |
 |:---|:---|
+|DEV_AAS_USER |開発環境デプロイユーザ |
+|DEV_AAS_PASSWORD |開発環境デプロイユーザのパスワード |
 |TEST_AAS_USER |テスト環境デプロイユーザ |
 |TEST_AAS_PASSWORD |テスト環境デプロイユーザのパスワード |
 
