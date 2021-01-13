@@ -348,8 +348,9 @@ class CampaignController extends BaseController
             $this->logger->debug('Delete "TheaterCampaign"', ['count' => $theaterCampaignDeleteCount]);
 
             $this->em->getConnection()->commit();
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $this->em->getConnection()->rollBack();
+
             throw $e;
         }
     }

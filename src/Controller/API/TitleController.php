@@ -84,27 +84,34 @@ class TitleController extends BaseController
     {
         $data   = $request->getParams();
         $errors = [];
+
         foreach ($data['titles'] as $title) {
             $ratings = Entity\Title::getRatingTypes();
             $i       = array_search($title['rating'], $ratings);
+
             if ($i !== false) {
                 $title['rating'] = $i;
             } else {
                 $title['rating'] = null;
             }
+
             try {
                 $newTitle = new Entity\Title();
                 $newTitle->setName($title['name']);
+
                 if (! empty($title['sub_title'])) {
                     $newTitle->setSubTitle($title['sub_title']);
                 }
+
                 $newTitle->setCheverCode($title['chever_code']);
+
                 if (
                     ! isset($title['not_exist_publishing_expected_date']) ||
                     $title['not_exist_publishing_expected_date'] !== '1'
                 ) {
                     $newTitle->setPublishingExpectedDate($title['publishing_expected_date']);
                 }
+
                 $newTitle->setRating((int) $title['rating']);
                 $newTitle->setUniversal([]);
                 $newTitle->setCreatedUser($this->auth->getUser());
@@ -112,11 +119,12 @@ class TitleController extends BaseController
 
                 $this->em->persist($newTitle);
                 $this->em->flush();
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 $this->logger->error($e);
                 array_push($errors, $e->getMessage());
             }
         }
+
         if (count($errors) > 0) {
             $this->data->set('status', 'fail');
             $this->data->set('errors', $errors);

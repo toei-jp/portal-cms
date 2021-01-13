@@ -77,7 +77,7 @@ class AdvanceTicketController extends BaseController
     protected function getForm(int $type)
     {
         if ($this->auth->getUser()->isTheater()) {
-            if (Form\AbstractAdvanceSaleForm::TYPE_NEW === $type) {
+            if ($type === Form\AbstractAdvanceSaleForm::TYPE_NEW) {
                 throw new \LogicException('Type "NEW" does not exist.');
             }
 
@@ -454,13 +454,15 @@ class AdvanceTicketController extends BaseController
                 $advanceTicket->setSpecialGiftImage(null);
             }
 
-            if ($image['name']) {
-                $file = $this->uploadFile($image);
-
-                $this->em->persist($file);
-
-                $advanceTicket->setSpecialGiftImage($file);
+            if (! $image['name']) {
+                continue;
             }
+
+            $file = $this->uploadFile($image);
+
+            $this->em->persist($file);
+
+            $advanceTicket->setSpecialGiftImage($file);
         }
 
         $this->em->flush();

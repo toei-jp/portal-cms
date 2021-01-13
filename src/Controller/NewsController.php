@@ -361,8 +361,9 @@ class NewsController extends BaseController
             $this->logger->debug('Delete "TheaterNews"', ['count' => $theaterNewsDeleteCount]);
 
             $this->em->getConnection()->commit();
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $this->em->getConnection()->rollBack();
+
             throw $e;
         }
     }

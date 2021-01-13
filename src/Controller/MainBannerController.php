@@ -324,8 +324,9 @@ class MainBannerController extends BaseController
             $this->logger->debug('Delete "TheaterMainBanner"', ['count' => $theaterMainBannerDeleteCount]);
 
             $this->em->getConnection()->commit();
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $this->em->getConnection()->rollBack();
+
             throw $e;
         }
     }

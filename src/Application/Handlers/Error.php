@@ -52,6 +52,9 @@ class Error extends BaseHandler
         ]);
     }
 
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.Exceptions.ReferenceThrowableOnly.ReferencedGeneralException
+     */
     protected function renderHtmlErrorMessage(\Exception $exception)
     {
         if (APP_DEBUG) {
