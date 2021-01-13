@@ -45,6 +45,7 @@ class EditorController extends BaseController
             }
 
             $this->data->set('errors', $errors);
+
             return;
         }
 
