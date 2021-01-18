@@ -1,9 +1,9 @@
 <?php
 
-namespace Toei\PortalAdmin\ORM\Repository;
+namespace App\ORM\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Toei\PortalAdmin\ORM\Entity\Theater;
+use App\ORM\Entity\Theater;
 
 /**
  * Theater repository class

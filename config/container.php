@@ -5,7 +5,7 @@
  *
  * AbstractControllerのphpdoc更新を推奨。
  *
- * @see Toei\PortalAdmin\Controller\AbstractController\__call()
+ * @see App\Controller\AbstractController\__call()
  */
 
 // phpcs:disable SlevomatCodingStandard.Commenting.InlineDocCommentDeclaration
@@ -33,11 +33,11 @@ $container['view'] = static function ($container) {
 
     // add Extension
     $view->addExtension(new \Twig\Extension\DebugExtension());
-    $view->addExtension(new \Toei\PortalAdmin\Twig\Extension\AzureStorageExtension(
+    $view->addExtension(new \App\Twig\Extension\AzureStorageExtension(
         $container->get('bc'),
         $container->get('settings')['storage']['public_endpoint']
     ));
-    $view->addExtension(new \Toei\PortalAdmin\Twig\Extension\MotionPictureExtenstion(
+    $view->addExtension(new \App\Twig\Extension\MotionPictureExtenstion(
         $container->get('settings')['mp']
     ));
 
@@ -70,7 +70,7 @@ $container['logger'] = static function ($container) {
     }
 
     $azureBlobStorageSettings = $settings['azure_blob_storage'];
-    $azureBlobStorageHandler  = new Toei\PortalAdmin\Logger\Handler\AzureBlobStorageHandler(
+    $azureBlobStorageHandler  = new \App\Logger\Handler\AzureBlobStorageHandler(
         $container->get('bc'),
         $azureBlobStorageSettings['container'],
         $azureBlobStorageSettings['blob'],
@@ -108,10 +108,10 @@ $container['em'] = static function ($container) {
     );
 
     $config->setProxyDir(APP_ROOT . '/src/ORM/Proxy');
-    $config->setProxyNamespace('Toei\PortalAdmin\ORM\Proxy');
+    $config->setProxyNamespace('App\ORM\Proxy');
     $config->setAutoGenerateProxyClasses($settings['dev_mode']);
 
-    $logger = new \Toei\PortalAdmin\Logger\DbalLogger($container->get('logger'));
+    $logger = new \App\Logger\DbalLogger($container->get('logger'));
     $config->setSQLLogger($logger);
 
     return \Doctrine\ORM\EntityManager::create($settings['connection'], $config);
@@ -120,7 +120,7 @@ $container['em'] = static function ($container) {
 /**
  * session manager
  *
- * @return \Toei\PortalAdmin\Session\SessionManager
+ * @return \App\Session\SessionManager
  */
 $container['sm'] = static function ($container) {
     $settings = $container->get('settings')['session'];
@@ -128,7 +128,7 @@ $container['sm'] = static function ($container) {
     $config = new \Laminas\Session\Config\SessionConfig();
     $config->setOptions($settings);
 
-    return new \Toei\PortalAdmin\Session\SessionManager($config);
+    return new \App\Session\SessionManager($config);
 };
 
 /**
@@ -145,10 +145,10 @@ $container['flash'] = static function ($container) {
 /**
  * auth
  *
- * @return \Toei\PortalAdmin\Auth
+ * @return \App\Auth
  */
 $container['auth'] = static function ($container) {
-    return new Toei\PortalAdmin\Auth($container);
+    return new \App\Auth($container);
 };
 
 /**
@@ -176,27 +176,27 @@ $container['bc'] = static function ($container) {
 };
 
 $container['errorHandler'] = static function ($container) {
-    return new \Toei\PortalAdmin\Application\Handlers\Error(
+    return new \App\Application\Handlers\Error(
         $container->get('logger'),
         $container->get('settings')['displayErrorDetails']
     );
 };
 
 $container['phpErrorHandler'] = static function ($container) {
-    return new \Toei\PortalAdmin\Application\Handlers\PhpError(
+    return new \App\Application\Handlers\PhpError(
         $container->get('logger'),
         $container->get('settings')['displayErrorDetails']
     );
 };
 
 $container['notFoundHandler'] = static function ($container) {
-    return new \Toei\PortalAdmin\Application\Handlers\NotFound(
+    return new \App\Application\Handlers\NotFound(
         $container->get('view')
     );
 };
 
 $container['notAllowedHandler'] = static function ($container) {
-    return new \Toei\PortalAdmin\Application\Handlers\NotAllowed(
+    return new \App\Application\Handlers\NotAllowed(
         $container->get('view')
     );
 };

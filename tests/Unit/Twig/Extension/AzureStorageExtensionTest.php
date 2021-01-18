@@ -6,7 +6,7 @@ namespace Tests\Unit\Twig\Extension;
 
 use MicrosoftAzure\Storage\Blob\BlobRestProxy;
 use Mockery;
-use Toei\PortalAdmin\Twig\Extension\AzureStorageExtension;
+use App\Twig\Extension\AzureStorageExtension;
 
 /**
  * Azure Storage extension test

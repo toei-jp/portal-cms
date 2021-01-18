@@ -4,23 +4,23 @@
  * routes.php
  */
 
-use Toei\PortalAdmin\Controller\AdminUserController;
-use Toei\PortalAdmin\Controller\AuthController;
-use Toei\PortalAdmin\Controller\AdvanceTicketController;
-use Toei\PortalAdmin\Controller\CampaignController;
-use Toei\PortalAdmin\Controller\IndexController;
-use Toei\PortalAdmin\Controller\MainBannerController;
-use Toei\PortalAdmin\Controller\NewsController;
-use Toei\PortalAdmin\Controller\ScheduleController;
-use Toei\PortalAdmin\Controller\TheaterMetaController;
-use Toei\PortalAdmin\Controller\TitleController;
-use Toei\PortalAdmin\Controller\API\AuthController as AuthApiController;
-use Toei\PortalAdmin\Controller\API\CampaignController as CampaignApiController;
-use Toei\PortalAdmin\Controller\API\EditorController as EditorApiController;
-use Toei\PortalAdmin\Controller\API\MainBannerController as MainBannerApiController;
-use Toei\PortalAdmin\Controller\API\NewsController as NewsApiController;
-use Toei\PortalAdmin\Controller\API\TitleController as TitleApiController;
-use Toei\PortalAdmin\Middleware\AuthMiddleware;
+use App\Controller\AdminUserController;
+use App\Controller\AuthController;
+use App\Controller\AdvanceTicketController;
+use App\Controller\CampaignController;
+use App\Controller\IndexController;
+use App\Controller\MainBannerController;
+use App\Controller\NewsController;
+use App\Controller\ScheduleController;
+use App\Controller\TheaterMetaController;
+use App\Controller\TitleController;
+use App\Controller\API\AuthController as AuthApiController;
+use App\Controller\API\CampaignController as CampaignApiController;
+use App\Controller\API\EditorController as EditorApiController;
+use App\Controller\API\MainBannerController as MainBannerApiController;
+use App\Controller\API\NewsController as NewsApiController;
+use App\Controller\API\TitleController as TitleApiController;
+use App\Middleware\AuthMiddleware;
 
 // phpcs:disable SlevomatCodingStandard.Commenting.InlineDocCommentDeclaration
 /** @var \Slim\App $app */

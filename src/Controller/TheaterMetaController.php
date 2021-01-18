@@ -1,10 +1,10 @@
 <?php
 
-namespace Toei\PortalAdmin\Controller;
+namespace App\Controller;
 
 use Slim\Exception\NotFoundException;
-use Toei\PortalAdmin\Form;
-use Toei\PortalAdmin\ORM\Entity;
+use App\Form;
+use App\ORM\Entity;
 
 /**
  * TheaterMeta controller

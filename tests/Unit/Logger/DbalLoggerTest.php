@@ -8,7 +8,7 @@ use Mockery;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
-use Toei\PortalAdmin\Logger\DbalLogger;
+use App\Logger\DbalLogger;
 
 /**
  * DBAL Logger test

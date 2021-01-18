@@ -1,6 +1,6 @@
 <?php
 
-namespace Toei\PortalAdmin\Controller\Traits;
+namespace App\Controller\Traits;
 
 /**
  * AzureBlobStorage trait

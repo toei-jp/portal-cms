@@ -1,11 +1,11 @@
 <?php
 
-namespace Toei\PortalAdmin\ORM\Repository;
+namespace App\ORM\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Toei\PortalAdmin\Form\ScheduleFindForm;
-use Toei\PortalAdmin\ORM\Entity\Schedule;
-use Toei\PortalAdmin\Pagination\DoctrinePaginator;
+use App\Form\ScheduleFindForm;
+use App\ORM\Entity\Schedule;
+use App\Pagination\DoctrinePaginator;
 
 /**
  * Schedule repository class

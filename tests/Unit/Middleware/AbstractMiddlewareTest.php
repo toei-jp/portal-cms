@@ -8,7 +8,7 @@ use Mockery;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
-use Toei\PortalAdmin\Middleware\AbstractMiddleware;
+use App\Middleware\AbstractMiddleware;
 
 /**
  * Abstract Middleware test

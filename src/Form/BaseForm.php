@@ -1,12 +1,12 @@
 <?php
 
-namespace Toei\PortalAdmin\Form;
+namespace App\Form;
 
 use Laminas\Form\Form;
 use Laminas\I18n\Translator\Resources;
 use Laminas\Validator\Translator;
 use Laminas\Validator\AbstractValidator;
-use Toei\PortalAdmin\Translator\ValidatorTranslator;
+use App\Translator\ValidatorTranslator;
 
 /**
  * Base form class

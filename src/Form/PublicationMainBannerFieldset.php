@@ -1,6 +1,6 @@
 <?php
 
-namespace Toei\PortalAdmin\Form;
+namespace App\Form;
 
 use Laminas\Form\Fieldset;
 use Laminas\InputFilter\InputFilterProviderInterface;

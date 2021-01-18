@@ -1,9 +1,9 @@
 <?php
 
-namespace Toei\PortalAdmin\ORM\Entity;
+namespace App\ORM\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Toei\PortalAdmin\ORM\Entity\AbstractEntity;
+use App\ORM\Entity\AbstractEntity;
 
 /**
  * ShowingTheater entity class

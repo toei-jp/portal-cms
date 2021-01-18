@@ -185,7 +185,7 @@ jobs:
           command: >-
             zip -r development_app.zip
             azure bin cert config error public src template vendor cli-config.php README.md version.txt
-            -x public/Web.config.example public/Web.config.prod
+            -x public/.htaccess.example public/Web.config.example public/Web.config.prod
 
       - store_artifacts:
           path: ./development_app.zip

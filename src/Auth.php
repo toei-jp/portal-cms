@@ -1,9 +1,9 @@
 <?php
 
-namespace Toei\PortalAdmin;
+namespace App;
 
 use Psr\Container\ContainerInterface;
-use Toei\PortalAdmin\ORM\Entity\AdminUser;
+use App\ORM\Entity\AdminUser;
 
 class Auth
 {

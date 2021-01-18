@@ -1,12 +1,12 @@
 <?php
 
-namespace Toei\PortalAdmin\Form;
+namespace App\Form;
 
 use Laminas\Form\Fieldset;
 use Laminas\InputFilter\InputFilter;
 use Laminas\Validator;
 use Doctrine\ORM\EntityManager;
-use Toei\PortalAdmin\ORM\Entity;
+use App\ORM\Entity;
 
 /**
  * MainBannerPublication form class

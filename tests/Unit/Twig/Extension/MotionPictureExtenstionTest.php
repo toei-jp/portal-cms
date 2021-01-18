@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Twig\Extension;
 
 use Mockery;
-use Toei\PortalAdmin\Twig\Extension\MotionPictureExtenstion;
+use App\Twig\Extension\MotionPictureExtenstion;
 
 /**
  * MotionPicture extension test

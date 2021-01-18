@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Http\Response;
-use Toei\PortalAdmin\Middleware\AuthMiddleware;
+use App\Middleware\AuthMiddleware;
 
 /**
  * Auth Middleware test

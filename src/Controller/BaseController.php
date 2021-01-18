@@ -1,10 +1,10 @@
 <?php
 
-namespace Toei\PortalAdmin\Controller;
+namespace App\Controller;
 
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface as Response;
-use Toei\PortalAdmin\Responder;
+use App\Responder;
 
 /**
  * Base controller

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Unit;
 
-use Toei\PortalAdmin\Auth;
-use Toei\PortalAdmin\ORM\Entity\AdminUser;
+use App\Auth;
+use App\ORM\Entity\AdminUser;
 use Laminas\Stdlib\ArrayObject;
 use Mockery;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;

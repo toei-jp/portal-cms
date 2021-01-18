@@ -1,9 +1,9 @@
 <?php
 
-namespace Toei\PortalAdmin\Form;
+namespace App\Form;
 
 use Laminas\InputFilter\InputFilter;
-use Toei\PortalAdmin\ValidatorTranslator;
+use App\ValidatorTranslator;
 
 /**
  * Login form class

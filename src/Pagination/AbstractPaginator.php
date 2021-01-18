@@ -1,6 +1,6 @@
 <?php
 
-namespace Toei\PortalAdmin\Pagination;
+namespace App\Pagination;
 
 /**
  * Abstract Paginator class

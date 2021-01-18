@@ -1,6 +1,6 @@
 <?php
 
-namespace Toei\PortalAdmin\Session;
+namespace App\Session;
 
 use Laminas\Session\Config\ConfigInterface;
 use Laminas\Session\Container;

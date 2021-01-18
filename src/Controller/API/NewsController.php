@@ -1,9 +1,9 @@
 <?php
 
-namespace Toei\PortalAdmin\Controller\API;
+namespace App\Controller\API;
 
-use Toei\PortalAdmin\Controller\Traits\AzureBlobStorage;
-use Toei\PortalAdmin\ORM\Entity;
+use App\Controller\Traits\AzureBlobStorage;
+use App\ORM\Entity;
 
 /**
  * News API controller

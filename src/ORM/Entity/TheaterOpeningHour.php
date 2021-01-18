@@ -1,8 +1,8 @@
 <?php
 
-namespace Toei\PortalAdmin\ORM\Entity;
+namespace App\ORM\Entity;
 
-use Toei\PortalAdmin\ORM\Entity\AbstractEntity;
+use App\ORM\Entity\AbstractEntity;
 
 /**
  * TheaterOpeningHour entity class

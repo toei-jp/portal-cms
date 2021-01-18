@@ -1,6 +1,6 @@
 <?php
 
-namespace Toei\PortalAdmin\Application\Handlers;
+namespace App\Application\Handlers;
 
 use Slim\Handlers\NotAllowed as BaseHandler;
 use Slim\Views\Twig;

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Toei\PortalAdmin\Console\Command\Cache\Clear;
+namespace App\Console\Command\Cache\Clear;
 
-use Toei\PortalAdmin\Console\Command\BaseCommand;
+use App\Console\Command\BaseCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;

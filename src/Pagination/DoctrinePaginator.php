@@ -4,7 +4,7 @@
  * DoctrinePaginator.php
  */
 
-namespace Toei\PortalAdmin\Pagination;
+namespace App\Pagination;
 
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Tools\Pagination\Paginator as WrapPaginator;

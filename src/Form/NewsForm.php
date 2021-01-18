@@ -1,10 +1,10 @@
 <?php
 
-namespace Toei\PortalAdmin\Form;
+namespace App\Form;
 
 use Laminas\InputFilter\InputFilter;
 use Laminas\Validator;
-use Toei\PortalAdmin\ORM\Entity\News;
+use App\ORM\Entity\News;
 
 /**
  * News form class

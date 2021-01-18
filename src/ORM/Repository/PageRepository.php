@@ -1,9 +1,9 @@
 <?php
 
-namespace Toei\PortalAdmin\ORM\Repository;
+namespace App\ORM\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Toei\PortalAdmin\ORM\Entity\Page;
+use App\ORM\Entity\Page;
 
 /**
  * Page repository class

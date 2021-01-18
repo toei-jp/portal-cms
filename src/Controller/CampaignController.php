@@ -1,10 +1,10 @@
 <?php
 
-namespace Toei\PortalAdmin\Controller;
+namespace App\Controller;
 
-use Toei\PortalAdmin\Exception\ForbiddenException;
-use Toei\PortalAdmin\Form;
-use Toei\PortalAdmin\ORM\Entity;
+use App\Exception\ForbiddenException;
+use App\Form;
+use App\ORM\Entity;
 use Slim\Exception\NotFoundException;
 
 /**
@@ -52,7 +52,7 @@ class CampaignController extends BaseController
         $this->data->set('values', $values);
         $this->data->set('params', $cleanValues);
 
-        /** @var \Toei\PortalAdmin\Pagination\DoctrinePaginator $pagenater */
+        /** @var \App\Pagination\DoctrinePaginator $pagenater */
         $pagenater = $this->em->getRepository(Entity\Campaign::class)->findForList($cleanValues, $page);
 
         $this->data->set('pagenater', $pagenater);

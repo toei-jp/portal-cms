@@ -1,6 +1,6 @@
 <?php
 
-namespace Toei\PortalAdmin\Middleware;
+namespace App\Middleware;
 
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Http\Response;

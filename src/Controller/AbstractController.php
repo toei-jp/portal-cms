@@ -1,25 +1,25 @@
 <?php
 
-namespace Toei\PortalAdmin\Controller;
+namespace App\Controller;
 
 use Slim\Collection;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Psr\Container\ContainerInterface;
-use Toei\PortalAdmin\Exception\RedirectException;
-use Toei\PortalAdmin\Responder\AbstractResponder as Responder;
+use App\Exception\RedirectException;
+use App\Responder\AbstractResponder as Responder;
 
 /**
  * Abstract controller
  *
- * @property-read \Toei\PortalAdmin\Auth $auth
+ * @property-read \App\Auth $auth
  * @property-read \MicrosoftAzure\Storage\Blob\BlobRestProxy $bc
  * @property-read \Doctrine\ORM\EntityManager $em
  * @property-read \Slim\Flash\Messages $flash
  * @property-read \Monolog\Logger $logger
  * @property-read \Slim\Interfaces\RouterInterface $router
  * @property-read array $settings
- * @property-read \Toei\PortalAdmin\Session\SessionManager $sm
+ * @property-read \App\Session\SessionManager $sm
  * @property-read \Slim\Views\Twig $view
  */
 abstract class AbstractController

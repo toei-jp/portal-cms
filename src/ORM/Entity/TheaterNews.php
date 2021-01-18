@@ -1,15 +1,15 @@
 <?php
 
-namespace Toei\PortalAdmin\ORM\Entity;
+namespace App\ORM\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Toei\PortalAdmin\ORM\Entity\AbstractEntity;
+use App\ORM\Entity\AbstractEntity;
 
 /**
  * TheaterNews entity class
  *
  * @ORM\Entity
- * @ORM\Entity(repositoryClass="Toei\PortalAdmin\ORM\Repository\TheaterNewsRepository")
+ * @ORM\Entity(repositoryClass="App\ORM\Repository\TheaterNewsRepository")
  * @ORM\Table(name="theater_news", options={"collate"="utf8mb4_general_ci"})
  * @ORM\HasLifecycleCallbacks
  */

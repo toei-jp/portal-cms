@@ -1,6 +1,6 @@
 <?php
 
-namespace Toei\PortalAdmin\ORM\Entity;
+namespace App\ORM\Entity;
 
 /**
  * SoftDelete trait

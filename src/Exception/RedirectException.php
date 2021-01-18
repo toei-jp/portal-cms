@@ -1,6 +1,6 @@
 <?php
 
-namespace Toei\PortalAdmin\Exception;
+namespace App\Exception;
 
 use Psr\Http\Message\UriInterface;
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace Toei\PortalAdmin\ORM\Repository;
+namespace App\ORM\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Toei\PortalAdmin\ORM\Entity\MainBanner;
-use Toei\PortalAdmin\ORM\Entity\TheaterMainBanner;
+use App\ORM\Entity\MainBanner;
+use App\ORM\Entity\TheaterMainBanner;
 
 /**
  * TheaterMainBanner repository class

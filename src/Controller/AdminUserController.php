@@ -1,11 +1,11 @@
 <?php
 
-namespace Toei\PortalAdmin\Controller;
+namespace App\Controller;
 
-use Toei\PortalAdmin\Form\LoginForm;
-use Toei\PortalAdmin\Exception\ForbiddenException;
-use Toei\PortalAdmin\Form;
-use Toei\PortalAdmin\ORM\Entity;
+use App\Form\LoginForm;
+use App\Exception\ForbiddenException;
+use App\Form;
+use App\ORM\Entity;
 
 /**
  * AdminUser controller class
@@ -39,7 +39,7 @@ class AdminUserController extends BaseController
         $cleanValues = [];
         $this->data->set('params', $cleanValues);
 
-        /** @var \Toei\PortalAdmin\Pagination\DoctrinePaginator $pagenater */
+        /** @var \App\Pagination\DoctrinePaginator $pagenater */
         $pagenater = $this->em->getRepository(Entity\AdminUser::class)->findForList($cleanValues, $page);
 
         $this->data->set('pagenater', $pagenater);

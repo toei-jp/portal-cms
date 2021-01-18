@@ -1,6 +1,6 @@
 <?php
 
-namespace Toei\PortalAdmin\Logger;
+namespace App\Logger;
 
 use Doctrine\DBAL\Logging\SQLLogger;
 use Monolog\Logger;

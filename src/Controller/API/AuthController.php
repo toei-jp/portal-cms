@@ -1,6 +1,6 @@
 <?php
 
-namespace Toei\PortalAdmin\Controller\API;
+namespace App\Controller\API;
 
 use GuzzleHttp\Client as HttpClient;
 

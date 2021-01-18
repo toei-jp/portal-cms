@@ -1,10 +1,10 @@
 <?php
 
-namespace Toei\PortalAdmin\Controller\API;
+namespace App\Controller\API;
 
-use Toei\PortalAdmin\Controller\Traits\AzureBlobStorage;
-use Toei\PortalAdmin\Form;
-use Toei\PortalAdmin\Form\API as ApiForm;
+use App\Controller\Traits\AzureBlobStorage;
+use App\Form;
+use App\Form\API as ApiForm;
 
 /**
  * Editor API controller

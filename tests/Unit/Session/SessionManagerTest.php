@@ -7,7 +7,7 @@ namespace Tests\Unit\Session;
 use Mockery;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;
-use Toei\PortalAdmin\Session\SessionManager;
+use App\Session\SessionManager;
 
 /**
  * Session Manager test

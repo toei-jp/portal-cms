@@ -1,15 +1,15 @@
 <?php
 
-namespace Toei\PortalAdmin\ORM\Entity;
+namespace App\ORM\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Toei\PortalAdmin\ORM\Entity\AbstractEntity;
+use App\ORM\Entity\AbstractEntity;
 
 /**
  * PageNews entity class
  *
  * @ORM\Entity
- * @ORM\Entity(repositoryClass="Toei\PortalAdmin\ORM\Repository\PageNewsRepository")
+ * @ORM\Entity(repositoryClass="App\ORM\Repository\PageNewsRepository")
  * @ORM\Table(name="page_news", options={"collate"="utf8mb4_general_ci"})
  * @ORM\HasLifecycleCallbacks
  */

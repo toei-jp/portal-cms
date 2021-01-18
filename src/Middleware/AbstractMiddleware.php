@@ -1,6 +1,6 @@
 <?php
 
-namespace Toei\PortalAdmin\Middleware;
+namespace App\Middleware;
 
 use Psr\Container\ContainerInterface;
 

@@ -1,14 +1,14 @@
 <?php
 
-namespace Toei\PortalAdmin\ORM\Entity;
+namespace App\ORM\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Toei\PortalAdmin\ORM\Entity\AbstractEntity;
+use App\ORM\Entity\AbstractEntity;
 
 /**
  * AdminUser entity class
  *
- * @ORM\Entity(repositoryClass="Toei\PortalAdmin\ORM\Repository\AdminUserRepository")
+ * @ORM\Entity(repositoryClass="App\ORM\Repository\AdminUserRepository")
  * @ORM\Table(name="admin_user", options={"collate"="utf8mb4_general_ci"})
  * @ORM\HasLifecycleCallbacks
  */
