@@ -1,11 +1,11 @@
 <?php
 
-namespace Toei\PortalAdmin\Form;
+namespace App\Form;
 
 use Laminas\Form\Fieldset;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Validator;
-use Toei\PortalAdmin\ORM\Entity\AdvanceTicket;
+use App\ORM\Entity\AdvanceTicket;
 
 /**
  * AdvanceTicket fieldset class

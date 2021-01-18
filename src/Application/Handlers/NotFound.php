@@ -1,6 +1,6 @@
 <?php
 
-namespace Toei\PortalAdmin\Application\Handlers;
+namespace App\Application\Handlers;
 
 use Slim\Handlers\NotFound as BaseHandler;
 use Psr\Http\Message\ServerRequestInterface;

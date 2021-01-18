@@ -1,10 +1,10 @@
 <?php
 
-namespace Toei\PortalAdmin\ORM\Repository;
+namespace App\ORM\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Toei\PortalAdmin\ORM\Entity\Campaign;
-use Toei\PortalAdmin\ORM\Entity\PageCampaign;
+use App\ORM\Entity\Campaign;
+use App\ORM\Entity\PageCampaign;
 
 /**
  * PageCampaign repository class

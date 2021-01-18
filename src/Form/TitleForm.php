@@ -1,10 +1,10 @@
 <?php
 
-namespace Toei\PortalAdmin\Form;
+namespace App\Form;
 
 use Laminas\InputFilter\InputFilter;
 use Laminas\Validator;
-use Toei\PortalAdmin\ORM\Entity\Title;
+use App\ORM\Entity\Title;
 
 /**
  * Title form class

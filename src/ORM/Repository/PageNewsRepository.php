@@ -1,10 +1,10 @@
 <?php
 
-namespace Toei\PortalAdmin\ORM\Repository;
+namespace App\ORM\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Toei\PortalAdmin\ORM\Entity\News;
-use Toei\PortalAdmin\ORM\Entity\PageNews;
+use App\ORM\Entity\News;
+use App\ORM\Entity\PageNews;
 
 /**
  * PageNews repository class

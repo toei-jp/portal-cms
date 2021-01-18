@@ -1,17 +1,17 @@
 <?php
 
-namespace Toei\PortalAdmin\ORM\Entity;
+namespace App\ORM\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
-use Toei\PortalAdmin\ORM\Entity\AbstractEntity;
+use App\ORM\Entity\AbstractEntity;
 
 /**
  * AdvanceSale entity class
  *
- * @ORM\Entity(repositoryClass="Toei\PortalAdmin\ORM\Repository\AdvanceSaleRepository")
+ * @ORM\Entity(repositoryClass="App\ORM\Repository\AdvanceSaleRepository")
  * @ORM\Table(name="advance_sale", options={"collate"="utf8mb4_general_ci"})
  * @ORM\HasLifecycleCallbacks
  */

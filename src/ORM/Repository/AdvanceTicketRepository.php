@@ -1,11 +1,11 @@
 <?php
 
-namespace Toei\PortalAdmin\ORM\Repository;
+namespace App\ORM\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Toei\PortalAdmin\Form\AdvanceTicketFindForm;
-use Toei\PortalAdmin\ORM\Entity\AdvanceTicket;
-use Toei\PortalAdmin\Pagination\DoctrinePaginator;
+use App\Form\AdvanceTicketFindForm;
+use App\ORM\Entity\AdvanceTicket;
+use App\Pagination\DoctrinePaginator;
 
 /**
  * AdvanceTicket repository class

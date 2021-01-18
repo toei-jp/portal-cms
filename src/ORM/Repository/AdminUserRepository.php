@@ -1,10 +1,10 @@
 <?php
 
-namespace Toei\PortalAdmin\ORM\Repository;
+namespace App\ORM\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Toei\PortalAdmin\ORM\Entity\AdminUser;
-use Toei\PortalAdmin\Pagination\DoctrinePaginator;
+use App\ORM\Entity\AdminUser;
+use App\Pagination\DoctrinePaginator;
 
 /**
  * AdminUser repository class

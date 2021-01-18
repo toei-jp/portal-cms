@@ -1,6 +1,6 @@
 <?php
 
-namespace Toei\PortalAdmin\Responder;
+namespace App\Responder;
 
 /**
  * Abstract responder

@@ -1,11 +1,11 @@
 <?php
 
-namespace Toei\PortalAdmin\Form;
+namespace App\Form;
 
 use Laminas\Form\Fieldset;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Validator;
-use Toei\PortalAdmin\ORM\Entity\ShowingFormat;
+use App\ORM\Entity\ShowingFormat;
 
 /**
  * ShowingFormat fieldset class

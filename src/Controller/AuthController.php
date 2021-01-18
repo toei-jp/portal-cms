@@ -1,8 +1,8 @@
 <?php
 
-namespace Toei\PortalAdmin\Controller;
+namespace App\Controller;
 
-use Toei\PortalAdmin\Form\LoginForm;
+use App\Form\LoginForm;
 
 /**
  * Auth controller class

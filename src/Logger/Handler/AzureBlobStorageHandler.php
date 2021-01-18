@@ -1,6 +1,6 @@
 <?php
 
-namespace Toei\PortalAdmin\Logger\Handler;
+namespace App\Logger\Handler;
 
 use Blue32a\Monolog\Handler\AzureBlobStorageHandler as BaseHandler;
 use MicrosoftAzure\Storage\Common\Exceptions\ServiceException;

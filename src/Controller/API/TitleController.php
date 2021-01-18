@@ -1,8 +1,8 @@
 <?php
 
-namespace Toei\PortalAdmin\Controller\API;
+namespace App\Controller\API;
 
-use Toei\PortalAdmin\ORM\Entity;
+use App\ORM\Entity;
 
 /**
  * Title API controller

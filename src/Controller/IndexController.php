@@ -1,6 +1,6 @@
 <?php
 
-namespace Toei\PortalAdmin\Controller;
+namespace App\Controller;
 
 /**
  * Index controller

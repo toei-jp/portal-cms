@@ -1,10 +1,10 @@
 <?php
 
-namespace Toei\PortalAdmin\Form;
+namespace App\Form;
 
 use Laminas\Form\Fieldset;
 use Laminas\InputFilter\InputFilterProviderInterface;
-use Toei\PortalAdmin\ORM\Entity\TheaterOpeningHour;
+use App\ORM\Entity\TheaterOpeningHour;
 
 /**
  * OpeningHour fieldset class

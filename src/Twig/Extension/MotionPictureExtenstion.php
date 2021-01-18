@@ -1,6 +1,6 @@
 <?php
 
-namespace Toei\PortalAdmin\Twig\Extension;
+namespace App\Twig\Extension;
 
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;

@@ -1,11 +1,11 @@
 <?php
 
-namespace Toei\PortalAdmin\Form;
+namespace App\Form;
 
 use Laminas\InputFilter\InputFilter;
 use Laminas\Validator;
 use Doctrine\ORM\EntityManager;
-use Toei\PortalAdmin\ORM\Entity\Theater;
+use App\ORM\Entity\Theater;
 
 /**
  * Schedule form class
