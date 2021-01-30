@@ -5,7 +5,13 @@ namespace App\Controller;
 use App\Controller\Traits\ImageResize;
 use App\Form;
 use App\ORM\Entity;
+use App\Pagination\DoctrinePaginator;
+use LogicException;
+use MicrosoftAzure\Storage\Blob\Models\CreateBlockBlobOptions;
 use Slim\Exception\NotFoundException;
+use Slim\Http\Request;
+use Slim\Http\Response;
+use Throwable;
 
 /**
  * News controller
@@ -17,9 +23,9 @@ class NewsController extends BaseController
     /**
      * list action
      *
-     * @param \Slim\Http\Request  $request
-     * @param \Slim\Http\Response $response
-     * @param array               $args
+     * @param Request  $request
+     * @param Response $response
+     * @param array    $args
      * @return string|void
      */
     public function executeList($request, $response, $args)
@@ -49,7 +55,7 @@ class NewsController extends BaseController
         $this->data->set('values', $values);
         $this->data->set('params', $cleanValues);
 
-        /** @var \App\Pagination\DoctrinePaginator $pagenater */
+        /** @var DoctrinePaginator $pagenater */
         $pagenater = $this->em->getRepository(Entity\News::class)->findForList($cleanValues, $page);
 
         $this->data->set('pagenater', $pagenater);
@@ -58,9 +64,9 @@ class NewsController extends BaseController
     /**
      * new action
      *
-     * @param \Slim\Http\Request  $request
-     * @param \Slim\Http\Response $response
-     * @param array               $args
+     * @param Request  $request
+     * @param Response $response
+     * @param array    $args
      * @return string|void
      */
     public function executeNew($request, $response, $args)
@@ -72,9 +78,9 @@ class NewsController extends BaseController
     /**
      * create action
      *
-     * @param \Slim\Http\Request  $request
-     * @param \Slim\Http\Response $response
-     * @param array               $args
+     * @param Request  $request
+     * @param Response $response
+     * @param array    $args
      * @return string|void
      */
     public function executeCreate($request, $response, $args)
@@ -106,7 +112,7 @@ class NewsController extends BaseController
 
         // upload storage
         // @todo storageと同期するような仕組みをFileへ
-        $options = new \MicrosoftAzure\Storage\Blob\Models\CreateBlockBlobOptions();
+        $options = new CreateBlockBlobOptions();
         $options->setContentType($image['type']);
         $this->bc->createBlockBlob(
             Entity\File::getBlobContainer(),
@@ -159,9 +165,9 @@ class NewsController extends BaseController
     /**
      * edit action
      *
-     * @param \Slim\Http\Request  $request
-     * @param \Slim\Http\Response $response
-     * @param array               $args
+     * @param Request  $request
+     * @param Response $response
+     * @param array    $args
      * @return string|void
      */
     public function executeEdit($request, $response, $args)
@@ -200,9 +206,9 @@ class NewsController extends BaseController
     /**
      * update action
      *
-     * @param \Slim\Http\Request  $request
-     * @param \Slim\Http\Response $response
-     * @param array               $args
+     * @param Request  $request
+     * @param Response $response
+     * @param array    $args
      * @return string|void
      */
     public function executeUpdate($request, $response, $args)
@@ -243,7 +249,7 @@ class NewsController extends BaseController
 
             // upload storage
             // @todo storageと同期するような仕組みをFileへ
-            $options = new \MicrosoftAzure\Storage\Blob\Models\CreateBlockBlobOptions();
+            $options = new CreateBlockBlobOptions();
             $options->setContentType($image['type']);
             $this->bc->createBlockBlob(
                 Entity\File::getBlobContainer(),
@@ -302,9 +308,9 @@ class NewsController extends BaseController
     /**
      * delete action
      *
-     * @param \Slim\Http\Request  $request
-     * @param \Slim\Http\Response $response
-     * @param array               $args
+     * @param Request  $request
+     * @param Response $response
+     * @param array    $args
      * @return string|void
      */
     public function executeDelete($request, $response, $args)
@@ -361,7 +367,7 @@ class NewsController extends BaseController
             $this->logger->debug('Delete "TheaterNews"', ['count' => $theaterNewsDeleteCount]);
 
             $this->em->getConnection()->commit();
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $this->em->getConnection()->rollBack();
 
             throw $e;
@@ -371,9 +377,9 @@ class NewsController extends BaseController
     /**
      * publication action
      *
-     * @param \Slim\Http\Request  $request
-     * @param \Slim\Http\Response $response
-     * @param array               $args
+     * @param Request  $request
+     * @param Response $response
+     * @param array    $args
      * @return string|void
      */
     public function executePublication($request, $response, $args)
@@ -405,9 +411,9 @@ class NewsController extends BaseController
     /**
      * publication update action
      *
-     * @param \Slim\Http\Request  $request
-     * @param \Slim\Http\Response $response
-     * @param array               $args
+     * @param Request  $request
+     * @param Response $response
+     * @param array    $args
      * @return string|void
      */
     public function executePublicationUpdate($request, $response, $args)
@@ -418,7 +424,7 @@ class NewsController extends BaseController
         $form->setData($request->getParams());
 
         if (! $form->isValid()) {
-            throw new \LogicException('invalid parameters.');
+            throw new LogicException('invalid parameters.');
         }
 
         $cleanData       = $form->getData();
@@ -454,7 +460,7 @@ class NewsController extends BaseController
 
             if (! $news) {
                 // @todo formで検証したい
-                throw new \LogicException('invalid news.');
+                throw new LogicException('invalid news.');
             }
 
             $publication->setNews($news);

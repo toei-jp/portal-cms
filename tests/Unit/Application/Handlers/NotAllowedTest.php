@@ -7,7 +7,10 @@ namespace Tests\Unit\Application\Handlers;
 use App\Application\Handlers\NotAllowed;
 use Mockery;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+use Mockery\LegacyMockInterface;
+use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 use Slim\Views\Twig;
 
 /**
@@ -18,15 +21,15 @@ final class NotAllowedTest extends TestCase
     use MockeryPHPUnitIntegration;
 
     /**
-     * @return \ReflectionClass
+     * @return ReflectionClass
      */
     protected function createTargetReflection()
     {
-        return new \ReflectionClass(NotAllowed::class);
+        return new ReflectionClass(NotAllowed::class);
     }
 
     /**
-     * @return \Mockery\MockInterface&\Mockery\LegacyMockInterface&NotAllowed
+     * @return MockInterface&LegacyMockInterface&NotAllowed
      */
     protected function createTargetMock()
     {
@@ -34,7 +37,7 @@ final class NotAllowedTest extends TestCase
     }
 
     /**
-     * @return \Mockery\MockInterface&\Mockery\LegacyMockInterface&Twig
+     * @return MockInterface&LegacyMockInterface&Twig
      */
     protected function createViewMock()
     {

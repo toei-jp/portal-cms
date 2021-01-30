@@ -2,8 +2,8 @@
 
 namespace App\Application\Handlers;
 
-use Slim\Handlers\NotFound as BaseHandler;
 use Psr\Http\Message\ServerRequestInterface;
+use Slim\Handlers\NotFound as BaseHandler;
 use Slim\Views\Twig;
 
 /**

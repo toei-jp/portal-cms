@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
-use Slim\Exception\NotFoundException;
 use App\Form;
 use App\ORM\Entity;
+use Slim\Exception\NotFoundException;
+use Slim\Http\Request;
+use Slim\Http\Response;
 
 /**
  * TheaterMeta controller
@@ -14,9 +16,9 @@ class TheaterMetaController extends BaseController
     /**
      * opening hour action
      *
-     * @param \Slim\Http\Request  $request
-     * @param \Slim\Http\Response $response
-     * @param array               $args
+     * @param Request  $request
+     * @param Response $response
+     * @param array    $args
      * @return string|void
      */
     public function executeOpeningHour($request, $response, $args)
@@ -36,9 +38,9 @@ class TheaterMetaController extends BaseController
     /**
      * opening hour edit action
      *
-     * @param \Slim\Http\Request  $request
-     * @param \Slim\Http\Response $response
-     * @param array               $args
+     * @param Request  $request
+     * @param Response $response
+     * @param array    $args
      * @return string|void
      */
     public function executeOpeningHourEdit($request, $response, $args)
@@ -74,9 +76,9 @@ class TheaterMetaController extends BaseController
     /**
      * opening hour update action
      *
-     * @param \Slim\Http\Request  $request
-     * @param \Slim\Http\Response $response
-     * @param array               $args
+     * @param Request  $request
+     * @param Response $response
+     * @param array    $args
      * @return string|void
      */
     public function executeOpeningHourUpdate($request, $response, $args)

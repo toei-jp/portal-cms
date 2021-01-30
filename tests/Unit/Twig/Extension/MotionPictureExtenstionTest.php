@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Twig\Extension;
 
-use Mockery;
 use App\Twig\Extension\MotionPictureExtenstion;
+use Mockery;
+use Mockery\LegacyMockInterface;
+use Mockery\MockInterface;
+use ReflectionClass;
 
 /**
  * MotionPicture extension test
@@ -15,7 +18,7 @@ final class MotionPictureExtenstionTest extends BaseTestCase
     /**
      * Create target mock
      *
-     * @return \Mockery\MockInterface|\Mockery\LegacyMockInterface|MotionPictureExtenstion
+     * @return MockInterface|LegacyMockInterface|MotionPictureExtenstion
      */
     protected function createTargetMock()
     {
@@ -25,11 +28,11 @@ final class MotionPictureExtenstionTest extends BaseTestCase
     /**
      * Create Target reflection
      *
-     * @return \ReflectionClass
+     * @return ReflectionClass
      */
     protected function createTargetReflection()
     {
-        return new \ReflectionClass(MotionPictureExtenstion::class);
+        return new ReflectionClass(MotionPictureExtenstion::class);
     }
 
     /**

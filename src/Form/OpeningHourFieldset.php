@@ -2,9 +2,9 @@
 
 namespace App\Form;
 
+use App\ORM\Entity\TheaterOpeningHour;
 use Laminas\Form\Fieldset;
 use Laminas\InputFilter\InputFilterProviderInterface;
-use App\ORM\Entity\TheaterOpeningHour;
 
 /**
  * OpeningHour fieldset class

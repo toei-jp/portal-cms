@@ -3,7 +3,6 @@
 namespace App\ORM\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use App\ORM\Entity\AbstractEntity;
 
 /**
  * ShowingFormat entity class

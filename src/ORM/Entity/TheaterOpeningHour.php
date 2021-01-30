@@ -2,7 +2,7 @@
 
 namespace App\ORM\Entity;
 
-use App\ORM\Entity\AbstractEntity;
+use DateTime;
 
 /**
  * TheaterOpeningHour entity class
@@ -25,21 +25,21 @@ class TheaterOpeningHour extends AbstractEntity
     /**
      * from_date
      *
-     * @var \DateTime
+     * @var DateTime
      */
     protected $fromDate;
 
     /**
      * to_date
      *
-     * @var \DateTime|null
+     * @var DateTime|null
      */
     protected $toDate;
 
     /**
      * time
      *
-     * @var \DateTime
+     * @var DateTime
      */
     protected $time;
 
@@ -91,7 +91,7 @@ class TheaterOpeningHour extends AbstractEntity
     /**
      * get from_date
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getFromDate()
     {
@@ -101,22 +101,22 @@ class TheaterOpeningHour extends AbstractEntity
     /**
      * set from_date
      *
-     * @param \DateTime|string $fromDate
+     * @param DateTime|string $fromDate
      * @return void
      */
     public function setFromDate($fromDate)
     {
-        if ($fromDate instanceof \DateTime) {
+        if ($fromDate instanceof DateTime) {
             $this->fromDate = $fromDate;
         } else {
-            $this->fromDate = new \DateTime($fromDate);
+            $this->fromDate = new DateTime($fromDate);
         }
     }
 
     /**
      * get to_date
      *
-     * @return \DateTime|null
+     * @return DateTime|null
      */
     public function getToDate()
     {
@@ -126,22 +126,22 @@ class TheaterOpeningHour extends AbstractEntity
     /**
      * set to_date
      *
-     * @param \DateTime|string|null $toDate
+     * @param DateTime|string|null $toDate
      * @return void
      */
     public function setToDate($toDate)
     {
-        if (is_null($toDate) || $toDate instanceof \DateTime) {
+        if (is_null($toDate) || $toDate instanceof DateTime) {
             $this->toDate = $toDate;
         } else {
-            $this->toDate = new \DateTime($toDate);
+            $this->toDate = new DateTime($toDate);
         }
     }
 
     /**
      * get time
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getTime()
     {
@@ -151,15 +151,15 @@ class TheaterOpeningHour extends AbstractEntity
     /**
      * set time
      *
-     * @param \DateTime|string $time
+     * @param DateTime|string $time
      * @return void
      */
     public function setTime($time)
     {
-        if ($time instanceof \DateTime) {
+        if ($time instanceof DateTime) {
             $this->time = $time;
         } else {
-            $this->time = new \DateTime($time);
+            $this->time = new DateTime($time);
         }
     }
 

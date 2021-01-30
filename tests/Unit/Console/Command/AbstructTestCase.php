@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Tests\Unit\Console\Command;
 
 use Mockery;
+use Mockery\LegacyMockInterface;
+use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -12,7 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 abstract class AbstructTestCase extends TestCase
 {
     /**
-     * @return \Mockery\MockInterface|\Mockery\LegacyMockInterface|InputInterface
+     * @return MockInterface|LegacyMockInterface|InputInterface
      */
     protected function createInputMock()
     {
@@ -20,7 +22,7 @@ abstract class AbstructTestCase extends TestCase
     }
 
     /**
-     * @return \Mockery\MockInterface|\Mockery\LegacyMockInterface
+     * @return MockInterface|LegacyMockInterface
      */
     protected function createInputSpy()
     {
@@ -28,7 +30,7 @@ abstract class AbstructTestCase extends TestCase
     }
 
     /**
-     * @return \Mockery\MockInterface|\Mockery\LegacyMockInterface|OutputInterface
+     * @return MockInterface|LegacyMockInterface|OutputInterface
      */
     protected function createOutputMock()
     {
@@ -36,7 +38,7 @@ abstract class AbstructTestCase extends TestCase
     }
 
     /**
-     * @return \Mockery\MockInterface|\Mockery\LegacyMockInterface
+     * @return MockInterface|LegacyMockInterface
      */
     protected function createOutputSpy()
     {

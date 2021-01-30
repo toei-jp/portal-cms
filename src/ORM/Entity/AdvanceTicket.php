@@ -2,8 +2,8 @@
 
 namespace App\ORM\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
-use App\ORM\Entity\AbstractEntity;
 
 /**
  * AdvanceTicket entity class
@@ -74,7 +74,7 @@ class AdvanceTicket extends AbstractEntity
      *
      * @ORM\Column(type="datetime", name="release_dt")
      *
-     * @var \DateTime
+     * @var DateTime
      */
     protected $releaseDt;
 
@@ -183,7 +183,7 @@ class AdvanceTicket extends AbstractEntity
     /**
      * get release_dt
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getReleaseDt()
     {
@@ -193,15 +193,15 @@ class AdvanceTicket extends AbstractEntity
     /**
      * set release_dt
      *
-     * @param \DateTime|string $releaseDt
+     * @param DateTime|string $releaseDt
      * @return void
      */
     public function setReleaseDt($releaseDt)
     {
-        if ($releaseDt instanceof \DateTime) {
+        if ($releaseDt instanceof DateTime) {
             $this->releaseDt = $releaseDt;
         } else {
-            $this->releaseDt = new \DateTime($releaseDt);
+            $this->releaseDt = new DateTime($releaseDt);
         }
     }
 
@@ -395,7 +395,7 @@ class AdvanceTicket extends AbstractEntity
             return self::$statusList[self::STATUS_SALE_END];
         }
 
-        $now = new \DateTime('now');
+        $now = new DateTime('now');
         $end = $this->getAdvanceSale()->getPublishingExpectedDate();
 
         if ($end && $now > $end) {

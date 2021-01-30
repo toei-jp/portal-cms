@@ -6,7 +6,12 @@ use App\Controller\Traits\ImageResize;
 use App\Exception\ForbiddenException;
 use App\Form;
 use App\ORM\Entity;
+use App\Pagination\DoctrinePaginator;
+use DateTime;
+use MicrosoftAzure\Storage\Blob\Models\CreateBlockBlobOptions;
 use Slim\Exception\NotFoundException;
+use Slim\Http\Request;
+use Slim\Http\Response;
 
 /**
  * Title controller
@@ -29,9 +34,9 @@ class TitleController extends BaseController
     /**
      * list action
      *
-     * @param \Slim\Http\Request  $request
-     * @param \Slim\Http\Response $response
-     * @param array               $args
+     * @param Request  $request
+     * @param Response $response
+     * @param array    $args
      * @return string|void
      */
     public function executeList($request, $response, $args)
@@ -54,7 +59,7 @@ class TitleController extends BaseController
         $this->data->set('values', $values);
         $this->data->set('params', $cleanValues);
 
-        /** @var \App\Pagination\DoctrinePaginator $pagenater */
+        /** @var DoctrinePaginator $pagenater */
         $pagenater = $this->em->getRepository(Entity\Title::class)->findForList($cleanValues, $page);
 
         $this->data->set('pagenater', $pagenater);
@@ -63,9 +68,9 @@ class TitleController extends BaseController
     /**
      * new action
      *
-     * @param \Slim\Http\Request  $request
-     * @param \Slim\Http\Response $response
-     * @param array               $args
+     * @param Request  $request
+     * @param Response $response
+     * @param array    $args
      * @return string|void
      */
     public function executeNew($request, $response, $args)
@@ -77,9 +82,9 @@ class TitleController extends BaseController
     /**
      * import action
      *
-     * @param \Slim\Http\Request  $request
-     * @param \Slim\Http\Response $response
-     * @param array               $args
+     * @param Request  $request
+     * @param Response $response
+     * @param array    $args
      * @return string|void
      */
     public function executeImport($request, $response, $args)
@@ -89,9 +94,9 @@ class TitleController extends BaseController
     /**
      * create action
      *
-     * @param \Slim\Http\Request  $request
-     * @param \Slim\Http\Response $response
-     * @param array               $args
+     * @param Request  $request
+     * @param Response $response
+     * @param array    $args
      * @return string|void
      */
     public function executeCreate($request, $response, $args)
@@ -125,7 +130,7 @@ class TitleController extends BaseController
 
             // upload storage
             // @todo storageと同期するような仕組みをFileへ
-            $options = new \MicrosoftAzure\Storage\Blob\Models\CreateBlockBlobOptions();
+            $options = new CreateBlockBlobOptions();
             $options->setContentType($image['type']);
             $this->bc->createBlockBlob(
                 Entity\File::getBlobContainer(),
@@ -177,9 +182,9 @@ class TitleController extends BaseController
     /**
      * edit action
      *
-     * @param \Slim\Http\Request  $request
-     * @param \Slim\Http\Response $response
-     * @param array               $args
+     * @param Request  $request
+     * @param Response $response
+     * @param array    $args
      * @return string|void
      */
     public function executeEdit($request, $response, $args)
@@ -213,7 +218,7 @@ class TitleController extends BaseController
 
         $publishingExpectedDate = $title->getPublishingExpectedDate();
 
-        if ($publishingExpectedDate instanceof \DateTime) {
+        if ($publishingExpectedDate instanceof DateTime) {
             $values['publishing_expected_date']           = $publishingExpectedDate->format('Y/m/d');
             $values['not_exist_publishing_expected_date'] = null;
         } else {
@@ -227,9 +232,9 @@ class TitleController extends BaseController
     /**
      * update action
      *
-     * @param \Slim\Http\Request  $request
-     * @param \Slim\Http\Response $response
-     * @param array               $args
+     * @param Request  $request
+     * @param Response $response
+     * @param array    $args
      * @return string|void
      */
     public function executeUpdate($request, $response, $args)
@@ -282,7 +287,7 @@ class TitleController extends BaseController
 
             // upload storage
             // @todo storageと同期するような仕組みをFileへ
-            $options = new \MicrosoftAzure\Storage\Blob\Models\CreateBlockBlobOptions();
+            $options = new CreateBlockBlobOptions();
             $options->setContentType($image['type']);
             $this->bc->createBlockBlob(
                 Entity\File::getBlobContainer(),
@@ -334,9 +339,9 @@ class TitleController extends BaseController
     /**
      * delete action
      *
-     * @param \Slim\Http\Request  $request
-     * @param \Slim\Http\Response $response
-     * @param array               $args
+     * @param Request  $request
+     * @param Response $response
+     * @param array    $args
      * @return string|void
      */
     public function executeDelete($request, $response, $args)

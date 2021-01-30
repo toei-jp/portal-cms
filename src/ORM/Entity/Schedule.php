@@ -2,10 +2,10 @@
 
 namespace App\ORM\Entity;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use App\ORM\Entity\AbstractEntity;
 
 /**
  * Schedule entity class
@@ -46,7 +46,7 @@ class Schedule extends AbstractEntity
      *
      * @ORM\Column(type="date", name="start_date")
      *
-     * @var \DateTime
+     * @var DateTime
      */
     protected $startDate;
 
@@ -55,7 +55,7 @@ class Schedule extends AbstractEntity
      *
      * @ORM\Column(type="date", name="end_date")
      *
-     * @var \DateTime
+     * @var DateTime
      */
     protected $endDate;
 
@@ -64,7 +64,7 @@ class Schedule extends AbstractEntity
      *
      * @ORM\Column(type="datetime", name="public_start_dt")
      *
-     * @var \DateTime
+     * @var DateTime
      */
     protected $publicStartDt;
 
@@ -73,7 +73,7 @@ class Schedule extends AbstractEntity
      *
      * @ORM\Column(type="datetime", name="public_end_dt")
      *
-     * @var \DateTime
+     * @var DateTime
      */
     protected $publicEndDt;
 
@@ -147,7 +147,7 @@ class Schedule extends AbstractEntity
     /**
      * get start_date
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getStartDate()
     {
@@ -157,22 +157,22 @@ class Schedule extends AbstractEntity
     /**
      * set start_date
      *
-     * @param \DateTime|string $startDate
+     * @param DateTime|string $startDate
      * @return void
      */
     public function setStartDate($startDate)
     {
-        if ($startDate instanceof \DateTime) {
+        if ($startDate instanceof DateTime) {
             $this->startDate = $startDate;
         } else {
-            $this->startDate = new \DateTime($startDate);
+            $this->startDate = new DateTime($startDate);
         }
     }
 
     /**
      * get end_date
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getEndDate()
     {
@@ -182,22 +182,22 @@ class Schedule extends AbstractEntity
     /**
      * set end_date
      *
-     * @param \DateTime|string $endDate
+     * @param DateTime|string $endDate
      * @return void
      */
     public function setEndDate($endDate)
     {
-        if ($endDate instanceof \DateTime) {
+        if ($endDate instanceof DateTime) {
             $this->endDate = $endDate;
         } else {
-            $this->endDate = new \DateTime($endDate);
+            $this->endDate = new DateTime($endDate);
         }
     }
 
     /**
      * get public_start_dt
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getPublicStartDt()
     {
@@ -207,22 +207,22 @@ class Schedule extends AbstractEntity
     /**
      * set public_start_dt
      *
-     * @param \DateTime|string $publicStartDt
+     * @param DateTime|string $publicStartDt
      * @return void
      */
     public function setPublicStartDt($publicStartDt)
     {
-        if ($publicStartDt instanceof \DateTime) {
+        if ($publicStartDt instanceof DateTime) {
             $this->publicStartDt = $publicStartDt;
         } else {
-            $this->publicStartDt = new \DateTime($publicStartDt);
+            $this->publicStartDt = new DateTime($publicStartDt);
         }
     }
 
     /**
      * get public_end_dt
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getPublicEndDt()
     {
@@ -232,15 +232,15 @@ class Schedule extends AbstractEntity
     /**
      * set public_end_dt
      *
-     * @param \DateTime|string $publicEndDt
+     * @param DateTime|string $publicEndDt
      * @return void
      */
     public function setPublicEndDt($publicEndDt)
     {
-        if ($publicEndDt instanceof \DateTime) {
+        if ($publicEndDt instanceof DateTime) {
             $this->publicEndDt = $publicEndDt;
         } else {
-            $this->publicEndDt = new \DateTime($publicEndDt);
+            $this->publicEndDt = new DateTime($publicEndDt);
         }
     }
 

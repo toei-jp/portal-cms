@@ -3,6 +3,9 @@
 namespace App\Controller\API;
 
 use GuzzleHttp\Client as HttpClient;
+use Psr\Http\Message\ResponseInterface;
+use Slim\Http\Request;
+use Slim\Http\Response;
 
 /**
  * Auth controller
@@ -21,8 +24,8 @@ class AuthController extends BaseController
     /**
      * pre execute
      *
-     * @param \Slim\Http\Request  $request
-     * @param \Slim\Http\Response $response
+     * @param Request  $request
+     * @param Response $response
      * @return void
      */
     protected function preExecute($request, $response): void
@@ -41,9 +44,9 @@ class AuthController extends BaseController
      *
      * @link https://m-p.backlog.jp/view/TOEI-112
      *
-     * @param \Slim\Http\Request  $request
-     * @param \Slim\Http\Response $response
-     * @param array               $args
+     * @param Request  $request
+     * @param Response $response
+     * @param array    $args
      * @return string|void
      */
     public function executeToken($request, $response, $args)
@@ -64,9 +67,9 @@ class AuthController extends BaseController
      *
      * @link https://docs.aws.amazon.com/ja_jp/cognito/latest/developerguide/token-endpoint.html
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return ResponseInterface
      */
-    protected function requestToken(): \Psr\Http\Message\ResponseInterface
+    protected function requestToken(): ResponseInterface
     {
         $endpoint = '/oauth2/token';
         $headers  = [

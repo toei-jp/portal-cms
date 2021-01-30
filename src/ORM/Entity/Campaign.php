@@ -2,10 +2,10 @@
 
 namespace App\ORM\Entity;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use App\ORM\Entity\AbstractEntity;
 
 /**
  * Campaign entity class
@@ -65,7 +65,7 @@ class Campaign extends AbstractEntity
      *
      * @ORM\Column(type="datetime", name="start_dt")
      *
-     * @var \DateTime
+     * @var DateTime
      */
     protected $startDt;
 
@@ -74,7 +74,7 @@ class Campaign extends AbstractEntity
      *
      * @ORM\Column(type="datetime", name="end_dt")
      *
-     * @var \DateTime
+     * @var DateTime
      */
     protected $endDt;
 
@@ -190,7 +190,7 @@ class Campaign extends AbstractEntity
     /**
      * get start_dt
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getStartDt()
     {
@@ -200,22 +200,22 @@ class Campaign extends AbstractEntity
     /**
      * set start_dt
      *
-     * @param \DateTime|string $startDt
+     * @param DateTime|string $startDt
      * @return void
      */
     public function setStartDt($startDt)
     {
-        if ($startDt instanceof \DateTime) {
+        if ($startDt instanceof DateTime) {
             $this->startDt = $startDt;
         } else {
-            $this->startDt = new \DateTime($startDt);
+            $this->startDt = new DateTime($startDt);
         }
     }
 
     /**
      * get end_dt
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getEndDt()
     {
@@ -225,15 +225,15 @@ class Campaign extends AbstractEntity
     /**
      * set end_dt
      *
-     * @param \DateTime|string $endDt
+     * @param DateTime|string $endDt
      * @return void
      */
     public function setEndDt($endDt)
     {
-        if ($endDt instanceof \DateTime) {
+        if ($endDt instanceof DateTime) {
             $this->endDt = $endDt;
         } else {
-            $this->endDt = new \DateTime($endDt);
+            $this->endDt = new DateTime($endDt);
         }
     }
 

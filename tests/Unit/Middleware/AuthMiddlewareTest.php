@@ -4,13 +4,16 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Middleware;
 
+use App\Middleware\AuthMiddleware;
 use Mockery;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+use Mockery\LegacyMockInterface;
+use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use ReflectionClass;
 use Slim\Http\Response;
-use App\Middleware\AuthMiddleware;
 
 /**
  * Auth Middleware test
@@ -22,7 +25,7 @@ final class AuthMiddlewareTest extends TestCase
     /**
      * Create target mock
      *
-     * @return \Mockery\MockInterface|\Mockery\LegacyMockInterface|AuthMiddleware
+     * @return MockInterface|LegacyMockInterface|AuthMiddleware
      */
     protected function createTargetMock()
     {
@@ -32,17 +35,17 @@ final class AuthMiddlewareTest extends TestCase
     /**
      * Create target reflection
      *
-     * @return \ReflectionClass
+     * @return ReflectionClass
      */
     protected function createTargetReflection()
     {
-        return new \ReflectionClass(AuthMiddleware::class);
+        return new ReflectionClass(AuthMiddleware::class);
     }
 
     /**
      * Create Container mock
      *
-     * @return \Mockery\MockInterface|\Mockery\LegacyMockInterface|ContainerInterface
+     * @return MockInterface|LegacyMockInterface|ContainerInterface
      */
     protected function createContainerMock()
     {
@@ -52,7 +55,7 @@ final class AuthMiddlewareTest extends TestCase
     /**
      * Create Auth mock
      *
-     * @return \Mockery\MockInterface|\Mockery\LegacyMockInterface
+     * @return MockInterface|LegacyMockInterface
      */
     protected function createAuthMock()
     {
@@ -62,7 +65,7 @@ final class AuthMiddlewareTest extends TestCase
     /**
      * Create Router mock
      *
-     * @return \Mockery\MockInterface|\Mockery\LegacyMockInterface
+     * @return MockInterface|LegacyMockInterface
      */
     protected function createRouterMock()
     {
@@ -72,7 +75,7 @@ final class AuthMiddlewareTest extends TestCase
     /**
      * Create Request mock
      *
-     * @return \Mockery\MockInterface|\Mockery\LegacyMockInterface|ServerRequestInterface
+     * @return MockInterface|LegacyMockInterface|ServerRequestInterface
      */
     protected function createRequestMock()
     {
@@ -82,7 +85,7 @@ final class AuthMiddlewareTest extends TestCase
     /**
      * Create Response mock
      *
-     * @return \Mockery\MockInterface|\Mockery\LegacyMockInterface|Response
+     * @return MockInterface|LegacyMockInterface|Response
      */
     protected function createResponseMock()
     {

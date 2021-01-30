@@ -2,9 +2,10 @@
 
 namespace App\ORM\Repository;
 
-use Doctrine\ORM\EntityRepository;
 use App\ORM\Entity\Title;
 use App\Pagination\DoctrinePaginator;
+use Doctrine\ORM\EntityRepository;
+use InvalidArgumentException;
 
 /**
  * Title repository class
@@ -56,7 +57,7 @@ class TitleRepository extends EntityRepository
     public function findForListApi(string $name)
     {
         if (empty($name)) {
-            throw new \InvalidArgumentException('invalid "name".');
+            throw new InvalidArgumentException('invalid "name".');
         }
 
         $qb = $this->createQueryBuilder('t');
@@ -82,7 +83,7 @@ class TitleRepository extends EntityRepository
     public function findForFindImportedApi($ids)
     {
         if (gettype($ids) !== 'array') {
-            throw new \InvalidArgumentException('invalid "ids".');
+            throw new InvalidArgumentException('invalid "ids".');
         }
 
         $qb = $this->createQueryBuilder('t');

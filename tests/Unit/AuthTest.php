@@ -9,8 +9,11 @@ use App\ORM\Entity\AdminUser;
 use Laminas\Stdlib\ArrayObject;
 use Mockery;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+use Mockery\LegacyMockInterface;
+use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
+use ReflectionClass;
 
 /**
  * Auth test
@@ -24,7 +27,7 @@ final class AuthTest extends TestCase
      *
      * ContainerInterfaceを実装したモックを作成する。
      *
-     * @return \Mockery\MockInterface|\Mockery\LegacyMockInterface|ContainerInterface
+     * @return MockInterface|LegacyMockInterface|ContainerInterface
      */
     protected function createContainerMock()
     {
@@ -36,7 +39,7 @@ final class AuthTest extends TestCase
      *
      * ひとまず仮のクラスで実装する。
      *
-     * @return \Mockery\MockInterface|\Mockery\LegacyMockInterface
+     * @return MockInterface|LegacyMockInterface
      */
     protected function createEntityManagerMock()
     {
@@ -49,7 +52,7 @@ final class AuthTest extends TestCase
      * 実際のセッション（$_SESSION）は利用しない形にする。
      * ひとまず仮のクラスで実装する。
      *
-     * @return \Mockery\MockInterface|\Mockery\LegacyMockInterface
+     * @return MockInterface|LegacyMockInterface
      */
     protected function createSessionManagerMock()
     {
@@ -63,7 +66,7 @@ final class AuthTest extends TestCase
      * 現状ではoffsetGet()、offsetSet()が利用できれば良いので、
      * 元になっているArrayObjectを利用する。
      *
-     * @return \Mockery\MockInterface|\Mockery\LegacyMockInterface
+     * @return MockInterface|LegacyMockInterface
      */
     protected function createSessionContaierMock()
     {
@@ -75,7 +78,7 @@ final class AuthTest extends TestCase
      *
      * ひとまず仮のクラスで実装する。
      *
-     * @return \Mockery\MockInterface|\Mockery\LegacyMockInterface
+     * @return MockInterface|LegacyMockInterface
      */
     protected function createAdminUserRepositoryMock()
     {
@@ -85,7 +88,7 @@ final class AuthTest extends TestCase
     /**
      * Create AdminUser Repository mock
      *
-     * @return \Mockery\MockInterface|\Mockery\LegacyMockInterface|AdminUser
+     * @return MockInterface|LegacyMockInterface|AdminUser
      */
     protected function createAdminUserMock()
     {
@@ -111,7 +114,7 @@ final class AuthTest extends TestCase
 
         $authMock = Mockery::mock(Auth::class)->makePartial();
 
-        $authRef = new \ReflectionClass(Auth::class);
+        $authRef = new ReflectionClass(Auth::class);
 
         // execute constructor
         $authConstructor = $authRef->getConstructor();
@@ -185,7 +188,7 @@ final class AuthTest extends TestCase
         $entityManagerMock = $this->createEntityManagerMockOfTestLogin($repositoryMock);
 
         $authMock = Mockery::mock(Auth::class)->makePartial();
-        $authRef  = new \ReflectionClass(Auth::class);
+        $authRef  = new ReflectionClass(Auth::class);
 
         $emPropertyRef = $authRef->getProperty('em');
         $emPropertyRef->setAccessible(true);
@@ -224,7 +227,7 @@ final class AuthTest extends TestCase
         $entityManagerMock = $this->createEntityManagerMockOfTestLogin($repositoryMock);
 
         $authMock = Mockery::mock(Auth::class)->makePartial();
-        $authRef  = new \ReflectionClass(Auth::class);
+        $authRef  = new ReflectionClass(Auth::class);
 
         $emPropertyRef = $authRef->getProperty('em');
         $emPropertyRef->setAccessible(true);
@@ -275,7 +278,7 @@ final class AuthTest extends TestCase
             ->with('user_id', 1);
 
         $authMock = Mockery::mock(Auth::class)->makePartial();
-        $authRef  = new \ReflectionClass(Auth::class);
+        $authRef  = new ReflectionClass(Auth::class);
 
         $emPropertyRef = $authRef->getProperty('em');
         $emPropertyRef->setAccessible(true);
@@ -297,7 +300,7 @@ final class AuthTest extends TestCase
     /**
      * Create EntityManager mock of testLogin
      *
-     * @return \Mockery\MockInterface|\Mockery\LegacyMockInterface
+     * @return MockInterface|LegacyMockInterface
      */
     protected function createEntityManagerMockOfTestLogin($repository)
     {
@@ -327,7 +330,7 @@ final class AuthTest extends TestCase
             ->with('user_id');
 
         $authMock = Mockery::mock(Auth::class)->makePartial();
-        $authRef  = new \ReflectionClass(Auth::class);
+        $authRef  = new ReflectionClass(Auth::class);
 
         // initialize property
         $userPropertyRef = $authRef->getProperty('user');
@@ -355,7 +358,7 @@ final class AuthTest extends TestCase
         $sessionContainerMock->makePartial();
 
         $authMock = Mockery::mock(Auth::class)->makePartial();
-        $authRef  = new \ReflectionClass(Auth::class);
+        $authRef  = new ReflectionClass(Auth::class);
 
         // initialize property
         $sessionPropertyRef = $authRef->getProperty('session');
@@ -426,7 +429,7 @@ final class AuthTest extends TestCase
             ->with(AdminUser::class)
             ->andReturn($repositoryMock);
 
-        $authRef = new \ReflectionClass(Auth::class);
+        $authRef = new ReflectionClass(Auth::class);
 
         // initialize property
         $emPropertyRef = $authRef->getProperty('em');
@@ -468,7 +471,7 @@ final class AuthTest extends TestCase
             ->shouldReceive('getRepository')
             ->never();
 
-        $authRef = new \ReflectionClass(Auth::class);
+        $authRef = new ReflectionClass(Auth::class);
 
         // initialize property
         $emPropertyRef = $authRef->getProperty('em');

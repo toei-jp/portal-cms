@@ -3,6 +3,9 @@
 namespace App\Controller\API;
 
 use App\ORM\Entity;
+use Slim\Http\Request;
+use Slim\Http\Response;
+use Throwable;
 
 /**
  * Title API controller
@@ -12,9 +15,9 @@ class TitleController extends BaseController
     /**
      * list action
      *
-     * @param \Slim\Http\Request  $request
-     * @param \Slim\Http\Response $response
-     * @param array               $args
+     * @param Request  $request
+     * @param Response $response
+     * @param array    $args
      * @return string|void
      */
     public function executeList($request, $response, $args)
@@ -47,9 +50,9 @@ class TitleController extends BaseController
     /**
      * find imported title action
      *
-     * @param \Slim\Http\Request  $request
-     * @param \Slim\Http\Response $response
-     * @param array               $args
+     * @param Request  $request
+     * @param Response $response
+     * @param array    $args
      * @return string|void
      */
     public function executeFindImported($request, $response, $args)
@@ -75,9 +78,9 @@ class TitleController extends BaseController
     /**
      * import title action
      *
-     * @param \Slim\Http\Request  $request
-     * @param \Slim\Http\Response $response
-     * @param array               $args
+     * @param Request  $request
+     * @param Response $response
+     * @param array    $args
      * @return string|void
      */
     public function executeImportTitles($request, $response, $args)
@@ -119,7 +122,7 @@ class TitleController extends BaseController
 
                 $this->em->persist($newTitle);
                 $this->em->flush();
-            } catch (\Throwable $e) {
+            } catch (Throwable $e) {
                 $this->logger->error($e);
                 array_push($errors, $e->getMessage());
             }
@@ -136,9 +139,9 @@ class TitleController extends BaseController
     /**
      * autocomplete action
      *
-     * @param \Slim\Http\Request  $request
-     * @param \Slim\Http\Response $response
-     * @param array               $args
+     * @param Request  $request
+     * @param Response $response
+     * @param array    $args
      * @return string|void
      */
     public function executeAutocomplete($request, $response, $args)

@@ -2,10 +2,12 @@
 
 namespace App\Controller;
 
-use App\Form\LoginForm;
 use App\Exception\ForbiddenException;
 use App\Form;
 use App\ORM\Entity;
+use App\Pagination\DoctrinePaginator;
+use Slim\Http\Request;
+use Slim\Http\Response;
 
 /**
  * AdminUser controller class
@@ -26,9 +28,9 @@ class AdminUserController extends BaseController
     /**
      * list action
      *
-     * @param \Slim\Http\Request  $request
-     * @param \Slim\Http\Response $response
-     * @param array               $args
+     * @param Request  $request
+     * @param Response $response
+     * @param array    $args
      * @return string|void
      */
     public function executeList($request, $response, $args)
@@ -39,7 +41,7 @@ class AdminUserController extends BaseController
         $cleanValues = [];
         $this->data->set('params', $cleanValues);
 
-        /** @var \App\Pagination\DoctrinePaginator $pagenater */
+        /** @var DoctrinePaginator $pagenater */
         $pagenater = $this->em->getRepository(Entity\AdminUser::class)->findForList($cleanValues, $page);
 
         $this->data->set('pagenater', $pagenater);
@@ -48,9 +50,9 @@ class AdminUserController extends BaseController
     /**
      * new action
      *
-     * @param \Slim\Http\Request  $request
-     * @param \Slim\Http\Response $response
-     * @param array               $args
+     * @param Request  $request
+     * @param Response $response
+     * @param array    $args
      * @return string|void
      */
     public function executeNew($request, $response, $args)
@@ -62,9 +64,9 @@ class AdminUserController extends BaseController
     /**
      * create action
      *
-     * @param \Slim\Http\Request  $request
-     * @param \Slim\Http\Response $response
-     * @param array               $args
+     * @param Request  $request
+     * @param Response $response
+     * @param array    $args
      * @return string|void
      */
     public function executeCreate($request, $response, $args)
