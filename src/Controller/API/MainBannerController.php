@@ -4,6 +4,8 @@ namespace App\Controller\API;
 
 use App\Controller\Traits\AzureBlobStorage;
 use App\ORM\Entity;
+use Slim\Http\Request;
+use Slim\Http\Response;
 
 /**
  * MainBanner API controller
@@ -15,9 +17,9 @@ class MainBannerController extends BaseController
     /**
      * list action
      *
-     * @param \Slim\Http\Request  $request
-     * @param \Slim\Http\Response $response
-     * @param array               $args
+     * @param Request  $request
+     * @param Response $response
+     * @param array    $args
      * @return string|void
      */
     public function executeList($request, $response, $args)

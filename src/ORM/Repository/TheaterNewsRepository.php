@@ -2,9 +2,8 @@
 
 namespace App\ORM\Repository;
 
-use Doctrine\ORM\EntityRepository;
 use App\ORM\Entity\News;
-use App\ORM\Entity\TheaterNews;
+use Doctrine\ORM\EntityRepository;
 
 /**
  * TheaterNews repository class

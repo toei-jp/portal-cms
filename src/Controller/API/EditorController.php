@@ -5,6 +5,9 @@ namespace App\Controller\API;
 use App\Controller\Traits\AzureBlobStorage;
 use App\Form;
 use App\Form\API as ApiForm;
+use MicrosoftAzure\Storage\Blob\Models\CreateBlockBlobOptions;
+use Slim\Http\Request;
+use Slim\Http\Response;
 
 /**
  * Editor API controller
@@ -23,9 +26,9 @@ class EditorController extends BaseController
     /**
      * upload action
      *
-     * @param \Slim\Http\Request  $request
-     * @param \Slim\Http\Response $response
-     * @param array               $args
+     * @param Request  $request
+     * @param Response $response
+     * @param array    $args
      * @return string|void
      */
     public function executeUpload($request, $response, $args)
@@ -58,7 +61,7 @@ class EditorController extends BaseController
         $blobName = md5(uniqid('', true)) . '.' . $info['extension'];
 
         // upload storage
-        $options = new \MicrosoftAzure\Storage\Blob\Models\CreateBlockBlobOptions();
+        $options = new CreateBlockBlobOptions();
         $options->setContentType($file['type']);
         $this->bc->createBlockBlob(
             $this->blobContainer,

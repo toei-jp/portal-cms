@@ -8,8 +8,39 @@
  * @see App\Controller\AbstractController\__call()
  */
 
+use App\Application\Handlers\Error;
+use App\Application\Handlers\NotAllowed;
+use App\Application\Handlers\NotFound;
+use App\Application\Handlers\PhpError;
+use App\Auth;
+use App\Logger\DbalLogger;
+use App\Logger\Handler\AzureBlobStorageHandler;
+use App\Session\SessionManager;
+use App\Twig\Extension\AzureStorageExtension;
+use App\Twig\Extension\MotionPictureExtenstion;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Tools\Setup;
+use Laminas\Session\Config\SessionConfig;
+use MicrosoftAzure\Storage\Blob\BlobRestProxy;
+use Monolog\Handler\ChromePHPHandler;
+use Monolog\Handler\FingersCrossedHandler;
+use Monolog\Logger;
+use Monolog\Processor\IntrospectionProcessor;
+use Monolog\Processor\MemoryPeakUsageProcessor;
+use Monolog\Processor\MemoryUsageProcessor;
+use Monolog\Processor\PsrLogMessageProcessor;
+use Monolog\Processor\UidProcessor;
+use Monolog\Processor\WebProcessor;
+use Slim\App as SlimApp;
+use Slim\Flash\Messages as FlashMessages;
+use Slim\Http\Environment;
+use Slim\Http\Uri;
+use Slim\Views\Twig;
+use Slim\Views\TwigExtension;
+use Twig\Extension\DebugExtension;
+
 // phpcs:disable SlevomatCodingStandard.Commenting.InlineDocCommentDeclaration
-/** @var \Slim\App $app */
+/** @var SlimApp $app */
 // phpcs:enable
 
 $container = $app->getContainer();
@@ -19,25 +50,25 @@ $container = $app->getContainer();
  *
  * @link https://www.slimframework.com/docs/v3/features/templates.html
  *
- * @return \Slim\Views\Twig
+ * @return Twig
  */
 $container['view'] = static function ($container) {
     $settings = $container->get('settings')['view'];
 
-    $view = new \Slim\Views\Twig($settings['template_path'], $settings['settings']);
+    $view = new Twig($settings['template_path'], $settings['settings']);
 
     // Instantiate and add Slim specific extension
     $router = $container->get('router');
-    $uri    = \Slim\Http\Uri::createFromEnvironment(new \Slim\Http\Environment($_SERVER));
-    $view->addExtension(new \Slim\Views\TwigExtension($router, $uri));
+    $uri    = Uri::createFromEnvironment(new Environment($_SERVER));
+    $view->addExtension(new TwigExtension($router, $uri));
 
     // add Extension
-    $view->addExtension(new \Twig\Extension\DebugExtension());
-    $view->addExtension(new \App\Twig\Extension\AzureStorageExtension(
+    $view->addExtension(new DebugExtension());
+    $view->addExtension(new AzureStorageExtension(
         $container->get('bc'),
         $container->get('settings')['storage']['public_endpoint']
     ));
-    $view->addExtension(new \App\Twig\Extension\MotionPictureExtenstion(
+    $view->addExtension(new MotionPictureExtenstion(
         $container->get('settings')['mp']
     ));
 
@@ -49,28 +80,28 @@ $container['view'] = static function ($container) {
  *
  * @link https://github.com/Seldaek/monolog
  *
- * @return \Monolog\Logger
+ * @return Logger
  */
 $container['logger'] = static function ($container) {
     $settings = $container->get('settings')['logger'];
 
-    $logger = new Monolog\Logger($settings['name']);
-    $logger->pushProcessor(new Monolog\Processor\PsrLogMessageProcessor());
-    $logger->pushProcessor(new Monolog\Processor\UidProcessor());
-    $logger->pushProcessor(new Monolog\Processor\IntrospectionProcessor());
-    $logger->pushProcessor(new Monolog\Processor\WebProcessor());
-    $logger->pushProcessor(new Monolog\Processor\MemoryUsageProcessor());
-    $logger->pushProcessor(new Monolog\Processor\MemoryPeakUsageProcessor());
+    $logger = new Logger($settings['name']);
+    $logger->pushProcessor(new PsrLogMessageProcessor());
+    $logger->pushProcessor(new UidProcessor());
+    $logger->pushProcessor(new IntrospectionProcessor());
+    $logger->pushProcessor(new WebProcessor());
+    $logger->pushProcessor(new MemoryUsageProcessor());
+    $logger->pushProcessor(new MemoryPeakUsageProcessor());
 
     if (isset($settings['chrome_php'])) {
         $chromePhpSettings = $settings['chrome_php'];
-        $logger->pushHandler(new Monolog\Handler\ChromePHPHandler(
+        $logger->pushHandler(new ChromePHPHandler(
             $chromePhpSettings['level']
         ));
     }
 
     $azureBlobStorageSettings = $settings['azure_blob_storage'];
-    $azureBlobStorageHandler  = new \App\Logger\Handler\AzureBlobStorageHandler(
+    $azureBlobStorageHandler  = new AzureBlobStorageHandler(
         $container->get('bc'),
         $azureBlobStorageSettings['container'],
         $azureBlobStorageSettings['blob'],
@@ -78,7 +109,7 @@ $container['logger'] = static function ($container) {
     );
 
     $fingersCrossedSettings = $settings['fingers_crossed'];
-    $logger->pushHandler(new Monolog\Handler\FingersCrossedHandler(
+    $logger->pushHandler(new FingersCrossedHandler(
         $azureBlobStorageHandler,
         $fingersCrossedSettings['activation_strategy']
     ));
@@ -89,7 +120,7 @@ $container['logger'] = static function ($container) {
 /**
  * Doctrine entity manager
  *
- * @return \Doctrine\ORM\EntityManager
+ * @return EntityManager
  */
 $container['em'] = static function ($container) {
     $settings = $container->get('settings')['doctrine'];
@@ -99,7 +130,7 @@ $container['em'] = static function ($container) {
      *
      * @Entity => @ORM\Entity などとしておく。
      */
-    $config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
+    $config = Setup::createAnnotationMetadataConfiguration(
         $settings['metadata_dirs'],
         $settings['dev_mode'],
         null,
@@ -111,44 +142,44 @@ $container['em'] = static function ($container) {
     $config->setProxyNamespace('App\ORM\Proxy');
     $config->setAutoGenerateProxyClasses($settings['dev_mode']);
 
-    $logger = new \App\Logger\DbalLogger($container->get('logger'));
+    $logger = new DbalLogger($container->get('logger'));
     $config->setSQLLogger($logger);
 
-    return \Doctrine\ORM\EntityManager::create($settings['connection'], $config);
+    return EntityManager::create($settings['connection'], $config);
 };
 
 /**
  * session manager
  *
- * @return \App\Session\SessionManager
+ * @return SessionManager
  */
 $container['sm'] = static function ($container) {
     $settings = $container->get('settings')['session'];
 
-    $config = new \Laminas\Session\Config\SessionConfig();
+    $config = new SessionConfig();
     $config->setOptions($settings);
 
-    return new \App\Session\SessionManager($config);
+    return new SessionManager($config);
 };
 
 /**
  * Flash Messages
  *
- * @return \Slim\Flash\Messages
+ * @return FlashMessages
  */
 $container['flash'] = static function ($container) {
     $session = $container->get('sm')->getContainer('flash');
 
-    return new \Slim\Flash\Messages($session);
+    return new FlashMessages($session);
 };
 
 /**
  * auth
  *
- * @return \App\Auth
+ * @return Auth
  */
 $container['auth'] = static function ($container) {
-    return new \App\Auth($container);
+    return new Auth($container);
 };
 
 /**
@@ -156,7 +187,7 @@ $container['auth'] = static function ($container) {
  *
  * @link https://github.com/Azure/azure-storage-php/tree/master/azure-storage-blob
  *
- * @return \MicrosoftAzure\Storage\Blob\BlobRestProxy
+ * @return BlobRestProxy
  */
 $container['bc'] = static function ($container) {
     $settings   = $container->get('settings')['storage'];
@@ -172,31 +203,31 @@ $container['bc'] = static function ($container) {
         $connection .= sprintf('BlobEndpoint=%s;', $settings['blob_endpoint']);
     }
 
-    return \MicrosoftAzure\Storage\Blob\BlobRestProxy::createBlobService($connection);
+    return BlobRestProxy::createBlobService($connection);
 };
 
 $container['errorHandler'] = static function ($container) {
-    return new \App\Application\Handlers\Error(
+    return new Error(
         $container->get('logger'),
         $container->get('settings')['displayErrorDetails']
     );
 };
 
 $container['phpErrorHandler'] = static function ($container) {
-    return new \App\Application\Handlers\PhpError(
+    return new PhpError(
         $container->get('logger'),
         $container->get('settings')['displayErrorDetails']
     );
 };
 
 $container['notFoundHandler'] = static function ($container) {
-    return new \App\Application\Handlers\NotFound(
+    return new NotFound(
         $container->get('view')
     );
 };
 
 $container['notAllowedHandler'] = static function ($container) {
-    return new \App\Application\Handlers\NotAllowed(
+    return new NotAllowed(
         $container->get('view')
     );
 };

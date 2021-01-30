@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Form\LoginForm;
+use Slim\Http\Request;
+use Slim\Http\Response;
 
 /**
  * Auth controller class
@@ -12,9 +14,9 @@ class AuthController extends BaseController
     /**
      * login action
      *
-     * @param \Slim\Http\Request  $request
-     * @param \Slim\Http\Response $response
-     * @param array               $args
+     * @param Request  $request
+     * @param Response $response
+     * @param array    $args
      * @return string|void
      */
     public function executeLogin($request, $response, $args)
@@ -24,9 +26,9 @@ class AuthController extends BaseController
     /**
      * auth action
      *
-     * @param \Slim\Http\Request  $request
-     * @param \Slim\Http\Response $response
-     * @param array               $args
+     * @param Request  $request
+     * @param Response $response
+     * @param array    $args
      * @return string|void
      */
     public function executeAuth($request, $response, $args)
@@ -67,9 +69,9 @@ class AuthController extends BaseController
     /**
      * logout action
      *
-     * @param \Slim\Http\Request  $request
-     * @param \Slim\Http\Response $response
-     * @param array               $args
+     * @param Request  $request
+     * @param Response $response
+     * @param array    $args
      * @return string|void
      */
     public function executeLogout($request, $response, $args)

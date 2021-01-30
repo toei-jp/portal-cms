@@ -2,10 +2,9 @@
 
 namespace App\Form;
 
+use App\ORM\Entity\ShowingFormat;
 use Laminas\Form\Fieldset;
 use Laminas\InputFilter\InputFilterProviderInterface;
-use Laminas\Validator;
-use App\ORM\Entity\ShowingFormat;
 
 /**
  * ShowingFormat fieldset class

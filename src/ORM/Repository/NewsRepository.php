@@ -2,9 +2,10 @@
 
 namespace App\ORM\Repository;
 
-use Doctrine\ORM\EntityRepository;
 use App\ORM\Entity\News;
 use App\Pagination\DoctrinePaginator;
+use Doctrine\ORM\EntityRepository;
+use InvalidArgumentException;
 
 /**
  * News repository class
@@ -81,7 +82,7 @@ class NewsRepository extends EntityRepository
     public function findForListApi(string $headline)
     {
         if (empty($headline)) {
-            throw new \InvalidArgumentException('invalid "headline".');
+            throw new InvalidArgumentException('invalid "headline".');
         }
 
         $qb = $this->createQueryBuilder('c');

@@ -2,11 +2,11 @@
 
 namespace App\Form;
 
-use Laminas\Form\Fieldset;
+use App\ORM\Entity;
+use Doctrine\ORM\EntityManager;
+use InvalidArgumentException;
 use Laminas\InputFilter\InputFilter;
 use Laminas\Validator;
-use Doctrine\ORM\EntityManager;
-use App\ORM\Entity;
 
 /**
  * MainBannerPublication form class
@@ -31,7 +31,7 @@ class MainBannerPublicationForm extends BaseForm
     public function __construct(string $target, EntityManager $em)
     {
         if (! in_array($target, [self::TARGET_PAGE, self::TARGET_TEATER])) {
-            throw new \InvalidArgumentException('invalid target.');
+            throw new InvalidArgumentException('invalid target.');
         }
 
         $this->target = $target;

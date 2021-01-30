@@ -2,6 +2,8 @@
 
 namespace App\ORM\Entity;
 
+use DateTime;
+
 /**
  * Timestampable trait
  *
@@ -14,7 +16,7 @@ trait TimestampableTrait
      *
      * @ORM\Column(type="datetime", name="created_at")
      *
-     * @var \DateTime
+     * @var DateTime
      */
     protected $createdAt;
 
@@ -23,14 +25,14 @@ trait TimestampableTrait
      *
      * @ORM\Column(type="datetime", name="updated_at")
      *
-     * @var \DateTime
+     * @var DateTime
      */
     protected $updatedAt;
 
     /**
      * get created_at
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getCreatedAt()
     {
@@ -40,20 +42,20 @@ trait TimestampableTrait
     /**
      * set created_at
      *
-     * @param \DateTime|string $createdAt
+     * @param DateTime|string $createdAt
      * @return void
      */
     public function setCreatedAt($createdAt)
     {
-        $this->createdAt = ($createdAt instanceof \DateTime)
+        $this->createdAt = ($createdAt instanceof DateTime)
                         ? $createdAt
-                        : new \DateTime($createdAt);
+                        : new DateTime($createdAt);
     }
 
     /**
      * get updated_at
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getUpdatedAt()
     {
@@ -63,14 +65,14 @@ trait TimestampableTrait
     /**
      * set updated_at
      *
-     * @param \DateTime|string $updatedAt
+     * @param DateTime|string $updatedAt
      * @return void
      */
     public function setUpdatedAt($updatedAt)
     {
-        $this->updatedAt = ($updatedAt instanceof \DateTime)
+        $this->updatedAt = ($updatedAt instanceof DateTime)
                         ? $updatedAt
-                        : new \DateTime($updatedAt);
+                        : new DateTime($updatedAt);
     }
 
     /**

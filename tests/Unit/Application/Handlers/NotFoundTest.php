@@ -7,9 +7,12 @@ namespace Tests\Unit\Application\Handlers;
 use App\Application\Handlers\NotFound;
 use Mockery;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+use Mockery\LegacyMockInterface;
+use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UriInterface;
+use ReflectionClass;
 use Slim\Views\Twig;
 
 /**
@@ -20,15 +23,15 @@ final class NotFoundTest extends TestCase
     use MockeryPHPUnitIntegration;
 
     /**
-     * @return \ReflectionClass
+     * @return ReflectionClass
      */
     protected function createTargetReflection()
     {
-        return new \ReflectionClass(NotFound::class);
+        return new ReflectionClass(NotFound::class);
     }
 
     /**
-     * @return \Mockery\MockInterface&\Mockery\LegacyMockInterface&NotFound
+     * @return MockInterface&LegacyMockInterface&NotFound
      */
     protected function createTargetMock()
     {
@@ -36,7 +39,7 @@ final class NotFoundTest extends TestCase
     }
 
     /**
-     * @return \Mockery\MockInterface&\Mockery\LegacyMockInterface&Twig
+     * @return MockInterface&LegacyMockInterface&Twig
      */
     protected function createViewMock()
     {
@@ -48,7 +51,7 @@ final class NotFoundTest extends TestCase
      *
      * ひとまず仮のクラスで実装する。
      *
-     * @return \Mockery\MockInterface&\Mockery\LegacyMockInterface&ServerRequestInterface
+     * @return MockInterface&LegacyMockInterface&ServerRequestInterface
      */
     protected function createRequestMock()
     {

@@ -3,7 +3,6 @@
 namespace App\Form;
 
 use Laminas\InputFilter\InputFilter;
-use App\ValidatorTranslator;
 
 /**
  * Login form class

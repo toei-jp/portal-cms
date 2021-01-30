@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Twig\Extension;
 
+use App\Twig\Extension\AzureStorageExtension;
 use MicrosoftAzure\Storage\Blob\BlobRestProxy;
 use Mockery;
-use App\Twig\Extension\AzureStorageExtension;
+use Mockery\LegacyMockInterface;
+use Mockery\MockInterface;
+use ReflectionClass;
 
 /**
  * Azure Storage extension test
@@ -16,7 +19,7 @@ final class AzureStorageExtensionTest extends BaseTestCase
     /**
      * Create target mock
      *
-     * @return \Mockery\MockInterface|\Mockery\LegacyMockInterface|AzureStorageExtension
+     * @return MockInterface|LegacyMockInterface|AzureStorageExtension
      */
     protected function createTargetMock()
     {
@@ -26,17 +29,17 @@ final class AzureStorageExtensionTest extends BaseTestCase
     /**
      * Create Target reflection
      *
-     * @return \ReflectionClass
+     * @return ReflectionClass
      */
     protected function createTargetReflection()
     {
-        return new \ReflectionClass(AzureStorageExtension::class);
+        return new ReflectionClass(AzureStorageExtension::class);
     }
 
     /**
      * Create BlobRestProxy mock
      *
-     * @return \Mockery\MockInterface|\Mockery\LegacyMockInterface|BlobRestProxy
+     * @return MockInterface|LegacyMockInterface|BlobRestProxy
      */
     protected function crateBlobRestProxyMock()
     {

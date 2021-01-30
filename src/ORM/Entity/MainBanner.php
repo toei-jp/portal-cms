@@ -5,7 +5,6 @@ namespace App\ORM\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use App\ORM\Entity\AbstractEntity;
 
 /**
  * MainBanner entity class

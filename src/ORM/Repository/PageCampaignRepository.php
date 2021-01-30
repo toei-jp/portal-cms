@@ -2,9 +2,8 @@
 
 namespace App\ORM\Repository;
 
-use Doctrine\ORM\EntityRepository;
 use App\ORM\Entity\Campaign;
-use App\ORM\Entity\PageCampaign;
+use Doctrine\ORM\EntityRepository;
 
 /**
  * PageCampaign repository class

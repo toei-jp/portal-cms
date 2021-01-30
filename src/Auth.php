@@ -2,15 +2,17 @@
 
 namespace App;
 
-use Psr\Container\ContainerInterface;
 use App\ORM\Entity\AdminUser;
+use Doctrine\ORM\EntityManager;
+use Laminas\Session\Container;
+use Psr\Container\ContainerInterface;
 
 class Auth
 {
-    /** @var \Doctrine\ORM\EntityManager */
+    /** @var EntityManager */
     protected $em;
 
-    /** @var \Laminas\Session\Container */
+    /** @var Container */
     protected $session;
 
     /** @var AdminUser|null */

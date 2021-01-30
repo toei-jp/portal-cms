@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace Tests\Unit\Twig\Extension;
 
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+use Mockery\LegacyMockInterface;
+use Mockery\Mock;
+use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
@@ -19,7 +22,7 @@ abstract class BaseTestCase extends TestCase
     /**
      * Create Target mock
      *
-     * @return \Mockery\MockInterface|\Mockery\LegacyMockInterface|AbstractExtension
+     * @return MockInterface|LegacyMockInterface|AbstractExtension
      */
     abstract protected function createTargetMock();
 
@@ -32,7 +35,7 @@ abstract class BaseTestCase extends TestCase
      */
     public function testGetFunctions()
     {
-        /** @var \Mockery\Mock|AbstractExtension $targetMock */
+        /** @var Mock|AbstractExtension $targetMock */
         $targetMock = $this->createTargetMock()
             ->makePartial();
 

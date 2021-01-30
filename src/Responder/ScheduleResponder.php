@@ -2,8 +2,8 @@
 
 namespace App\Responder;
 
-use Slim\Collection;
 use Psr\Http\Message\ResponseInterface as Response;
+use Slim\Collection;
 
 /**
  * Schedule responder

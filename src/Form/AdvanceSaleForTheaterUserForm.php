@@ -2,10 +2,8 @@
 
 namespace App\Form;
 
-use Laminas\InputFilter\InputFilter;
-use Laminas\Validator;
 use Doctrine\ORM\EntityManager;
-use App\ORM\Entity;
+use Laminas\InputFilter\InputFilter;
 
 /**
  * AdvanceSale for theater user form class

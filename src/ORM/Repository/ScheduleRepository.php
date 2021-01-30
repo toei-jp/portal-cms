@@ -2,10 +2,10 @@
 
 namespace App\ORM\Repository;
 
-use Doctrine\ORM\EntityRepository;
 use App\Form\ScheduleFindForm;
 use App\ORM\Entity\Schedule;
 use App\Pagination\DoctrinePaginator;
+use Doctrine\ORM\EntityRepository;
 
 /**
  * Schedule repository class

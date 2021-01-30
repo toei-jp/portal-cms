@@ -2,11 +2,11 @@
 
 namespace App\Controller\API;
 
-use Psr\Container\ContainerInterface;
-use Psr\Http\Message\ResponseInterface as Response;
 use App\Controller\AbstractController;
 use App\Responder;
 use App\Responder\API as ApiResponder;
+use Slim\Http\Request;
+use Slim\Http\Response;
 
 /**
  * Base controller
@@ -16,8 +16,8 @@ abstract class BaseController extends AbstractController
     /**
      * pre execute
      *
-     * @param \Slim\Http\Request  $request
-     * @param \Slim\Http\Response $response
+     * @param Request  $request
+     * @param Response $response
      * @return void
      */
     protected function preExecute($request, $response): void
@@ -27,8 +27,8 @@ abstract class BaseController extends AbstractController
     /**
      * post execute
      *
-     * @param \Slim\Http\Request  $request
-     * @param \Slim\Http\Response $response
+     * @param Request  $request
+     * @param Response $response
      * @return void
      */
     protected function postExecute($request, $response): void

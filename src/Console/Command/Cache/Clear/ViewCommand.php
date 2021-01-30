@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace App\Console\Command\Cache\Clear;
 
 use App\Console\Command\BaseCommand;
+use RuntimeException;
+use Slim\Views\Twig;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
-use Slim\Views\Twig;
 use Twig\Cache\CacheInterface;
 use Twig\Cache\FilesystemCache;
 use Twig\Cache\NullCache;
@@ -44,7 +45,7 @@ class ViewCommand extends BaseCommand
         } elseif ($cache instanceof NullCache) {
             $output->writeln('Disable cache.');
         } else {
-            throw new \RuntimeException(sprintf('This cache interface is not supported (%s).', get_class($cache)));
+            throw new RuntimeException(sprintf('This cache interface is not supported (%s).', get_class($cache)));
         }
 
         $output->writeln('Command exit.');

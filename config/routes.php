@@ -5,8 +5,14 @@
  */
 
 use App\Controller\AdminUserController;
-use App\Controller\AuthController;
 use App\Controller\AdvanceTicketController;
+use App\Controller\API\AuthController as AuthApiController;
+use App\Controller\API\CampaignController as CampaignApiController;
+use App\Controller\API\EditorController as EditorApiController;
+use App\Controller\API\MainBannerController as MainBannerApiController;
+use App\Controller\API\NewsController as NewsApiController;
+use App\Controller\API\TitleController as TitleApiController;
+use App\Controller\AuthController;
 use App\Controller\CampaignController;
 use App\Controller\IndexController;
 use App\Controller\MainBannerController;
@@ -14,16 +20,11 @@ use App\Controller\NewsController;
 use App\Controller\ScheduleController;
 use App\Controller\TheaterMetaController;
 use App\Controller\TitleController;
-use App\Controller\API\AuthController as AuthApiController;
-use App\Controller\API\CampaignController as CampaignApiController;
-use App\Controller\API\EditorController as EditorApiController;
-use App\Controller\API\MainBannerController as MainBannerApiController;
-use App\Controller\API\NewsController as NewsApiController;
-use App\Controller\API\TitleController as TitleApiController;
 use App\Middleware\AuthMiddleware;
+use Slim\App as SlimApp;
 
 // phpcs:disable SlevomatCodingStandard.Commenting.InlineDocCommentDeclaration
-/** @var \Slim\App $app */
+/** @var SlimApp $app */
 // phpcs:enable
 
 $app->get('/login', AuthController::class . ':login')->setName('login');

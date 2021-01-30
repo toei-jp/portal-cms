@@ -2,11 +2,11 @@
 
 namespace App\ORM\Entity;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
-use App\ORM\Entity\AbstractEntity;
 
 /**
  * AdvanceSale entity class
@@ -57,7 +57,7 @@ class AdvanceSale extends AbstractEntity
      *
      * @ORM\Column(type="date", name="publishing_expected_date", nullable=true)
      *
-     * @var \DateTime|null
+     * @var DateTime|null
      */
     protected $publishingExpectedDate;
 
@@ -142,7 +142,7 @@ class AdvanceSale extends AbstractEntity
     /**
      * get publishing_expected_date
      *
-     * @return \DateTime|null
+     * @return DateTime|null
      */
     public function getPublishingExpectedDate()
     {
@@ -152,15 +152,15 @@ class AdvanceSale extends AbstractEntity
     /**
      * set publishing_dxpected_date
      *
-     * @param \DateTime|string|null $publishingExpectedDate
+     * @param DateTime|string|null $publishingExpectedDate
      * @return void
      */
     public function setPublishingExpectedDate($publishingExpectedDate)
     {
-        if (is_null($publishingExpectedDate) || ($publishingExpectedDate instanceof \DateTime)) {
+        if (is_null($publishingExpectedDate) || ($publishingExpectedDate instanceof DateTime)) {
             $this->publishingExpectedDate = $publishingExpectedDate;
         } else {
-            $this->publishingExpectedDate = new \DateTime($publishingExpectedDate);
+            $this->publishingExpectedDate = new DateTime($publishingExpectedDate);
         }
     }
 
