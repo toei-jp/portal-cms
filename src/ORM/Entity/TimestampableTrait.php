@@ -47,9 +47,9 @@ trait TimestampableTrait
      */
     public function setCreatedAt($createdAt)
     {
-        $this->createdAt = ($createdAt instanceof DateTime)
-                        ? $createdAt
-                        : new DateTime($createdAt);
+        $this->createdAt = $createdAt instanceof DateTime
+            ? $createdAt
+            : new DateTime($createdAt);
     }
 
     /**
@@ -70,9 +70,9 @@ trait TimestampableTrait
      */
     public function setUpdatedAt($updatedAt)
     {
-        $this->updatedAt = ($updatedAt instanceof DateTime)
-                        ? $updatedAt
-                        : new DateTime($updatedAt);
+        $this->updatedAt = $updatedAt instanceof DateTime
+            ? $updatedAt
+            : new DateTime($updatedAt);
     }
 
     /**
