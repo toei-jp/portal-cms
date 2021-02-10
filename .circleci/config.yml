@@ -270,7 +270,7 @@ jobs:
             az webapp deployment source config-zip \
               -g toei-portal \
               -n toei-portal-cms-production \
-              -s release
+              -s release \
               --src production_app.zip
 
   swap_prod_release_to_production:
