@@ -21,14 +21,9 @@ toei-jp (Organizations) > portal-cms (Projects) > Project Settings > Environment
 
 | Name | Value |
 |:---|:---|
-|DEV_AAS_USER |開発環境デプロイユーザ |
-|DEV_AAS_PASSWORD |開発環境デプロイユーザのパスワード |
-|TEST_AAS_USER |テスト環境デプロイユーザ |
-|TEST_AAS_PASSWORD |テスト環境デプロイユーザのパスワード |
-|PROD_RELEASE_AAS_USER |運用環境releaseスロット デプロイユーザ |
-|PROD_RELEASE_AAS_PASSWORD |運用環境releaseスロット デプロイユーザのパスワード |
 |AZURE_TENANT |Azure テナントID [circleci/azure-cli orb](https://circleci.com/developer/orbs/orb/circleci/azure-cli) |
 |AZURE_USERNAME |Azure ユーザ名 [circleci/azure-cli orb](https://circleci.com/developer/orbs/orb/circleci/azure-cli) |
 |AZURE_PASSWORD |Azure パスワード [circleci/azure-cli orb](https://circleci.com/developer/orbs/orb/circleci/azure-cli) |
-
-デプロイユーザとパスワードはAzure App Serviceの発行プロファイルの取得
+|AZURE_TENANT_DEV |Azure テナントID (開発用) [circleci/azure-cli orb](https://circleci.com/developer/orbs/orb/circleci/azure-cli) |
+|AZURE_USERNAME_DEV |Azure ユーザ名 (開発用) [circleci/azure-cli orb](https://circleci.com/developer/orbs/orb/circleci/azure-cli) |
+|AZURE_PASSWORD_DEV |Azure パスワード (開発用) [circleci/azure-cli orb](https://circleci.com/developer/orbs/orb/circleci/azure-cli) |
