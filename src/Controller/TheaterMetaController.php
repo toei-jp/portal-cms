@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\Form;
@@ -8,9 +10,6 @@ use Slim\Exception\NotFoundException;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-/**
- * TheaterMeta controller
- */
 class TheaterMetaController extends BaseController
 {
     /**
@@ -19,9 +18,9 @@ class TheaterMetaController extends BaseController
      * @param Request  $request
      * @param Response $response
      * @param array    $args
-     * @return string|void
+     * @return Response
      */
-    public function executeOpeningHour($request, $response, $args)
+    public function executeOpeningHour(Request $request, Response $response, array $args): Response
     {
         $user       = $this->auth->getUser();
         $repository = $this->em->getRepository(Entity\TheaterMeta::class);
@@ -32,7 +31,12 @@ class TheaterMetaController extends BaseController
             $metas = $repository->findActive();
         }
 
-        $this->data->set('metas', $metas);
+        return $this->render($response, 'theater_meta/opening_hour/list.html.twig', ['metas' => $metas]);
+    }
+
+    protected function renderEdit(Response $response, array $data = []): Response
+    {
+        return $this->render($response, 'theater_meta/opening_hour/edit.html.twig', $data);
     }
 
     /**
@@ -41,18 +45,20 @@ class TheaterMetaController extends BaseController
      * @param Request  $request
      * @param Response $response
      * @param array    $args
-     * @return string|void
+     * @return Response
      */
-    public function executeOpeningHourEdit($request, $response, $args)
+    public function executeOpeningHourEdit(Request $request, Response $response, array $args): Response
     {
         /** @var Entity\Theater|null $theater */
-        $theater = $this->em->getRepository(Entity\Theater::class)->findOneById($args['id']);
+        $theater = $this->em
+            ->getRepository(Entity\Theater::class)
+            ->findOneById($args['id']);
 
         if (is_null($theater)) {
             throw new NotFoundException($request, $response);
         }
 
-        $this->data->set('theater', $theater);
+        $form = new Form\TheaterOpeningHourForm();
 
         $values = [
             'hours' => [],
@@ -68,9 +74,11 @@ class TheaterMetaController extends BaseController
             ];
         }
 
-        $this->data->set('values', $values);
-
-        $this->data->set('form', new Form\TheaterOpeningHourForm());
+        return $this->renderEdit($response, [
+            'theater' => $theater,
+            'form' => $form,
+            'values' => $values,
+        ]);
     }
 
     /**
@@ -79,12 +87,14 @@ class TheaterMetaController extends BaseController
      * @param Request  $request
      * @param Response $response
      * @param array    $args
-     * @return string|void
+     * @return Response
      */
-    public function executeOpeningHourUpdate($request, $response, $args)
+    public function executeOpeningHourUpdate(Request $request, Response $response, array $args): Response
     {
         /** @var Entity\Theater|null $theater */
-        $theater = $this->em->getRepository(Entity\Theater::class)->findOneById($args['id']);
+        $theater = $this->em
+            ->getRepository(Entity\Theater::class)
+            ->findOneById($args['id']);
 
         if (is_null($theater)) {
             throw new NotFoundException($request, $response);
@@ -94,13 +104,13 @@ class TheaterMetaController extends BaseController
         $form->setData($request->getParams());
 
         if (! $form->isValid()) {
-            $this->data->set('theater', $theater);
-            $this->data->set('form', $form);
-            $this->data->set('values', $request->getParams());
-            $this->data->set('errors', $form->getMessages());
-            $this->data->set('is_validated', true);
-
-            return 'openingHourEdit';
+            return $this->renderEdit($response, [
+                'theater' => $theater,
+                'form' => $form,
+                'values' => $request->getParams(),
+                'errors' => $form->getMessages(),
+                'is_validated' => true,
+            ]);
         }
 
         $cleanData    = $form->getData();

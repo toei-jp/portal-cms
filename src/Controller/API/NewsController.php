@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\API;
 
 use App\Controller\Traits\AzureBlobStorage;
@@ -7,9 +9,6 @@ use App\ORM\Entity;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-/**
- * News API controller
- */
 class NewsController extends BaseController
 {
     use AzureBlobStorage;
@@ -20,21 +19,20 @@ class NewsController extends BaseController
      * @param Request  $request
      * @param Response $response
      * @param array    $args
-     * @return string|void
+     * @return Response
      */
-    public function executeList($request, $response, $args)
+    public function executeList(Request $request, Response $response, array $args): Response
     {
         $headline = $request->getParam('headline');
         $data     = [];
 
         if (! empty($headline)) {
+            /** @var Entity\News[] $newsList */
             $newsList = $this->em
                 ->getRepository(Entity\News::class)
                 ->findForListApi($headline);
 
             foreach ($newsList as $news) {
-                /** @var Entity\News $news */
-
                 $data[] = [
                     'id'             => $news->getId(),
                     'headline'       => $news->getHeadline(),
@@ -47,6 +45,6 @@ class NewsController extends BaseController
             }
         }
 
-        $this->data->set('data', $data);
+        return $response->withJson(['data' => $data]);
     }
 }

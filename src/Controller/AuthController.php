@@ -1,26 +1,31 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\Form\LoginForm;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-/**
- * Auth controller class
- */
 class AuthController extends BaseController
 {
+    protected function renderLogin(Response $response, array $data = []): Response
+    {
+        return $this->render($response, 'auth/login.html.twig', $data);
+    }
+
     /**
      * login action
      *
      * @param Request  $request
      * @param Response $response
      * @param array    $args
-     * @return string|void
+     * @return Response
      */
-    public function executeLogin($request, $response, $args)
+    public function executeLogin(Request $request, Response $response, array $args): Response
     {
+        return $this->renderLogin($response);
     }
 
     /**
@@ -29,19 +34,19 @@ class AuthController extends BaseController
      * @param Request  $request
      * @param Response $response
      * @param array    $args
-     * @return string|void
+     * @return Response
      */
-    public function executeAuth($request, $response, $args)
+    public function executeAuth(Request $request, Response $response, array $args): Response
     {
         $form = new LoginForm();
         $form->setData($request->getParams());
 
         if (! $form->isValid()) {
-            $this->data->set('values', $request->getParams());
-            $this->data->set('errors', $form->getMessages());
-            $this->data->set('is_validated', true);
-
-            return 'login';
+            return $this->renderLogin($response, [
+                'values' => $request->getParams(),
+                'errors' => $form->getMessages(),
+                'is_validated' => true,
+            ]);
         }
 
         $cleanData = $form->getData();
@@ -49,11 +54,11 @@ class AuthController extends BaseController
         $result = $this->auth->login($cleanData['name'], $cleanData['password']);
 
         if (! $result) {
-            $this->data->set('values', $request->getParams());
-            $this->data->set('errors', ['global' => ['ユーザ名かパスワードが間違っています。']]);
-            $this->data->set('is_validated', true);
-
-            return 'login';
+            return $this->renderLogin($response, [
+                'values' => $request->getParams(),
+                'errors' => ['global' => ['ユーザ名かパスワードが間違っています。']],
+                'is_validated' => true,
+            ]);
         }
 
         $user = $this->auth->getUser();
@@ -72,9 +77,9 @@ class AuthController extends BaseController
      * @param Request  $request
      * @param Response $response
      * @param array    $args
-     * @return string|void
+     * @return void
      */
-    public function executeLogout($request, $response, $args)
+    public function executeLogout(Request $request, Response $response, array $args): void
     {
         $this->auth->logout();
 

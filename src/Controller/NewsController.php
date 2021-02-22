@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\Controller\Traits\ImageResize;
@@ -13,9 +15,6 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 use Throwable;
 
-/**
- * News controller
- */
 class NewsController extends BaseController
 {
     use ImageResize;
@@ -26,22 +25,23 @@ class NewsController extends BaseController
      * @param Request  $request
      * @param Response $response
      * @param array    $args
-     * @return string|void
+     * @return Response
      */
-    public function executeList($request, $response, $args)
+    public function executeList(Request $request, Response $response, array $args): Response
     {
         $page = (int) $request->getParam('p', 1);
 
         $form = new Form\NewsFindForm($this->em);
         $form->setData($request->getParams());
         $cleanValues = [];
+        $errors      = [];
 
         if ($form->isValid()) {
             $cleanValues = $form->getData();
             $values      = $cleanValues;
         } else {
             $values = $request->getParams();
-            $this->data->set('errors', $form->getMessages());
+            $errors = $form->getMessages();
         }
 
         $user = $this->auth->getUser();
@@ -51,14 +51,23 @@ class NewsController extends BaseController
             $cleanValues['user'] = $user->getId();
         }
 
-        $this->data->set('form', $form);
-        $this->data->set('values', $values);
-        $this->data->set('params', $cleanValues);
-
         /** @var DoctrinePaginator $pagenater */
-        $pagenater = $this->em->getRepository(Entity\News::class)->findForList($cleanValues, $page);
+        $pagenater = $this->em
+            ->getRepository(Entity\News::class)
+            ->findForList($cleanValues, $page);
 
-        $this->data->set('pagenater', $pagenater);
+        return $this->render($response, 'news/list.html.twig', [
+            'form' => $form,
+            'values' => $values,
+            'params' => $cleanValues,
+            'errors' => $errors,
+            'pagenater' => $pagenater,
+        ]);
+    }
+
+    protected function renderNew(Response $response, array $data = []): Response
+    {
+        return $this->render($response, 'news/new.html.twig', $data);
     }
 
     /**
@@ -67,12 +76,13 @@ class NewsController extends BaseController
      * @param Request  $request
      * @param Response $response
      * @param array    $args
-     * @return string|void
+     * @return Response
      */
-    public function executeNew($request, $response, $args)
+    public function executeNew(Request $request, Response $response, array $args): Response
     {
         $form = new Form\NewsForm(Form\NewsForm::TYPE_NEW);
-        $this->data->set('form', $form);
+
+        return $this->renderNew($response, ['form' => $form]);
     }
 
     /**
@@ -81,9 +91,9 @@ class NewsController extends BaseController
      * @param Request  $request
      * @param Response $response
      * @param array    $args
-     * @return string|void
+     * @return Response
      */
-    public function executeCreate($request, $response, $args)
+    public function executeCreate(Request $request, Response $response, array $args): Response
     {
         // Laminas_Formの都合で$request->getUploadedFiles()ではなく$_FILESを使用する
         $params = Form\BaseForm::buildData($request->getParams(), $_FILES);
@@ -92,12 +102,12 @@ class NewsController extends BaseController
         $form->setData($params);
 
         if (! $form->isValid()) {
-            $this->data->set('form', $form);
-            $this->data->set('values', $request->getParams());
-            $this->data->set('errors', $form->getMessages());
-            $this->data->set('is_validated', true);
-
-            return 'new';
+            return $this->renderNew($response, [
+                'form' => $form,
+                'values' => $request->getParams(),
+                'errors' => $form->getMessages(),
+                'is_validated' => true,
+            ]);
         }
 
         $cleanData = $form->getData();
@@ -162,24 +172,31 @@ class NewsController extends BaseController
         );
     }
 
+    protected function renderEdit(Response $response, array $data = []): Response
+    {
+        return $this->render($response, 'news/edit.html.twig', $data);
+    }
+
     /**
      * edit action
      *
      * @param Request  $request
      * @param Response $response
      * @param array    $args
-     * @return string|void
+     * @return Response
      */
-    public function executeEdit($request, $response, $args)
+    public function executeEdit(Request $request, Response $response, array $args): Response
     {
         /** @var Entity\News|null $news */
-        $news = $this->em->getRepository(Entity\News::class)->findOneById($args['id']);
+        $news = $this->em
+            ->getRepository(Entity\News::class)
+            ->findOneById($args['id']);
 
         if (is_null($news)) {
             throw new NotFoundException($request, $response);
         }
 
-        $this->data->set('news', $news);
+        $form = new Form\NewsForm(Form\NewsForm::TYPE_EDIT);
 
         $values = [
             'id'         => $news->getId(),
@@ -197,10 +214,11 @@ class NewsController extends BaseController
             $values['title_name'] = $news->getTitle()->getName();
         }
 
-        $this->data->set('values', $values);
-
-        $form = new Form\NewsForm(Form\NewsForm::TYPE_EDIT);
-        $this->data->set('form', $form);
+        return $this->renderEdit($response, [
+            'news' => $news,
+            'form' => $form,
+            'values' => $values,
+        ]);
     }
 
     /**
@@ -209,12 +227,14 @@ class NewsController extends BaseController
      * @param Request  $request
      * @param Response $response
      * @param array    $args
-     * @return string|void
+     * @return Response
      */
-    public function executeUpdate($request, $response, $args)
+    public function executeUpdate(Request $request, Response $response, array $args): Response
     {
         /** @var Entity\News|null $news */
-        $news = $this->em->getRepository(Entity\News::class)->findOneById($args['id']);
+        $news = $this->em
+            ->getRepository(Entity\News::class)
+            ->findOneById($args['id']);
 
         if (is_null($news)) {
             throw new NotFoundException($request, $response);
@@ -227,13 +247,13 @@ class NewsController extends BaseController
         $form->setData($params);
 
         if (! $form->isValid()) {
-            $this->data->set('news', $news);
-            $this->data->set('form', $form);
-            $this->data->set('values', $request->getParams());
-            $this->data->set('errors', $form->getMessages());
-            $this->data->set('is_validated', true);
-
-            return 'edit';
+            return $this->renderEdit($response, [
+                'news' => $news,
+                'form' => $form,
+                'values' => $request->getParams(),
+                'errors' => $form->getMessages(),
+                'is_validated' => true,
+            ]);
         }
 
         $cleanData = $form->getData();
@@ -311,12 +331,14 @@ class NewsController extends BaseController
      * @param Request  $request
      * @param Response $response
      * @param array    $args
-     * @return string|void
+     * @return void
      */
-    public function executeDelete($request, $response, $args)
+    public function executeDelete(Request $request, Response $response, array $args): void
     {
         /** @var Entity\News|null $news */
-        $news = $this->em->getRepository(Entity\News::class)->findOneById($args['id']);
+        $news = $this->em
+            ->getRepository(Entity\News::class)
+            ->findOneById($args['id']);
 
         if (is_null($news)) {
             throw new NotFoundException($request, $response);
@@ -334,13 +356,7 @@ class NewsController extends BaseController
         $this->redirect($this->router->pathFor('news_list'), 303);
     }
 
-    /**
-     * do delete
-     *
-     * @param Entity\News $news
-     * @return void
-     */
-    protected function doDelete(Entity\News $news)
+    protected function doDelete(Entity\News $news): void
     {
         $this->em->getConnection()->beginTransaction();
 
@@ -380,9 +396,9 @@ class NewsController extends BaseController
      * @param Request  $request
      * @param Response $response
      * @param array    $args
-     * @return string|void
+     * @return Response
      */
-    public function executePublication($request, $response, $args)
+    public function executePublication(Request $request, Response $response, array $args): Response
     {
         $user = $this->auth->getUser();
 
@@ -392,8 +408,6 @@ class NewsController extends BaseController
         if (! $user->isTheater()) {
             $pages = $this->em->getRepository(Entity\Page::class)->findActive();
         }
-
-        $this->data->set('pages', $pages);
 
         $theaterRepository = $this->em->getRepository(Entity\Theater::class);
 
@@ -405,7 +419,10 @@ class NewsController extends BaseController
             $theaters = $theaterRepository->findActive();
         }
 
-        $this->data->set('theaters', $theaters);
+        return $this->render($response, 'news/publication.html.twig', [
+            'pages' => $pages,
+            'theaters' => $theaters,
+        ]);
     }
 
     /**
@@ -414,9 +431,9 @@ class NewsController extends BaseController
      * @param Request  $request
      * @param Response $response
      * @param array    $args
-     * @return string|void
+     * @return void
      */
-    public function executePublicationUpdate($request, $response, $args)
+    public function executePublicationUpdate(Request $request, Response $response, array $args): void
     {
         $target = $args['target'];
 

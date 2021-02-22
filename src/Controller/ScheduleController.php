@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\Form;
@@ -9,9 +11,6 @@ use Slim\Exception\NotFoundException;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-/**
- * Schedule controller
- */
 class ScheduleController extends BaseController
 {
     /**
@@ -20,34 +19,44 @@ class ScheduleController extends BaseController
      * @param Request  $request
      * @param Response $response
      * @param array    $args
-     * @return string|void
+     * @return Response
      */
-    public function executeList($request, $response, $args)
+    public function executeList(Request $request, Response $response, array $args): Response
     {
         $page = (int) $request->getParam('p', 1);
-        $this->data->set('page', $page);
 
         $form = new Form\ScheduleFindForm();
-        $this->data->set('form', $form);
 
         $form->setData($request->getParams());
         $cleanValues = [];
+        $errors      = [];
 
         if ($form->isValid()) {
             $cleanValues = $form->getData();
             $values      = $cleanValues;
         } else {
             $values = $request->getParams();
-            $this->data->set('errors', $form->getMessages());
+            $errors = $form->getMessages();
         }
 
-        $this->data->set('values', $values);
-        $this->data->set('params', $cleanValues);
-
         /** @var DoctrinePaginator $pagenater */
-        $pagenater = $this->em->getRepository(Entity\Schedule::class)->findForList($cleanValues, $page);
+        $pagenater = $this->em
+            ->getRepository(Entity\Schedule::class)
+            ->findForList($cleanValues, $page);
 
-        $this->data->set('pagenater', $pagenater);
+        return $this->render($response, 'schedule/list.html.twig', [
+            'page' => $page,
+            'form' => $form,
+            'values' => $values,
+            'params' => $cleanValues,
+            'errors' => $errors,
+            'pagenater' => $pagenater,
+        ]);
+    }
+
+    protected function renderNew(Response $response, array $data = []): Response
+    {
+        return $this->render($response, 'schedule/new.html.twig', $data);
     }
 
     /**
@@ -56,11 +65,15 @@ class ScheduleController extends BaseController
      * @param Request  $request
      * @param Response $response
      * @param array    $args
-     * @return string|void
+     * @return Response
      */
-    public function executeNew($request, $response, $args)
+    public function executeNew(Request $request, Response $response, array $args): Response
     {
-        $this->data->set('form', new Form\ScheduleForm(Form\ScheduleForm::TYPE_NEW, $this->em));
+        $form = new Form\ScheduleForm(Form\ScheduleForm::TYPE_NEW, $this->em);
+
+        return $this->renderNew($response, [
+            'form' > $form,
+        ]);
     }
 
     /**
@@ -69,20 +82,20 @@ class ScheduleController extends BaseController
      * @param Request  $request
      * @param Response $response
      * @param array    $args
-     * @return string|void
+     * @return Response
      */
-    public function executeCreate($request, $response, $args)
+    public function executeCreate(Request $request, Response $response, array $args): Response
     {
         $form = new Form\ScheduleForm(Form\ScheduleForm::TYPE_NEW, $this->em);
         $form->setData($request->getParams());
 
         if (! $form->isValid()) {
-            $this->data->set('form', $form);
-            $this->data->set('values', $request->getParams());
-            $this->data->set('errors', $form->getMessages());
-            $this->data->set('is_validated', true);
-
-            return 'new';
+            return $this->renderNew($response, [
+                'form' => $form,
+                'values' => $request->getParams(),
+                'errors' => $form->getMessages(),
+                'is_validated' => true,
+            ]);
         }
 
         $cleanData = $form->getData();
@@ -135,24 +148,31 @@ class ScheduleController extends BaseController
         );
     }
 
+    protected function renderEdit(Response $response, array $data = []): Response
+    {
+        return $this->render($response, 'schedule/edit.html.twig', $data);
+    }
+
     /**
      * edit action
      *
      * @param Request  $request
      * @param Response $response
      * @param array    $args
-     * @return string|void
+     * @return Response
      */
-    public function executeEdit($request, $response, $args)
+    public function executeEdit(Request $request, Response $response, array $args): Response
     {
         /** @var Entity\Schedule|null $schedule */
-        $schedule = $this->em->getRepository(Entity\Schedule::class)->findOneById($args['id']);
+        $schedule = $this->em
+            ->getRepository(Entity\Schedule::class)
+            ->findOneById($args['id']);
 
         if (is_null($schedule)) {
             throw new NotFoundException($request, $response);
         }
 
-        $this->data->set('schedule', $schedule);
+        $form = new Form\ScheduleForm(Form\ScheduleForm::TYPE_EDIT, $this->em);
 
         $values = [
             'id' => $schedule->getId(),
@@ -180,9 +200,11 @@ class ScheduleController extends BaseController
             ];
         }
 
-        $this->data->set('values', $values);
-
-        $this->data->set('form', new Form\ScheduleForm(Form\ScheduleForm::TYPE_EDIT, $this->em));
+        return $this->renderEdit($response, [
+            'schedule' => $schedule,
+            'form' => $form,
+            'values' => $values,
+        ]);
     }
 
     /**
@@ -191,12 +213,14 @@ class ScheduleController extends BaseController
      * @param Request  $request
      * @param Response $response
      * @param array    $args
-     * @return string|void
+     * @return Response
      */
-    public function executeUpdate($request, $response, $args)
+    public function executeUpdate(Request $request, Response $response, array $args): Response
     {
         /** @var Entity\Schedule|null $schedule */
-        $schedule = $this->em->getRepository(Entity\Schedule::class)->findOneById($args['id']);
+        $schedule = $this->em
+            ->getRepository(Entity\Schedule::class)
+            ->findOneById($args['id']);
 
         if (is_null($schedule)) {
             throw new NotFoundException($request, $response);
@@ -206,13 +230,13 @@ class ScheduleController extends BaseController
         $form->setData($request->getParams());
 
         if (! $form->isValid()) {
-            $this->data->set('schedule', $schedule);
-            $this->data->set('form', $form);
-            $this->data->set('values', $request->getParams());
-            $this->data->set('errors', $form->getMessages());
-            $this->data->set('is_validated', true);
-
-            return 'edit';
+            return $this->renderEdit($response, [
+                'schedule' => $schedule,
+                'form' => $form,
+                'values' => $request->getParams(),
+                'errors' => $form->getMessages(),
+                'is_validated' => true,
+            ]);
         }
 
         $cleanData = $form->getData();
@@ -271,12 +295,14 @@ class ScheduleController extends BaseController
      * @param Request  $request
      * @param Response $response
      * @param array    $args
-     * @return string|void
+     * @return void
      */
-    public function executeDelete($request, $response, $args)
+    public function executeDelete(Request $request, Response $response, array $args): void
     {
         /** @var Entity\Schedule|null $schedule */
-        $schedule = $this->em->getRepository(Entity\Schedule::class)->findOneById($args['id']);
+        $schedule = $this->em
+            ->getRepository(Entity\Schedule::class)
+            ->findOneById($args['id']);
 
         if (is_null($schedule)) {
             throw new NotFoundException($request, $response);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\Exception\ForbiddenException;
@@ -9,9 +11,6 @@ use App\Pagination\DoctrinePaginator;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-/**
- * AdminUser controller class
- */
 class AdminUserController extends BaseController
 {
     protected function preExecute($request, $response): void
@@ -31,20 +30,29 @@ class AdminUserController extends BaseController
      * @param Request  $request
      * @param Response $response
      * @param array    $args
-     * @return string|void
+     * @return Response
      */
-    public function executeList($request, $response, $args)
+    public function executeList(Request $request, Response $response, array $args): Response
     {
         $page = (int) $request->getParam('p', 1);
-        $this->data->set('page', $page);
 
         $cleanValues = [];
-        $this->data->set('params', $cleanValues);
 
         /** @var DoctrinePaginator $pagenater */
-        $pagenater = $this->em->getRepository(Entity\AdminUser::class)->findForList($cleanValues, $page);
+        $pagenater = $this->em
+            ->getRepository(Entity\AdminUser::class)
+            ->findForList($cleanValues, $page);
 
-        $this->data->set('pagenater', $pagenater);
+        return $this->render($response, 'admin_user/list.html.twig', [
+            'page' => $page,
+            'params' => $cleanValues,
+            'pagenater' => $pagenater,
+        ]);
+    }
+
+    protected function renderNew(Response $response, array $data): Response
+    {
+        return $this->render($response, 'admin_user/new.html.twig', $data);
     }
 
     /**
@@ -53,12 +61,13 @@ class AdminUserController extends BaseController
      * @param Request  $request
      * @param Response $response
      * @param array    $args
-     * @return string|void
+     * @return Response
      */
-    public function executeNew($request, $response, $args)
+    public function executeNew(Request $request, Response $response, array $args): Response
     {
         $form = new Form\AdminUserForm($this->em);
-        $this->data->set('form', $form);
+
+        return $this->renderNew($response, ['form' => $form]);
     }
 
     /**
@@ -67,20 +76,20 @@ class AdminUserController extends BaseController
      * @param Request  $request
      * @param Response $response
      * @param array    $args
-     * @return string|void
+     * @return Response
      */
-    public function executeCreate($request, $response, $args)
+    public function executeCreate(Request $request, Response $response, array $args): Response
     {
         $form = new Form\AdminUserForm($this->em);
         $form->setData($request->getParams());
 
         if (! $form->isValid()) {
-            $this->data->set('form', $form);
-            $this->data->set('values', $request->getParams());
-            $this->data->set('errors', $form->getMessages());
-            $this->data->set('is_validated', true);
-
-            return 'new';
+            return $this->renderNew($response, [
+                'form' => $form,
+                'values' => $request->getParams(),
+                'errors' => $form->getMessages(),
+                'is_validated' => true,
+            ]);
         }
 
         $cleanData = $form->getData();

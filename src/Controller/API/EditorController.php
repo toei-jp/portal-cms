@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\API;
 
 use App\Controller\Traits\AzureBlobStorage;
@@ -9,9 +11,6 @@ use MicrosoftAzure\Storage\Blob\Models\CreateBlockBlobOptions;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-/**
- * Editor API controller
- */
 class EditorController extends BaseController
 {
     use AzureBlobStorage;
@@ -29,9 +28,9 @@ class EditorController extends BaseController
      * @param Request  $request
      * @param Response $response
      * @param array    $args
-     * @return string|void
+     * @return Response
      */
-    public function executeUpload($request, $response, $args)
+    public function executeUpload(Request $request, Response $response, array $args): Response
     {
         // Laminas_Formの都合で$request->getUploadedFiles()ではなく$_FILESを使用する
         $params = Form\BaseForm::buildData($request->getParams(), $_FILES);
@@ -47,9 +46,7 @@ class EditorController extends BaseController
                 $errors[] = ['title' => $message];
             }
 
-            $this->data->set('errors', $errors);
-
-            return;
+            return $response->withJson(['errors' => $errors]);
         }
 
         $cleanData = $form->getData();
@@ -77,6 +74,6 @@ class EditorController extends BaseController
             'url'  => $url,
         ];
 
-        $this->data->set('data', $data);
+        return $response->withJson(['data' => $data]);
     }
 }

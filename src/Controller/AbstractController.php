@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\Auth;
 use App\Exception\RedirectException;
-use App\Responder\AbstractResponder as Responder;
 use App\Session\SessionManager;
 use Doctrine\ORM\EntityManager;
 use LogicException;
@@ -12,7 +13,6 @@ use MicrosoftAzure\Storage\Blob\BlobRestProxy;
 use Monolog\Logger;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\UriInterface;
-use Slim\Collection;
 use Slim\Flash\Messages as FlashMessages;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -20,8 +20,6 @@ use Slim\Interfaces\RouterInterface;
 use Slim\Views\Twig;
 
 /**
- * Abstract controller
- *
  * @property-read Auth $auth
  * @property-read BlobRestProxy $bc
  * @property-read EntityManager $em
@@ -37,27 +35,12 @@ abstract class AbstractController
     /** @var ContainerInterface container */
     protected $container;
 
-    /**
-     * data
-     *
-     * Responderへ値を渡すために作成。
-     *
-     * @var Collection
-     */
-    protected $data;
-
     /** @var string */
     protected $actionName;
 
-    /**
-     * construct
-     *
-     * @param ContainerInterface $container
-     */
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
-        $this->data      = new Collection();
     }
 
     /**
@@ -77,15 +60,14 @@ abstract class AbstractController
         Request $request,
         Response $response,
         array $args
-    ) {
+    ): Response {
         try {
             $this->logger->debug('Run preExecute().');
             $this->preExecute($request, $response);
 
             $this->logger->debug('Run {method}().', ['method' => $actionMethod]);
 
-            /** @var string|null $method */
-            $method = $this->$actionMethod($request, $response, $args);
+            $response = $this->$actionMethod($request, $response, $args);
 
             $this->logger->debug('Run postExecute().');
             $this->postExecute($request, $response);
@@ -100,7 +82,7 @@ abstract class AbstractController
 
         $this->logger->debug('Run buildResponse().');
 
-        return $this->buildResponse($response, $method);
+        return $response;
     }
 
     /**
@@ -113,7 +95,7 @@ abstract class AbstractController
      * @param Response $response
      * @return void
      */
-    abstract protected function preExecute($request, $response): void;
+    abstract protected function preExecute(Request $request, Response $response): void;
 
     /**
      * pre execute
@@ -125,7 +107,7 @@ abstract class AbstractController
      * @param Response $response
      * @return void
      */
-    abstract protected function postExecute($request, $response): void;
+    abstract protected function postExecute(Request $request, Response $response): void;
 
     /**
      * redirect
@@ -143,26 +125,6 @@ abstract class AbstractController
     {
         throw new RedirectException($url, $status);
     }
-
-    /**
-     * build response
-     *
-     * @param Response    $response
-     * @param string|null $method   responder method
-     * @return Response
-     */
-    protected function buildResponse(Response $response, string $method = null): Response
-    {
-        $responder = $this->getResponder();
-
-        if (empty($method)) {
-            $method = $this->actionName;
-        }
-
-        return $responder->$method($response, $this->data);
-    }
-
-    abstract protected function getResponder(): Responder;
 
     /**
      * call

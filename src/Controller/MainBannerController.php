@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\Exception\ForbiddenException;
@@ -13,12 +15,9 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 use Throwable;
 
-/**
- * MainBanner controller
- */
 class MainBannerController extends BaseController
 {
-    protected function preExecute($request, $response): void
+    protected function preExecute(Request $request, Response $response): void
     {
         $user = $this->auth->getUser();
 
@@ -35,32 +34,42 @@ class MainBannerController extends BaseController
      * @param Request  $request
      * @param Response $response
      * @param array    $args
-     * @return string|void
+     * @return Response
      */
-    public function executeList($request, $response, $args)
+    public function executeList(Request $request, Response $response, array $args): Response
     {
         $page = (int) $request->getParam('p', 1);
-        $this->data->set('page', $page);
 
         $form = new Form\MainBannerFindForm();
         $form->setData($request->getParams());
         $cleanValues = [];
+        $errors      = [];
 
         if ($form->isValid()) {
             $cleanValues = $form->getData();
             $values      = $cleanValues;
         } else {
             $values = $request->getParams();
-            $this->data->set('errors', $form->getMessages());
+            $errors = $form->getMessages();
         }
 
-        $this->data->set('values', $values);
-        $this->data->set('params', $cleanValues);
-
         /** @var DoctrinePaginator $pagenater */
-        $pagenater = $this->em->getRepository(Entity\MainBanner::class)->findForList($cleanValues, $page);
+        $pagenater = $this->em
+            ->getRepository(Entity\MainBanner::class)
+            ->findForList($cleanValues, $page);
 
-        $this->data->set('pagenater', $pagenater);
+        return $this->render($response, 'main_banner/list.html.twig', [
+            'page' => $page,
+            'values' => $values,
+            'params' => $cleanValues,
+            'errors' => $errors,
+            'pagenater' => $pagenater,
+        ]);
+    }
+
+    protected function renderNew(Response $response, array $data = []): Response
+    {
+        return $this->render($response, 'main_banner/new.html.twig', $data);
     }
 
     /**
@@ -69,11 +78,13 @@ class MainBannerController extends BaseController
      * @param Request  $request
      * @param Response $response
      * @param array    $args
-     * @return string|void
+     * @return Response
      */
-    public function executeNew($request, $response, $args)
+    public function executeNew(Request $request, Response $response, array $args): Response
     {
-        $this->data->set('form', new Form\MainBannerForm(Form\MainBannerForm::TYPE_NEW));
+        $form = new Form\MainBannerForm(Form\MainBannerForm::TYPE_NEW);
+
+        return $this->renderNew($response, ['form' => $form]);
     }
 
     /**
@@ -82,9 +93,9 @@ class MainBannerController extends BaseController
      * @param Request  $request
      * @param Response $response
      * @param array    $args
-     * @return string|void
+     * @return Response
      */
-    public function executeCreate($request, $response, $args)
+    public function executeCreate(Request $request, Response $response, array $args): Response
     {
         // Laminas_Formの都合で$request->getUploadedFiles()ではなく$_FILESを使用する
         $params = Form\BaseForm::buildData($request->getParams(), $_FILES);
@@ -93,12 +104,12 @@ class MainBannerController extends BaseController
         $form->setData($params);
 
         if (! $form->isValid()) {
-            $this->data->set('form', $form);
-            $this->data->set('values', $request->getParams());
-            $this->data->set('errors', $form->getMessages());
-            $this->data->set('is_validated', true);
-
-            return 'new';
+            return $this->renderNew($response, [
+                'form' => $form,
+                'values' => $request->getParams(),
+                'errors' => $form->getMessages(),
+                'is_validated' => true,
+            ]);
         }
 
         $cleanData = $form->getData();
@@ -149,24 +160,31 @@ class MainBannerController extends BaseController
         );
     }
 
+    protected function renderEdit(Response $response, array $data = []): Response
+    {
+        return $this->render($response, 'main_banner/edit.html.twig', $data);
+    }
+
     /**
      * edit action
      *
      * @param Request  $request
      * @param Response $response
      * @param array    $args
-     * @return string|void
+     * @return Response
      */
-    public function executeEdit($request, $response, $args)
+    public function executeEdit(Request $request, Response $response, array $args): Response
     {
         /** @var Entity\MainBanner|null $mainBanner */
-        $mainBanner = $this->em->getRepository(Entity\MainBanner::class)->findOneById($args['id']);
+        $mainBanner = $this->em
+            ->getRepository(Entity\MainBanner::class)
+            ->findOneById($args['id']);
 
         if (is_null($mainBanner)) {
             throw new NotFoundException($request, $response);
         }
 
-        $this->data->set('mainBanner', $mainBanner);
+        $form = new Form\MainBannerForm(Form\MainBannerForm::TYPE_EDIT);
 
         $values = [
             'id'        => $mainBanner->getId(),
@@ -175,9 +193,11 @@ class MainBannerController extends BaseController
             'link_url'  => $mainBanner->getLinkUrl(),
         ];
 
-        $this->data->set('values', $values);
-
-        $this->data->set('form', new Form\MainBannerForm(Form\MainBannerForm::TYPE_EDIT));
+        return $this->renderEdit($response, [
+            'mainBanner' => $mainBanner,
+            'form' => $form,
+            'values' => $values,
+        ]);
     }
 
     /**
@@ -186,12 +206,14 @@ class MainBannerController extends BaseController
      * @param Request  $request
      * @param Response $response
      * @param array    $args
-     * @return string|void
+     * @return Response
      */
-    public function executeUpdate($request, $response, $args)
+    public function executeUpdate(Request $request, Response $response, array $args): Response
     {
         /** @var Entity\MainBanner|null $mainBanner */
-        $mainBanner = $this->em->getRepository(Entity\MainBanner::class)->findOneById($args['id']);
+        $mainBanner = $this->em
+            ->getRepository(Entity\MainBanner::class)
+            ->findOneById($args['id']);
 
         if (is_null($mainBanner)) {
             throw new NotFoundException($request, $response);
@@ -204,13 +226,13 @@ class MainBannerController extends BaseController
         $form->setData($params);
 
         if (! $form->isValid()) {
-            $this->data->set('mainBanner', $mainBanner);
-            $this->data->set('form', $form);
-            $this->data->set('values', $request->getParams());
-            $this->data->set('errors', $form->getMessages());
-            $this->data->set('is_validated', true);
-
-            return 'edit';
+            return $this->renderEdit($response, [
+                'mainBanner' => $mainBanner,
+                'form' => $form,
+                'values' => $request->getParams(),
+                'errors' => $form->getMessages(),
+                'is_validated' => true,
+            ]);
         }
 
         $cleanData = $form->getData();
@@ -274,12 +296,14 @@ class MainBannerController extends BaseController
      * @param Request  $request
      * @param Response $response
      * @param array    $args
-     * @return string|void
+     * @return void
      */
-    public function executeDelete($request, $response, $args)
+    public function executeDelete(Request $request, Response $response, array $args): void
     {
         /** @var Entity\MainBanner|null $mainBanner */
-        $mainBanner = $this->em->getRepository(Entity\MainBanner::class)->findOneById($args['id']);
+        $mainBanner = $this->em
+            ->getRepository(Entity\MainBanner::class)
+            ->findOneById($args['id']);
 
         if (is_null($mainBanner)) {
             throw new NotFoundException($request, $response);
@@ -297,13 +321,7 @@ class MainBannerController extends BaseController
         $this->redirect($this->router->pathFor('main_banner_list'), 303);
     }
 
-    /**
-     * do delete
-     *
-     * @param Entity\MainBanner $mainBanner
-     * @return void
-     */
-    protected function doDelete(Entity\MainBanner $mainBanner)
+    protected function doDelete(Entity\MainBanner $mainBanner): void
     {
         $this->em->getConnection()->beginTransaction();
 
@@ -343,17 +361,24 @@ class MainBannerController extends BaseController
      * @param Request  $request
      * @param Response $response
      * @param array    $args
-     * @return string|void
+     * @return Response
      */
-    public function executePublication($request, $response, $args)
+    public function executePublication(Request $request, Response $response, array $args): Response
     {
         /** @var Entity\Page[] $pages */
-        $pages = $this->em->getRepository(Entity\Page::class)->findActive();
-        $this->data->set('pages', $pages);
+        $pages = $this->em
+            ->getRepository(Entity\Page::class)
+            ->findActive();
 
         /** @var Entity\Theater[] $theaters */
-        $theaters = $this->em->getRepository(Entity\Theater::class)->findActive();
-        $this->data->set('theaters', $theaters);
+        $theaters = $this->em
+            ->getRepository(Entity\Theater::class)
+            ->findActive();
+
+        return $this->render($response, 'main_banner/publication.html.twig', [
+            'pages' => $pages,
+            'theaters' => $theaters,
+        ]);
     }
 
     /**
@@ -362,9 +387,9 @@ class MainBannerController extends BaseController
      * @param Request  $request
      * @param Response $response
      * @param array    $args
-     * @return string|void
+     * @return void
      */
-    public function executePublicationUpdate($request, $response, $args)
+    public function executePublicationUpdate(Request $request, Response $response, array $args): void
     {
         $target = $args['target'];
 
