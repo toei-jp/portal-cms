@@ -129,8 +129,8 @@ class ScheduleController extends BaseController
             $this->em->persist($format);
 
             $format->setSchedule($schedule);
-            $format->setSystem($formatData['system']);
-            $format->setVoice($formatData['voice']);
+            $format->setSystem((int) $formatData['system']);
+            $format->setVoice((int) $formatData['voice']);
         }
 
         $this->em->flush();
@@ -270,8 +270,8 @@ class ScheduleController extends BaseController
             $this->em->persist($format);
 
             $format->setSchedule($schedule);
-            $format->setSystem($formatData['system']);
-            $format->setVoice($formatData['voice']);
+            $format->setSystem((int) $formatData['system']);
+            $format->setVoice((int) $formatData['voice']);
         }
 
         $this->em->flush();
