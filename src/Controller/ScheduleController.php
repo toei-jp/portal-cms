@@ -71,9 +71,7 @@ class ScheduleController extends BaseController
     {
         $form = new Form\ScheduleForm(Form\ScheduleForm::TYPE_NEW, $this->em);
 
-        return $this->renderNew($response, [
-            'form' => $form,
-        ]);
+        return $this->renderNew($response, ['form' => $form]);
     }
 
     /**
