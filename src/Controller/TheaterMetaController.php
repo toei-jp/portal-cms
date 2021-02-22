@@ -52,7 +52,7 @@ class TheaterMetaController extends BaseController
         /** @var Entity\Theater|null $theater */
         $theater = $this->em
             ->getRepository(Entity\Theater::class)
-            ->findOneById($args['id']);
+            ->findOneById((int) $args['id']);
 
         if (is_null($theater)) {
             throw new NotFoundException($request, $response);
@@ -94,7 +94,7 @@ class TheaterMetaController extends BaseController
         /** @var Entity\Theater|null $theater */
         $theater = $this->em
             ->getRepository(Entity\Theater::class)
-            ->findOneById($args['id']);
+            ->findOneById((int) $args['id']);
 
         if (is_null($theater)) {
             throw new NotFoundException($request, $response);

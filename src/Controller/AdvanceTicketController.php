@@ -180,7 +180,7 @@ class AdvanceTicketController extends BaseController
         /** @var Entity\Theater $theater */
         $theater = $this->em
             ->getRepository(Entity\Theater::class)
-            ->findOneById($cleanData['theater']);
+            ->findOneById((int) $cleanData['theater']);
         $advanceSale->setTheater($theater);
 
         /** @var Entity\Title $title */
@@ -202,10 +202,10 @@ class AdvanceTicketController extends BaseController
             $advanceTicket->setReleaseDt($ticket['release_dt']);
             $advanceTicket->setReleaseDtText($ticket['release_dt_text']);
             $advanceTicket->setIsSalesEnd($ticket['is_sales_end'] === '1');
-            $advanceTicket->setType($ticket['type']);
+            $advanceTicket->setType((int) $ticket['type']);
             $advanceTicket->setPriceText($ticket['price_text']);
             $advanceTicket->setSpecialGift($ticket['special_gift']);
-            $advanceTicket->setSpecialGiftStock($ticket['special_gift_stock']);
+            $advanceTicket->setSpecialGiftStock((int) $ticket['special_gift_stock'] ?: null);
 
             $image = $ticket['special_gift_image'];
             $file  = null;
@@ -270,7 +270,7 @@ class AdvanceTicketController extends BaseController
      */
     public function executeEdit(Request $request, Response $response, array $args): Response
     {
-        $advanceSale = $this->getEntity($args['id']);
+        $advanceSale = $this->getEntity((int) $args['id']);
 
         if (is_null($advanceSale)) {
             throw new NotFoundException($request, $response);
@@ -343,7 +343,7 @@ class AdvanceTicketController extends BaseController
      */
     public function executeUpdate(Request $request, Response $response, array $args): Response
     {
-        $advanceSale = $this->getEntity($args['id']);
+        $advanceSale = $this->getEntity((int) $args['id']);
 
         if (is_null($advanceSale)) {
             throw new NotFoundException($request, $response);
@@ -395,7 +395,7 @@ class AdvanceTicketController extends BaseController
         /** @var Entity\Theater $theater */
         $theater = $this->em
             ->getRepository(Entity\Theater::class)
-            ->findOneById($cleanData['theater']);
+            ->findOneById((int) $cleanData['theater']);
         $advanceSale->setTheater($theater);
 
         /** @var Entity\Title $title */
@@ -460,10 +460,10 @@ class AdvanceTicketController extends BaseController
             $advanceTicket->setReleaseDt($ticket['release_dt']);
             $advanceTicket->setReleaseDtText($ticket['release_dt_text']);
             $advanceTicket->setIsSalesEnd($ticket['is_sales_end'] === '1');
-            $advanceTicket->setType($ticket['type']);
+            $advanceTicket->setType((int) $ticket['type']);
             $advanceTicket->setPriceText($ticket['price_text']);
             $advanceTicket->setSpecialGift($ticket['special_gift']);
-            $advanceTicket->setSpecialGiftStock($ticket['special_gift_stock']);
+            $advanceTicket->setSpecialGiftStock((int) $ticket['special_gift_stock'] ?: null);
 
             $image         = $ticket['special_gift_image'];
             $isDeleteImage = ($ticket['delete_special_gift_image'] === '1') || $image['name'];
