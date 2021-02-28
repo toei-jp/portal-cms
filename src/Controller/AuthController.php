@@ -10,6 +10,9 @@ use Slim\Http\Response;
 
 class AuthController extends BaseController
 {
+    /**
+     * @param array<string, mixed> $data
+     */
     protected function renderLogin(Response $response, array $data = []): Response
     {
         return $this->render($response, 'auth/login.html.twig', $data);
@@ -18,10 +21,7 @@ class AuthController extends BaseController
     /**
      * login action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return Response
+     * @param array<string, mixed> $args
      */
     public function executeLogin(Request $request, Response $response, array $args): Response
     {
@@ -31,10 +31,7 @@ class AuthController extends BaseController
     /**
      * auth action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return Response
+     * @param array<string, mixed> $args
      */
     public function executeAuth(Request $request, Response $response, array $args): Response
     {
@@ -74,10 +71,7 @@ class AuthController extends BaseController
     /**
      * logout action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return void
+     * @param array<string, mixed> $args
      */
     public function executeLogout(Request $request, Response $response, array $args): void
     {

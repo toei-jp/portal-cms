@@ -31,10 +31,7 @@ class CampaignController extends BaseController
     /**
      * list action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return Response
+     * @param array<string, mixed> $args
      */
     public function executeList(Request $request, Response $response, array $args): Response
     {
@@ -68,6 +65,9 @@ class CampaignController extends BaseController
         ]);
     }
 
+    /**
+     * @param array<string, mixed> $data
+     */
     protected function renderNew(Response $response, array $data = []): Response
     {
         return $this->render($response, 'campaign/new.html.twig', $data);
@@ -76,10 +76,7 @@ class CampaignController extends BaseController
     /**
      * new action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return Response
+     * @param array<string, mixed> $args
      */
     public function executeNew(Request $request, Response $response, array $args): Response
     {
@@ -89,10 +86,7 @@ class CampaignController extends BaseController
     /**
      * create action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return Response
+     * @param array<string, mixed> $args
      */
     public function executeCreate(Request $request, Response $response, array $args): Response
     {
@@ -140,7 +134,9 @@ class CampaignController extends BaseController
         $title = null;
 
         if ($cleanData['title_id']) {
-            $title =  $this->em->getRepository(Entity\Title::class)->findOneById($cleanData['title_id']);
+            $title =  $this->em
+                ->getRepository(Entity\Title::class)
+                ->findOneById((int) $cleanData['title_id']);
         }
 
         $campaign = new Entity\Campaign();
@@ -167,6 +163,9 @@ class CampaignController extends BaseController
         );
     }
 
+    /**
+     * @param array<string, mixed> $data
+     */
     protected function renderEdit(Response $response, array $data = []): Response
     {
         return $this->render($response, 'campaign/edit.html.twig', $data);
@@ -175,17 +174,14 @@ class CampaignController extends BaseController
     /**
      * edit action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return Response
+     * @param array<string, mixed> $args
      */
     public function executeEdit(Request $request, Response $response, array $args): Response
     {
         /** @var Entity\Campaign|null $campaign */
         $campaign = $this->em
             ->getRepository(Entity\Campaign::class)
-            ->findOneById($args['id']);
+            ->findOneById((int) $args['id']);
 
         if (is_null($campaign)) {
             throw new NotFoundException($request, $response);
@@ -215,17 +211,14 @@ class CampaignController extends BaseController
     /**
      * update action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return Response
+     * @param array<string, mixed> $args
      */
     public function executeUpdate(Request $request, Response $response, array $args): Response
     {
         /** @var Entity\Campaign|null $campaign */
         $campaign = $this->em
             ->getRepository(Entity\Campaign::class)
-            ->findOneById($args['id']);
+            ->findOneById((int) $args['id']);
 
         if (is_null($campaign)) {
             throw new NotFoundException($request, $response);
@@ -287,7 +280,9 @@ class CampaignController extends BaseController
         $title = null;
 
         if ($cleanData['title_id']) {
-            $title =  $this->em->getRepository(Entity\Title::class)->findOneById($cleanData['title_id']);
+            $title =  $this->em
+                ->getRepository(Entity\Title::class)
+                ->findOneById((int) $cleanData['title_id']);
         }
 
         $campaign->setTitle($title);
@@ -315,17 +310,14 @@ class CampaignController extends BaseController
     /**
      * delete action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return void
+     * @param array<string, mixed> $args
      */
     public function executeDelete(Request $request, Response $response, array $args): void
     {
         /** @var Entity\Campaign|null $campaign */
         $campaign = $this->em
             ->getRepository(Entity\Campaign::class)
-            ->findOneById($args['id']);
+            ->findOneById((int) $args['id']);
 
         if (is_null($campaign)) {
             throw new NotFoundException($request, $response);
@@ -343,13 +335,7 @@ class CampaignController extends BaseController
         $this->redirect($this->router->pathFor('campaign_list'), 303);
     }
 
-    /**
-     * do delete
-     *
-     * @param Entity\Campaign $campaign
-     * @return void
-     */
-    protected function doDelete(Entity\Campaign $campaign)
+    protected function doDelete(Entity\Campaign $campaign): void
     {
         $this->em->getConnection()->beginTransaction();
 
@@ -386,10 +372,7 @@ class CampaignController extends BaseController
     /**
      * publication action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return Response
+     * @param array<string, mixed> $args
      */
     public function executePublication(Request $request, Response $response, array $args): Response
     {
@@ -408,10 +391,7 @@ class CampaignController extends BaseController
     /**
      * publication update action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return void
+     * @param array<string, mixed> $args
      */
     public function executePublicationUpdate(Request $request, Response $response, array $args): void
     {

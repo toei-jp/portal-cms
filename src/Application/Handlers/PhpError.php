@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Application\Handlers;
 
 use Exception;
@@ -7,20 +9,11 @@ use Monolog\Logger;
 use Slim\Handlers\PhpError as BaseHandler;
 use Throwable;
 
-/**
- * PHP Error handler
- */
 class PhpError extends BaseHandler
 {
     /** @var Logger */
     protected $logger;
 
-    /**
-     * construct
-     *
-     * @param Logger $logger
-     * @param bool   $displayErrorDetails
-     */
     public function __construct(Logger $logger, bool $displayErrorDetails = false)
     {
         $this->logger = $logger;
@@ -29,25 +22,16 @@ class PhpError extends BaseHandler
     }
 
     /**
-     *  Write to the error log
-     *
      * @see Slim\Handlers\AbstractError
      *
      * @param Exception|Throwable $throwable
-     * @return void
      */
-    protected function writeToErrorLog($throwable)
+    protected function writeToErrorLog($throwable): void
     {
         $this->log($throwable);
     }
 
-    /**
-     * Undocumented function
-     *
-     * @param Throwable $error
-     * @return void
-     */
-    protected function log(Throwable $error)
+    protected function log(Throwable $error): void
     {
         $this->logger->error($error->getMessage(), [
             'type' => get_class($error),
@@ -58,6 +42,9 @@ class PhpError extends BaseHandler
         ]);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function renderHtmlErrorMessage(Throwable $error)
     {
         if (APP_DEBUG) {

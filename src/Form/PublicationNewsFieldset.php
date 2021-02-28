@@ -1,13 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Form;
 
 use Laminas\Form\Fieldset;
 use Laminas\InputFilter\InputFilterProviderInterface;
 
-/**
- * PublicationNews fieldset class
- */
 class PublicationNewsFieldset extends Fieldset implements InputFilterProviderInterface
 {
     public function __construct()
@@ -17,12 +16,7 @@ class PublicationNewsFieldset extends Fieldset implements InputFilterProviderInt
         $this->setup();
     }
 
-    /**
-     * setup
-     *
-     * @return void
-     */
-    protected function setup()
+    protected function setup(): void
     {
         $this->add([
             'name' => 'news_id',
@@ -36,11 +30,9 @@ class PublicationNewsFieldset extends Fieldset implements InputFilterProviderInt
     }
 
     /**
-     * return inpu filter specification
-     *
-     * @return array
+     * @return array<string, mixed>
      */
-    public function getInputFilterSpecification()
+    public function getInputFilterSpecification(): array
     {
         return [
             'news_id' => ['required' => true],

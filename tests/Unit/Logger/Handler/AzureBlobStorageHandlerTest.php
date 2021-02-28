@@ -15,37 +15,25 @@ use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use ReflectionClass;
 
-/**
- * AzureBlobStorage handler test
- */
 final class AzureBlobStorageHandlerTest extends TestCase
 {
     use MockeryPHPUnitIntegration;
 
     /**
-     * Create target mock
-     *
-     * @return MockInterface|LegacyMockInterface|Handler
+     * @return MockInterface&LegacyMockInterface&Handler
      */
     protected function createTargetMock()
     {
         return Mockery::mock(Handler::class);
     }
 
-    /**
-     * Create target reflection
-     *
-     * @return ReflectionClass
-     */
-    protected function createTargetReflection()
+    protected function createTargetReflection(): ReflectionClass
     {
         return new ReflectionClass(Handler::class);
     }
 
     /**
-     * Create BlobRestProxy mock
-     *
-     * @return MockInterface|LegacyMockInterface|BlobRestProxy
+     * @return MockInterface&LegacyMockInterface&BlobRestProxy
      */
     protected function createBlobRestProxyMock()
     {
@@ -56,10 +44,8 @@ final class AzureBlobStorageHandlerTest extends TestCase
      * test createBlob (Blob Existing)
      *
      * @test
-     *
-     * @return void
      */
-    public function testCreateBlobExisting()
+    public function testCreateBlobExisting(): void
     {
         $container = 'example';
         $blob      = 'test.log';
@@ -100,10 +86,8 @@ final class AzureBlobStorageHandlerTest extends TestCase
      * test createBlob (Blob Not Found)
      *
      * @test
-     *
-     * @return void
      */
-    public function testCreateBlobNotFound()
+    public function testCreateBlobNotFound(): void
     {
         $container = 'example';
         $blob      = 'test.log';
@@ -147,10 +131,8 @@ final class AzureBlobStorageHandlerTest extends TestCase
      * test createBlob (Service Error)
      *
      * @test
-     *
-     * @return void
      */
-    public function testCreateBlobServiceError()
+    public function testCreateBlobServiceError(): void
     {
         $container = 'example';
         $blob      = 'test.log';
@@ -192,13 +174,7 @@ final class AzureBlobStorageHandlerTest extends TestCase
         $createBlobMethodRef->invoke($targetMock);
     }
 
-    /**
-     * Create ServiceException
-     *
-     * @param integer $status
-     * @return ServiceException
-     */
-    protected function createServiceException(int $status)
+    protected function createServiceException(int $status): ServiceException
     {
         $responceMock = $this->createResponceMock();
         $responceMock
@@ -215,9 +191,7 @@ final class AzureBlobStorageHandlerTest extends TestCase
     }
 
     /**
-     * Create Responce mock
-     *
-     * @return MockInterface|LegacyMockInterface|ResponseInterface
+     * @return MockInterface&LegacyMockInterface&ResponseInterface
      */
     protected function createResponceMock()
     {
@@ -225,13 +199,9 @@ final class AzureBlobStorageHandlerTest extends TestCase
     }
 
     /**
-     * test write
-     *
      * @test
-     *
-     * @return void
      */
-    public function testWrite()
+    public function testWrite(): void
     {
         $isBlobCreated = false;
         $record        = ['formatted' => 'test'];
@@ -270,10 +240,8 @@ final class AzureBlobStorageHandlerTest extends TestCase
      * test write (Is Blob Created)
      *
      * @test
-     *
-     * @return void
      */
-    public function testWriteIsBlobCreated()
+    public function testWriteIsBlobCreated(): void
     {
         $isBlobCreated = true;
         $record        = ['formatted' => 'test'];

@@ -1,17 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Form;
 
 use Laminas\InputFilter\InputFilter;
 
-/**
- * MainBanner find form class
- */
 class MainBannerFindForm extends BaseForm
 {
-    /**
-     * construct
-     */
     public function __construct()
     {
         parent::__construct();
@@ -19,12 +15,7 @@ class MainBannerFindForm extends BaseForm
         $this->setup();
     }
 
-    /**
-     * setup
-     *
-     * @return void
-     */
-    protected function setup()
+    protected function setup(): void
     {
         $this->add([
             'name' => 'name',

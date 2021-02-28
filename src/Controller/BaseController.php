@@ -23,9 +23,7 @@ abstract class BaseController extends AbstractController
     }
 
     /**
-     * @param Response $response
-     * @param string   $template
-     * @param array    $data
+     * @param array<string, mixed> $data
      */
     protected function render(Response $response, string $template, array $data = []): Response
     {

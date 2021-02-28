@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\ORM\Entity;
 
 use DateTime;
@@ -15,41 +17,22 @@ class TheaterOpeningHour extends AbstractEntity
     public const TYPE_DATE = 1;
     public const TYPE_TERM = 2;
 
-    /**
-     * type
-     *
-     * @var int
-     */
+    /** @var int */
     protected $type;
 
-    /**
-     * from_date
-     *
-     * @var DateTime
-     */
+    /** @var DateTime */
     protected $fromDate;
 
-    /**
-     * to_date
-     *
-     * @var DateTime|null
-     */
+    /** @var DateTime|null */
     protected $toDate;
 
-    /**
-     * time
-     *
-     * @var DateTime
-     */
+    /** @var DateTime */
     protected $time;
 
     /**
-     * create
-     *
-     * @param array $array
-     * @return self
+     * @param array<string, mixed> $array
      */
-    public static function create(array $array)
+    public static function create(array $array): self
     {
         $entity = new self();
         $entity->setType((int) $array['type']);
@@ -60,51 +43,29 @@ class TheaterOpeningHour extends AbstractEntity
         return $entity;
     }
 
-    /**
-     * construct
-     */
     public function __construct()
     {
     }
 
-    /**
-     * get type
-     *
-     * @return int
-     */
-    public function getType()
+    public function getType(): int
     {
         return $this->type;
     }
 
-    /**
-     * set type
-     *
-     * @param int $type
-     * @return void
-     */
-    public function setType(int $type)
+    public function setType(int $type): void
     {
         $this->type = $type;
     }
 
-    /**
-     * get from_date
-     *
-     * @return DateTime
-     */
-    public function getFromDate()
+    public function getFromDate(): DateTime
     {
         return $this->fromDate;
     }
 
     /**
-     * set from_date
-     *
      * @param DateTime|string $fromDate
-     * @return void
      */
-    public function setFromDate($fromDate)
+    public function setFromDate($fromDate): void
     {
         if ($fromDate instanceof DateTime) {
             $this->fromDate = $fromDate;
@@ -113,23 +74,15 @@ class TheaterOpeningHour extends AbstractEntity
         }
     }
 
-    /**
-     * get to_date
-     *
-     * @return DateTime|null
-     */
-    public function getToDate()
+    public function getToDate(): ?DateTime
     {
         return $this->toDate;
     }
 
     /**
-     * set to_date
-     *
      * @param DateTime|string|null $toDate
-     * @return void
      */
-    public function setToDate($toDate)
+    public function setToDate($toDate): void
     {
         if (is_null($toDate) || $toDate instanceof DateTime) {
             $this->toDate = $toDate;
@@ -138,23 +91,15 @@ class TheaterOpeningHour extends AbstractEntity
         }
     }
 
-    /**
-     * get time
-     *
-     * @return DateTime
-     */
-    public function getTime()
+    public function getTime(): DateTime
     {
         return $this->time;
     }
 
     /**
-     * set time
-     *
      * @param DateTime|string $time
-     * @return void
      */
-    public function setTime($time)
+    public function setTime($time): void
     {
         if ($time instanceof DateTime) {
             $this->time = $time;
@@ -164,11 +109,9 @@ class TheaterOpeningHour extends AbstractEntity
     }
 
     /**
-     * to array
-     *
-     * @return array
+     * @return array<string, mixed>
      */
-    public function toArray()
+    public function toArray(): array
     {
         $array = [];
 

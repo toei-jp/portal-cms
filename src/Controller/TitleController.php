@@ -33,10 +33,7 @@ class TitleController extends BaseController
     /**
      * list action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return Response
+     * @param array<string, mixed> $args
      */
     public function executeList(Request $request, Response $response, array $args): Response
     {
@@ -72,16 +69,16 @@ class TitleController extends BaseController
     /**
      * import action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return Response
+     * @param array<string, mixed> $args
      */
     public function executeImport(Request $request, Response $response, array $args): Response
     {
         return $this->render($response, 'title/import.html.twig');
     }
 
+    /**
+     * @param array<string, mixed> $data
+     */
     protected function renderNew(Response $response, array $data = []): Response
     {
         return $this->render($response, 'title/new.html.twig', $data);
@@ -90,10 +87,7 @@ class TitleController extends BaseController
     /**
      * new action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return Response
+     * @param array<string, mixed> $args
      */
     public function executeNew(Request $request, Response $response, array $args): Response
     {
@@ -105,10 +99,7 @@ class TitleController extends BaseController
     /**
      * create action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return Response
+     * @param array<string, mixed> $args
      */
     public function executeCreate(Request $request, Response $response, array $args): Response
     {
@@ -190,6 +181,9 @@ class TitleController extends BaseController
         );
     }
 
+    /**
+     * @param array<string, mixed> $data
+     */
     protected function renderEdit(Response $response, array $data = []): Response
     {
         return $this->render($response, 'title/edit.html.twig', $data);
@@ -198,17 +192,14 @@ class TitleController extends BaseController
     /**
      * edit action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return Response
+     * @param array<string, mixed> $args
      */
     public function executeEdit(Request $request, Response $response, array $args): Response
     {
         /** @var Entity\Title|null $title */
         $title = $this->em
             ->getRepository(Entity\Title::class)
-            ->findOneById($args['id']);
+            ->findOneById((int) $args['id']);
 
         if (is_null($title)) {
             throw new NotFoundException($request, $response);
@@ -251,17 +242,14 @@ class TitleController extends BaseController
     /**
      * update action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return Response
+     * @param array<string, mixed> $args
      */
     public function executeUpdate(Request $request, Response $response, array $args): Response
     {
         /** @var Entity\Title|null $title */
         $title = $this->em
             ->getRepository(Entity\Title::class)
-            ->findOneById($args['id']);
+            ->findOneById((int) $args['id']);
 
         if (is_null($title)) {
             throw new NotFoundException($request, $response);
@@ -360,17 +348,14 @@ class TitleController extends BaseController
     /**
      * delete action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return void
+     * @param array<string, mixed> $args
      */
     public function executeDelete(Request $request, Response $response, array $args): void
     {
         /** @var Entity\Title|null $title */
         $title = $this->em
             ->getRepository(Entity\Title::class)
-            ->findOneById($args['id']);
+            ->findOneById((int) $args['id']);
 
         if (is_null($title)) {
             throw new NotFoundException($request, $response);

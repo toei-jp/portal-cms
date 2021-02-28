@@ -31,10 +31,7 @@ class MainBannerController extends BaseController
     /**
      * list action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return Response
+     * @param array<string, mixed> $args
      */
     public function executeList(Request $request, Response $response, array $args): Response
     {
@@ -67,6 +64,9 @@ class MainBannerController extends BaseController
         ]);
     }
 
+    /**
+     * @param array<string, mixed> $data
+     */
     protected function renderNew(Response $response, array $data = []): Response
     {
         return $this->render($response, 'main_banner/new.html.twig', $data);
@@ -75,10 +75,7 @@ class MainBannerController extends BaseController
     /**
      * new action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return Response
+     * @param array<string, mixed> $args
      */
     public function executeNew(Request $request, Response $response, array $args): Response
     {
@@ -90,10 +87,7 @@ class MainBannerController extends BaseController
     /**
      * create action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return Response
+     * @param array<string, mixed> $args
      */
     public function executeCreate(Request $request, Response $response, array $args): Response
     {
@@ -160,6 +154,9 @@ class MainBannerController extends BaseController
         );
     }
 
+    /**
+     * @param array<string, mixed> $data
+     */
     protected function renderEdit(Response $response, array $data = []): Response
     {
         return $this->render($response, 'main_banner/edit.html.twig', $data);
@@ -168,17 +165,14 @@ class MainBannerController extends BaseController
     /**
      * edit action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return Response
+     * @param array<string, mixed> $args
      */
     public function executeEdit(Request $request, Response $response, array $args): Response
     {
         /** @var Entity\MainBanner|null $mainBanner */
         $mainBanner = $this->em
             ->getRepository(Entity\MainBanner::class)
-            ->findOneById($args['id']);
+            ->findOneById((int) $args['id']);
 
         if (is_null($mainBanner)) {
             throw new NotFoundException($request, $response);
@@ -203,17 +197,14 @@ class MainBannerController extends BaseController
     /**
      * update action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return Response
+     * @param array<string, mixed> $args
      */
     public function executeUpdate(Request $request, Response $response, array $args): Response
     {
         /** @var Entity\MainBanner|null $mainBanner */
         $mainBanner = $this->em
             ->getRepository(Entity\MainBanner::class)
-            ->findOneById($args['id']);
+            ->findOneById((int) $args['id']);
 
         if (is_null($mainBanner)) {
             throw new NotFoundException($request, $response);
@@ -293,17 +284,14 @@ class MainBannerController extends BaseController
     /**
      * delete action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return void
+     * @param array<string, mixed> $args
      */
     public function executeDelete(Request $request, Response $response, array $args): void
     {
         /** @var Entity\MainBanner|null $mainBanner */
         $mainBanner = $this->em
             ->getRepository(Entity\MainBanner::class)
-            ->findOneById($args['id']);
+            ->findOneById((int) $args['id']);
 
         if (is_null($mainBanner)) {
             throw new NotFoundException($request, $response);
@@ -358,10 +346,7 @@ class MainBannerController extends BaseController
     /**
      * publication action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return Response
+     * @param array<string, mixed> $args
      */
     public function executePublication(Request $request, Response $response, array $args): Response
     {
@@ -384,10 +369,7 @@ class MainBannerController extends BaseController
     /**
      * publication update action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return void
+     * @param array<string, mixed> $args
      */
     public function executePublicationUpdate(Request $request, Response $response, array $args): void
     {

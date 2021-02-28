@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * @link https://github.com/phpstan/phpstan-doctrine
  */

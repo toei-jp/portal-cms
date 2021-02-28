@@ -1,25 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Form;
 
 use App\ORM\Entity;
 use Doctrine\ORM\EntityManager;
 use Laminas\InputFilter\InputFilter;
 
-/**
- * AdvanceSale form class
- */
 class AdvanceSaleForm extends AbstractAdvanceSaleForm
 {
-    /**@var array */
-    protected $theaterChoices = [];
-
-    /**
-     * construct
-     *
-     * @param int           $type
-     * @param EntityManager $em
-     */
     public function __construct(int $type, EntityManager $em)
     {
         $this->type           = $type;
@@ -31,12 +21,7 @@ class AdvanceSaleForm extends AbstractAdvanceSaleForm
         $this->setup();
     }
 
-    /**
-     * setup
-     *
-     * @return void
-     */
-    protected function setup()
+    protected function setup(): void
     {
         if ($this->type === self::TYPE_EDIT) {
             $this->add([
@@ -51,12 +36,12 @@ class AdvanceSaleForm extends AbstractAdvanceSaleForm
             ]);
         }
 
+        /** @var Entity\Theater[] $theaters */
         $theaters = $this->em
             ->getRepository(Entity\Theater::class)
             ->findActive();
 
         foreach ($theaters as $theater) {
-            /** @var Entity\Theater $theater */
             $this->theaterChoices[$theater->getId()] = $theater->getNameJa();
         }
 
@@ -159,7 +144,7 @@ class AdvanceSaleForm extends AbstractAdvanceSaleForm
         $this->setInputFilter($inputFilter);
     }
 
-    public function isValid()
+    public function isValid(): bool
     {
         $this->preValidator($this->data);
 
@@ -167,12 +152,9 @@ class AdvanceSaleForm extends AbstractAdvanceSaleForm
     }
 
     /**
-     * pre validator
-     *
-     * @param array $data
-     * @return void
+     * @param array<string, mixed> $data
      */
-    protected function preValidator(array $data)
+    protected function preValidator(array $data): void
     {
         if ($data['not_exist_publishing_expected_date'] === '1') {
             $this->getInputFilter()->get('publishing_expected_date')->setRequired(false);
@@ -180,11 +162,9 @@ class AdvanceSaleForm extends AbstractAdvanceSaleForm
     }
 
     /**
-     * return theater choices
-     *
-     * @return array
+     * @return array<int, string>
      */
-    public function getTheaterChoices()
+    public function getTheaterChoices(): array
     {
         return $this->theaterChoices;
     }

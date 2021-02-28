@@ -1,21 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\ORM\Repository;
 
 use App\ORM\Entity\Theater;
 use Doctrine\ORM\EntityRepository;
 
-/**
- * Theater repository class
- */
 class TheaterRepository extends EntityRepository
 {
     /**
-     * find
-     *
      * @return Theater[]
      */
-    public function findActive()
+    public function findActive(): array
     {
         $qb = $this->createQueryBuilder('t');
         $qb
@@ -26,12 +23,10 @@ class TheaterRepository extends EntityRepository
     }
 
     /**
-     * find by ids
-     *
-     * @param array $ids
+     * @param int[] $ids
      * @return Theater[]
      */
-    public function findByIds(array $ids)
+    public function findByIds(array $ids): array
     {
         $qb = $this->createQueryBuilder('t');
         $qb
@@ -43,13 +38,7 @@ class TheaterRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    /**
-     * find one by id
-     *
-     * @param int $id
-     * @return Theater|null
-     */
-    public function findOneById(int $id)
+    public function findOneById(int $id): ?Theater
     {
         $qb = $this->createQueryBuilder('t');
         $qb

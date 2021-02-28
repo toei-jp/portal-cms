@@ -13,7 +13,7 @@ use Slim\Http\Response;
 
 class AdminUserController extends BaseController
 {
-    protected function preExecute($request, $response): void
+    protected function preExecute(Request $request, Response $response): void
     {
         $user = $this->auth->getUser();
 
@@ -27,10 +27,7 @@ class AdminUserController extends BaseController
     /**
      * list action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return Response
+     * @param array<string, mixed> $args
      */
     public function executeList(Request $request, Response $response, array $args): Response
     {
@@ -50,6 +47,9 @@ class AdminUserController extends BaseController
         ]);
     }
 
+    /**
+     * @param array<string, mixed> $data
+     */
     protected function renderNew(Response $response, array $data): Response
     {
         return $this->render($response, 'admin_user/new.html.twig', $data);
@@ -58,10 +58,7 @@ class AdminUserController extends BaseController
     /**
      * new action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return Response
+     * @param array<string, mixed> $args
      */
     public function executeNew(Request $request, Response $response, array $args): Response
     {
@@ -73,10 +70,7 @@ class AdminUserController extends BaseController
     /**
      * create action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return Response
+     * @param array<string, mixed> $args
      */
     public function executeCreate(Request $request, Response $response, array $args): Response
     {
@@ -105,7 +99,7 @@ class AdminUserController extends BaseController
         if ($adminUser->isTheater()) {
             $theater = $this->em
                 ->getRepository(Entity\Theater::class)
-                ->findOneById($cleanData['theater']);
+                ->findOneById((int) $cleanData['theater']);
 
             $adminUser->setTheater($theater);
         }

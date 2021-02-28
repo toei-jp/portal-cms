@@ -11,35 +11,23 @@ use Mockery\LegacyMockInterface;
 use Mockery\MockInterface;
 use ReflectionClass;
 
-/**
- * Azure Storage extension test
- */
 final class AzureStorageExtensionTest extends BaseTestCase
 {
     /**
-     * Create target mock
-     *
-     * @return MockInterface|LegacyMockInterface|AzureStorageExtension
+     * @return MockInterface&LegacyMockInterface&AzureStorageExtension
      */
     protected function createTargetMock()
     {
         return Mockery::mock(AzureStorageExtension::class);
     }
 
-    /**
-     * Create Target reflection
-     *
-     * @return ReflectionClass
-     */
-    protected function createTargetReflection()
+    protected function createTargetReflection(): ReflectionClass
     {
         return new ReflectionClass(AzureStorageExtension::class);
     }
 
     /**
-     * Create BlobRestProxy mock
-     *
-     * @return MockInterface|LegacyMockInterface|BlobRestProxy
+     * @return MockInterface&LegacyMockInterface&BlobRestProxy
      */
     protected function crateBlobRestProxyMock()
     {
@@ -47,13 +35,9 @@ final class AzureStorageExtensionTest extends BaseTestCase
     }
 
     /**
-     * test construct
-     *
      * @test
-     *
-     * @return void
      */
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $targetMock        = $this->createTargetMock();
         $blobRestProxyMock = $this->crateBlobRestProxyMock();
@@ -85,10 +69,8 @@ final class AzureStorageExtensionTest extends BaseTestCase
      * test blobUrl has publicEndpoint
      *
      * @test
-     *
-     * @return void
      */
-    public function testBlobUrlHasPublicEndpoint()
+    public function testBlobUrlHasPublicEndpoint(): void
     {
         $targetMock = $this->createTargetMock();
         $targetMock->makePartial();
@@ -115,10 +97,8 @@ final class AzureStorageExtensionTest extends BaseTestCase
      * test blobUrl do not has publicEndpoint
      *
      * @test
-     *
-     * @return void
      */
-    public function testBlobUrlDoNotHasPublicEndpoint()
+    public function testBlobUrlDoNotHasPublicEndpoint(): void
     {
         $container = 'test';
         $blob      = 'sample.txt';

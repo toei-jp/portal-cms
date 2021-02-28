@@ -14,10 +14,7 @@ class TitleController extends BaseController
     /**
      * list action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return Response
+     * @param array<string, mixed> $args
      */
     public function executeList(Request $request, Response $response, array $args): Response
     {
@@ -48,10 +45,7 @@ class TitleController extends BaseController
     /**
      * find imported title action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return Response
+     * @param array<string, mixed> $args
      */
     public function executeFindImported(Request $request, Response $response, array $args): Response
     {
@@ -75,10 +69,7 @@ class TitleController extends BaseController
     /**
      * import title action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return Response
+     * @param array<string, mixed> $args
      */
     public function executeImportTitles(Request $request, Response $response, array $args): Response
     {
@@ -138,10 +129,7 @@ class TitleController extends BaseController
     /**
      * autocomplete action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return Response
+     * @param array<string, mixed> $args
      */
     public function executeAutocomplete(Request $request, Response $response, array $args): Response
     {

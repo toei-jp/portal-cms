@@ -1,39 +1,33 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Form;
 
 use App\ORM\Entity;
 use Doctrine\ORM\EntityManager;
 use Laminas\InputFilter\InputFilter;
 
-/**
- * News find form class
- */
 class NewsFindForm extends BaseForm
 {
     /** @var EntityManager */
     protected $em;
 
-    /** @var array */
+    /** @var array<int, string> */
     protected $termChoices = [
         '1' => '掲出中',
         '2' => '掲出終了',
     ];
 
-    /** @var array */
+    /** @var array<int, string> */
     protected $categoryChoices;
 
-    /** @var array */
+    /** @var array<int, string>*/
     protected $pageChoices = [];
 
-    /** @var array */
+    /** @var array<int, string> */
     protected $theaterChoices = [];
 
-    /**
-     * construct
-     *
-     * @param EntityManager $em
-     */
     public function __construct(EntityManager $em)
     {
         $this->em              = $em;
@@ -44,12 +38,7 @@ class NewsFindForm extends BaseForm
         $this->setup();
     }
 
-    /**
-     * setup
-     *
-     * @return void
-     */
-    protected function setup()
+    protected function setup(): void
     {
         $this->add([
             'name' => 'term',
@@ -67,10 +56,10 @@ class NewsFindForm extends BaseForm
             ],
         ]);
 
+        /** @var Entity\Page[] $pages */
         $pages = $this->em->getRepository(Entity\Page::class)->findActive();
 
         foreach ($pages as $page) {
-            /** @var Entity\Page $page */
             $this->pageChoices[$page->getId()] = $page->getNameJa();
         }
 
@@ -82,10 +71,10 @@ class NewsFindForm extends BaseForm
             ],
         ]);
 
+        /** @var Entity\Theater[] $theaters */
         $theaters = $this->em->getRepository(Entity\Theater::class)->findActive();
 
         foreach ($theaters as $theater) {
-            /** @var Entity\Theater $theater */
             $this->theaterChoices[$theater->getId()] = $theater->getNameJa();
         }
 
@@ -122,41 +111,33 @@ class NewsFindForm extends BaseForm
     }
 
     /**
-     * return term choices
-     *
-     * @return array
+     * @return array<int, string>
      */
-    public function getTermChoices()
+    public function getTermChoices(): array
     {
         return $this->termChoices;
     }
 
     /**
-     * return category choices
-     *
-     * @return array
+     * @return array<int, string>
      */
-    public function getCategoryChoices()
+    public function getCategoryChoices(): array
     {
         return $this->categoryChoices;
     }
 
     /**
-     * return page choices
-     *
-     * @return array
+     * @return array<int, string>
      */
-    public function getPageChoices()
+    public function getPageChoices(): array
     {
         return $this->pageChoices;
     }
 
     /**
-     * return theater choices
-     *
-     * @return array
+     * @return array<int, string>
      */
-    public function getTheaterChoices()
+    public function getTheaterChoices(): array
     {
         return $this->theaterChoices;
     }

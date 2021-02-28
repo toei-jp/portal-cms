@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\ORM\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -15,7 +17,7 @@ class ShowingFormat extends AbstractEntity
 {
     use TimestampableTrait;
 
-    /** @var array */
+    /** @var array<int, string> */
     protected static $systemList = [
         1  => '2D',
         2  => '3D',
@@ -30,7 +32,7 @@ class ShowingFormat extends AbstractEntity
         99 => 'なし',
     ];
 
-    /** @var array */
+    /** @var array<int, string> */
     protected static $voiceList = [
         1 => '字幕',
         2 => '吹替',
@@ -38,8 +40,6 @@ class ShowingFormat extends AbstractEntity
     ];
 
     /**
-     * id
-     *
      * @ORM\Id
      * @ORM\Column(type="integer", options={"unsigned"=true})
      * @ORM\GeneratedValue
@@ -49,8 +49,6 @@ class ShowingFormat extends AbstractEntity
     protected $id;
 
     /**
-     * schedule
-     *
      * @ORM\ManyToOne(targetEntity="Schedule")
      * @ORM\JoinColumn(name="schedule_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      *
@@ -59,8 +57,6 @@ class ShowingFormat extends AbstractEntity
     protected $schedule;
 
     /**
-     * system
-     *
      * @ORM\Column(type="smallint", options={"unsigned"=true})
      *
      * @var int
@@ -68,8 +64,6 @@ class ShowingFormat extends AbstractEntity
     protected $system;
 
     /**
-     * voice
-     *
      * @ORM\Column(type="smallint", options={"unsigned"=true})
      *
      * @var int
@@ -77,121 +71,66 @@ class ShowingFormat extends AbstractEntity
     protected $voice;
 
     /**
-     * return system list
-     *
-     * @return array
+     * @return array<int, string>
      */
-    public static function getSystemList()
+    public static function getSystemList(): array
     {
         return self::$systemList;
     }
 
     /**
-     * return voice list
-     *
-     * @return array
+     * @return array<int, string>
      */
-    public static function getVoiceList()
+    public static function getVoiceList(): array
     {
         return self::$voiceList;
     }
 
-    /**
-     * construct
-     */
     public function __construct()
     {
     }
 
-    /**
-     * get id
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * get schedule
-     *
-     * @return Schedule
-     */
-    public function getSchedule()
+    public function getSchedule(): Schedule
     {
         return $this->schedule;
     }
 
-    /**
-     * schedule
-     *
-     * @param Schedule $schedule
-     * @return void
-     */
-    public function setSchedule(Schedule $schedule)
+    public function setSchedule(Schedule $schedule): void
     {
         $this->schedule = $schedule;
     }
 
-    /**
-     * get system
-     *
-     * @return int
-     */
-    public function getSystem()
+    public function getSystem(): int
     {
         return $this->system;
     }
 
-    /**
-     * get system label
-     *
-     * @return string|null
-     */
-    public function getSystemLabel()
+    public function getSystemLabel(): ?string
     {
         return self::$systemList[$this->getSystem()] ?? null;
     }
 
-    /**
-     * set system
-     *
-     * @param int $system
-     * @return void
-     */
-    public function setSystem(int $system)
+    public function setSystem(int $system): void
     {
         $this->system = $system;
     }
 
-    /**
-     * get voice
-     *
-     * @return int
-     */
-    public function getVoice()
+    public function getVoice(): int
     {
         return $this->voice;
     }
 
-    /**
-     * get voice label
-     *
-     * @return string|null
-     */
-    public function getVoiceLabel()
+    public function getVoiceLabel(): ?string
     {
         return self::$voiceList[$this->getVoice()] ?? null;
     }
 
-    /**
-     * set voice
-     *
-     * @param int $voice
-     * @return void
-     */
-    public function setVoice(int $voice)
+    public function setVoice(int $voice): void
     {
         $this->voice = $voice;
     }

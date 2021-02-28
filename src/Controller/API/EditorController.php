@@ -15,20 +15,13 @@ class EditorController extends BaseController
 {
     use AzureBlobStorage;
 
-    /**
-     * Blob Container name
-     *
-     * @var string
-     */
+    /** @var string */
     protected $blobContainer = 'editor';
 
     /**
      * upload action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return Response
+     * @param array<string, mixed> $args
      */
     public function executeUpload(Request $request, Response $response, array $args): Response
     {

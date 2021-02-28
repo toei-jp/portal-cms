@@ -1,44 +1,31 @@
 <?php
 
-/**
- * DoctrinePaginator.php
- */
+declare(strict_types=1);
 
 namespace App\Pagination;
 
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Tools\Pagination\Paginator as WrapPaginator;
 
-/**
- * Doctrine paginator class
- */
 class DoctrinePaginator extends AbstractPaginator
 {
     /** @var WrapPaginator */
     protected $wrapPaginator;
 
     /**
-     * construct
-     *
-     * @param Query   $query               A Doctrine ORM query or query builder.
-     * @param int     $page
-     * @param int     $maxPerPage
-     * @param boolean $fetchJoinCollection Whether the query joins a collection (true by default).
+     * @param Query $query               A Doctrine ORM query or query builder.
+     * @param bool  $fetchJoinCollection Whether the query joins a collection (true by default).
      */
-    public function __construct(Query $query, int $page, int $maxPerPage, $fetchJoinCollection = true)
+    public function __construct(Query $query, int $page, int $maxPerPage, bool $fetchJoinCollection = true)
     {
         $this->initalize($query, $page, $maxPerPage, $fetchJoinCollection);
     }
 
     /**
-     * initalize
-     *
-     * @param Query   $query               A Doctrine ORM query or query builder.
-     * @param int     $page
-     * @param int     $maxPerPage
-     * @param boolean $fetchJoinCollection Whether the query joins a collection (true by default).
+     * @param Query $query               A Doctrine ORM query or query builder.
+     * @param bool  $fetchJoinCollection Whether the query joins a collection (true by default).
      */
-    protected function initalize(Query $query, int $page, int $maxPerPage, $fetchJoinCollection = true)
+    protected function initalize(Query $query, int $page, int $maxPerPage, bool $fetchJoinCollection = true): void
     {
         $this->page       = $page;
         $this->maxPerPage = $maxPerPage;
@@ -66,7 +53,10 @@ class DoctrinePaginator extends AbstractPaginator
         }
     }
 
-    public function getResultsInPage()
+    /**
+     * {@inheritdoc}
+     */
+    public function getResultsInPage(): ?array
     {
         return $this->resultsInPage;
     }

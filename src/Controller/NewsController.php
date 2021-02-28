@@ -22,10 +22,7 @@ class NewsController extends BaseController
     /**
      * list action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return Response
+     * @param array<string, mixed> $args
      */
     public function executeList(Request $request, Response $response, array $args): Response
     {
@@ -65,6 +62,9 @@ class NewsController extends BaseController
         ]);
     }
 
+    /**
+     * @param array<string, mixed> $data
+     */
     protected function renderNew(Response $response, array $data = []): Response
     {
         return $this->render($response, 'news/new.html.twig', $data);
@@ -73,10 +73,7 @@ class NewsController extends BaseController
     /**
      * new action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return Response
+     * @param array<string, mixed> $args
      */
     public function executeNew(Request $request, Response $response, array $args): Response
     {
@@ -88,10 +85,7 @@ class NewsController extends BaseController
     /**
      * create action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return Response
+     * @param array<string, mixed> $args
      */
     public function executeCreate(Request $request, Response $response, array $args): Response
     {
@@ -143,7 +137,9 @@ class NewsController extends BaseController
         $title = null;
 
         if ($cleanData['title_id']) {
-            $title =  $this->em->getRepository(Entity\Title::class)->findOneById($cleanData['title_id']);
+            $title = $this->em
+                ->getRepository(Entity\Title::class)
+                ->findOneById((int) $cleanData['title_id']);
         }
 
         $news = new Entity\News();
@@ -172,6 +168,9 @@ class NewsController extends BaseController
         );
     }
 
+    /**
+     * @param array<string, mixed> $data
+     */
     protected function renderEdit(Response $response, array $data = []): Response
     {
         return $this->render($response, 'news/edit.html.twig', $data);
@@ -180,17 +179,14 @@ class NewsController extends BaseController
     /**
      * edit action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return Response
+     * @param array<string, mixed> $args
      */
     public function executeEdit(Request $request, Response $response, array $args): Response
     {
         /** @var Entity\News|null $news */
         $news = $this->em
             ->getRepository(Entity\News::class)
-            ->findOneById($args['id']);
+            ->findOneById((int) $args['id']);
 
         if (is_null($news)) {
             throw new NotFoundException($request, $response);
@@ -224,17 +220,14 @@ class NewsController extends BaseController
     /**
      * update action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return Response
+     * @param array<string, mixed> $args
      */
     public function executeUpdate(Request $request, Response $response, array $args): Response
     {
         /** @var Entity\News|null $news */
         $news = $this->em
             ->getRepository(Entity\News::class)
-            ->findOneById($args['id']);
+            ->findOneById((int) $args['id']);
 
         if (is_null($news)) {
             throw new NotFoundException($request, $response);
@@ -299,7 +292,9 @@ class NewsController extends BaseController
         $title = null;
 
         if ($cleanData['title_id']) {
-            $title =  $this->em->getRepository(Entity\Title::class)->findOneById($cleanData['title_id']);
+            $title = $this->em
+                ->getRepository(Entity\Title::class)
+                ->findOneById((int) $cleanData['title_id']);
         }
 
         $news->setTitle($title);
@@ -328,17 +323,14 @@ class NewsController extends BaseController
     /**
      * delete action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return void
+     * @param array<string, mixed> $args
      */
     public function executeDelete(Request $request, Response $response, array $args): void
     {
         /** @var Entity\News|null $news */
         $news = $this->em
             ->getRepository(Entity\News::class)
-            ->findOneById($args['id']);
+            ->findOneById((int) $args['id']);
 
         if (is_null($news)) {
             throw new NotFoundException($request, $response);
@@ -393,10 +385,7 @@ class NewsController extends BaseController
     /**
      * publication action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return Response
+     * @param array<string, mixed> $args
      */
     public function executePublication(Request $request, Response $response, array $args): Response
     {
@@ -428,10 +417,7 @@ class NewsController extends BaseController
     /**
      * publication update action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return void
+     * @param array<string, mixed> $args
      */
     public function executePublicationUpdate(Request $request, Response $response, array $args): void
     {

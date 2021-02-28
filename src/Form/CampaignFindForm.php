@@ -1,31 +1,30 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Form;
 
 use App\ORM\Entity;
 use Doctrine\ORM\EntityManager;
 use Laminas\InputFilter\InputFilter;
 
-/**
- * Campaign find form class
- */
 class CampaignFindForm extends BaseForm
 {
     /** @var EntityManager */
     protected $em;
 
-    protected $statusChoices  = [
+    /** @var array<int, string> */
+    protected $statusChoices = [
         '1' => 'キャンペーン中',
         '2' => 'キャンペーン終了',
     ];
-    protected $pageChoices    = [];
+
+    /** @var array<int, string> */
+    protected $pageChoices = [];
+
+    /** @var array<int, string> */
     protected $theaterChoices = [];
 
-    /**
-     * construct
-     *
-     * @param EntityManager $em
-     */
     public function __construct(EntityManager $em)
     {
         $this->em = $em;
@@ -35,12 +34,7 @@ class CampaignFindForm extends BaseForm
         $this->setup();
     }
 
-    /**
-     * setup
-     *
-     * @return void
-     */
-    protected function setup()
+    protected function setup(): void
     {
         $this->add([
             'name' => 'status',
@@ -50,10 +44,10 @@ class CampaignFindForm extends BaseForm
             ],
         ]);
 
+        /** @var Entity\Page[] $pages */
         $pages = $this->em->getRepository(Entity\Page::class)->findActive();
 
         foreach ($pages as $page) {
-            /** @var Entity\Page $page */
             $this->pageChoices[$page->getId()] = $page->getNameJa();
         }
 
@@ -65,10 +59,10 @@ class CampaignFindForm extends BaseForm
             ],
         ]);
 
+        /** @var Entity\Theater[] $theaters */
         $theaters = $this->em->getRepository(Entity\Theater::class)->findActive();
 
         foreach ($theaters as $theater) {
-            /** @var Entity\Theater $theater */
             $this->theaterChoices[$theater->getId()] = $theater->getNameJa();
         }
 
@@ -100,31 +94,25 @@ class CampaignFindForm extends BaseForm
     }
 
     /**
-     * return status choices
-     *
-     * @return array
+     * @return array<int, string>
      */
-    public function getStatusChoices()
+    public function getStatusChoices(): array
     {
         return $this->statusChoices;
     }
 
     /**
-     * return page choices
-     *
-     * @return array
+     * @return array<int, string>
      */
-    public function getPageChoices()
+    public function getPageChoices(): array
     {
         return $this->pageChoices;
     }
 
     /**
-     * return theater choices
-     *
-     * @return array
+     * @return array<int, string>
      */
-    public function getTheaterChoices()
+    public function getTheaterChoices(): array
     {
         return $this->theaterChoices;
     }

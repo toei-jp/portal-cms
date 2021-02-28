@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Form;
 
 use App\Translator\ValidatorTranslator;
@@ -7,21 +9,15 @@ use Laminas\Form\Form;
 use Laminas\I18n\Translator\Resources;
 use Laminas\Validator\AbstractValidator;
 
-/**
- * Base form class
- */
 class BaseForm extends Form
 {
-    /** @var array */
+    /** @var string[] */
     public static $imageMimeTypes = [
         'image/jpeg',
         'image/png',
         'image/gif',
     ];
 
-    /**
-     * construct
-     */
     public function __construct()
     {
         parent::__construct();
@@ -43,9 +39,9 @@ class BaseForm extends Form
      * NG: <input type="text" name="items[0][name]">
      * OK: <input type="text" name="items[str][name]">
      *
-     * @param array $params
-     * @param array $uploadedFiles
-     * @return array
+     * @param array{mixed}         $params
+     * @param array<string, mixed> $uploadedFiles
+     * @return array{mixed}
      */
     public static function buildData(array $params, array $uploadedFiles): array
     {
@@ -60,8 +56,8 @@ class BaseForm extends Form
      *
      * ネストされたfileの値をパースするために作成。
      *
-     * @param array $uploadedFiles
-     * @return array
+     * @param array<string, mixed> $uploadedFiles
+     * @return array<string, mixed>
      */
     private static function parseUploadedFiles(array $uploadedFiles): array
     {

@@ -1,14 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Form;
 
 use App\ORM\Entity\News;
 use Laminas\InputFilter\InputFilter;
 use Laminas\Validator;
 
-/**
- * News form class
- */
 class NewsForm extends BaseForm
 {
     public const TYPE_NEW  = 1;
@@ -17,14 +16,9 @@ class NewsForm extends BaseForm
     /** @var int */
     protected $type;
 
-    /** @var array */
+    /** @var array<int, string> */
     protected $categoryChoices;
 
-    /**
-     * construct
-     *
-     * @param int $type
-     */
     public function __construct(int $type)
     {
         $this->type            = $type;
@@ -35,12 +29,7 @@ class NewsForm extends BaseForm
         $this->setup();
     }
 
-    /**
-     * setup
-     *
-     * @return void
-     */
-    protected function setup()
+    protected function setup(): void
     {
         if ($this->type === self::TYPE_EDIT) {
             $this->add([
@@ -170,11 +159,9 @@ class NewsForm extends BaseForm
     }
 
     /**
-     * return category choices
-     *
-     * @return array
+     * @return array<int, string>
      */
-    public function getCategoryChoices()
+    public function getCategoryChoices(): array
     {
         return $this->categoryChoices;
     }

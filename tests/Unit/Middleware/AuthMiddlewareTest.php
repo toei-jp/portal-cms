@@ -15,37 +15,25 @@ use Psr\Http\Message\ServerRequestInterface;
 use ReflectionClass;
 use Slim\Http\Response;
 
-/**
- * Auth Middleware test
- */
 final class AuthMiddlewareTest extends TestCase
 {
     use MockeryPHPUnitIntegration;
 
     /**
-     * Create target mock
-     *
-     * @return MockInterface|LegacyMockInterface|AuthMiddleware
+     * @return MockInterface&LegacyMockInterface&AuthMiddleware
      */
     protected function createTargetMock()
     {
         return Mockery::mock(AuthMiddleware::class);
     }
 
-    /**
-     * Create target reflection
-     *
-     * @return ReflectionClass
-     */
-    protected function createTargetReflection()
+    protected function createTargetReflection(): ReflectionClass
     {
         return new ReflectionClass(AuthMiddleware::class);
     }
 
     /**
-     * Create Container mock
-     *
-     * @return MockInterface|LegacyMockInterface|ContainerInterface
+     * @return MockInterface&LegacyMockInterface&ContainerInterface
      */
     protected function createContainerMock()
     {
@@ -53,9 +41,7 @@ final class AuthMiddlewareTest extends TestCase
     }
 
     /**
-     * Create Auth mock
-     *
-     * @return MockInterface|LegacyMockInterface
+     * @return MockInterface&LegacyMockInterface
      */
     protected function createAuthMock()
     {
@@ -63,9 +49,7 @@ final class AuthMiddlewareTest extends TestCase
     }
 
     /**
-     * Create Router mock
-     *
-     * @return MockInterface|LegacyMockInterface
+     * @return MockInterface&LegacyMockInterface
      */
     protected function createRouterMock()
     {
@@ -73,9 +57,7 @@ final class AuthMiddlewareTest extends TestCase
     }
 
     /**
-     * Create Request mock
-     *
-     * @return MockInterface|LegacyMockInterface|ServerRequestInterface
+     * @return MockInterface&LegacyMockInterface&ServerRequestInterface
      */
     protected function createRequestMock()
     {
@@ -83,9 +65,7 @@ final class AuthMiddlewareTest extends TestCase
     }
 
     /**
-     * Create Response mock
-     *
-     * @return MockInterface|LegacyMockInterface|Response
+     * @return MockInterface&LegacyMockInterface&Response
      */
     protected function createResponseMock()
     {
@@ -96,10 +76,8 @@ final class AuthMiddlewareTest extends TestCase
      * test __invoke (is not authenticated)
      *
      * @test
-     *
-     * @return void
      */
-    public function testInvokeIsNotAuthenticated()
+    public function testInvokeIsNotAuthenticated(): void
     {
         $authMock = $this->createAuthMock();
         $authMock
@@ -158,10 +136,8 @@ final class AuthMiddlewareTest extends TestCase
      * test __invoke (is authenticated)
      *
      * @test
-     *
-     * @return void
      */
-    public function testInvokeIsAuthenticated()
+    public function testInvokeIsAuthenticated(): void
     {
         $authMock = $this->createAuthMock();
         $authMock

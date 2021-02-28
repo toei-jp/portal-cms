@@ -15,10 +15,7 @@ class TheaterMetaController extends BaseController
     /**
      * opening hour action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return Response
+     * @param array<string, mixed> $args
      */
     public function executeOpeningHour(Request $request, Response $response, array $args): Response
     {
@@ -34,6 +31,9 @@ class TheaterMetaController extends BaseController
         return $this->render($response, 'theater_meta/opening_hour/list.html.twig', ['metas' => $metas]);
     }
 
+    /**
+     * @param array<string, mixed> $data
+     */
     protected function renderEdit(Response $response, array $data = []): Response
     {
         return $this->render($response, 'theater_meta/opening_hour/edit.html.twig', $data);
@@ -42,10 +42,7 @@ class TheaterMetaController extends BaseController
     /**
      * opening hour edit action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return Response
+     * @param array<string, mixed> $args
      */
     public function executeOpeningHourEdit(Request $request, Response $response, array $args): Response
     {
@@ -65,7 +62,6 @@ class TheaterMetaController extends BaseController
         ];
 
         foreach ($theater->getMeta()->getOpeningHours() as $hour) {
-            /** @var Entity\TheaterOpeningHour $hour */
             $values['hours'][] = [
                 'type'      => $hour->getType(),
                 'from_date' => $hour->getFromDate()->format('Y/m/d'),
@@ -84,10 +80,7 @@ class TheaterMetaController extends BaseController
     /**
      * opening hour update action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return Response
+     * @param array<string, mixed> $args
      */
     public function executeOpeningHourUpdate(Request $request, Response $response, array $args): Response
     {

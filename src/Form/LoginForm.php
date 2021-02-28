@@ -1,17 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Form;
 
 use Laminas\InputFilter\InputFilter;
 
-/**
- * Login form class
- */
 class LoginForm extends BaseForm
 {
-    /**
-     * construct
-     */
     public function __construct()
     {
         parent::__construct();

@@ -1,13 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Logger;
 
 use Doctrine\DBAL\Logging\SQLLogger;
 use Monolog\Logger;
 
-/**
- * DBAL logger
- */
 class DbalLogger implements SQLLogger
 {
     /** @var Logger */
@@ -16,17 +15,15 @@ class DbalLogger implements SQLLogger
     /** @var int */
     protected $count;
 
-    /**
-     * construct
-     *
-     * @param Logger $logger
-     */
     public function __construct(Logger $logger)
     {
         $this->logger = $logger;
     }
 
-    public function startQuery($sql, array $params = null, array $types = null)
+    /**
+     * {@inheritdoc}
+     */
+    public function startQuery($sql, ?array $params = null, ?array $types = null)
     {
         $this->log($sql, [
             'params' => $params,
@@ -34,18 +31,14 @@ class DbalLogger implements SQLLogger
         ]);
     }
 
-    public function stopQuery()
+    public function stopQuery(): void
     {
     }
 
     /**
-     * log
-     *
-     * @param string $message
-     * @param array  $context
-     * @return void
+     * @param array<mixed> $context
      */
-    protected function log($message, array $context = [])
+    protected function log(string $message, array $context = []): void
     {
         $this->logger->debug($message, $context);
     }

@@ -1,8 +1,6 @@
 <?php
 
-/**
- * routes.php
- */
+declare(strict_types=1);
 
 use App\Controller\AdminUserController;
 use App\Controller\AdvanceTicketController;
@@ -31,10 +29,10 @@ $app->get('/login', AuthController::class . ':login')->setName('login');
 $app->post('/auth', AuthController::class . ':auth')->setName('auth');
 $app->get('/logout', AuthController::class . ':logout')->setName('logout');
 
-$app->group('', function () {
+$app->group('', function (): void {
     $this->get('/', IndexController::class . ':index')->setName('homepage');
 
-    $this->group('/title', function () {
+    $this->group('/title', function (): void {
         $this->get('/list', TitleController::class . ':list')->setName('title_list');
         $this->get('/new', TitleController::class . ':new')->setName('title_new');
         $this->get('/import', TitleController::class . ':import')->setName('title_import');
@@ -44,7 +42,7 @@ $app->group('', function () {
         $this->get('/{id}/delete', TitleController::class . ':delete')->setName('title_delete');
     });
 
-    $this->group('/schedule', function () {
+    $this->group('/schedule', function (): void {
         $this->get('/list', ScheduleController::class . ':list')->setName('schedule_list');
         $this->get('/new', ScheduleController::class . ':new')->setName('schedule_new');
         $this->post('/create', ScheduleController::class . ':create')->setName('schedule_create');
@@ -53,7 +51,7 @@ $app->group('', function () {
         $this->get('/{id}/delete', ScheduleController::class . ':delete')->setName('schedule_delete');
     });
 
-    $this->group('/main_banner', function () {
+    $this->group('/main_banner', function (): void {
         $this->get('/publication', MainBannerController::class . ':publication')->setName('main_banner_publication');
         $this->post('/publication/update/{target}', MainBannerController::class . ':publicationUpdate')
             ->setName('main_banner_publication_update');
@@ -65,7 +63,7 @@ $app->group('', function () {
         $this->get('/{id}/delete', MainBannerController::class . ':delete')->setName('main_banner_delete');
     });
 
-    $this->group('/campaign', function () {
+    $this->group('/campaign', function (): void {
         $this->get('/publication', CampaignController::class . ':publication')->setName('campaign_publication');
         $this->post('/publication/update/{target}', CampaignController::class . ':publicationUpdate')
             ->setName('campaign_publication_update');
@@ -77,7 +75,7 @@ $app->group('', function () {
         $this->get('/{id}/delete', CampaignController::class . ':delete')->setName('campaign_delete');
     });
 
-    $this->group('/news', function () {
+    $this->group('/news', function (): void {
         $this->get('/publication', NewsController::class . ':publication')->setName('news_publication');
         $this->post('/publication/update/{target}', NewsController::class . ':publicationUpdate')
             ->setName('news_publication_update');
@@ -89,7 +87,7 @@ $app->group('', function () {
         $this->get('/{id}/delete', NewsController::class . ':delete')->setName('news_delete');
     });
 
-    $this->group('/advance_ticket', function () {
+    $this->group('/advance_ticket', function (): void {
         $this->get('/list', AdvanceTicketController::class . ':list')->setName('advance_ticket_list');
         $this->get('/new', AdvanceTicketController::class . ':new')->setName('advance_ticket_new');
         $this->post('/create', AdvanceTicketController::class . ':create')->setName('advance_ticket_create');
@@ -98,7 +96,7 @@ $app->group('', function () {
         $this->get('/{id}/delete', AdvanceTicketController::class . ':delete')->setName('advance_ticket_delete');
     });
 
-    $this->group('/theater', function () {
+    $this->group('/theater', function (): void {
         $this->get('/opening-hour', TheaterMetaController::class . ':openingHour')->setName('opening_hour');
         $this->get('/{id}/opening-hour/edit', TheaterMetaController::class . ':openingHourEdit')
             ->setName('opening_hour_edit');
@@ -106,37 +104,37 @@ $app->group('', function () {
             ->setName('opening_hour_update');
     });
 
-    $this->group('/admin_user', function () {
+    $this->group('/admin_user', function (): void {
         $this->get('/list', AdminUserController::class . ':list')->setName('admin_user_list');
         $this->get('/new', AdminUserController::class . ':new')->setName('admin_user_new');
         $this->post('/create', AdminUserController::class . ':create')->setName('admin_user_create');
     });
 
-    $this->group('/api', function () {
-        $this->group('/title', function () {
+    $this->group('/api', function (): void {
+        $this->group('/title', function (): void {
             $this->get('/list', TitleApiController::class . ':list');
             $this->get('/autocomplete', TitleApiController::class . ':autocomplete');
             $this->get('/findImported', TitleApiController::class . ':findImported');
             $this->post('/importTitles', TitleApiController::class . ':importTitles');
         });
 
-        $this->group('/main_banner', function () {
+        $this->group('/main_banner', function (): void {
             $this->get('/list', MainBannerApiController::class . ':list');
         });
 
-        $this->group('/campaign', function () {
+        $this->group('/campaign', function (): void {
             $this->get('/list', CampaignApiController::class . ':list');
         });
 
-        $this->group('/news', function () {
+        $this->group('/news', function (): void {
             $this->get('/list', NewsApiController::class . ':list');
         });
 
-        $this->group('/editor', function () {
+        $this->group('/editor', function (): void {
             $this->post('/upload', EditorApiController::class . ':upload');
         });
 
-        $this->group('/auth', function () {
+        $this->group('/auth', function (): void {
             $this->post('/token', AuthApiController::class . ':token');
         });
     });

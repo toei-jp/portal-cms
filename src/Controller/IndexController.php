@@ -12,10 +12,7 @@ class IndexController extends BaseController
     /**
      * index action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return Response
+     * @param array<string, mixed> $args
      */
     public function executeIndex(Request $request, Response $response, array $args): Response
     {

@@ -16,10 +16,7 @@ class ScheduleController extends BaseController
     /**
      * list action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return Response
+     * @param array<string, mixed> $args
      */
     public function executeList(Request $request, Response $response, array $args): Response
     {
@@ -54,6 +51,9 @@ class ScheduleController extends BaseController
         ]);
     }
 
+    /**
+     * @param array<string, mixed> $data
+     */
     protected function renderNew(Response $response, array $data = []): Response
     {
         return $this->render($response, 'schedule/new.html.twig', $data);
@@ -62,10 +62,7 @@ class ScheduleController extends BaseController
     /**
      * new action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return Response
+     * @param array<string, mixed> $args
      */
     public function executeNew(Request $request, Response $response, array $args): Response
     {
@@ -77,10 +74,7 @@ class ScheduleController extends BaseController
     /**
      * create action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return Response
+     * @param array<string, mixed> $args
      */
     public function executeCreate(Request $request, Response $response, array $args): Response
     {
@@ -101,7 +95,9 @@ class ScheduleController extends BaseController
         $schedule = new Entity\Schedule();
         $this->em->persist($schedule);
 
-        $title =  $this->em->getRepository(Entity\Title::class)->findOneById($cleanData['title_id']);
+        $title =  $this->em
+            ->getRepository(Entity\Title::class)
+            ->findOneById((int) $cleanData['title_id']);
         $schedule->setTitle($title);
 
         $schedule->setStartDate($cleanData['start_date']);
@@ -112,11 +108,12 @@ class ScheduleController extends BaseController
         $schedule->setCreatedUser($this->auth->getUser());
         $schedule->setUpdatedUser($this->auth->getUser());
 
-        $theaters = $this->em->getRepository(Entity\Theater::class)->findByIds($cleanData['theater']);
+        /** @var Entity\Theater[] $theaters */
+        $theaters = $this->em
+            ->getRepository(Entity\Theater::class)
+            ->findByIds($cleanData['theater']);
 
         foreach ($theaters as $theater) {
-            /** @var Entity\Theater $theater */
-
             $showingTheater = new Entity\ShowingTheater();
             $this->em->persist($showingTheater);
 
@@ -146,6 +143,9 @@ class ScheduleController extends BaseController
         );
     }
 
+    /**
+     * @param array<string, mixed> $data
+     */
     protected function renderEdit(Response $response, array $data = []): Response
     {
         return $this->render($response, 'schedule/edit.html.twig', $data);
@@ -154,17 +154,14 @@ class ScheduleController extends BaseController
     /**
      * edit action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return Response
+     * @param array<string, mixed> $args
      */
     public function executeEdit(Request $request, Response $response, array $args): Response
     {
         /** @var Entity\Schedule|null $schedule */
         $schedule = $this->em
             ->getRepository(Entity\Schedule::class)
-            ->findOneById($args['id']);
+            ->findOneById((int) $args['id']);
 
         if (is_null($schedule)) {
             throw new NotFoundException($request, $response);
@@ -186,12 +183,10 @@ class ScheduleController extends BaseController
         ];
 
         foreach ($schedule->getShowingTheaters() as $showingTheater) {
-            /** @var Entity\ShowingTheater $showingTheater */
             $values['theater'][] = $showingTheater->getTheater()->getId();
         }
 
         foreach ($schedule->getShowingFormats() as $showingFormat) {
-            /** @var Entity\ShowingFormat $showingFormat */
             $values['formats'][] = [
                 'system' => $showingFormat->getSystem(),
                 'voice' => $showingFormat->getVoice(),
@@ -208,17 +203,14 @@ class ScheduleController extends BaseController
     /**
      * update action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return Response
+     * @param array<string, mixed> $args
      */
     public function executeUpdate(Request $request, Response $response, array $args): Response
     {
         /** @var Entity\Schedule|null $schedule */
         $schedule = $this->em
             ->getRepository(Entity\Schedule::class)
-            ->findOneById($args['id']);
+            ->findOneById((int) $args['id']);
 
         if (is_null($schedule)) {
             throw new NotFoundException($request, $response);
@@ -239,7 +231,9 @@ class ScheduleController extends BaseController
 
         $cleanData = $form->getData();
 
-        $title =  $this->em->getRepository(Entity\Title::class)->findOneById($cleanData['title_id']);
+        $title = $this->em
+            ->getRepository(Entity\Title::class)
+            ->findOneById((int) $cleanData['title_id']);
         $schedule->setTitle($title);
 
         $schedule->setStartDate($cleanData['start_date']);
@@ -251,11 +245,12 @@ class ScheduleController extends BaseController
 
         $schedule->getShowingTheaters()->clear();
 
-        $theaters = $this->em->getRepository(Entity\Theater::class)->findByIds($cleanData['theater']);
+        /** @var Entity\Theater[] $theaters */
+        $theaters = $this->em
+            ->getRepository(Entity\Theater::class)
+            ->findByIds($cleanData['theater']);
 
         foreach ($theaters as $theater) {
-            /** @var Entity\Theater $theater */
-
             $showingTheater = new Entity\ShowingTheater();
             $this->em->persist($showingTheater);
 
@@ -290,17 +285,14 @@ class ScheduleController extends BaseController
     /**
      * delete action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return void
+     * @param array<string, mixed> $args
      */
     public function executeDelete(Request $request, Response $response, array $args): void
     {
         /** @var Entity\Schedule|null $schedule */
         $schedule = $this->em
             ->getRepository(Entity\Schedule::class)
-            ->findOneById($args['id']);
+            ->findOneById((int) $args['id']);
 
         if (is_null($schedule)) {
             throw new NotFoundException($request, $response);

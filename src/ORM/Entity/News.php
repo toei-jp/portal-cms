@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\ORM\Entity;
 
 use DateTime;
@@ -22,12 +24,10 @@ class News extends AbstractEntity
 
     public const CATEGORY_TOPICS = 1;
 
-    /** @var array */
+    /** @var array<int, string> */
     public static $categories = [self::CATEGORY_TOPICS => 'トピックス'];
 
     /**
-     * id
-     *
      * @ORM\Id
      * @ORM\Column(type="integer", options={"unsigned"=true})
      * @ORM\GeneratedValue
@@ -37,8 +37,6 @@ class News extends AbstractEntity
     protected $id;
 
     /**
-     * title
-     *
      * @ORM\ManyToOne(targetEntity="Title")
      * @ORM\JoinColumn(name="title_id", referencedColumnName="id", nullable=true, onDelete="RESTRICT")
      *
@@ -47,8 +45,6 @@ class News extends AbstractEntity
     protected $title;
 
     /**
-     * image
-     *
      * @ORM\OneToOne(targetEntity="File")
      * @ORM\JoinColumn(name="image_file_id", referencedColumnName="id", nullable=false, onDelete="RESTRICT")
      *
@@ -57,8 +53,6 @@ class News extends AbstractEntity
     protected $image;
 
     /**
-     * category
-     *
      * @ORM\Column(type="smallint", options={"unsigned"=true})
      *
      * @var int
@@ -66,8 +60,6 @@ class News extends AbstractEntity
     protected $category;
 
     /**
-     * headline
-     *
      * @ORM\Column(type="string")
      *
      * @var string
@@ -75,8 +67,6 @@ class News extends AbstractEntity
     protected $headline;
 
     /**
-     * body
-     *
      * @ORM\Column(type="text")
      *
      * @var string
@@ -84,8 +74,6 @@ class News extends AbstractEntity
     protected $body;
 
     /**
-     * start_dt
-     *
      * @ORM\Column(type="datetime", name="start_dt")
      *
      * @var DateTime
@@ -93,8 +81,6 @@ class News extends AbstractEntity
     protected $startDt;
 
     /**
-     * end_dt
-     *
      * @ORM\Column(type="datetime", name="end_dt")
      *
      * @var DateTime
@@ -102,8 +88,6 @@ class News extends AbstractEntity
     protected $endDt;
 
     /**
-     * pages
-     *
      * @ORM\OneToMany(targetEntity="PageNews", mappedBy="news")
      *
      * @var Collection<PageNews>
@@ -111,165 +95,87 @@ class News extends AbstractEntity
     protected $pages;
 
     /**
-     * theaters
-     *
      * @ORM\OneToMany(targetEntity="TheaterNews", mappedBy="news")
      *
      * @var Collection<TheaterNews>
      */
     protected $theaters;
 
-    /**
-     * construct
-     */
     public function __construct()
     {
         $this->pages    = new ArrayCollection();
         $this->theaters = new ArrayCollection();
     }
 
-    /**
-     * get id
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * get title
-     *
-     * @return Title|null
-     */
-    public function getTitle()
+    public function getTitle(): ?Title
     {
         return $this->title;
     }
 
-    /**
-     * set title
-     *
-     * @param Title|null $title
-     * @return void
-     */
-    public function setTitle($title)
+    public function setTitle(?Title $title): void
     {
         $this->title = $title;
     }
 
-    /**
-     * get image
-     *
-     * @return File
-     */
-    public function getImage()
+    public function getImage(): File
     {
         return $this->image;
     }
 
-    /**
-     * set image
-     *
-     * @param File $image
-     * @return void
-     */
-    public function setImage(File $image)
+    public function setImage(File $image): void
     {
         $this->image = $image;
     }
 
-    /**
-     * get category
-     *
-     * @return int
-     */
-    public function getCategory()
+    public function getCategory(): int
     {
         return $this->category;
     }
 
-    /**
-     * get category label
-     *
-     * @return string|null
-     */
-    public function getCategoryLabel()
+    public function getCategoryLabel(): ?string
     {
         return self::$categories[$this->getCategory()] ?? null;
     }
 
-    /**
-     * set category
-     *
-     * @param int $category
-     * @return void
-     */
-    public function setCategory(int $category)
+    public function setCategory(int $category): void
     {
         $this->category = $category;
     }
 
-    /**
-     * get headline
-     *
-     * @return string
-     */
-    public function getHeadline()
+    public function getHeadline(): string
     {
         return $this->headline;
     }
 
-    /**
-     * set headline
-     *
-     * @param string $headline
-     * @return void
-     */
-    public function setHeadline(string $headline)
+    public function setHeadline(string $headline): void
     {
         $this->headline = $headline;
     }
 
-    /**
-     * get body
-     *
-     * @return string
-     */
-    public function getBody()
+    public function getBody(): string
     {
         return $this->body;
     }
 
-    /**
-     * set body
-     *
-     * @param string $body
-     * @return void
-     */
-    public function setBody(string $body)
+    public function setBody(string $body): void
     {
         $this->body = $body;
     }
 
-    /**
-     * get start_dt
-     *
-     * @return DateTime
-     */
-    public function getStartDt()
+    public function getStartDt(): DateTime
     {
         return $this->startDt;
     }
 
     /**
-     * set start_dt
-     *
      * @param DateTime|string $startDt
-     * @return void
      */
-    public function setStartDt($startDt)
+    public function setStartDt($startDt): void
     {
         if ($startDt instanceof DateTime) {
             $this->startDt = $startDt;
@@ -278,23 +184,15 @@ class News extends AbstractEntity
         }
     }
 
-    /**
-     * get end_dt
-     *
-     * @return DateTime
-     */
-    public function getEndDt()
+    public function getEndDt(): DateTime
     {
         return $this->endDt;
     }
 
     /**
-     * set end_dt
-     *
      * @param DateTime|string $endDt
-     * @return void
      */
-    public function setEndDt($endDt)
+    public function setEndDt($endDt): void
     {
         if ($endDt instanceof DateTime) {
             $this->endDt = $endDt;
@@ -304,9 +202,7 @@ class News extends AbstractEntity
     }
 
     /**
-     * get pages
-     *
-     * @return Collection
+     * @return Collection<PageNews>
      */
     public function getPages(): Collection
     {
@@ -314,21 +210,14 @@ class News extends AbstractEntity
     }
 
     /**
-     * get theaters
-     *
-     * @return Collection
+     * @return Collection<TheaterNews>
      */
     public function getTheaters(): Collection
     {
         return $this->theaters;
     }
 
-    /**
-     * get published target
-     *
-     * @return ArrayCollection
-     */
-    public function getPublishedTargets()
+    public function getPublishedTargets(): ArrayCollection
     {
         $publications = new ArrayCollection();
 

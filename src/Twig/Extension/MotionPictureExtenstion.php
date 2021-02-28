@@ -1,22 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Twig\Extension;
 
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
-/**
- * MotionPicture twig extension class
- */
 class MotionPictureExtenstion extends AbstractExtension
 {
-    /** @var array */
+    /** @var array<string, mixed> */
     protected $settings;
 
     /**
-     * construct
-     *
-     * @param array $settings
+     * @param array<string, mixed> $settings
      */
     public function __construct(array $settings)
     {
@@ -24,20 +21,13 @@ class MotionPictureExtenstion extends AbstractExtension
     }
 
     /**
-     * get functions
-     *
-     * @return array
+     * @return TwigFunction[]
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [new TwigFunction('mp_api_endpoint', [$this, 'getApiEndpoint'])];
     }
 
-    /**
-     * return API endpoint
-     *
-     * @return string
-     */
     public function getApiEndpoint(): string
     {
         return $this->settings['api_endpoint'];
