@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\ORM\Entity;
 
 use DateTime;
@@ -24,8 +26,6 @@ class Title extends AbstractEntity
     public const RATING_R18  = 4;
 
     /**
-     * id
-     *
      * @ORM\Id
      * @ORM\Column(type="integer", options={"unsigned"=true})
      * @ORM\GeneratedValue
@@ -35,8 +35,6 @@ class Title extends AbstractEntity
     protected $id;
 
     /**
-     * image
-     *
      * @ORM\OneToOne(targetEntity="File")
      * @ORM\JoinColumn(name="image_file_id", referencedColumnName="id", nullable=true, onDelete="RESTRICT")
      *
@@ -45,8 +43,6 @@ class Title extends AbstractEntity
     protected $image;
 
     /**
-     * chever_code
-     *
      * @ORM\Column(name="chever_code", type="string", length=100, unique=true, nullable=true)
      *
      * @var string|null
@@ -54,8 +50,6 @@ class Title extends AbstractEntity
     protected $cheverCode;
 
     /**
-     * name
-     *
      * @ORM\Column(type="string")
      *
      * @var string
@@ -63,8 +57,6 @@ class Title extends AbstractEntity
     protected $name;
 
     /**
-     * name_kana
-     *
      * @ORM\Column(type="string", name="name_kana", nullable=true)
      *
      * @var string|null
@@ -72,8 +64,6 @@ class Title extends AbstractEntity
     protected $nameKana;
 
     /**
-     * sub_title
-     *
      * @ORM\Column(type="string", name="sub_title", nullable=true)
      *
      * @var string|null
@@ -81,8 +71,6 @@ class Title extends AbstractEntity
     protected $subTitle;
 
     /**
-     * credit
-     *
      * @ORM\Column(type="string", nullable=true)
      *
      * @var string|null
@@ -90,8 +78,6 @@ class Title extends AbstractEntity
     protected $credit;
 
     /**
-     * catchcopy
-     *
      * @ORM\Column(type="text", nullable=true)
      *
      * @var string|null
@@ -99,8 +85,6 @@ class Title extends AbstractEntity
     protected $catchcopy;
 
     /**
-     * introduction
-     *
      * @ORM\Column(type="text", nullable=true)
      *
      * @var string|null
@@ -108,8 +92,6 @@ class Title extends AbstractEntity
     protected $introduction;
 
     /**
-     * director
-     *
      * @ORM\Column(type="string", nullable=true)
      *
      * @var string|null
@@ -117,8 +99,6 @@ class Title extends AbstractEntity
     protected $director;
 
     /**
-     * cast
-     *
      * @ORM\Column(type="string", nullable=true)
      *
      * @var string|null
@@ -126,8 +106,6 @@ class Title extends AbstractEntity
     protected $cast;
 
     /**
-     * publishing_expected_date
-     *
      * @ORM\Column(type="date", name="publishing_expected_date", nullable=true)
      *
      * @var DateTime|null
@@ -135,8 +113,6 @@ class Title extends AbstractEntity
     protected $publishingExpectedDate;
 
     /**
-     * official_site
-     *
      * @ORM\Column(type="string", name="official_site", nullable=true)
      *
      * @var string|null
@@ -144,8 +120,6 @@ class Title extends AbstractEntity
     protected $officialSite;
 
     /**
-     * rating
-     *
      * @ORM\Column(type="smallint", nullable=true, options={"unsigned"=true})
      *
      * @var int|null
@@ -153,19 +127,13 @@ class Title extends AbstractEntity
     protected $rating;
 
     /**
-     * universal
-     *
      * @ORM\Column(type="json", nullable=true)
      *
-     * @var array|null
+     * @var array<int>|null
      */
     protected $universal;
 
-    /**
-     * レイティング区分
-     *
-     * @var array
-     */
+    /** @var array<int, string> */
     protected static $ratingTypes = [
         self::RATING_G    => 'G',
         self::RATING_PG12 => 'PG12',
@@ -173,260 +141,130 @@ class Title extends AbstractEntity
         self::RATING_R18  => 'R18+',
     ];
 
-    /**
-     * ユニバーサル区分
-     *
-     * @var array
-     */
+    /** @var array<int, string> */
     protected static $universalTypes = [
         '1' => '音声上映',
         '2' => '字幕上映',
     ];
 
-    /**
-     * construct
-     */
     public function __construct()
     {
     }
 
-    /**
-     * get id
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * get image
-     *
-     * @return File|null
-     */
-    public function getImage()
+    public function getImage(): ?File
     {
         return $this->image;
     }
 
-    /**
-     * set image
-     *
-     * @param File|null $image
-     * @return void
-     */
-    public function setImage($image)
+    public function setImage(?File $image): void
     {
         $this->image = $image;
     }
 
-    /**
-     * get chever_code
-     *
-     * @return string|null
-     */
-    public function getCheverCode()
+    public function getCheverCode(): ?string
     {
         return $this->cheverCode;
     }
 
-    /**
-     * set chever_code
-     *
-     * @param string|null $cheverCode
-     * @return void
-     */
-    public function setCheverCode(?string $cheverCode)
+    public function setCheverCode(?string $cheverCode): void
     {
         $this->cheverCode = $cheverCode;
     }
 
-    /**
-     * get name
-     *
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * set name
-     *
-     * @param string $name
-     * @return void
-     */
-    public function setName(string $name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * get name_kana
-     *
-     * @return string|null
-     */
-    public function getNameKana()
+    public function getNameKana(): ?string
     {
         return $this->nameKana;
     }
 
-    /**
-     * set name_kana
-     *
-     * @param string|null $nameKana
-     * @return void
-     */
-    public function setNameKana(?string $nameKana)
+    public function setNameKana(?string $nameKana): void
     {
         $this->nameKana = $nameKana;
     }
 
-    /**
-     * get sub_title
-     *
-     * @return string|null
-     */
-    public function getSubTitle()
+    public function getSubTitle(): ?string
     {
         return $this->subTitle;
     }
 
-    /**
-     * set sub_title
-     *
-     * @param string|null $subTitle
-     * @return void
-     */
-    public function setSubTitle(?string $subTitle)
+    public function setSubTitle(?string $subTitle): void
     {
         $this->subTitle = $subTitle;
     }
 
-    /**
-     * credit
-     *
-     * @return string|null
-     */
-    public function getCredit()
+    public function getCredit(): ?string
     {
         return $this->credit;
     }
 
-    /**
-     * set credit
-     *
-     * @param string|null $credit
-     * @return void
-     */
-    public function setCredit(?string $credit)
+    public function setCredit(?string $credit): void
     {
         $this->credit = $credit;
     }
 
-    /**
-     * get catchcopy
-     *
-     * @return string|null
-     */
-    public function getCatchcopy()
+    public function getCatchcopy(): ?string
     {
         return $this->catchcopy;
     }
 
-    /**
-     * set catchcopy
-     *
-     * @param string|null $catchcopy
-     * @return void
-     */
-    public function setCatchcopy(?string $catchcopy)
+    public function setCatchcopy(?string $catchcopy): void
     {
         $this->catchcopy = $catchcopy;
     }
 
-    /**
-     * get introduction
-     *
-     * @return string|null
-     */
-    public function getIntroduction()
+    public function getIntroduction(): ?string
     {
         return $this->introduction;
     }
 
-    /**
-     * set introduction
-     *
-     * @param string|null $introduction
-     * @return void
-     */
-    public function setIntroduction(?string $introduction)
+    public function setIntroduction(?string $introduction): void
     {
         $this->introduction = $introduction;
     }
 
-    /**
-     * get director
-     *
-     * @return string|null
-     */
-    public function getDirector()
+    public function getDirector(): ?string
     {
         return $this->director;
     }
 
-    /**
-     * set director
-     *
-     * @param string|null $director
-     * @return void
-     */
-    public function setDirector(?string $director)
+    public function setDirector(?string $director): void
     {
         $this->director = $director;
     }
 
-    /**
-     * get cast
-     *
-     * @return string|null
-     */
-    public function getCast()
+    public function getCast(): ?string
     {
         return $this->cast;
     }
 
-    /**
-     * set cast
-     *
-     * @param string $cast
-     * @return void
-     */
-    public function setCast(?string $cast)
+    public function setCast(?string $cast): void
     {
         $this->cast = $cast;
     }
 
-    /**
-     * get publishing_expected_date
-     *
-     * @return DateTime|null
-     */
-    public function getPublishingExpectedDate()
+    public function getPublishingExpectedDate(): ?DateTime
     {
         return $this->publishingExpectedDate;
     }
 
     /**
-     * set publishing_dxpected_date
-     *
      * @param DateTime|string|null $publishingExpectedDate
-     * @return void
      */
-    public function setPublishingExpectedDate($publishingExpectedDate)
+    public function setPublishingExpectedDate($publishingExpectedDate): void
     {
         if (is_null($publishingExpectedDate) || ($publishingExpectedDate instanceof DateTime)) {
             $this->publishingExpectedDate = $publishingExpectedDate;
@@ -435,64 +273,38 @@ class Title extends AbstractEntity
         }
     }
 
-    /**
-     * get official_site
-     *
-     * @return string|null
-     */
-    public function getOfficialSite()
+    public function getOfficialSite(): ?string
     {
         return $this->officialSite;
     }
 
-    /**
-     * set official_site
-     *
-     * @param string|null $officialSite
-     * @return void
-     */
-    public function setOfficialSite(?string $officialSite)
+    public function setOfficialSite(?string $officialSite): void
     {
         $this->officialSite = $officialSite;
     }
 
-    /**
-     * get rating
-     *
-     * @return int|null
-     */
-    public function getRating()
+    public function getRating(): ?int
     {
         return $this->rating;
     }
 
-    /**
-     * set rating
-     *
-     * @param int|null $rating
-     * @return void
-     */
-    public function setRating(?int $rating)
+    public function setRating(?int $rating): void
     {
         $this->rating = $rating;
     }
 
     /**
-     * get universal
-     *
-     * @return array|null
+     * @return array<int>|null
      */
-    public function getUniversal()
+    public function getUniversal(): ?array
     {
         return $this->universal;
     }
 
     /**
-     * get univarsal label
-     *
-     * @return array
+     * @return string[]
      */
-    public function getUniversalLabel()
+    public function getUniversalLabel(): array
     {
         $univarsal = $this->getUniversal();
         $types     = self::getUniversalTypes();
@@ -508,32 +320,25 @@ class Title extends AbstractEntity
     }
 
     /**
-     * set universal
-     *
-     * @param array|null $universal
-     * @return void
+     * @param array<int>|null $universal
      */
-    public function setUniversal(?array $universal)
+    public function setUniversal(?array $universal): void
     {
         $this->universal = $universal;
     }
 
     /**
-     * get レイティング区分
-     *
-     * @return array
+     * @return array<int, string>
      */
-    public static function getRatingTypes()
+    public static function getRatingTypes(): array
     {
         return self::$ratingTypes;
     }
 
     /**
-     * get ユニバーサル区分
-     *
-     * @return array
+     * @return array<int, string>
      */
-    public static function getUniversalTypes()
+    public static function getUniversalTypes(): array
     {
         return self::$universalTypes;
     }

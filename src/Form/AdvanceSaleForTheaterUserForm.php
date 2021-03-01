@@ -1,20 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Form;
 
 use Doctrine\ORM\EntityManager;
 use Laminas\InputFilter\InputFilter;
 
-/**
- * AdvanceSale for theater user form class
- */
 class AdvanceSaleForTheaterUserForm extends AbstractAdvanceSaleForm
 {
-    /**
-     * construct
-     *
-     * @param EntityManager $em
-     */
     public function __construct(EntityManager $em)
     {
         $this->type           = self::TYPE_EDIT;
@@ -26,12 +20,7 @@ class AdvanceSaleForTheaterUserForm extends AbstractAdvanceSaleForm
         $this->setup();
     }
 
-    /**
-     * setup
-     *
-     * @return void
-     */
-    protected function setup()
+    protected function setup(): void
     {
         $this->add([
             'name' => 'id',

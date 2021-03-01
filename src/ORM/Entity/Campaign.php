@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\ORM\Entity;
 
 use DateTime;
@@ -21,8 +23,6 @@ class Campaign extends AbstractEntity
     use TimestampableTrait;
 
     /**
-     * id
-     *
      * @ORM\Id
      * @ORM\Column(type="integer", options={"unsigned"=true})
      * @ORM\GeneratedValue
@@ -32,8 +32,6 @@ class Campaign extends AbstractEntity
     protected $id;
 
     /**
-     * title
-     *
      * @ORM\ManyToOne(targetEntity="Title")
      * @ORM\JoinColumn(name="title_id", referencedColumnName="id", nullable=true, onDelete="RESTRICT")
      *
@@ -42,8 +40,6 @@ class Campaign extends AbstractEntity
     protected $title;
 
     /**
-     * image
-     *
      * @ORM\OneToOne(targetEntity="File")
      * @ORM\JoinColumn(name="image_file_id", referencedColumnName="id", nullable=false, onDelete="RESTRICT")
      *
@@ -52,8 +48,6 @@ class Campaign extends AbstractEntity
     protected $image;
 
     /**
-     * name
-     *
      * @ORM\Column(type="string")
      *
      * @var string
@@ -61,8 +55,6 @@ class Campaign extends AbstractEntity
     protected $name;
 
     /**
-     * start_dt
-     *
      * @ORM\Column(type="datetime", name="start_dt")
      *
      * @var DateTime
@@ -70,8 +62,6 @@ class Campaign extends AbstractEntity
     protected $startDt;
 
     /**
-     * end_dt
-     *
      * @ORM\Column(type="datetime", name="end_dt")
      *
      * @var DateTime
@@ -79,8 +69,6 @@ class Campaign extends AbstractEntity
     protected $endDt;
 
     /**
-     * url
-     *
      * @ORM\Column(type="string")
      *
      * @var string
@@ -88,8 +76,6 @@ class Campaign extends AbstractEntity
     protected $url;
 
     /**
-     * pages
-     *
      * @ORM\OneToMany(targetEntity="PageCampaign", mappedBy="campaign")
      *
      * @var Collection<PageCampaign>
@@ -97,113 +83,62 @@ class Campaign extends AbstractEntity
     protected $pages;
 
     /**
-     * theaters
-     *
      * @ORM\OneToMany(targetEntity="TheaterCampaign", mappedBy="campaign")
      *
      * @var Collection<TheaterCampaign>
      */
     protected $theaters;
 
-    /**
-     * construct
-     */
     public function __construct()
     {
         $this->pages    = new ArrayCollection();
         $this->theaters = new ArrayCollection();
     }
 
-    /**
-     * get id
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * get title
-     *
-     * @return Title|null
-     */
-    public function getTitle()
+    public function getTitle(): ?Title
     {
         return $this->title;
     }
 
-    /**
-     * set title
-     *
-     * @param Title|null $title
-     * @return void
-     */
-    public function setTitle($title)
+    public function setTitle(?Title $title): void
     {
         $this->title = $title;
     }
 
-    /**
-     * get image
-     *
-     * @return File
-     */
-    public function getImage()
+    public function getImage(): File
     {
         return $this->image;
     }
 
-    /**
-     * set image
-     *
-     * @param File $image
-     * @return void
-     */
-    public function setImage(File $image)
+    public function setImage(File $image): void
     {
         $this->image = $image;
     }
 
-    /**
-     * get name
-     *
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * set name
-     *
-     * @param string $name
-     * @return void
-     */
-    public function setName(string $name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * get start_dt
-     *
-     * @return DateTime
-     */
-    public function getStartDt()
+    public function getStartDt(): DateTime
     {
         return $this->startDt;
     }
 
     /**
-     * set start_dt
-     *
      * @param DateTime|string $startDt
-     * @return void
      */
-    public function setStartDt($startDt)
+    public function setStartDt($startDt): void
     {
         if ($startDt instanceof DateTime) {
             $this->startDt = $startDt;
@@ -212,23 +147,15 @@ class Campaign extends AbstractEntity
         }
     }
 
-    /**
-     * get end_dt
-     *
-     * @return DateTime
-     */
-    public function getEndDt()
+    public function getEndDt(): DateTime
     {
         return $this->endDt;
     }
 
     /**
-     * set end_dt
-     *
      * @param DateTime|string $endDt
-     * @return void
      */
-    public function setEndDt($endDt)
+    public function setEndDt($endDt): void
     {
         if ($endDt instanceof DateTime) {
             $this->endDt = $endDt;
@@ -237,31 +164,18 @@ class Campaign extends AbstractEntity
         }
     }
 
-    /**
-     * get url
-     *
-     * @return string
-     */
-    public function getUrl()
+    public function getUrl(): string
     {
         return $this->url;
     }
 
-    /**
-     * set url
-     *
-     * @param string $url
-     * @return void
-     */
-    public function setUrl(string $url)
+    public function setUrl(string $url): void
     {
         $this->url = $url;
     }
 
     /**
-     * get pages
-     *
-     * @return Collection
+     * @return Collection<PageCampaign>
      */
     public function getPages(): Collection
     {
@@ -269,21 +183,14 @@ class Campaign extends AbstractEntity
     }
 
     /**
-     * get theaters
-     *
-     * @return Collection
+     * @return Collection<TheaterCampaign>
      */
     public function getTheaters(): Collection
     {
         return $this->theaters;
     }
 
-    /**
-     * get published target
-     *
-     * @return ArrayCollection
-     */
-    public function getPublishedTargets()
+    public function getPublishedTargets(): ArrayCollection
     {
         $publications = new ArrayCollection();
 

@@ -1,30 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Form;
 
 use App\ORM\Entity;
 use Doctrine\ORM\EntityManager;
 use Laminas\InputFilter\InputFilter;
 
-/**
- * AdminUser form class
- */
 class AdminUserForm extends BaseForm
 {
     /** @var EntityManager */
     protected $em;
 
-    /** @var array */
+    /** @var array<int, string> */
     protected $groupChoices;
 
-    /** @var array */
+    /** @var array<int, string> */
     protected $theaterChoices;
 
-    /**
-     * construct
-     *
-     * @param EntityManager $em
-     */
     public function __construct(EntityManager $em)
     {
         $this->em = $em;
@@ -37,12 +31,7 @@ class AdminUserForm extends BaseForm
         $this->setup();
     }
 
-    /**
-     * setup
-     *
-     * @return void
-     */
-    protected function setup()
+    protected function setup(): void
     {
         $this->add([
             'name' => 'name',
@@ -67,10 +56,10 @@ class AdminUserForm extends BaseForm
             ],
         ]);
 
+        /** @var Entity\Theater[] $theaters */
         $theaters = $this->em->getRepository(Entity\Theater::class)->findActive();
 
         foreach ($theaters as $theater) {
-            /** @var Entity\Theater $theater */
             $this->theaterChoices[$theater->getId()] = $theater->getNameJa();
         }
 
@@ -112,21 +101,17 @@ class AdminUserForm extends BaseForm
     }
 
     /**
-     * return group choices
-     *
-     * @return array
+     * @return array<int, string>
      */
-    public function getGroupChoices()
+    public function getGroupChoices(): array
     {
         return $this->groupChoices;
     }
 
     /**
-     * return theater choices
-     *
-     * @return array
+     * @return array<int, string>
      */
-    public function getTheaterChoices()
+    public function getTheaterChoices(): array
     {
         return $this->theaterChoices;
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\ORM\Entity;
 
 use DateTime;
@@ -21,8 +23,6 @@ class Schedule extends AbstractEntity
     use TimestampableTrait;
 
     /**
-     * id
-     *
      * @ORM\Id
      * @ORM\Column(type="integer", options={"unsigned"=true})
      * @ORM\GeneratedValue
@@ -32,8 +32,6 @@ class Schedule extends AbstractEntity
     protected $id;
 
     /**
-     * title
-     *
      * @ORM\ManyToOne(targetEntity="Title")
      * @ORM\JoinColumn(name="title_id", referencedColumnName="id", nullable=false, onDelete="RESTRICT")
      *
@@ -42,8 +40,6 @@ class Schedule extends AbstractEntity
     protected $title;
 
     /**
-     * start_date
-     *
      * @ORM\Column(type="date", name="start_date")
      *
      * @var DateTime
@@ -51,8 +47,6 @@ class Schedule extends AbstractEntity
     protected $startDate;
 
     /**
-     * end_date
-     *
      * @ORM\Column(type="date", name="end_date")
      *
      * @var DateTime
@@ -60,8 +54,6 @@ class Schedule extends AbstractEntity
     protected $endDate;
 
     /**
-     * public_start_dt
-     *
      * @ORM\Column(type="datetime", name="public_start_dt")
      *
      * @var DateTime
@@ -69,8 +61,6 @@ class Schedule extends AbstractEntity
     protected $publicStartDt;
 
     /**
-     * public_end_dt
-     *
      * @ORM\Column(type="datetime", name="public_end_dt")
      *
      * @var DateTime
@@ -78,8 +68,6 @@ class Schedule extends AbstractEntity
     protected $publicEndDt;
 
     /**
-     * remark
-     *
      * @ORM\Column(type="text", nullable=true)
      *
      * @var string|null
@@ -87,8 +75,6 @@ class Schedule extends AbstractEntity
     protected $remark;
 
     /**
-     * showing_formats
-     *
      * @ORM\OneToMany(targetEntity="ShowingFormat", mappedBy="schedule", orphanRemoval=true)
      *
      * @var Collection<ShowingFormat>
@@ -96,71 +82,42 @@ class Schedule extends AbstractEntity
     protected $showingFormats;
 
     /**
-     * showing_theaters
-     *
      * @ORM\OneToMany(targetEntity="ShowingTheater", mappedBy="schedule", orphanRemoval=true)
      *
      * @var Collection<ShowingTheater>
      */
     protected $showingTheaters;
 
-    /**
-     * construct
-     */
     public function __construct()
     {
         $this->showingFormats  = new ArrayCollection();
         $this->showingTheaters = new ArrayCollection();
     }
 
-    /**
-     * get id
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * get title
-     *
-     * @return Title
-     */
-    public function getTitle()
+    public function getTitle(): Title
     {
         return $this->title;
     }
 
-    /**
-     * set title
-     *
-     * @param Title $title
-     * @return void
-     */
-    public function setTitle(Title $title)
+    public function setTitle(Title $title): void
     {
         $this->title = $title;
     }
 
-    /**
-     * get start_date
-     *
-     * @return DateTime
-     */
-    public function getStartDate()
+    public function getStartDate(): DateTime
     {
         return $this->startDate;
     }
 
     /**
-     * set start_date
-     *
      * @param DateTime|string $startDate
-     * @return void
      */
-    public function setStartDate($startDate)
+    public function setStartDate($startDate): void
     {
         if ($startDate instanceof DateTime) {
             $this->startDate = $startDate;
@@ -169,23 +126,15 @@ class Schedule extends AbstractEntity
         }
     }
 
-    /**
-     * get end_date
-     *
-     * @return DateTime
-     */
-    public function getEndDate()
+    public function getEndDate(): DateTime
     {
         return $this->endDate;
     }
 
     /**
-     * set end_date
-     *
      * @param DateTime|string $endDate
-     * @return void
      */
-    public function setEndDate($endDate)
+    public function setEndDate($endDate): void
     {
         if ($endDate instanceof DateTime) {
             $this->endDate = $endDate;
@@ -194,23 +143,15 @@ class Schedule extends AbstractEntity
         }
     }
 
-    /**
-     * get public_start_dt
-     *
-     * @return DateTime
-     */
-    public function getPublicStartDt()
+    public function getPublicStartDt(): DateTime
     {
         return $this->publicStartDt;
     }
 
     /**
-     * set public_start_dt
-     *
      * @param DateTime|string $publicStartDt
-     * @return void
      */
-    public function setPublicStartDt($publicStartDt)
+    public function setPublicStartDt($publicStartDt): void
     {
         if ($publicStartDt instanceof DateTime) {
             $this->publicStartDt = $publicStartDt;
@@ -219,23 +160,15 @@ class Schedule extends AbstractEntity
         }
     }
 
-    /**
-     * get public_end_dt
-     *
-     * @return DateTime
-     */
-    public function getPublicEndDt()
+    public function getPublicEndDt(): DateTime
     {
         return $this->publicEndDt;
     }
 
     /**
-     * set public_end_dt
-     *
      * @param DateTime|string $publicEndDt
-     * @return void
      */
-    public function setPublicEndDt($publicEndDt)
+    public function setPublicEndDt($publicEndDt): void
     {
         if ($publicEndDt instanceof DateTime) {
             $this->publicEndDt = $publicEndDt;
@@ -244,65 +177,44 @@ class Schedule extends AbstractEntity
         }
     }
 
-    /**
-     * get remark
-     *
-     * @return string|null
-     */
-    public function getRemark()
+    public function getRemark(): ?string
     {
         return $this->remark;
     }
 
-    /**
-     * set remark
-     *
-     * @param string|null $remark
-     * @return void
-     */
-    public function setRemark(?string $remark)
+    public function setRemark(?string $remark): void
     {
         $this->remark = $remark;
     }
 
     /**
-     * get showing_formats
-     *
-     * @return Collection
+     * @return Collection<ShowingFormat>
      */
-    public function getShowingFormats()
+    public function getShowingFormats(): Collection
     {
         return $this->showingFormats;
     }
 
     /**
-     * set showing_formats
-     *
-     * @param Collection $showingFormats
-     * @return void
+     * @param Collection<ShowingFormat> $showingFormats
      */
-    public function setShowingFormats(Collection $showingFormats)
+    public function setShowingFormats(Collection $showingFormats): void
     {
         $this->showingFormats = $showingFormats;
     }
 
     /**
-     * get showing_theaters
-     *
-     * @return Collection
+     * @return Collection<ShowingTheater>
      */
-    public function getShowingTheaters()
+    public function getShowingTheaters(): Collection
     {
         return $this->showingTheaters;
     }
 
     /**
-     * set showing_theaters
-     *
-     * @param Collection $showingTheaters
-     * @return void
+     * @param Collection<ShowingTheater> $showingTheaters
      */
-    public function setShowingTheaters(Collection $showingTheaters)
+    public function setShowingTheaters(Collection $showingTheaters): void
     {
         $this->showingTheaters = $showingTheaters;
     }

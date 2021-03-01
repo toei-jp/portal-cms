@@ -1,10 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\ORM\Entity;
 
-/**
- * Abstract entity class
- */
 abstract class AbstractEntity
 {
 }

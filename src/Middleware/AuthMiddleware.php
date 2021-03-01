@@ -1,24 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Middleware;
 
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Http\Response;
 
-/**
- * Auth middleware class
- */
 class AuthMiddleware extends AbstractMiddleware
 {
-    /**
-     * Undocumented function
-     *
-     * @param Request  $request
-     * @param Response $response
-     * @param callable $next
-     * @return Response
-     */
-    public function __invoke(Request $request, Response $response, $next)
+    public function __invoke(Request $request, Response $response, callable $next): Response
     {
         $auth = $this->container->get('auth');
 

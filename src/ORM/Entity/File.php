@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\ORM\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -18,8 +20,6 @@ class File extends AbstractEntity
     use TimestampableTrait;
 
     /**
-     * id
-     *
      * @ORM\Id
      * @ORM\Column(type="integer", options={"unsigned"=true})
      * @ORM\GeneratedValue
@@ -29,8 +29,6 @@ class File extends AbstractEntity
     protected $id;
 
     /**
-     * name
-     *
      * @ORM\Column(type="string", unique=true)
      *
      * @var string
@@ -38,8 +36,6 @@ class File extends AbstractEntity
     protected $name;
 
     /**
-     * original_name
-     *
      * @ORM\Column(type="string", name="original_name")
      *
      * @var string
@@ -47,8 +43,6 @@ class File extends AbstractEntity
     protected $originalName;
 
     /**
-     * mime_type
-     *
      * @ORM\Column(type="string", name="mime_type")
      *
      * @var string
@@ -56,139 +50,73 @@ class File extends AbstractEntity
     protected $mimeType;
 
     /**
-     * size
-     *
      * @ORM\Column(type="integer", options={"unsigned"=true})
      *
      * @var int
      */
     protected $size;
 
-    /**
-     * blob container name
-     *
-     * @var string
-     */
+    /** @var string */
     protected static $blobContainer = 'file';
 
-    /**
-     * construct
-     */
     public function __construct()
     {
     }
 
-    /**
-     * get id
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * get name
-     *
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * set name
-     *
-     * @param string $name
-     * @return void
-     */
-    public function setName(string $name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * get original_name
-     *
-     * @return string
-     */
-    public function getOriginalName()
+    public function getOriginalName(): string
     {
         return $this->originalName;
     }
 
-    /**
-     * set original_name
-     *
-     * @param string $originalName
-     * @return void
-     */
-    public function setOriginalName(string $originalName)
+    public function setOriginalName(string $originalName): void
     {
         $this->originalName = $originalName;
     }
 
-    /**
-     * get mime_type
-     *
-     * @return string
-     */
-    public function getMimeType()
+    public function getMimeType(): string
     {
         return $this->mimeType;
     }
 
-    /**
-     * set mime_type
-     *
-     * @param string $mimeType
-     * @return void
-     */
-    public function setMimeType(string $mimeType)
+    public function setMimeType(string $mimeType): void
     {
         $this->mimeType = $mimeType;
     }
 
-    /**
-     * get size
-     *
-     * @return int
-     */
-    public function getSize()
+    public function getSize(): int
     {
         return $this->size;
     }
 
-    /**
-     * set size
-     *
-     * @param int $size
-     * @return void
-     */
-    public function setSize(int $size)
+    public function setSize(int $size): void
     {
         $this->size = $size;
     }
 
-    /**
-     * get blob container
-     *
-     * @return string
-     */
-    public static function getBlobContainer()
+    public static function getBlobContainer(): string
     {
         return self::$blobContainer;
     }
 
     /**
-     * create name
-     *
      * @param string $file original file
-     * @return string
      */
-    public static function createName(string $file)
+    public static function createName(string $file): string
     {
         $info = pathinfo($file);
 

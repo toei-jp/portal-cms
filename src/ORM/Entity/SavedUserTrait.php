@@ -1,15 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\ORM\Entity;
 
-/**
- * SavedUser trait
- */
 trait SavedUserTrait
 {
     /**
-     * created_user
-     *
      * @ORM\ManyToOne(targetEntity="AdminUser")
      * @ORM\JoinColumn(name="created_user_id", referencedColumnName="id", nullable=true, onDelete="RESTRICT")
      *
@@ -18,8 +15,6 @@ trait SavedUserTrait
     protected $createdUser;
 
     /**
-     * updated_user
-     *
      * @ORM\ManyToOne(targetEntity="AdminUser")
      * @ORM\JoinColumn(name="updated_user_id", referencedColumnName="id", nullable=true, onDelete="RESTRICT")
      *
@@ -27,44 +22,22 @@ trait SavedUserTrait
      */
     protected $updatedUser;
 
-    /**
-     * get created_user
-     *
-     * @return AdminUser|null
-     */
-    public function getCreatedUser()
+    public function getCreatedUser(): ?AdminUser
     {
         return $this->createdUser;
     }
 
-    /**
-     * set created_user
-     *
-     * @param AdminUser|null $createdUser
-     * @return void
-     */
-    public function setCreatedUser(?AdminUser $createdUser)
+    public function setCreatedUser(?AdminUser $createdUser): void
     {
         $this->createdUser = $createdUser;
     }
 
-    /**
-     * get updated_user
-     *
-     * @return AdminUser|null
-     */
-    public function getUpdatedUser()
+    public function getUpdatedUser(): ?AdminUser
     {
         return $this->updatedUser;
     }
 
-    /**
-     * set updated_user
-     *
-     * @param AdminUser|null $updatedUser
-     * @return void
-     */
-    public function setUpdatedUser(?AdminUser $updatedUser)
+    public function setUpdatedUser(?AdminUser $updatedUser): void
     {
         $this->updatedUser = $updatedUser;
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\API;
 
 use App\ORM\Entity;
@@ -7,83 +9,69 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 use Throwable;
 
-/**
- * Title API controller
- */
 class TitleController extends BaseController
 {
     /**
      * list action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return string|void
+     * @param array<string, mixed> $args
      */
-    public function executeList($request, $response, $args)
+    public function executeList(Request $request, Response $response, array $args): Response
     {
         $name = $request->getParam('name');
         $data = [];
 
         if (! empty($name)) {
+            /** @var Entity\Title[] $titles */
             $titles = $this->em
                 ->getRepository(Entity\Title::class)
                 ->findForListApi($name);
 
             foreach ($titles as $title) {
-                /** @var Entity\Title $title */
-
                 $data[] = [
                     'id'            => $title->getId(),
                     'name'          => $title->getName(),
                     'official_site' => $title->getOfficialSite(),
                     'publishing_expected_date' => $title->getPublishingExpectedDate()
-                                               ? $title->getPublishingExpectedDate()->format('Y/m/d')
-                                               : null,
+                        ? $title->getPublishingExpectedDate()->format('Y/m/d')
+                        : null,
                 ];
             }
         }
 
-        $this->data->set('data', $data);
+        return $response->withJson(['data' => $data]);
     }
 
     /**
      * find imported title action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return string|void
+     * @param array<string, mixed> $args
      */
-    public function executeFindImported($request, $response, $args)
+    public function executeFindImported(Request $request, Response $response, array $args): Response
     {
         $ids  = json_decode($request->getParam('ids'));
         $data = [];
 
         if ($ids !== null) {
+            /** @var Entity\Title[] $titles */
             $titles = $this->em
                 ->getRepository(Entity\Title::class)
                 ->findForFindImportedApi($ids);
 
             foreach ($titles as $title) {
-                /** @var Entity\Title $title */
-
                 array_push($data, $title->getCheverCode());
             }
         }
 
-        $this->data->set('data', $data);
+        return $response->withJson(['data' => $data]);
     }
 
     /**
      * import title action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return string|void
+     * @param array<string, mixed> $args
      */
-    public function executeImportTitles($request, $response, $args)
+    public function executeImportTitles(Request $request, Response $response, array $args): Response
     {
         $data   = $request->getParams();
         $errors = [];
@@ -123,38 +111,36 @@ class TitleController extends BaseController
                 $this->em->persist($newTitle);
                 $this->em->flush();
             } catch (Throwable $e) {
-                $this->logger->error($e);
+                $this->logger->error($e->getMessage());
                 array_push($errors, $e->getMessage());
             }
         }
 
         if (count($errors) > 0) {
-            $this->data->set('status', 'fail');
-            $this->data->set('errors', $errors);
-        } else {
-            $this->data->set('status', 'success');
+            return $response->withJson([
+                'status' => 'fail',
+                'errors' => $errors,
+            ]);
         }
+
+        return $response->withJson(['status' => 'success']);
     }
 
     /**
      * autocomplete action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return string|void
+     * @param array<string, mixed> $args
      */
-    public function executeAutocomplete($request, $response, $args)
+    public function executeAutocomplete(Request $request, Response $response, array $args): Response
     {
+        /** @var Entity\Title[] $titles */
         $titles = $this->em
-                ->getRepository(Entity\Title::class)
-                ->findForAutocomplete($request->getParams());
+            ->getRepository(Entity\Title::class)
+            ->findForAutocomplete($request->getParams());
 
         $data = [];
 
         foreach ($titles as $title) {
-            /** @var Entity\Title $title */
-
             $data[] = [
                 'name'      => $title->getName(),
                 'name_kana' => $title->getNameKana(),
@@ -162,6 +148,6 @@ class TitleController extends BaseController
             ];
         }
 
-        $this->data->set('data', $data);
+        return $response->withJson(['data' => $data]);
     }
 }

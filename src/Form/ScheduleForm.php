@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Form;
 
 use App\ORM\Entity\Theater;
@@ -7,9 +9,6 @@ use Doctrine\ORM\EntityManager;
 use Laminas\InputFilter\InputFilter;
 use Laminas\Validator;
 
-/**
- * Schedule form class
- */
 class ScheduleForm extends BaseForm
 {
     public const TYPE_NEW  = 1;
@@ -21,18 +20,12 @@ class ScheduleForm extends BaseForm
     /** @var EntityManager */
     protected $em;
 
-    /** @var array */
+    /** @var array<int, string> */
     protected $theaterChoices;
 
     /** @var ShowingFormatFieldset */
     protected $showingFormatFieldset;
 
-    /**
-     * construct
-     *
-     * @param int           $type
-     * @param EntityManager $em
-     */
     public function __construct(int $type, EntityManager $em)
     {
         $this->type = $type;
@@ -46,12 +39,7 @@ class ScheduleForm extends BaseForm
         $this->setup();
     }
 
-    /**
-     * setup
-     *
-     * @return void
-     */
-    protected function setup()
+    protected function setup(): void
     {
         if ($this->type === self::TYPE_EDIT) {
             $this->add([
@@ -90,10 +78,10 @@ class ScheduleForm extends BaseForm
             'type' => 'Textarea',
         ]);
 
+        /** @var Theater[] $theaters */
         $theaters = $this->em->getRepository(Theater::class)->findActive();
 
         foreach ($theaters as $theater) {
-            /** @var Theater $theater */
             $this->theaterChoices[$theater->getId()] = $theater->getNameJa();
         }
 
@@ -185,21 +173,14 @@ class ScheduleForm extends BaseForm
     }
 
     /**
-     * return theater choices
-     *
-     * @return array
+     * @return array<int, string>
      */
-    public function getTheaterChoices()
+    public function getTheaterChoices(): array
     {
         return $this->theaterChoices;
     }
 
-    /**
-     * return format Fieldset
-     *
-     * @return ShowingFormatFieldset
-     */
-    public function getShowingFormatFieldset()
+    public function getShowingFormatFieldset(): ShowingFormatFieldset
     {
         return $this->showingFormatFieldset;
     }

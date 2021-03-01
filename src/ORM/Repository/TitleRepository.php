@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\ORM\Repository;
 
 use App\ORM\Entity\Title;
@@ -7,20 +9,12 @@ use App\Pagination\DoctrinePaginator;
 use Doctrine\ORM\EntityRepository;
 use InvalidArgumentException;
 
-/**
- * Title repository class
- */
 class TitleRepository extends EntityRepository
 {
     /**
-     * find for list page
-     *
-     * @param array $params
-     * @param int   $page
-     * @param int   $maxPerPage
-     * @return DoctrinePaginator
+     * @param array<string, mixed> $params
      */
-    public function findForList(array $params, int $page, int $maxPerPage = 10)
+    public function findForList(array $params, int $page, int $maxPerPage = 10): DoctrinePaginator
     {
         $qb = $this->createQueryBuilder('t');
         $qb
@@ -49,12 +43,9 @@ class TitleRepository extends EntityRepository
     }
 
     /**
-     * find for list API
-     *
-     * @param string $name
      * @return Title[]
      */
-    public function findForListApi(string $name)
+    public function findForListApi(string $name): array
     {
         if (empty($name)) {
             throw new InvalidArgumentException('invalid "name".');
@@ -75,12 +66,10 @@ class TitleRepository extends EntityRepository
     }
 
     /**
-     * find for find imported API
-     *
-     * @param array $ids
+     * @param string[] $ids
      * @return Title[]
      */
-    public function findForFindImportedApi($ids)
+    public function findForFindImportedApi(array $ids): array
     {
         if (gettype($ids) !== 'array') {
             throw new InvalidArgumentException('invalid "ids".');
@@ -100,10 +89,10 @@ class TitleRepository extends EntityRepository
      *
      * @link https://github.com/sergiodlopes/jquery-flexdatalist
      *
-     * @param array $params
+     * @param array<string, mixed> $params
      * @return Title[]
      */
-    public function findForAutocomplete(array $params)
+    public function findForAutocomplete(array $params): array
     {
         $keyword = $params['keyword'];
 
@@ -127,13 +116,7 @@ class TitleRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    /**
-     * find one by id
-     *
-     * @param int $id
-     * @return Title|null
-     */
-    public function findOneById($id)
+    public function findOneById(int $id): ?Title
     {
         $qb = $this->createQueryBuilder('t');
         $qb

@@ -1,12 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Form;
 
 use Doctrine\ORM\EntityManager;
 
-/**
- * Abstract AdvanceSale form class
- */
 abstract class AbstractAdvanceSaleForm extends BaseForm
 {
     public const TYPE_NEW  = 1;
@@ -21,25 +20,21 @@ abstract class AbstractAdvanceSaleForm extends BaseForm
     /** @var AdvanceTicketFieldset */
     protected $ticketFieldset;
 
-    /**@var array */
+    /** @var array<int, string> */
     protected $theaterChoices = [];
 
     /**
-     * return ticket type choices
-     *
-     * @return array
+     * @return array<int, string>
      */
-    public function getTicketTypeChoices()
+    public function getTicketTypeChoices(): array
     {
         return $this->ticketFieldset->getTypeChoices();
     }
 
     /**
-     * return ticket special_gift_stock choices
-     *
-     * @return array
+     * @return array<int, string>
      */
-    public function getTicketSpecialGiftStockChoices()
+    public function getTicketSpecialGiftStockChoices(): array
     {
         return $this->ticketFieldset->getSpecialGiftStockChoices();
     }

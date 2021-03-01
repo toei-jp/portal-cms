@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\ORM\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -25,8 +27,6 @@ class Theater extends AbstractEntity implements
     public const MASTER_VERSION_V2 = 2;
 
     /**
-     * id
-     *
      * @ORM\Id
      * @ORM\Column(type="smallint", options={"unsigned"=true})
      * @ORM\GeneratedValue(strategy="NONE")
@@ -36,8 +36,6 @@ class Theater extends AbstractEntity implements
     protected $id;
 
     /**
-     * name
-     *
      * @ORM\Column(type="string", unique=true)
      *
      * @var string
@@ -45,8 +43,6 @@ class Theater extends AbstractEntity implements
     protected $name;
 
     /**
-     * name_ja
-     *
      * @ORM\Column(type="string", name="name_ja")
      *
      * @var string
@@ -54,8 +50,6 @@ class Theater extends AbstractEntity implements
     protected $nameJa;
 
     /**
-     * area
-     *
      * @ORM\Column(type="smallint", options={"unsigned"=true})
      *
      * @var int
@@ -63,8 +57,6 @@ class Theater extends AbstractEntity implements
     protected $area;
 
     /**
-     * master_code
-     *
      * @ORM\Column(type="string", name="master_code", length=3, options={"fixed":true})
      *
      * @var string
@@ -72,8 +64,6 @@ class Theater extends AbstractEntity implements
     protected $masterCode;
 
     /**
-     * display_order
-     *
      * @ORM\Column(type="smallint", name="display_order", options={"unsigned"=true})
      *
      * @var int
@@ -92,8 +82,6 @@ class Theater extends AbstractEntity implements
     protected $meta;
 
     /**
-     * admin_users
-     *
      * @ORM\OneToMany(targetEntity="AdminUser", mappedBy="theater")
      *
      * @var Collection<AdminUser>
@@ -101,8 +89,6 @@ class Theater extends AbstractEntity implements
     protected $adminUsers;
 
     /**
-     * campaigns
-     *
      * @ORM\OneToMany(targetEntity="TheaterCampaign", mappedBy="theater", orphanRemoval=true)
      * @ORM\OrderBy({"displayOrder" = "ASC"})
      *
@@ -111,8 +97,6 @@ class Theater extends AbstractEntity implements
     protected $campaigns;
 
     /**
-     * news_list
-     *
      * @ORM\OneToMany(targetEntity="TheaterNews", mappedBy="theater", orphanRemoval=true)
      * @ORM\OrderBy({"displayOrder" = "ASC"})
      *
@@ -121,8 +105,6 @@ class Theater extends AbstractEntity implements
     protected $newsList;
 
     /**
-     * main_banners
-     *
      * @ORM\OneToMany(targetEntity="TheaterMainBanner", mappedBy="theater", orphanRemoval=true)
      * @ORM\OrderBy({"displayOrder" = "ASC"})
      *
@@ -130,159 +112,85 @@ class Theater extends AbstractEntity implements
      */
     protected $mainBanners;
 
-    /**
-     * construct
-     *
-     * @param int $id
-     */
     public function __construct(int $id)
     {
         $this->id          = $id;
         $this->adminUsers  = new ArrayCollection();
         $this->campaigns   = new ArrayCollection();
-        $this->newsList    =  new ArrayCollection();
+        $this->newsList    = new ArrayCollection();
         $this->mainBanners = new ArrayCollection();
     }
 
-    /**
-     * get id
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * get name
-     *
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * set name
-     *
-     * @param string $name
-     * @return void
-     */
-    public function setName(string $name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * get name_ja
-     *
-     * @return string
-     */
-    public function getNameJa()
+    public function getNameJa(): string
     {
         return $this->nameJa;
     }
 
-    /**
-     * set name_ja
-     *
-     * @param string $nameJa
-     * @return void
-     */
-    public function setNameJa(string $nameJa)
+    public function setNameJa(string $nameJa): void
     {
         $this->nameJa = $nameJa;
     }
 
-    /**
-     * get area
-     *
-     * @return int
-     */
-    public function getArea()
+    public function getArea(): int
     {
         return $this->area;
     }
 
-    /**
-     * set area
-     *
-     * @param int $area
-     * @return void
-     */
-    public function setArea($area)
+    public function setArea(int $area): void
     {
         $this->area = $area;
     }
 
-    /**
-     * get master_code
-     *
-     * @return string
-     */
-    public function getMasterCode()
+    public function getMasterCode(): string
     {
         return $this->masterCode;
     }
 
-    /**
-     * set master_code
-     *
-     * @param string $masterCode
-     * @return void
-     */
-    public function setMasterCode($masterCode)
+    public function setMasterCode(string $masterCode): void
     {
         $this->masterCode = $masterCode;
     }
 
-    /**
-     * get display_order
-     *
-     * @return int
-     */
-    public function getDisplayOrder()
+    public function getDisplayOrder(): int
     {
         return $this->displayOrder;
     }
 
-    /**
-     * set display_order
-     *
-     * @param int $displayOrder
-     * @return void
-     */
-    public function setDisplayOrder(int $displayOrder)
+    public function setDisplayOrder(int $displayOrder): void
     {
         $this->displayOrder = $displayOrder;
     }
 
-    /**
-     * get meta
-     *
-     * @return TheaterMeta
-     */
-    public function getMeta()
+    public function getMeta(): TheaterMeta
     {
         return $this->meta;
     }
 
     /**
-     * get admin_users
-     *
-     * @return Collection
+     * @return Collection<AdminUser>
      */
-    public function getAdminUsers()
+    public function getAdminUsers(): Collection
     {
         return $this->adminUsers;
     }
 
     /**
-     * get campaigns
-     *
-     * @return Collection
+     * @return Collection<TheaterCampaign>
      */
     public function getCampaigns(): Collection
     {
@@ -290,9 +198,7 @@ class Theater extends AbstractEntity implements
     }
 
     /**
-     * get news_list
-     *
-     * @return Collection
+     * @return Collection<TheaterNews>
      */
     public function getNewsList(): Collection
     {
@@ -300,9 +206,7 @@ class Theater extends AbstractEntity implements
     }
 
     /**
-     * get main_banners
-     *
-     * @return Collection
+     * @return Collection<TheaterMainBanner>
      */
     public function getMainBanners(): Collection
     {

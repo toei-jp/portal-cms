@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\ORM\Entity;
 
 use DateTime;
@@ -28,20 +30,20 @@ class AdvanceTicket extends AbstractEntity
     public const STATUS_SALE     = 2;
     public const STATUS_SALE_END = 3;
 
-    /** @var array */
+    /** @var array<int, string> */
     protected static $types = [
         self::TYPE_MVTK  => 'ムビチケ',
         self::TYPE_PAPER => '紙券',
     ];
 
-    /** @var array */
+    /** @var array<int, string> */
     protected static $specialGiftStockList = [
         self::SPECIAL_GIFT_STOCK_IN     => '有り',
         self::SPECIAL_GIFT_STOCK_FEW    => '残り僅か',
         self::SPECIAL_GIFT_STOCK_NOT_IN => '特典終了',
     ];
 
-    /** @var array */
+    /** @var array<int, string> */
     protected static $statusList = [
         self::STATUS_PRE_SALE => '販売予定',
         self::STATUS_SALE     => '販売中',
@@ -49,8 +51,6 @@ class AdvanceTicket extends AbstractEntity
     ];
 
     /**
-     * id
-     *
      * @ORM\Id
      * @ORM\Column(type="integer", options={"unsigned"=true})
      * @ORM\GeneratedValue
@@ -60,8 +60,6 @@ class AdvanceTicket extends AbstractEntity
     protected $id;
 
     /**
-     * advance_sale
-     *
      * @ORM\ManyToOne(targetEntity="AdvanceSale")
      * @ORM\JoinColumn(name="advance_sale_id", referencedColumnName="id", nullable=false, onDelete="RESTRICT")
      *
@@ -70,8 +68,6 @@ class AdvanceTicket extends AbstractEntity
     protected $advanceSale;
 
     /**
-     * release_dt
-     *
      * @ORM\Column(type="datetime", name="release_dt")
      *
      * @var DateTime
@@ -79,8 +75,6 @@ class AdvanceTicket extends AbstractEntity
     protected $releaseDt;
 
     /**
-     * release_dt_text
-     *
      * @ORM\Column(type="string", name="release_dt_text", nullable=true)
      *
      * @var string|null
@@ -88,8 +82,6 @@ class AdvanceTicket extends AbstractEntity
     protected $releaseDtText;
 
     /**
-     * is_sales_end
-     *
      * @ORM\Column(type="boolean", name="is_sales_end", options={"default":false})
      *
      * @var bool
@@ -97,8 +89,6 @@ class AdvanceTicket extends AbstractEntity
     protected $isSalesEnd;
 
     /**
-     * type
-     *
      * @ORM\Column(type="smallint", options={"unsigned"=true})
      *
      * @var int
@@ -106,8 +96,6 @@ class AdvanceTicket extends AbstractEntity
     protected $type;
 
     /**
-     * price_text
-     *
      * @ORM\Column(type="string", name="price_text", nullable=true)
      *
      * @var string|null
@@ -115,8 +103,6 @@ class AdvanceTicket extends AbstractEntity
     protected $priceText;
 
     /**
-     * special_gift
-     *
      * @ORM\Column(type="string", name="special_gift", nullable=true)
      *
      * @var string|null
@@ -124,8 +110,6 @@ class AdvanceTicket extends AbstractEntity
     protected $specialGift;
 
     /**
-     * special_gift_stock
-     *
      * @ORM\Column(type="smallint", name="special_gift_stock", nullable=true, options={"unsigned"=true})
      *
      * @var int|null
@@ -133,8 +117,6 @@ class AdvanceTicket extends AbstractEntity
     protected $specialGiftStock;
 
     /**
-     * special_gift_image
-     *
      * @ORM\OneToOne(targetEntity="File")
      * @ORM\JoinColumn(name="special_gift_image", referencedColumnName="id", nullable=true, onDelete="RESTRICT")
      *
@@ -142,61 +124,34 @@ class AdvanceTicket extends AbstractEntity
      */
     protected $specialGiftImage;
 
-    /**
-     * construct
-     */
     public function __construct()
     {
     }
 
-    /**
-     * get id
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * get advance_sale
-     *
-     * @return AdvanceSale
-     */
-    public function getAdvanceSale()
+    public function getAdvanceSale(): AdvanceSale
     {
         return $this->advanceSale;
     }
 
-    /**
-     * set advance_sale
-     *
-     * @param AdvanceSale $advanceSale
-     * @return void
-     */
-    public function setAdvanceSale(AdvanceSale $advanceSale)
+    public function setAdvanceSale(AdvanceSale $advanceSale): void
     {
         $this->advanceSale = $advanceSale;
     }
 
-    /**
-     * get release_dt
-     *
-     * @return DateTime
-     */
-    public function getReleaseDt()
+    public function getReleaseDt(): DateTime
     {
         return $this->releaseDt;
     }
 
     /**
-     * set release_dt
-     *
      * @param DateTime|string $releaseDt
-     * @return void
      */
-    public function setReleaseDt($releaseDt)
+    public function setReleaseDt($releaseDt): void
     {
         if ($releaseDt instanceof DateTime) {
             $this->releaseDt = $releaseDt;
@@ -205,191 +160,95 @@ class AdvanceTicket extends AbstractEntity
         }
     }
 
-    /**
-     * get release_dt_text
-     *
-     * @return string|null
-     */
-    public function getReleaseDtText()
+    public function getReleaseDtText(): ?string
     {
         return $this->releaseDtText;
     }
 
-    /**
-     * set release_dt_text
-     *
-     * @param string|null $releaseDtText
-     * @return void
-     */
-    public function setReleaseDtText(?string $releaseDtText)
+    public function setReleaseDtText(?string $releaseDtText): void
     {
         $this->releaseDtText = $releaseDtText;
     }
 
-    /**
-     * get is_sales_end
-     *
-     * @return bool
-     */
-    public function getIsSalesEnd()
+    public function getIsSalesEnd(): bool
     {
         return $this->isSalesEnd;
     }
 
     /**
-     * is salse end
-     *
      * alias getIsSalesEnd()
-     *
-     * @return bool
      */
-    public function isSalseEnd()
+    public function isSalseEnd(): bool
     {
         return $this->getIsSalesEnd();
     }
 
-    /**
-     * set is_salse_end
-     *
-     * @param bool $isSalesEnd
-     * @return void
-     */
-    public function setIsSalesEnd(bool $isSalesEnd)
+    public function setIsSalesEnd(bool $isSalesEnd): void
     {
         $this->isSalesEnd = $isSalesEnd;
     }
 
-    /**
-     * get type
-     *
-     * @return int
-     */
-    public function getType()
+    public function getType(): int
     {
         return $this->type;
     }
 
-    /**
-     * get type label
-     *
-     * @return string|null
-     */
-    public function getTypeLabel()
+    public function getTypeLabel(): ?string
     {
         return self::$types[$this->getType()] ?? null;
     }
 
-    /**
-     * set type
-     *
-     * @param int $type
-     * @return void
-     */
-    public function setType(int $type)
+    public function setType(int $type): void
     {
         $this->type = $type;
     }
 
-    /**
-     * get price_text
-     *
-     * @return string|null
-     */
-    public function getPriceText()
+    public function getPriceText(): ?string
     {
         return $this->priceText;
     }
 
-    /**
-     * set price_text
-     *
-     * @param string|null $priceText
-     * @return void
-     */
-    public function setPriceText(?string $priceText)
+    public function setPriceText(?string $priceText): void
     {
         $this->priceText = $priceText;
     }
 
-    /**
-     * get special_gift
-     *
-     * @return string|null
-     */
-    public function getSpecialGift()
+    public function getSpecialGift(): ?string
     {
         return $this->specialGift;
     }
 
-    /**
-     * set special_gift
-     *
-     * @param string|null $specialGift
-     * @return void
-     */
-    public function setSpecialGift(?string $specialGift)
+    public function setSpecialGift(?string $specialGift): void
     {
         $this->specialGift = $specialGift;
     }
 
-    /**
-     * get special_gift_stock
-     *
-     * @return int|null
-     */
-    public function getSpecialGiftStock()
+    public function getSpecialGiftStock(): ?int
     {
         return $this->specialGiftStock;
     }
 
-    /**
-     * get special_gift_stock label
-     *
-     * @return string|null
-     */
-    public function getSpecialGiftStockLabel()
+    public function getSpecialGiftStockLabel(): ?string
     {
         return self::$specialGiftStockList[$this->getSpecialGiftStock()] ?? null;
     }
 
-    /**
-     * set special_gift_stock
-     *
-     * @param int|null $specialGiftStock
-     * @return void
-     */
-    public function setSpecialGiftStock($specialGiftStock)
+    public function setSpecialGiftStock(?int $specialGiftStock): void
     {
         $this->specialGiftStock = $specialGiftStock ?: null;
     }
 
-    /**
-     * get special_gift_image
-     *
-     * @return File|null
-     */
-    public function getSpecialGiftImage()
+    public function getSpecialGiftImage(): ?File
     {
         return $this->specialGiftImage;
     }
 
-    /**
-     * set special_gift_image
-     *
-     * @param File|null $specialGiftImage
-     * @return void
-     */
-    public function setSpecialGiftImage($specialGiftImage)
+    public function setSpecialGiftImage(?File $specialGiftImage): void
     {
         $this->specialGiftImage = $specialGiftImage;
     }
 
-    /**
-     * get status label
-     *
-     * @return string|null
-     */
-    public function getStatusLabel()
+    public function getStatusLabel(): ?string
     {
         if ($this->isSalseEnd()) {
             return self::$statusList[self::STATUS_SALE_END];
@@ -413,21 +272,17 @@ class AdvanceTicket extends AbstractEntity
     }
 
     /**
-     * return types
-     *
-     * @return array
+     * @return array<int, string>
      */
-    public static function getTypes()
+    public static function getTypes(): array
     {
         return self::$types;
     }
 
     /**
-     * return special gift stock list
-     *
-     * @return array
+     * @return array<int, string>
      */
-    public static function getSpecialGiftStockList()
+    public static function getSpecialGiftStockList(): array
     {
         return self::$specialGiftStockList;
     }

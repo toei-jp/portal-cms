@@ -14,17 +14,11 @@ use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 
-/**
- * Error handler test
- */
 final class ErrorTest extends TestCase
 {
     use MockeryPHPUnitIntegration;
 
-    /**
-     * @return ReflectionClass
-     */
-    protected function createTargetReflection()
+    protected function createTargetReflection(): ReflectionClass
     {
         return new ReflectionClass(Error::class);
     }
@@ -46,13 +40,9 @@ final class ErrorTest extends TestCase
     }
 
     /**
-     * test construct
-     *
      * @test
-     *
-     * @return void
      */
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $loggerMock = $this->createLoggerMock();
 
@@ -80,11 +70,9 @@ final class ErrorTest extends TestCase
     }
 
     /**
-     * test writeToErrorLog
-     *
-     * @return void
+     * @test
      */
-    public function testWriteToErrorLog()
+    public function testWriteToErrorLog(): void
     {
         $exception = new Exception();
 
@@ -107,13 +95,9 @@ final class ErrorTest extends TestCase
     }
 
     /**
-     * test log
-     *
      * @test
-     *
-     * @return void
      */
-    public function testLog()
+    public function testLog(): void
     {
         $message = 'message';
 
@@ -150,10 +134,8 @@ final class ErrorTest extends TestCase
      *
      * @runInSeparateProcess
      * @test
-     *
-     * @return void
      */
-    public function testRenderHtmlErrorMessageDebugOn()
+    public function testRenderHtmlErrorMessageDebugOn(): void
     {
         define('APP_DEBUG', true);
         define('APP_ROOT', __DIR__);
@@ -182,10 +164,8 @@ final class ErrorTest extends TestCase
      *
      * @runInSeparateProcess
      * @test
-     *
-     * @return void
      */
-    public function testRenderHtmlErrorMessageDebugOff()
+    public function testRenderHtmlErrorMessageDebugOff(): void
     {
         define('APP_DEBUG', false);
         define('APP_ROOT', __DIR__);

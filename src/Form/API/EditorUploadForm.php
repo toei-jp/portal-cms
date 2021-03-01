@@ -1,19 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Form\API;
 
 use App\Form\BaseForm;
 use Laminas\InputFilter\InputFilter;
 use Laminas\Validator;
 
-/**
- * EditorUpload form class
- */
 class EditorUploadForm extends BaseForm
 {
-    /**
-     * construct
-     */
     public function __construct()
     {
         parent::__construct();
@@ -21,12 +17,7 @@ class EditorUploadForm extends BaseForm
         $this->setup();
     }
 
-    /**
-     * setup
-     *
-     * @return void
-     */
-    protected function setup()
+    protected function setup(): void
     {
         $this->add([
             'name' => 'file',

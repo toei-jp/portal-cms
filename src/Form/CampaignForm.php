@@ -1,13 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Form;
 
 use Laminas\InputFilter\InputFilter;
 use Laminas\Validator;
 
-/**
- * Campaign form class
- */
 class CampaignForm extends BaseForm
 {
     public const TYPE_NEW  = 1;
@@ -16,12 +15,7 @@ class CampaignForm extends BaseForm
     /** @var int */
     protected $type;
 
-    /**
-     * construct
-     *
-     * @param int $type
-     */
-    public function __construct($type)
+    public function __construct(int $type)
     {
         $this->type = $type;
 
@@ -30,12 +24,7 @@ class CampaignForm extends BaseForm
         $this->setup();
     }
 
-    /**
-     * setup
-     *
-     * @return void
-     */
-    protected function setup()
+    protected function setup(): void
     {
         $this->add([
             'name' => 'name',

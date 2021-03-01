@@ -13,17 +13,11 @@ use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use Slim\Views\Twig;
 
-/**
- * NotAllowed handler test
- */
 final class NotAllowedTest extends TestCase
 {
     use MockeryPHPUnitIntegration;
 
-    /**
-     * @return ReflectionClass
-     */
-    protected function createTargetReflection()
+    protected function createTargetReflection(): ReflectionClass
     {
         return new ReflectionClass(NotAllowed::class);
     }
@@ -45,13 +39,9 @@ final class NotAllowedTest extends TestCase
     }
 
     /**
-     * test construct
-     *
      * @test
-     *
-     * @return void
      */
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $viewMock = $this->createViewMock();
 
@@ -75,10 +65,8 @@ final class NotAllowedTest extends TestCase
      *
      * @runInSeparateProcess
      * @test
-     *
-     * @return void
      */
-    public function testRenderHtmlNotAllowedMessageDebugOn()
+    public function testRenderHtmlNotAllowedMessageDebugOn(): void
     {
         define('APP_DEBUG', true);
 
@@ -106,10 +94,8 @@ final class NotAllowedTest extends TestCase
      *
      * @runInSeparateProcess
      * @test
-     *
-     * @return void
      */
-    public function testRenderHtmlNotAllowedMessageDebugOff()
+    public function testRenderHtmlNotAllowedMessageDebugOff(): void
     {
         define('APP_DEBUG', false);
 

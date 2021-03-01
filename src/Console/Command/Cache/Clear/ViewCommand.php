@@ -16,6 +16,7 @@ use Twig\Cache\NullCache;
 
 class ViewCommand extends BaseCommand
 {
+    /** {@inheritDoc} */
     protected static $defaultName = 'cache:clear:view';
 
     /** @var Twig */
@@ -28,11 +29,11 @@ class ViewCommand extends BaseCommand
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         /** @var CacheInterface $cache */
         $cache = $this->view->getEnvironment()->getCache(false);
@@ -53,12 +54,7 @@ class ViewCommand extends BaseCommand
         return 0;
     }
 
-    /**
-     * @param string          $dir
-     * @param OutputInterface $output
-     * @return void
-     */
-    protected function clearFilesystemCache(string $dir, OutputInterface $output)
+    protected function clearFilesystemCache(string $dir, OutputInterface $output): void
     {
         $output->writeln('Clear filesystem chace.');
 

@@ -1,21 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\ORM\Repository;
 
 use App\ORM\Entity\Page;
 use Doctrine\ORM\EntityRepository;
 
-/**
- * Page repository class
- */
 class PageRepository extends EntityRepository
 {
     /**
-     * find
-     *
      * @return Page[]
      */
-    public function findActive()
+    public function findActive(): array
     {
         $qb = $this->createQueryBuilder('p');
         $qb->where('p.isDeleted = false');
@@ -24,12 +21,10 @@ class PageRepository extends EntityRepository
     }
 
     /**
-     * find by ids
-     *
-     * @param array $ids
+     * @param int[] $ids
      * @return Page[]
      */
-    public function findByIds(array $ids)
+    public function findByIds(array $ids): array
     {
         $qb = $this->createQueryBuilder('p');
         $qb
@@ -40,13 +35,7 @@ class PageRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    /**
-     * find one by id
-     *
-     * @param int $id
-     * @return Page|null
-     */
-    public function findOneById(int $id)
+    public function findOneById(int $id): ?Page
     {
         $qb = $this->createQueryBuilder('p');
         $qb

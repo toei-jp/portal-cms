@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\ORM\Repository;
 
 use App\Form\ScheduleFindForm;
@@ -7,20 +9,12 @@ use App\ORM\Entity\Schedule;
 use App\Pagination\DoctrinePaginator;
 use Doctrine\ORM\EntityRepository;
 
-/**
- * Schedule repository class
- */
 class ScheduleRepository extends EntityRepository
 {
     /**
-     * find for list page
-     *
-     * @param array $params
-     * @param int   $page
-     * @param int   $maxPerPage
-     * @return DoctrinePaginator
+     * @param array<string, mixed> $params
      */
-    public function findForList(array $params, int $page, int $maxPerPage = 10)
+    public function findForList(array $params, int $page, int $maxPerPage = 10): DoctrinePaginator
     {
         $qb = $this->createQueryBuilder('s');
         $qb
@@ -86,13 +80,7 @@ class ScheduleRepository extends EntityRepository
         return new DoctrinePaginator($query, $page, $maxPerPage);
     }
 
-    /**
-     * find one by id
-     *
-     * @param int $id
-     * @return Schedule|null
-     */
-    public function findOneById($id)
+    public function findOneById(int $id): ?Schedule
     {
         $qb = $this->createQueryBuilder('s');
         $qb

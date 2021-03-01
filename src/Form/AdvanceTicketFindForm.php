@@ -1,29 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Form;
 
 use Laminas\InputFilter\InputFilter;
 use Laminas\Validator;
 
-/**
- * AdvanceTicket find form class
- */
 class AdvanceTicketFindForm extends BaseForm
 {
     public const STATUS_PRE_SALE = 1;
     public const STATUS_SALE     = 2;
     public const STATUS_SALE_END = 3;
 
-    /** @var array */
+    /** @var array<int, string> */
     protected $statusChoices = [
         self::STATUS_SALE     => '販売中',
         self::STATUS_PRE_SALE => '販売予定',
         self::STATUS_SALE_END => '販売終了',
     ];
 
-    /**
-     * construct
-     */
     public function __construct()
     {
         parent::__construct();
@@ -31,12 +27,7 @@ class AdvanceTicketFindForm extends BaseForm
         $this->setup();
     }
 
-    /**
-     * setup
-     *
-     * @return void
-     */
-    protected function setup()
+    protected function setup(): void
     {
         $this->add([
             'name' => 'status',
@@ -72,11 +63,9 @@ class AdvanceTicketFindForm extends BaseForm
     }
 
     /**
-     * return status choices
-     *
-     * @return array
+     * @return array<int, string>
      */
-    public function getStatusChoices()
+    public function getStatusChoices(): array
     {
         return $this->statusChoices;
     }

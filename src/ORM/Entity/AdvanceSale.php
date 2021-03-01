@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\ORM\Entity;
 
 use DateTime;
@@ -22,8 +24,6 @@ class AdvanceSale extends AbstractEntity
     use TimestampableTrait;
 
     /**
-     * id
-     *
      * @ORM\Id
      * @ORM\Column(type="integer", options={"unsigned"=true})
      * @ORM\GeneratedValue
@@ -33,8 +33,6 @@ class AdvanceSale extends AbstractEntity
     protected $id;
 
     /**
-     * theater
-     *
      * @ORM\ManyToOne(targetEntity="Theater")
      * @ORM\JoinColumn(name="theater_id", referencedColumnName="id", nullable=false, onDelete="RESTRICT")
      *
@@ -43,8 +41,6 @@ class AdvanceSale extends AbstractEntity
     protected $theater;
 
     /**
-     * title
-     *
      * @ORM\ManyToOne(targetEntity="Title")
      * @ORM\JoinColumn(name="title_id", referencedColumnName="id", nullable=false, onDelete="RESTRICT")
      *
@@ -53,8 +49,6 @@ class AdvanceSale extends AbstractEntity
     protected $title;
 
     /**
-     * publishing_expected_date
-     *
      * @ORM\Column(type="date", name="publishing_expected_date", nullable=true)
      *
      * @var DateTime|null
@@ -62,8 +56,6 @@ class AdvanceSale extends AbstractEntity
     protected $publishingExpectedDate;
 
     /**
-     * publishing_expected_date_text
-     *
      * @ORM\Column(type="string", name="publishing_expected_date_text", nullable=true)
      *
      * @var string|null
@@ -71,91 +63,51 @@ class AdvanceSale extends AbstractEntity
     protected $publishingExpectedDateText;
 
     /**
-     * advance_tickets
-     *
      * @ORM\OneToMany(targetEntity="AdvanceTicket", mappedBy="advanceSale", indexBy="id")
      *
      * @var Collection<AdvanceTicket>
      */
     protected $advanceTickets;
 
-    /**
-     * construct
-     */
     public function __construct()
     {
         $this->advanceTickets = new ArrayCollection();
     }
 
-    /**
-     * get id
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * get tehater
-     *
-     * @return Theater
-     */
-    public function getTheater()
+    public function getTheater(): Theater
     {
         return $this->theater;
     }
 
-    /**
-     * set theater
-     *
-     * @param Theater $theater
-     * @return void
-     */
-    public function setTheater(Theater $theater)
+    public function setTheater(Theater $theater): void
     {
         $this->theater = $theater;
     }
 
-    /**
-     * get title
-     *
-     * @return Title
-     */
-    public function getTitle()
+    public function getTitle(): Title
     {
         return $this->title;
     }
 
-    /**
-     * set title
-     *
-     * @param Title $title
-     * @return void
-     */
-    public function setTitle(Title $title)
+    public function setTitle(Title $title): void
     {
         $this->title = $title;
     }
 
-    /**
-     * get publishing_expected_date
-     *
-     * @return DateTime|null
-     */
-    public function getPublishingExpectedDate()
+    public function getPublishingExpectedDate(): ?DateTime
     {
         return $this->publishingExpectedDate;
     }
 
     /**
-     * set publishing_dxpected_date
-     *
      * @param DateTime|string|null $publishingExpectedDate
-     * @return void
      */
-    public function setPublishingExpectedDate($publishingExpectedDate)
+    public function setPublishingExpectedDate($publishingExpectedDate): void
     {
         if (is_null($publishingExpectedDate) || ($publishingExpectedDate instanceof DateTime)) {
             $this->publishingExpectedDate = $publishingExpectedDate;
@@ -164,43 +116,28 @@ class AdvanceSale extends AbstractEntity
         }
     }
 
-    /**
-     * get publishing_expected_date_text
-     *
-     * @return string|null
-     */
-    public function getPublishingExpectedDateText()
+    public function getPublishingExpectedDateText(): ?string
     {
         return $this->publishingExpectedDateText;
     }
 
-    /**
-     * set publishing_expected_date_text
-     *
-     * @param string|null $publishingExpectedDateText
-     * @return void
-     */
-    public function setPublishingExpectedDateText(?string $publishingExpectedDateText)
+    public function setPublishingExpectedDateText(?string $publishingExpectedDateText): void
     {
         $this->publishingExpectedDateText = $publishingExpectedDateText;
     }
 
     /**
-     * get advance_tickets
-     *
-     * @return Collection
+     * @return Collection<AdvanceTicket>
      */
-    public function getAdvanceTickets()
+    public function getAdvanceTickets(): Collection
     {
         return $this->advanceTickets;
     }
 
     /**
-     * get active advance_tickets
-     *
-     * @return Collection
+     * @return Collection<AdvanceTicket>
      */
-    public function getActiveAdvanceTickets()
+    public function getActiveAdvanceTickets(): Collection
     {
         $criteria = Criteria::create()
             ->where(Criteria::expr()->eq('isDeleted', false));

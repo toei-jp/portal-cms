@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\ORM\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -16,8 +18,6 @@ class TheaterMeta extends AbstractEntity
     use TimestampableTrait;
 
     /**
-     * id
-     *
      * @ORM\Id
      * @ORM\Column(type="smallint", options={"unsigned"=true})
      * @ORM\GeneratedValue(strategy="NONE")
@@ -27,8 +27,6 @@ class TheaterMeta extends AbstractEntity
     protected $id;
 
     /**
-     * theater
-     *
      * @ORM\OneToOne(targetEntity="Theater")
      * @ORM\JoinColumn(name="theater_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      *
@@ -37,59 +35,36 @@ class TheaterMeta extends AbstractEntity
     protected $theater;
 
     /**
-     * opening_hours
-     *
      * @ORM\Column(type="json", name="opening_hours")
      *
-     * @var array
+     * @var array{type:int,from_date:string,to_date:string|null,time:string}[]
      */
     protected $openingHours;
 
-    /**
-     * construct
-     */
     public function __construct()
     {
         $this->openingHours = [];
     }
 
-    /**
-     * get id
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * get theater
-     *
-     * @return Theater
-     */
-    public function getTheater()
+    public function getTheater(): Theater
     {
         return $this->theater;
     }
 
-    /**
-     * set theater
-     *
-     * @param Theater $theater
-     * @return void
-     */
-    public function setTheater(Theater $theater)
+    public function setTheater(Theater $theater): void
     {
         $this->theater = $theater;
     }
 
     /**
-     * get opening_hours
-     *
      * @return TheaterOpeningHour[]
      */
-    public function getOpeningHours()
+    public function getOpeningHours(): array
     {
         $hours = [];
 
@@ -103,12 +78,9 @@ class TheaterMeta extends AbstractEntity
     }
 
     /**
-     * set opening_hours
-     *
      * @param TheaterOpeningHour[] $openingHours
-     * @return void
      */
-    public function setOpeningHours(array $openingHours)
+    public function setOpeningHours(array $openingHours): void
     {
         $hours = [];
 

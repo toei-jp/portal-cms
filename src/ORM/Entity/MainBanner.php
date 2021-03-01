@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\ORM\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -22,15 +24,13 @@ class MainBanner extends AbstractEntity
     public const LINK_TYPE_NONE = 1;
     public const LINK_TYPE_URL  = 2;
 
-    /** @var array */
+    /** @var array<int, string> */
     protected static $linkTypes = [
         self::LINK_TYPE_NONE => 'リンクなし',
         self::LINK_TYPE_URL  => 'URL',
     ];
 
     /**
-     * id
-     *
      * @ORM\Id
      * @ORM\Column(type="integer", options={"unsigned"=true})
      * @ORM\GeneratedValue
@@ -40,8 +40,6 @@ class MainBanner extends AbstractEntity
     protected $id;
 
     /**
-     * image
-     *
      * @ORM\OneToOne(targetEntity="File")
      * @ORM\JoinColumn(name="image_file_id", referencedColumnName="id", nullable=false, onDelete="RESTRICT")
      *
@@ -50,8 +48,6 @@ class MainBanner extends AbstractEntity
     protected $image;
 
     /**
-     * name
-     *
      * @ORM\Column(type="string")
      *
      * @var string
@@ -59,8 +55,6 @@ class MainBanner extends AbstractEntity
     protected $name;
 
     /**
-     * link_type
-     *
      * @ORM\Column(type="smallint", name="link_type", options={"unsigned"=true})
      *
      * @var int
@@ -68,8 +62,6 @@ class MainBanner extends AbstractEntity
     protected $linkType;
 
     /**
-     * link_url
-     *
      * @ORM\Column(type="string", name="link_url", nullable=true)
      *
      * @var string|null
@@ -77,8 +69,6 @@ class MainBanner extends AbstractEntity
     protected $linkUrl;
 
     /**
-     * pages
-     *
      * @ORM\OneToMany(targetEntity="PageMainBanner", mappedBy="mainBanner")
      *
      * @var Collection<PageMainBanner>
@@ -86,8 +76,6 @@ class MainBanner extends AbstractEntity
     protected $pages;
 
     /**
-     * theaters
-     *
      * @ORM\OneToMany(targetEntity="TheaterMainBanner", mappedBy="mainBanner")
      *
      * @var Collection<TheaterMainBanner>
@@ -95,122 +83,66 @@ class MainBanner extends AbstractEntity
     protected $theaters;
 
     /**
-     * return link types
-     *
-     * @return array
+     * @return array<int, string>
      */
-    public static function getLinkTypes()
+    public static function getLinkTypes(): array
     {
         return self::$linkTypes;
     }
 
-    /**
-     * construct
-     */
     public function __construct()
     {
         $this->pages    = new ArrayCollection();
         $this->theaters = new ArrayCollection();
     }
 
-    /**
-     * get id
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * get image
-     *
-     * @return File
-     */
-    public function getImage()
+    public function getImage(): File
     {
         return $this->image;
     }
 
-    /**
-     * set image
-     *
-     * @param File $image
-     * @return void
-     */
-    public function setImage(File $image)
+    public function setImage(File $image): void
     {
         $this->image = $image;
     }
 
-    /**
-     * get name
-     *
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * set name
-     *
-     * @param string $name
-     * @return void
-     */
-    public function setName(string $name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * get link_type
-     *
-     * @return int
-     */
-    public function getLinkType()
+    public function getLinkType(): int
     {
         return $this->linkType;
     }
 
-    /**
-     * set link_type
-     *
-     * @param int $linkType
-     * @return void
-     */
-    public function setLinkType(int $linkType)
+    public function setLinkType(int $linkType): void
     {
         $this->linkType = $linkType;
     }
 
-    /**
-     * get link_url
-     *
-     * @return string|null
-     */
-    public function getLinkUrl()
+    public function getLinkUrl(): ?string
     {
         return $this->linkUrl;
     }
 
-    /**
-     * set link_url
-     *
-     * @param string|null $linkUrl
-     * @return void
-     */
-    public function setLinkUrl($linkUrl)
+    public function setLinkUrl(?string $linkUrl): void
     {
         $this->linkUrl = $linkUrl;
     }
 
     /**
-     * get pages
-     *
-     * @return Collection
+     * @return Collection<PageMainBanner>
      */
     public function getPages(): Collection
     {
@@ -218,9 +150,7 @@ class MainBanner extends AbstractEntity
     }
 
     /**
-     * get theaters
-     *
-     * @return Collection
+     * @return Collection<TheaterMainBanner>
      */
     public function getTheaters(): Collection
     {

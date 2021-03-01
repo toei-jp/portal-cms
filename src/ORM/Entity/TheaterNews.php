@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\ORM\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -17,8 +19,6 @@ class TheaterNews extends AbstractEntity
     use TimestampableTrait;
 
     /**
-     * id
-     *
      * @ORM\Id
      * @ORM\Column(type="integer", options={"unsigned"=true})
      * @ORM\GeneratedValue
@@ -28,8 +28,6 @@ class TheaterNews extends AbstractEntity
     protected $id;
 
     /**
-     * news
-     *
      * @ORM\ManyToOne(targetEntity="News")
      * @ORM\JoinColumn(name="news_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      *
@@ -38,8 +36,6 @@ class TheaterNews extends AbstractEntity
     protected $news;
 
     /**
-     * theater
-     *
      * @ORM\ManyToOne(targetEntity="Theater", inversedBy="newsList")
      * @ORM\JoinColumn(name="theater_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      *
@@ -48,90 +44,47 @@ class TheaterNews extends AbstractEntity
     protected $theater;
 
     /**
-     * display_order
-     *
      * @ORM\Column(type="smallint", name="display_order", options={"unsigned"=true})
      *
      * @var int
      */
     protected $displayOrder;
 
-    /**
-     * construct
-     */
     public function __construct()
     {
     }
 
-    /**
-     * get id
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * get news
-     *
-     * @return News
-     */
-    public function getNews()
+    public function getNews(): News
     {
         return $this->news;
     }
 
-    /**
-     * set news
-     *
-     * @param News $news
-     * @return void
-     */
-    public function setNews(News $news)
+    public function setNews(News $news): void
     {
         $this->news = $news;
     }
 
-    /**
-     * get theater
-     *
-     * @return Theater
-     */
-    public function getTheater()
+    public function getTheater(): Theater
     {
         return $this->theater;
     }
 
-    /**
-     * set theater
-     *
-     * @param Theater $theater
-     * @return void
-     */
-    public function setTheater(Theater $theater)
+    public function setTheater(Theater $theater): void
     {
         $this->theater = $theater;
     }
 
-    /**
-     * get display_order
-     *
-     * @return int
-     */
-    public function getDisplayOrder()
+    public function getDisplayOrder(): int
     {
         return $this->displayOrder;
     }
 
-    /**
-     * set display_order
-     *
-     * @param int $displayOrder
-     * @return void
-     */
-    public function setDisplayOrder(int $displayOrder)
+    public function setDisplayOrder(int $displayOrder): void
     {
         $this->displayOrder = $displayOrder;
     }

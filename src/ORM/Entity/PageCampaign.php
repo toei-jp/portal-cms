@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\ORM\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -17,8 +19,6 @@ class PageCampaign extends AbstractEntity
     use TimestampableTrait;
 
     /**
-     * id
-     *
      * @ORM\Id
      * @ORM\Column(type="integer", options={"unsigned"=true})
      * @ORM\GeneratedValue
@@ -28,8 +28,6 @@ class PageCampaign extends AbstractEntity
     protected $id;
 
     /**
-     * campaign
-     *
      * @ORM\ManyToOne(targetEntity="Campaign", inversedBy="pages")
      * @ORM\JoinColumn(name="campaign_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      *
@@ -38,8 +36,6 @@ class PageCampaign extends AbstractEntity
     protected $campaign;
 
     /**
-     * page
-     *
      * @ORM\ManyToOne(targetEntity="Page", inversedBy="campaigns")
      * @ORM\JoinColumn(name="page_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      *
@@ -48,90 +44,47 @@ class PageCampaign extends AbstractEntity
     protected $page;
 
     /**
-     * display_order
-     *
      * @ORM\Column(type="smallint", name="display_order", options={"unsigned"=true})
      *
      * @var int
      */
     protected $displayOrder;
 
-    /**
-     * construct
-     */
     public function __construct()
     {
     }
 
-    /**
-     * get id
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * get campaign
-     *
-     * @return Campaign
-     */
-    public function getCampaign()
+    public function getCampaign(): Campaign
     {
         return $this->campaign;
     }
 
-    /**
-     * set campaign
-     *
-     * @param Campaign $campaign
-     * @return void
-     */
-    public function setCampaign(Campaign $campaign)
+    public function setCampaign(Campaign $campaign): void
     {
         $this->campaign = $campaign;
     }
 
-    /**
-     * page
-     *
-     * @return Page
-     */
-    public function getPage()
+    public function getPage(): Page
     {
         return $this->page;
     }
 
-    /**
-     * set page
-     *
-     * @param Page $page
-     * @return void
-     */
-    public function setPage(Page $page)
+    public function setPage(Page $page): void
     {
         $this->page = $page;
     }
 
-    /**
-     * get display_order
-     *
-     * @return int
-     */
-    public function getDisplayOrder()
+    public function getDisplayOrder(): int
     {
         return $this->displayOrder;
     }
 
-    /**
-     * set display_order
-     *
-     * @param int $displayOrder
-     * @return void
-     */
-    public function setDisplayOrder(int $displayOrder)
+    public function setDisplayOrder(int $displayOrder): void
     {
         $this->displayOrder = $displayOrder;
     }

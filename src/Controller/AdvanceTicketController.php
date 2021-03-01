@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\Exception\ForbiddenException;
@@ -14,17 +16,8 @@ use Slim\Exception\NotFoundException;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-/**
- * AdvanceTicket controller
- */
 class AdvanceTicketController extends BaseController
 {
-    /**
-     * return entity
-     *
-     * @param int $id
-     * @return Entity\AdvanceSale|null
-     */
     protected function getEntity(int $id): ?Entity\AdvanceSale
     {
         return $this->em
@@ -35,25 +28,24 @@ class AdvanceTicketController extends BaseController
     /**
      * list action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return string|void
+     * @param array<string, mixed> $args
      */
-    public function executeList($request, $response, $args)
+    public function executeList(Request $request, Response $response, array $args): Response
     {
         $page = (int) $request->getParam('p', 1);
 
         $form = new Form\AdvanceTicketFindForm();
         $form->setData($request->getParams());
+
         $cleanValues = [];
+        $errors      = [];
 
         if ($form->isValid()) {
             $cleanValues = $form->getData();
             $values      = $cleanValues;
         } else {
             $values = $request->getParams();
-            $this->data->set('errors', $form->getMessages());
+            $errors = $form->getMessages();
         }
 
         $user = $this->auth->getUser();
@@ -63,20 +55,21 @@ class AdvanceTicketController extends BaseController
             $cleanValues['theater'] = [$user->getTheater()->getId()];
         }
 
-        $this->data->set('form', $form);
-        $this->data->set('values', $values);
-        $this->data->set('params', $cleanValues);
-
         /** @var DoctrinePaginator $pagenater */
-        $pagenater = $this->em->getRepository(Entity\AdvanceTicket::class)->findForList($cleanValues, $page);
+        $pagenater = $this->em
+            ->getRepository(Entity\AdvanceTicket::class)
+            ->findForList($cleanValues, $page);
 
-        $this->data->set('pagenater', $pagenater);
+        return $this->render($response, 'advance_ticket/list.html.twig', [
+            'form' => $form,
+            'values' => $values,
+            'params' => $cleanValues,
+            'errors' => $errors,
+            'pagenater' => $pagenater,
+        ]);
     }
 
     /**
-     * return form
-     *
-     * @param int $type
      * @return Form\AdvanceSaleForm|Form\AdvanceSaleForTheaterUserForm
      *
      * @throws LogicException
@@ -95,32 +88,35 @@ class AdvanceTicketController extends BaseController
     }
 
     /**
+     * @param array<string, mixed> $data
+     */
+    protected function renderNew(Response $response, array $data): Response
+    {
+        return $this->render($response, 'advance_ticket/new.html.twig', $data);
+    }
+
+    /**
      * new action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return string|void
+     * @param array<string, mixed> $args
      */
-    public function executeNew($request, $response, $args)
+    public function executeNew(Request $request, Response $response, array $args): Response
     {
         if ($this->auth->getUser()->isTheater()) {
             throw new ForbiddenException();
         }
 
         $form = $this->getForm(Form\AbstractAdvanceSaleForm::TYPE_NEW);
-        $this->data->set('form', $form);
+
+        return $this->renderNew($response, ['form' => $form]);
     }
 
     /**
      * create action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return string|void
+     * @param array<string, mixed> $args
      */
-    public function executeCreate($request, $response, $args)
+    public function executeCreate(Request $request, Response $response, array $args): Response
     {
         if ($this->auth->getUser()->isTheater()) {
             throw new ForbiddenException();
@@ -133,12 +129,12 @@ class AdvanceTicketController extends BaseController
         $form->setData($params);
 
         if (! $form->isValid()) {
-            $this->data->set('form', $form);
-            $this->data->set('values', $params);
-            $this->data->set('errors', $form->getMessages());
-            $this->data->set('is_validated', true);
-
-            return 'new';
+            return $this->renderNew($response, [
+                'form' => $form,
+                'values' => $params,
+                'errors' => $form->getMessages(),
+                'is_validated' => true,
+            ]);
         }
 
         $advanceSale = $this->doCreate($form);
@@ -154,12 +150,6 @@ class AdvanceTicketController extends BaseController
         );
     }
 
-    /**
-     * do create
-     *
-     * @param Form\AdvanceSaleForm $form
-     * @return Entity\AdvanceSale
-     */
     protected function doCreate(Form\AdvanceSaleForm $form): Entity\AdvanceSale
     {
         $cleanData = $form->getData();
@@ -169,13 +159,13 @@ class AdvanceTicketController extends BaseController
         /** @var Entity\Theater $theater */
         $theater = $this->em
             ->getRepository(Entity\Theater::class)
-            ->findOneById($cleanData['theater']);
+            ->findOneById((int) $cleanData['theater']);
         $advanceSale->setTheater($theater);
 
         /** @var Entity\Title $title */
         $title = $this->em
             ->getRepository(Entity\Title::class)
-            ->findOneById($cleanData['title_id']);
+            ->findOneById((int) $cleanData['title_id']);
         $advanceSale->setTitle($title);
 
         $advanceSale->setPublishingExpectedDate($cleanData['publishing_expected_date']);
@@ -191,10 +181,10 @@ class AdvanceTicketController extends BaseController
             $advanceTicket->setReleaseDt($ticket['release_dt']);
             $advanceTicket->setReleaseDtText($ticket['release_dt_text']);
             $advanceTicket->setIsSalesEnd($ticket['is_sales_end'] === '1');
-            $advanceTicket->setType($ticket['type']);
+            $advanceTicket->setType((int) $ticket['type']);
             $advanceTicket->setPriceText($ticket['price_text']);
             $advanceTicket->setSpecialGift($ticket['special_gift']);
-            $advanceTicket->setSpecialGiftStock($ticket['special_gift_stock']);
+            $advanceTicket->setSpecialGiftStock((int) $ticket['special_gift_stock'] ?: null);
 
             $image = $ticket['special_gift_image'];
             $file  = null;
@@ -216,10 +206,7 @@ class AdvanceTicketController extends BaseController
     }
 
     /**
-     * upload file
-     *
-     * @param array $uploadFile
-     * @return Entity\File
+     * @param array<string, mixed> $uploadFile
      */
     protected function uploadFile(array $uploadFile): Entity\File
     {
@@ -245,35 +232,39 @@ class AdvanceTicketController extends BaseController
     }
 
     /**
+     * @param array<string, mixed> $data
+     */
+    protected function renderEdit(Response $response, array $data): Response
+    {
+        return $this->render($response, 'advance_ticket/edit.html.twig', $data);
+    }
+
+    /**
      * edit action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return string|void
+     * @param array<string, mixed> $args
      */
-    public function executeEdit($request, $response, $args)
+    public function executeEdit(Request $request, Response $response, array $args): Response
     {
-        $advanceSale = $this->getEntity($args['id']);
+        $advanceSale = $this->getEntity((int) $args['id']);
 
         if (is_null($advanceSale)) {
             throw new NotFoundException($request, $response);
         }
 
-        $this->data->set('advanceSale', $advanceSale);
-
         $form = $this->getForm(Form\AbstractAdvanceSaleForm::TYPE_EDIT);
-        $this->data->set('form', $form);
 
         $values = $this->entityToArray($advanceSale);
-        $this->data->set('values', $values);
+
+        return $this->renderEdit($response, [
+            'advanceSale' => $advanceSale,
+            'form' => $form,
+            'values' => $values,
+        ]);
     }
 
     /**
-     * AdvanceSale entity to array
-     *
-     * @param Entity\AdvanceSale $advanceSale
-     * @return array
+     * @return array<string, mixed>
      */
     protected function entityToArray(Entity\AdvanceSale $advanceSale): array
     {
@@ -318,14 +309,11 @@ class AdvanceTicketController extends BaseController
     /**
      * update action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return string|void
+     * @param array<string, mixed> $args
      */
-    public function executeUpdate($request, $response, $args)
+    public function executeUpdate(Request $request, Response $response, array $args): Response
     {
-        $advanceSale = $this->getEntity($args['id']);
+        $advanceSale = $this->getEntity((int) $args['id']);
 
         if (is_null($advanceSale)) {
             throw new NotFoundException($request, $response);
@@ -338,13 +326,13 @@ class AdvanceTicketController extends BaseController
         $form->setData($params);
 
         if (! $form->isValid()) {
-            $this->data->set('advanceSale', $advanceSale);
-            $this->data->set('form', $form);
-            $this->data->set('values', $params);
-            $this->data->set('errors', $form->getMessages());
-            $this->data->set('is_validated', true);
-
-            return 'edit';
+            return $this->renderEdit($response, [
+                'advanceSale' => $advanceSale,
+                'form' => $form,
+                'values' => $params,
+                'errors' => $form->getMessages(),
+                'is_validated' => true,
+            ]);
         }
 
         if ($this->auth->getUser()->isTheater()) {
@@ -364,26 +352,20 @@ class AdvanceTicketController extends BaseController
         );
     }
 
-    /**
-     * do update
-     *
-     * @param Form\AdvanceSaleForm $form
-     * @param Entity\AdvanceSale   $advanceSale
-     */
-    protected function doUpdate(Form\AdvanceSaleForm $form, Entity\AdvanceSale $advanceSale)
+    protected function doUpdate(Form\AdvanceSaleForm $form, Entity\AdvanceSale $advanceSale): void
     {
         $cleanData = $form->getData();
 
         /** @var Entity\Theater $theater */
         $theater = $this->em
             ->getRepository(Entity\Theater::class)
-            ->findOneById($cleanData['theater']);
+            ->findOneById((int) $cleanData['theater']);
         $advanceSale->setTheater($theater);
 
         /** @var Entity\Title $title */
         $title = $this->em
             ->getRepository(Entity\Title::class)
-            ->findOneById($cleanData['title_id']);
+            ->findOneById((int) $cleanData['title_id']);
         $advanceSale->setTitle($title);
 
         $advanceSale->setPublishingExpectedDate($cleanData['publishing_expected_date']);
@@ -442,10 +424,10 @@ class AdvanceTicketController extends BaseController
             $advanceTicket->setReleaseDt($ticket['release_dt']);
             $advanceTicket->setReleaseDtText($ticket['release_dt_text']);
             $advanceTicket->setIsSalesEnd($ticket['is_sales_end'] === '1');
-            $advanceTicket->setType($ticket['type']);
+            $advanceTicket->setType((int) $ticket['type']);
             $advanceTicket->setPriceText($ticket['price_text']);
             $advanceTicket->setSpecialGift($ticket['special_gift']);
-            $advanceTicket->setSpecialGiftStock($ticket['special_gift_stock']);
+            $advanceTicket->setSpecialGiftStock((int) $ticket['special_gift_stock'] ?: null);
 
             $image         = $ticket['special_gift_image'];
             $isDeleteImage = ($ticket['delete_special_gift_image'] === '1') || $image['name'];
@@ -475,15 +457,10 @@ class AdvanceTicketController extends BaseController
         $this->em->flush();
     }
 
-    /**
-     * do update for theater user
-     *
-     * @param Form\AdvanceSaleForTheaterUserForm $form
-     * @param Entity\AdvanceSale                 $advanceSale
-     * @return void
-     */
-    protected function doUpdateForTheaterUser(Form\AdvanceSaleForTheaterUserForm $form, Entity\AdvanceSale $advanceSale)
-    {
+    protected function doUpdateForTheaterUser(
+        Form\AdvanceSaleForTheaterUserForm $form,
+        Entity\AdvanceSale $advanceSale
+    ): void {
         $cleanData = $form->getData();
 
         $advanceSale->setUpdatedUser($this->auth->getUser());
@@ -516,15 +493,14 @@ class AdvanceTicketController extends BaseController
     /**
      * delete action
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return string|void
+     * @param array<string, mixed> $args
      */
-    public function executeDelete($request, $response, $args)
+    public function executeDelete(Request $request, Response $response, array $args): void
     {
         /** @var Entity\AdvanceTicket|null $advanceTicket */
-        $advanceTicket = $this->em->getRepository(Entity\AdvanceTicket::class)->findOneById($args['id']);
+        $advanceTicket = $this->em
+            ->getRepository(Entity\AdvanceTicket::class)
+            ->findOneById((int) $args['id']);
 
         if (is_null($advanceTicket)) {
             throw new NotFoundException($request, $response);

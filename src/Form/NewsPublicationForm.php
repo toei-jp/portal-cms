@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Form;
 
 use App\ORM\Entity;
@@ -8,9 +10,6 @@ use InvalidArgumentException;
 use Laminas\InputFilter\InputFilter;
 use Laminas\Validator;
 
-/**
- * NewsPublication form class
- */
 class NewsPublicationForm extends BaseForm
 {
     public const TARGET_PAGE   = 'page';
@@ -22,12 +21,6 @@ class NewsPublicationForm extends BaseForm
     /** @var EntityManager */
     protected $em;
 
-    /**
-     * construct
-     *
-     * @param string        $target
-     * @param EntityManager $em
-     */
     public function __construct(string $target, EntityManager $em)
     {
         if (! in_array($target, [self::TARGET_PAGE, self::TARGET_TEATER])) {
@@ -42,12 +35,7 @@ class NewsPublicationForm extends BaseForm
         $this->setup();
     }
 
-    /**
-     * setup
-     *
-     * @return void
-     */
-    protected function setup()
+    protected function setup(): void
     {
         if ($this->target === self::TARGET_PAGE) {
             $this->add([

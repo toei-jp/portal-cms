@@ -1,40 +1,31 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Twig\Extension;
 
 use MicrosoftAzure\Storage\Blob\BlobRestProxy;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
-/**
- * Azure Storage twig extension class
- */
 class AzureStorageExtension extends AbstractExtension
 {
-    /** @var BlobRestProxy $client */
+    /** @var BlobRestProxy */
     protected $client;
 
-    /** @var string|null $publicEndpoint */
+    /** @var string|null */
     protected $publicEndpoint;
 
-    /**
-     * construct
-     *
-     * @param BlobRestProxy $client
-     * @param string|null   $publicEndpoint
-     */
-    public function __construct(BlobRestProxy $client, $publicEndpoint = null)
+    public function __construct(BlobRestProxy $client, ?string $publicEndpoint = null)
     {
         $this->client         = $client;
         $this->publicEndpoint = $publicEndpoint;
     }
 
     /**
-     * get functions
-     *
-     * @return array
+     * @return TwigFunction[]
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('blob_url', [$this, 'blobUrl']),
@@ -45,12 +36,8 @@ class AzureStorageExtension extends AbstractExtension
      * Blob URL
      *
      * Blobへのpublicアクセスを許可する必要があります。
-     *
-     * @param string $container Blob container name
-     * @param string $blob      Blob name
-     * @return string
      */
-    public function blobUrl(string $container, string $blob)
+    public function blobUrl(string $container, string $blob): string
     {
         if ($this->publicEndpoint) {
             return sprintf('%s/%s/%s', $this->publicEndpoint, $container, $blob);

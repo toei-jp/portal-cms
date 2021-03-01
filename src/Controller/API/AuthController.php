@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\API;
 
 use GuzzleHttp\Client as HttpClient;
@@ -7,9 +9,6 @@ use Psr\Http\Message\ResponseInterface;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-/**
- * Auth controller
- */
 class AuthController extends BaseController
 {
     /** @var string */
@@ -21,14 +20,7 @@ class AuthController extends BaseController
     /** @var string */
     protected $authClientSecret;
 
-    /**
-     * pre execute
-     *
-     * @param Request  $request
-     * @param Response $response
-     * @return void
-     */
-    protected function preExecute($request, $response): void
+    protected function preExecute(Request $request, Response $response): void
     {
         $settings = $this->settings['api'];
 
@@ -44,30 +36,25 @@ class AuthController extends BaseController
      *
      * @link https://m-p.backlog.jp/view/TOEI-112
      *
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
-     * @return string|void
+     * @param array<string, mixed> $args
      */
-    public function executeToken($request, $response, $args)
+    public function executeToken(Request $request, Response $response, array $args): Response
     {
         $meta = ['name' => 'Authorization Token'];
-        $this->data->set('meta', $meta);
 
-        $response = $this->requestToken();
+        $requestTokenResponse = $this->requestToken();
 
-        $rawData = $response->getBody()->getContents();
-        $data    = json_decode($rawData, true);
+        $rawData   = $requestTokenResponse->getBody()->getContents();
+        $tokenData = json_decode($rawData, true);
 
-        $this->data->set('data', $data);
+        return $response->withJson([
+            'meta' => $meta,
+            'data' => $tokenData,
+        ]);
     }
 
     /**
-     * request Token
-     *
      * @link https://docs.aws.amazon.com/ja_jp/cognito/latest/developerguide/token-endpoint.html
-     *
-     * @return ResponseInterface
      */
     protected function requestToken(): ResponseInterface
     {
@@ -87,11 +74,6 @@ class AuthController extends BaseController
         return $response;
     }
 
-    /**
-     * create HTTP Client
-     *
-     * @return HttpClient
-     */
     protected function createHttpClient(): HttpClient
     {
         $config = [
@@ -105,11 +87,6 @@ class AuthController extends BaseController
         return new HttpClient($config);
     }
 
-    /**
-     * create Authorization string
-     *
-     * @return string
-     */
     protected function createAuthStr(): string
     {
         $clientId     = $this->authClientId;
