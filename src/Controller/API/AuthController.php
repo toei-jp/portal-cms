@@ -66,12 +66,11 @@ class AuthController extends BaseController
         $params   = ['grant_type' => 'client_credentials'];
 
         $httpClient = $this->createHttpClient();
-        $response   = $httpClient->post($endpoint, [
+
+        return $httpClient->post($endpoint, [
             'headers' => $headers,
             'form_params' => $params,
         ]);
-
-        return $response;
     }
 
     protected function createHttpClient(): HttpClient
