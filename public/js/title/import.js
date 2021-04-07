@@ -1,40 +1,11 @@
 /**
  * title/import.js
  */
-var cinerino = window.cinerino;
 var API_ENDPOINT;
-
+var PROJECT_ID = (/development/.test(location.host)) ? 'toei-development'
+    : (/test/.test(location.host)) ? 'toei-test'
+        : (/production/.test(location.host)) ? 'toei-production' : 'toei-development';
 var TIMEZONE = 9; // JST Timezone
-
-/**
- * 設定作成
- * @param {string} accessToken 
- */
-function createOptions(accessToken) {
-    var option = {
-        domain: '',
-        clientId: '',
-        redirectUri: '',
-        logoutUri: '',
-        responseType: '',
-        scope: '',
-        state: '',
-        nonce: null,
-        tokenIssuer: ''
-    };
-    var auth = cinerino.createAuthInstance(option);
-    auth.setCredentials({ accessToken: accessToken });
-    var projectId = (/development/.test(location.host)) ? 'toei-development'
-        : (/test/.test(location.host)) ? 'toei-test'
-            : (/production/.test(location.host)) ? 'toei-production'
-                : '';
-
-    return {
-        endpoint: API_ENDPOINT,
-        auth: auth,
-        project: { id: projectId }
-    }
-}
 
 /**
  * 表示日付の修正
@@ -73,73 +44,82 @@ function getMovies(from, through) {
     showLoader();
     $('.search-result').hide();
     var days = ['日', '月', '火', '水', '木', '金', '土'];
-    api.auth.token().then(function (res) {
-        var accessToken = res.data.access_token;
-        var options = createOptions(accessToken);
-        var creativeWorkService = new cinerino.service.CreativeWork(options);
-        var searchConditions = {};
-        if (from.length > 0) {
-            searchConditions.datePublishedFrom = from;
-        }
-        if (through.length > 0) {
-            searchConditions.datePublishedThrough = through;
-        }
+    api.auth.token()
+        .then(function (res) {
+            var accessToken = res.data.access_token;
+            var params = {};
+            if (from.length > 0) {
+                params.datePublishedFrom = from;
+            }
+            if (through.length > 0) {
+                params.datePublishedThrough = through;
+            }
+            var options = {
+                dataType: 'json',
+                url: API_ENDPOINT + '/projects/' + PROJECT_ID + '/creativeWorks/movie',
+                type: 'GET',
+                timeout: 30000,
+                headers: {
+                    Authorization: 'Bearer ' + accessToken
+                },
+                data: params,
+            };
 
-        return creativeWorkService.searchMovies(searchConditions);
-    }).then(function (movies) {
-        // console.log(movies);
-        if (movies.data.length > 0) {
-            var ids = movies.data.map(function (m) {
-                return m.identifier
-            });
-            api.title.findImported(ids)
-                .done(function (res) {
-                    console.log(res);
-                    var doms = [];
-                    movies.data.forEach(function (movie) {
-                        var isImported = res.data.indexOf(movie.identifier) >= 0;
-                        var dom = '\
+            return $.ajax(options);
+        }).then(function (movies) {
+            // console.log(movies);
+            if (movies.length > 0) {
+                var ids = movies.map(function (m) {
+                    return m.identifier
+                });
+                api.title.findImported(ids)
+                    .done(function (res) {
+                        console.log(res);
+                        var doms = [];
+                        movies.forEach(function (movie) {
+                            var isImported = res.data.indexOf(movie.identifier) >= 0;
+                            var dom = '\
                         <tr class="' + (isImported ? 'imported' : 'unimported') + '">\
                             <td><input type="checkbox"' + (!isImported ? '' : ' disabled') + '></td>\
                             <td>' + displayDateCorrection(movie.datePublished) + '</td>\
                             <td'+ (!isImported ? ' style="color: red"' : '') + '>' + (!isImported ? '未反映' : '反映済') + '</td>\
                             <td>' + movie.identifier + '</td>\
-                            <td>' + movie.name + '</td>\
+                            <td>' + movie.name.ja + '</td>\
                             <td style="display: none">' + movie.headline + '</td>\
                             <td style="display: none">' + movie.contentRating + '</td>\
                         </tr>';
-                        doms.push(dom);
+                            doms.push(dom);
+                        });
+                        $('.search-result table tbody').html(doms.join('\n'));
+                        $('.search-result table tbody tr.unimported').click(function (event) {
+                            if (event.target.nodeName !== 'INPUT') {
+                                var checkBoxes = $(this).find('input[type=checkbox]');
+                                checkBoxes.prop("checked", !checkBoxes.prop("checked"));
+                            }
+                        });
+                        $('.search-result').show();
+                    })
+                    .fail(function (err) {
+                        console.error(err);
+                        $('.alert').html('エラーが発生しました。').addClass('alert-danger').removeClass('alert-info').show();
+                        window.scrollTo(0, 0);
+                        $('.search-result').hide();
+                    })
+                    .always(function () {
+                        hideLoader();
                     });
-                    $('.search-result table tbody').html(doms.join('\n'));
-                    $('.search-result table tbody tr.unimported').click(function (event) {
-                        if (event.target.nodeName !== 'INPUT') {
-                            var checkBoxes = $(this).find('input[type=checkbox]');
-                            checkBoxes.prop("checked", !checkBoxes.prop("checked"));
-                        }
-                    });
-                    $('.search-result').show();
-                })
-                .fail(function (err) {
-                    console.error(err);
-                    $('.alert').html('エラーが発生しました。').addClass('alert-danger').removeClass('alert-info').show();
-                    window.scrollTo(0, 0);
-                    $('.search-result').hide();
-                })
-                .always(function () {
-                    hideLoader();
-                });
-        } else {
+            } else {
+                hideLoader();
+                $('.alert').html('検索結果は０件です。').addClass('alert-info').removeClass('alert-danger').show();
+                window.scrollTo(0, 0);
+                $('.search-result').hide();
+            }
+        }).catch(function (error) {
             hideLoader();
-            $('.alert').html('検索結果は０件です。').addClass('alert-info').removeClass('alert-danger').show();
+            console.error(error);
+            $('.alert').html('作品一覧取得エラー。').addClass('alert-danger').removeClass('alert-info').show();
             window.scrollTo(0, 0);
-            $('.search-result').hide();
-        }
-    }).catch(function (error) {
-        hideLoader();
-        console.error(error);
-        $('.alert').html('作品一覧取得エラー。').addClass('alert-danger').removeClass('alert-info').show();
-        window.scrollTo(0, 0);
-    });
+        });
 }
 
 function importTitles() {
