@@ -484,7 +484,7 @@ class AdvanceTicketController extends BaseController
                 throw new RuntimeException(sprintf('advance_ticket(%s) dose not eixist.', $ticket['id']));
             }
 
-            $advanceTicket->setSpecialGiftStock($ticket['special_gift_stock']);
+            $advanceTicket->setSpecialGiftStock((int) $ticket['special_gift_stock']);
         }
 
         $this->em->flush();
