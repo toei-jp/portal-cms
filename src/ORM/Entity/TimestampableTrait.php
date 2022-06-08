@@ -8,19 +8,11 @@ use DateTime;
 
 trait TimestampableTrait
 {
-    /**
-     * @ORM\Column(type="datetime", name="created_at")
-     *
-     * @var DateTime
-     */
-    protected $createdAt;
+    /** @ORM\Column(type="datetime", name="created_at") */
+    protected DateTime $createdAt;
 
-    /**
-     * @ORM\Column(type="datetime", name="updated_at")
-     *
-     * @var DateTime
-     */
-    protected $updatedAt;
+    /** @ORM\Column(type="datetime", name="updated_at") */
+    protected DateTime $updatedAt;
 
     public function getCreatedAt(): DateTime
     {

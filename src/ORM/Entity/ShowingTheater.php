@@ -21,26 +21,20 @@ class ShowingTheater extends AbstractEntity
      * @ORM\Id
      * @ORM\Column(type="integer", options={"unsigned"=true})
      * @ORM\GeneratedValue
-     *
-     * @var int
      */
-    protected $id;
+    protected int $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="Schedule")
      * @ORM\JoinColumn(name="schedule_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
-     *
-     * @var Schedule
      */
-    protected $schedule;
+    protected Schedule $schedule;
 
     /**
      * @ORM\ManyToOne(targetEntity="Theater")
      * @ORM\JoinColumn(name="theater_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
-     *
-     * @var Theater
      */
-    protected $theater;
+    protected Theater $theater;
 
     public function __construct()
     {

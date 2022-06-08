@@ -31,20 +31,20 @@ class AdvanceTicket extends AbstractEntity
     public const STATUS_SALE_END = 3;
 
     /** @var array<int, string> */
-    protected static $types = [
+    protected static array $types = [
         self::TYPE_MVTK  => 'ムビチケ',
         self::TYPE_PAPER => '紙券',
     ];
 
     /** @var array<int, string> */
-    protected static $specialGiftStockList = [
+    protected static array $specialGiftStockList = [
         self::SPECIAL_GIFT_STOCK_IN     => '有り',
         self::SPECIAL_GIFT_STOCK_FEW    => '残り僅か',
         self::SPECIAL_GIFT_STOCK_NOT_IN => '特典終了',
     ];
 
     /** @var array<int, string> */
-    protected static $statusList = [
+    protected static array $statusList = [
         self::STATUS_PRE_SALE => '販売予定',
         self::STATUS_SALE     => '販売中',
         self::STATUS_SALE_END => '販売終了',
@@ -54,75 +54,41 @@ class AdvanceTicket extends AbstractEntity
      * @ORM\Id
      * @ORM\Column(type="integer", options={"unsigned"=true})
      * @ORM\GeneratedValue
-     *
-     * @var int
      */
-    protected $id;
+    protected int $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="AdvanceSale")
      * @ORM\JoinColumn(name="advance_sale_id", referencedColumnName="id", nullable=false, onDelete="RESTRICT")
-     *
-     * @var AdvanceSale
      */
-    protected $advanceSale;
+    protected AdvanceSale $advanceSale;
 
-    /**
-     * @ORM\Column(type="datetime", name="release_dt")
-     *
-     * @var DateTime
-     */
-    protected $releaseDt;
+    /** @ORM\Column(type="datetime", name="release_dt") */
+    protected DateTime $releaseDt;
 
-    /**
-     * @ORM\Column(type="string", name="release_dt_text", nullable=true)
-     *
-     * @var string|null
-     */
-    protected $releaseDtText;
+    /** @ORM\Column(type="string", name="release_dt_text", nullable=true) */
+    protected ?string $releaseDtText = null;
 
-    /**
-     * @ORM\Column(type="boolean", name="is_sales_end", options={"default":false})
-     *
-     * @var bool
-     */
-    protected $isSalesEnd;
+    /** @ORM\Column(type="boolean", name="is_sales_end", options={"default":false}) */
+    protected bool $isSalesEnd;
 
-    /**
-     * @ORM\Column(type="smallint", options={"unsigned"=true})
-     *
-     * @var int
-     */
-    protected $type;
+    /** @ORM\Column(type="smallint", options={"unsigned"=true}) */
+    protected int $type;
 
-    /**
-     * @ORM\Column(type="string", name="price_text", nullable=true)
-     *
-     * @var string|null
-     */
-    protected $priceText;
+    /** @ORM\Column(type="string", name="price_text", nullable=true) */
+    protected ?string $priceText = null;
 
-    /**
-     * @ORM\Column(type="string", name="special_gift", nullable=true)
-     *
-     * @var string|null
-     */
-    protected $specialGift;
+    /** @ORM\Column(type="string", name="special_gift", nullable=true) */
+    protected ?string $specialGift = null;
 
-    /**
-     * @ORM\Column(type="smallint", name="special_gift_stock", nullable=true, options={"unsigned"=true})
-     *
-     * @var int|null
-     */
-    protected $specialGiftStock;
+    /** @ORM\Column(type="smallint", name="special_gift_stock", nullable=true, options={"unsigned"=true}) */
+    protected ?int $specialGiftStock = null;
 
     /**
      * @ORM\OneToOne(targetEntity="File")
      * @ORM\JoinColumn(name="special_gift_image", referencedColumnName="id", nullable=true, onDelete="RESTRICT")
-     *
-     * @var File|null
      */
-    protected $specialGiftImage;
+    protected ?File $specialGiftImage = null;
 
     public function __construct()
     {

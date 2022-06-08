@@ -18,7 +18,7 @@ class ShowingFormat extends AbstractEntity
     use TimestampableTrait;
 
     /** @var array<int, string> */
-    protected static $systemList = [
+    protected static array $systemList = [
         1  => '2D',
         2  => '3D',
         3  => '4DX',
@@ -33,7 +33,7 @@ class ShowingFormat extends AbstractEntity
     ];
 
     /** @var array<int, string> */
-    protected static $voiceList = [
+    protected static array $voiceList = [
         1 => '字幕',
         2 => '吹替',
         3 => 'なし', // SASAKI-297
@@ -43,32 +43,20 @@ class ShowingFormat extends AbstractEntity
      * @ORM\Id
      * @ORM\Column(type="integer", options={"unsigned"=true})
      * @ORM\GeneratedValue
-     *
-     * @var int
      */
-    protected $id;
+    protected int $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="Schedule")
      * @ORM\JoinColumn(name="schedule_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
-     *
-     * @var Schedule
      */
-    protected $schedule;
+    protected Schedule $schedule;
 
-    /**
-     * @ORM\Column(type="smallint", options={"unsigned"=true})
-     *
-     * @var int
-     */
-    protected $system;
+    /** @ORM\Column(type="smallint", options={"unsigned"=true}) */
+    protected int $system;
 
-    /**
-     * @ORM\Column(type="smallint", options={"unsigned"=true})
-     *
-     * @var int
-     */
-    protected $voice;
+    /** @ORM\Column(type="smallint", options={"unsigned"=true}) */
+    protected int $voice;
 
     /**
      * @return array<int, string>

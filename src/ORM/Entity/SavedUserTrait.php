@@ -9,18 +9,14 @@ trait SavedUserTrait
     /**
      * @ORM\ManyToOne(targetEntity="AdminUser")
      * @ORM\JoinColumn(name="created_user_id", referencedColumnName="id", nullable=true, onDelete="RESTRICT")
-     *
-     * @var AdminUser|null
      */
-    protected $createdUser;
+    protected ?AdminUser $createdUser = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="AdminUser")
      * @ORM\JoinColumn(name="updated_user_id", referencedColumnName="id", nullable=true, onDelete="RESTRICT")
-     *
-     * @var AdminUser|null
      */
-    protected $updatedUser;
+    protected ?AdminUser $updatedUser = null;
 
     public function getCreatedUser(): ?AdminUser
     {

@@ -11,10 +11,10 @@ use Laminas\InputFilter\InputFilterProviderInterface;
 class ShowingFormatFieldset extends Fieldset implements InputFilterProviderInterface
 {
     /** @var array<int, string> */
-    protected $systemChoices;
+    protected array $systemChoices;
 
     /** @var array<int, string> */
-    protected $voiceChoices;
+    protected array $voiceChoices;
 
     public function __construct()
     {

@@ -17,17 +17,13 @@ class TheaterOpeningHour extends AbstractEntity
     public const TYPE_DATE = 1;
     public const TYPE_TERM = 2;
 
-    /** @var int */
-    protected $type;
+    protected int $type;
 
-    /** @var DateTime */
-    protected $fromDate;
+    protected DateTime $fromDate;
 
-    /** @var DateTime|null */
-    protected $toDate;
+    protected ?DateTime $toDate = null;
 
-    /** @var DateTime */
-    protected $time;
+    protected DateTime $time;
 
     /**
      * @param array<string, mixed> $array

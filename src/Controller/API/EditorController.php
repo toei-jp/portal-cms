@@ -15,8 +15,7 @@ class EditorController extends BaseController
 {
     use AzureBlobStorage;
 
-    /** @var string */
-    protected $blobContainer = 'editor';
+    protected string $blobContainer = 'editor';
 
     /**
      * upload action

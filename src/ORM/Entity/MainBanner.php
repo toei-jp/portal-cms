@@ -25,7 +25,7 @@ class MainBanner extends AbstractEntity
     public const LINK_TYPE_URL  = 2;
 
     /** @var array<int, string> */
-    protected static $linkTypes = [
+    protected static array $linkTypes = [
         self::LINK_TYPE_NONE => 'リンクなし',
         self::LINK_TYPE_URL  => 'URL',
     ];
@@ -34,53 +34,37 @@ class MainBanner extends AbstractEntity
      * @ORM\Id
      * @ORM\Column(type="integer", options={"unsigned"=true})
      * @ORM\GeneratedValue
-     *
-     * @var int
      */
-    protected $id;
+    protected int $id;
 
     /**
      * @ORM\OneToOne(targetEntity="File")
      * @ORM\JoinColumn(name="image_file_id", referencedColumnName="id", nullable=false, onDelete="RESTRICT")
-     *
-     * @var File
      */
-    protected $image;
+    protected File $image;
 
-    /**
-     * @ORM\Column(type="string")
-     *
-     * @var string
-     */
-    protected $name;
+    /** @ORM\Column(type="string") */
+    protected string $name;
 
-    /**
-     * @ORM\Column(type="smallint", name="link_type", options={"unsigned"=true})
-     *
-     * @var int
-     */
-    protected $linkType;
+    /** @ORM\Column(type="smallint", name="link_type", options={"unsigned"=true}) */
+    protected int $linkType;
 
-    /**
-     * @ORM\Column(type="string", name="link_url", nullable=true)
-     *
-     * @var string|null
-     */
-    protected $linkUrl;
+    /** @ORM\Column(type="string", name="link_url", nullable=true) */
+    protected ?string $linkUrl = null;
 
     /**
      * @ORM\OneToMany(targetEntity="PageMainBanner", mappedBy="mainBanner")
      *
      * @var Collection<PageMainBanner>
      */
-    protected $pages;
+    protected Collection $pages;
 
     /**
      * @ORM\OneToMany(targetEntity="TheaterMainBanner", mappedBy="mainBanner")
      *
      * @var Collection<TheaterMainBanner>
      */
-    protected $theaters;
+    protected Collection $theaters;
 
     /**
      * @return array<int, string>

@@ -23,7 +23,7 @@ class AdminUser extends AbstractEntity
     public const GROUP_THEATER = 3;
 
     /** @var array<int, string> */
-    protected static $groups = [
+    protected static array $groups = [
         self::GROUP_MASTER  => 'マスター',
         self::GROUP_MANAGER => 'マネージャー',
         self::GROUP_THEATER => '劇場',
@@ -33,46 +33,26 @@ class AdminUser extends AbstractEntity
      * @ORM\Id
      * @ORM\Column(type="smallint", options={"unsigned"=true})
      * @ORM\GeneratedValue
-     *
-     * @var int
      */
-    protected $id;
+    protected int $id;
 
-    /**
-     * @ORM\Column(type="string", unique=true)
-     *
-     * @var string
-     */
-    protected $name;
+    /** @ORM\Column(type="string", unique=true) */
+    protected string $name;
 
-    /**
-     * @ORM\Column(type="string", name="display_name")
-     *
-     * @var string
-     */
-    protected $displayName;
+    /** @ORM\Column(type="string", name="display_name") */
+    protected string $displayName;
 
-    /**
-     * @ORM\Column(type="string", length=60, options={"fixed":true})
-     *
-     * @var string
-     */
-    protected $password;
+    /** @ORM\Column(type="string", length=60, options={"fixed":true}) */
+    protected string $password;
 
-    /**
-     * @ORM\Column(type="smallint", name="`group`", options={"unsigned"=true})
-     *
-     * @var int
-     */
-    protected $group;
+    /** @ORM\Column(type="smallint", name="`group`", options={"unsigned"=true}) */
+    protected int $group;
 
     /**
      * @ORM\ManyToOne(targetEntity="Theater", inversedBy="adminUsers")
      * @ORM\JoinColumn(name="theater_id", referencedColumnName="id", nullable=true, onDelete="RESTRICT")
-     *
-     * @var Theater|null
      */
-    protected $theater;
+    protected ?Theater $theater = null;
 
     /**
      * @return array<int, string>

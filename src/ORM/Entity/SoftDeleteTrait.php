@@ -6,12 +6,8 @@ namespace App\ORM\Entity;
 
 trait SoftDeleteTrait
 {
-    /**
-     * @ORM\Column(type="boolean", name="is_deleted", options={"default":false})
-     *
-     * @var bool
-     */
-    protected $isDeleted = false;
+    /** @ORM\Column(type="boolean", name="is_deleted", options={"default":false}) */
+    protected bool $isDeleted = false;
 
     public function getIsDeleted(): bool
     {

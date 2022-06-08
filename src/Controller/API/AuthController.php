@@ -11,14 +11,11 @@ use Slim\Http\Response;
 
 class AuthController extends BaseController
 {
-    /** @var string */
-    protected $authServer;
+    protected string $authServer;
 
-    /** @var string */
-    protected $authClientId;
+    protected string $authClientId;
 
-    /** @var string */
-    protected $authClientSecret;
+    protected string $authClientSecret;
 
     protected function preExecute(Request $request, Response $response): void
     {

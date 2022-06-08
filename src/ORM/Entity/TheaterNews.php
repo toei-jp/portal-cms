@@ -22,33 +22,23 @@ class TheaterNews extends AbstractEntity
      * @ORM\Id
      * @ORM\Column(type="integer", options={"unsigned"=true})
      * @ORM\GeneratedValue
-     *
-     * @var int
      */
-    protected $id;
+    protected int $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="News")
      * @ORM\JoinColumn(name="news_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
-     *
-     * @var News
      */
-    protected $news;
+    protected News $news;
 
     /**
      * @ORM\ManyToOne(targetEntity="Theater", inversedBy="newsList")
      * @ORM\JoinColumn(name="theater_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
-     *
-     * @var Theater
      */
-    protected $theater;
+    protected Theater $theater;
 
-    /**
-     * @ORM\Column(type="smallint", name="display_order", options={"unsigned"=true})
-     *
-     * @var int
-     */
-    protected $displayOrder;
+    /** @ORM\Column(type="smallint", name="display_order", options={"unsigned"=true}) */
+    protected int $displayOrder;
 
     public function __construct()
     {
