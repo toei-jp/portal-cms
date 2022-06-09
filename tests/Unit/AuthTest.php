@@ -6,7 +6,9 @@ namespace Tests\Unit;
 
 use App\Auth;
 use App\ORM\Entity\AdminUser;
-use Laminas\Stdlib\ArrayObject;
+use App\Session\SessionManager;
+use Doctrine\ORM\EntityManager;
+use Laminas\Session\Config\StandardConfig;
 use Mockery;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use Mockery\LegacyMockInterface;
@@ -19,6 +21,20 @@ final class AuthTest extends TestCase
 {
     use MockeryPHPUnitIntegration;
 
+    private SessionManager $sessionManager;
+
+    protected function setUp(): void
+    {
+        $sessionConfig = new StandardConfig();
+        $sessionConfig->setOptions(['name' => 'test']);
+        $this->sessionManager = new SessionManager($sessionConfig);
+    }
+
+    protected function tearDown(): void
+    {
+        $this->sessionManager->getStorage()->clear();
+    }
+
     /**
      * @return MockInterface&LegacyMockInterface&ContainerInterface
      */
@@ -28,42 +44,11 @@ final class AuthTest extends TestCase
     }
 
     /**
-     * Create EntityManager mock
-     *
-     * ひとまず仮のクラスで実装する。
-     *
-     * @return MockInterface&LegacyMockInterface
+     * @return MockInterface|LegacyMockInterface|EntityManager
      */
     protected function createEntityManagerMock()
     {
-        return Mockery::mock('EntityManager');
-    }
-
-    /**
-     * Create SessionManager mock
-     *
-     * 実際のセッション（$_SESSION）は利用しない形にする。
-     * ひとまず仮のクラスで実装する。
-     *
-     * @return MockInterface&LegacyMockInterface
-     */
-    protected function createSessionManagerMock()
-    {
-        return Mockery::mock('SessionManager');
-    }
-
-    /**
-     * Create SessionContaier mock
-     *
-     * 実際のセッション（$_SESSION）は利用しない形にする。
-     * 現状ではoffsetGet()、offsetSet()が利用できれば良いので、
-     * 元になっているArrayObjectを利用する。
-     *
-     * @return MockInterface&LegacyMockInterface
-     */
-    protected function createSessionContaierMock()
-    {
-        return Mockery::mock(ArrayObject::class);
+        return Mockery::mock(EntityManager::class);
     }
 
     /**
@@ -91,13 +76,8 @@ final class AuthTest extends TestCase
      */
     public function testConstruct(): void
     {
-        $entityManagerMock    = $this->createEntityManagerMock();
-        $sessionContainerMock = $this->createSessionContaierMock();
-
-        $containerMock = $this->createContainerMockOfTestConstruct(
-            $entityManagerMock,
-            $sessionContainerMock
-        );
+        $entityManagerMock = $this->createEntityManagerMock();
+        $sessionContainer  = $this->sessionManager->getContainer();
 
         $authMock = Mockery::mock(Auth::class)->makePartial();
 
@@ -105,7 +85,7 @@ final class AuthTest extends TestCase
 
         // execute constructor
         $authConstructor = $authRef->getConstructor();
-        $authConstructor->invoke($authMock, $containerMock);
+        $authConstructor->invoke($authMock, $entityManagerMock, $sessionContainer);
 
         // test property "em"
         $emPropertyRef = $authRef->getProperty('em');
@@ -115,50 +95,15 @@ final class AuthTest extends TestCase
         // test property "session"
         $sessionPropertyRef = $authRef->getProperty('session');
         $sessionPropertyRef->setAccessible(true);
-        $this->assertEquals($sessionContainerMock, $sessionPropertyRef->getValue($authMock));
+        $this->assertEquals($sessionContainer, $sessionPropertyRef->getValue($authMock));
     }
 
     /**
-     * @param mixed $entityMananger
-     * @param mixed $sessionContainer
-     */
-    protected function createContainerMockOfTestConstruct($entityMananger, $sessionContainer): ContainerInterface
-    {
-        $mock = $this->createContainerMock();
-        $mock
-            ->shouldReceive('get')
-            ->once()
-            ->with('em')
-            ->andReturn($entityMananger);
-
-        $sessionManagerMock = $this->createSessionManagerMock();
-        $sessionManagerMock
-            ->shouldReceive('getContainer')
-            ->once()
-            ->with('auth')
-            ->andReturn($sessionContainer);
-
-        $mock
-            ->shouldReceive('get')
-            ->once()
-            ->with('sm')
-            ->andReturn($sessionManagerMock);
-
-        return $mock;
-    }
-
-    /**
-     * test login invalid user
-     *
      * @test
      */
     public function testLoginInvalidUser(): void
     {
-        $name     = 'username';
-        $password = 'password';
-
-        $inputName     = 'invalid';
-        $inputPassword = $password;
+        $inputName = 'not_found_user';
 
         $repositoryMock = $this->createAdminUserRepositoryMock();
         $repositoryMock
@@ -169,33 +114,23 @@ final class AuthTest extends TestCase
 
         $entityManagerMock = $this->createEntityManagerMockOfTestLogin($repositoryMock);
 
-        $authMock = Mockery::mock(Auth::class)->makePartial();
-        $authRef  = new ReflectionClass(Auth::class);
-
-        $emPropertyRef = $authRef->getProperty('em');
-        $emPropertyRef->setAccessible(true);
-        $emPropertyRef->setValue($authMock, $entityManagerMock);
+        $auth = new Auth($entityManagerMock, $this->sessionManager->getContainer());
 
         // execute
-        $this->assertFalse($authMock->login($inputName, $inputPassword));
+        $this->assertFalse($auth->login($inputName, 'password'));
     }
 
     /**
-     * test login invalid password
-     *
      * @test
      */
     public function testLoginInvalidPassword(): void
     {
-        $name     = 'username';
-        $password = 'password';
-
-        $inputName     = $name;
-        $inputPassword = 'invalid';
+        $inputName     = 'username';
+        $inputPassword = 'invalid_password';
 
         $adminUserMock = $this->createAdminUserMock();
         $adminUserMock->makePartial();
-        $adminUserMock->setPassword($password);
+        $adminUserMock->setPassword('valid_password');
 
         $repositoryMock = $this->createAdminUserRepositoryMock();
         $repositoryMock
@@ -206,30 +141,20 @@ final class AuthTest extends TestCase
 
         $entityManagerMock = $this->createEntityManagerMockOfTestLogin($repositoryMock);
 
-        $authMock = Mockery::mock(Auth::class)->makePartial();
-        $authRef  = new ReflectionClass(Auth::class);
-
-        $emPropertyRef = $authRef->getProperty('em');
-        $emPropertyRef->setAccessible(true);
-        $emPropertyRef->setValue($authMock, $entityManagerMock);
+        $auth = new Auth($entityManagerMock, $this->sessionManager->getContainer());
 
         // execute
-        $this->assertFalse($authMock->login($inputName, $inputPassword));
+        $this->assertFalse($auth->login($inputName, $inputPassword));
     }
 
     /**
-     * test login invalid password
-     *
      * @test
      */
     public function testLoginValidUser(): void
     {
-        $id       = 1;
+        $userId   = 1;
         $name     = 'username';
         $password = 'password';
-
-        $inputName     = $name;
-        $inputPassword = $password;
 
         $adminUserMock = $this->createAdminUserMock();
         $adminUserMock->makePartial();
@@ -238,48 +163,34 @@ final class AuthTest extends TestCase
             ->shouldReceive('getId')
             ->once()
             ->with()
-            ->andReturn($id);
+            ->andReturn($userId);
 
         $repositoryMock = $this->createAdminUserRepositoryMock();
         $repositoryMock
             ->shouldReceive('findOneByName')
             ->once()
-            ->with($inputName)
+            ->with($name)
             ->andReturn($adminUserMock);
 
         $entityManagerMock = $this->createEntityManagerMockOfTestLogin($repositoryMock);
 
-        $sessionContainerMock = $this->createSessionContaierMock();
-        $sessionContainerMock
-            ->shouldReceive('offsetSet')
-            ->once()
-            ->with('user_id', 1);
-
-        $authMock = Mockery::mock(Auth::class)->makePartial();
-        $authRef  = new ReflectionClass(Auth::class);
-
-        $emPropertyRef = $authRef->getProperty('em');
-        $emPropertyRef->setAccessible(true);
-        $emPropertyRef->setValue($authMock, $entityManagerMock);
-
-        $sessionPropertyRef = $authRef->getProperty('session');
-        $sessionPropertyRef->setAccessible(true);
-        $sessionPropertyRef->setValue($authMock, $sessionContainerMock);
+        $sessionContainer = $this->sessionManager->getContainer();
+        $auth             = new Auth($entityManagerMock, $sessionContainer);
 
         // execute
-        $this->assertTrue($authMock->login($inputName, $inputPassword));
+        $this->assertTrue($auth->login($name, $password));
 
+        $authRef         = new ReflectionClass(Auth::class);
         $userPropertyRef = $authRef->getProperty('user');
         $userPropertyRef->setAccessible(true);
 
-        $this->assertEquals($adminUserMock, $userPropertyRef->getValue($authMock));
+        $this->assertEquals($adminUserMock, $userPropertyRef->getValue($auth));
+        $this->assertSame($userId, $sessionContainer['user_id']);
     }
 
     /**
-     * Create EntityManager mock of testLogin
-     *
      * @param mixed $repository
-     * @return MockInterface&LegacyMockInterface
+     * @return MockInterface|LegacyMockInterface|EntityManager
      */
     protected function createEntityManagerMockOfTestLogin($repository)
     {
@@ -298,28 +209,26 @@ final class AuthTest extends TestCase
      */
     public function testLogout(): void
     {
-        $sessionContainerMock = $this->createSessionContaierMock();
-        $sessionContainerMock
-            ->shouldReceive('offsetUnset')
-            ->once()
-            ->with('user_id');
+        $sessionContainer            = $this->sessionManager->getContainer();
+        $sessionContainer['user_id'] = 1;
 
-        $authMock = Mockery::mock(Auth::class)->makePartial();
-        $authRef  = new ReflectionClass(Auth::class);
+        $auth    = new Auth($this->createEntityManagerMock(), $sessionContainer);
+        $authRef = new ReflectionClass(Auth::class);
 
         // initialize property
         $userPropertyRef = $authRef->getProperty('user');
         $userPropertyRef->setAccessible(true);
-        $userPropertyRef->setValue($authMock, 'user');
+        $userPropertyRef->setValue($auth, $this->createAdminUserMock());
 
         $sessionPropertyRef = $authRef->getProperty('session');
         $sessionPropertyRef->setAccessible(true);
-        $sessionPropertyRef->setValue($authMock, $sessionContainerMock);
+        $sessionPropertyRef->setValue($auth, $sessionContainer);
 
         // execute
-        $authMock->logout();
+        $auth->logout();
 
-        $this->assertNull($userPropertyRef->getValue($authMock));
+        $this->assertNull($userPropertyRef->getValue($auth));
+        $this->assertArrayNotHasKey('user_id', $sessionContainer);
     }
 
     /**
@@ -327,46 +236,20 @@ final class AuthTest extends TestCase
      */
     public function testIsAuthenticated(): void
     {
-        $sessionContainerMock = $this->createSessionContaierMock();
-        $sessionContainerMock->makePartial();
+        $sessionContainer = $this->sessionManager->getContainer();
 
-        $authMock = Mockery::mock(Auth::class)->makePartial();
-        $authRef  = new ReflectionClass(Auth::class);
-
-        // initialize property
-        $sessionPropertyRef = $authRef->getProperty('session');
-        $sessionPropertyRef->setAccessible(true);
-        $sessionPropertyRef->setValue($authMock, $sessionContainerMock);
+        $auth = new Auth($this->createEntityManagerMock(), $sessionContainer);
 
         // execute
-        $this->assertFalse($authMock->isAuthenticated());
+        $this->assertFalse($auth->isAuthenticated());
 
-        $sessionContainerMock['user_id'] = 1;
+        $sessionContainer['user_id'] = 1;
 
         // execute
-        $this->assertTrue($authMock->isAuthenticated());
+        $this->assertTrue($auth->isAuthenticated());
     }
 
     /**
-     * test getUser is not authenticated
-     *
-     * @test
-     */
-    public function testGetUserIsNotAuthenticated(): void
-    {
-        $authMock = Mockery::mock(Auth::class)->makePartial();
-        $authMock
-            ->shouldReceive('isAuthenticated')
-            ->once()
-            ->with()
-            ->andReturn(false);
-
-        $this->assertNull($authMock->getUser());
-    }
-
-    /**
-     * test getUser is authenticated
-     *
      * @test
      */
     public function testGetUserIsAuthenticated(): void
@@ -380,9 +263,8 @@ final class AuthTest extends TestCase
 
         $id = 1;
 
-        $sessionContainerMock = $this->createSessionContaierMock();
-        $sessionContainerMock->makePartial();
-        $sessionContainerMock['user_id'] = $id;
+        $sessionContainer            = $this->sessionManager->getContainer();
+        $sessionContainer['user_id'] = $id;
 
         $adminUserMock = $this->createAdminUserMock();
 
@@ -409,7 +291,7 @@ final class AuthTest extends TestCase
 
         $sessionPropertyRef = $authRef->getProperty('session');
         $sessionPropertyRef->setAccessible(true);
-        $sessionPropertyRef->setValue($authMock, $sessionContainerMock);
+        $sessionPropertyRef->setValue($authMock, $sessionContainer);
 
         $userPropertyRef = $authRef->getProperty('user');
         $userPropertyRef->setAccessible(true);
@@ -420,8 +302,6 @@ final class AuthTest extends TestCase
     }
 
     /**
-     * test getUser lodaded user
-     *
      * @test
      */
     public function testGetUserLoadedUser(): void
