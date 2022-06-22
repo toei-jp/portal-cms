@@ -21,25 +21,21 @@ class TheaterMeta extends AbstractEntity
      * @ORM\Id
      * @ORM\Column(type="smallint", options={"unsigned"=true})
      * @ORM\GeneratedValue(strategy="NONE")
-     *
-     * @var int
      */
-    protected $id;
+    protected int $id;
 
     /**
      * @ORM\OneToOne(targetEntity="Theater")
      * @ORM\JoinColumn(name="theater_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
-     *
-     * @var Theater
      */
-    protected $theater;
+    protected Theater $theater;
 
     /**
      * @ORM\Column(type="json", name="opening_hours")
      *
      * @var array{type:int,from_date:string,to_date:string|null,time:string}[]
      */
-    protected $openingHours;
+    protected array $openingHours;
 
     public function __construct()
     {

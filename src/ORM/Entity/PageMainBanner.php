@@ -22,33 +22,23 @@ class PageMainBanner extends AbstractEntity
      * @ORM\Id
      * @ORM\Column(type="integer", options={"unsigned"=true})
      * @ORM\GeneratedValue
-     *
-     * @var int
      */
-    protected $id;
+    protected int $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="MainBanner")
      * @ORM\JoinColumn(name="main_banner_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
-     *
-     * @var MainBanner
      */
-    protected $mainBanner;
+    protected MainBanner $mainBanner;
 
     /**
      * @ORM\ManyToOne(targetEntity="Page", inversedBy="newsList")
      * @ORM\JoinColumn(name="page_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
-     *
-     * @var Page
      */
-    protected $page;
+    protected Page $page;
 
-    /**
-     * @ORM\Column(type="smallint", name="display_order", options={"unsigned"=true})
-     *
-     * @var int
-     */
-    protected $displayOrder;
+    /** @ORM\Column(type="smallint", name="display_order", options={"unsigned"=true}) */
+    protected int $displayOrder;
 
     public function __construct()
     {

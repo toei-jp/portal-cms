@@ -26,68 +26,46 @@ class Campaign extends AbstractEntity
      * @ORM\Id
      * @ORM\Column(type="integer", options={"unsigned"=true})
      * @ORM\GeneratedValue
-     *
-     * @var int
      */
-    protected $id;
+    protected int $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="Title")
      * @ORM\JoinColumn(name="title_id", referencedColumnName="id", nullable=true, onDelete="RESTRICT")
-     *
-     * @var Title|null
      */
-    protected $title;
+    protected ?Title $title = null;
 
     /**
      * @ORM\OneToOne(targetEntity="File")
      * @ORM\JoinColumn(name="image_file_id", referencedColumnName="id", nullable=false, onDelete="RESTRICT")
-     *
-     * @var File
      */
-    protected $image;
+    protected File $image;
 
-    /**
-     * @ORM\Column(type="string")
-     *
-     * @var string
-     */
-    protected $name;
+    /** @ORM\Column(type="string") */
+    protected string $name;
 
-    /**
-     * @ORM\Column(type="datetime", name="start_dt")
-     *
-     * @var DateTime
-     */
-    protected $startDt;
+    /** @ORM\Column(type="datetime", name="start_dt") */
+    protected DateTime $startDt;
 
-    /**
-     * @ORM\Column(type="datetime", name="end_dt")
-     *
-     * @var DateTime
-     */
-    protected $endDt;
+    /** @ORM\Column(type="datetime", name="end_dt") */
+    protected DateTime $endDt;
 
-    /**
-     * @ORM\Column(type="string")
-     *
-     * @var string
-     */
-    protected $url;
+    /** @ORM\Column(type="string") */
+    protected string $url;
 
     /**
      * @ORM\OneToMany(targetEntity="PageCampaign", mappedBy="campaign")
      *
      * @var Collection<PageCampaign>
      */
-    protected $pages;
+    protected Collection $pages;
 
     /**
      * @ORM\OneToMany(targetEntity="TheaterCampaign", mappedBy="campaign")
      *
      * @var Collection<TheaterCampaign>
      */
-    protected $theaters;
+    protected Collection $theaters;
 
     public function __construct()
     {

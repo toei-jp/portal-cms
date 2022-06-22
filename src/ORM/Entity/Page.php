@@ -27,24 +27,14 @@ class Page extends AbstractEntity implements
      * @ORM\Id
      * @ORM\Column(type="smallint", options={"unsigned"=true})
      * @ORM\GeneratedValue(strategy="NONE")
-     *
-     * @var int
      */
-    protected $id;
+    protected int $id;
 
-    /**
-     * @ORM\Column(type="string", unique=true)
-     *
-     * @var string
-     */
-    protected $name;
+    /** @ORM\Column(type="string", unique=true) */
+    protected string $name;
 
-    /**
-     * @ORM\Column(type="string", name="name_ja")
-     *
-     * @var string
-     */
-    protected $nameJa;
+    /** @ORM\Column(type="string", name="name_ja") */
+    protected string $nameJa;
 
     /**
      * @ORM\OneToMany(targetEntity="PageCampaign", mappedBy="page", orphanRemoval=true)
@@ -52,7 +42,7 @@ class Page extends AbstractEntity implements
      *
      * @var Collection<PageCampaign>
      */
-    protected $campaigns;
+    protected Collection $campaigns;
 
     /**
      * @ORM\OneToMany(targetEntity="PageNews", mappedBy="page", orphanRemoval=true)
@@ -60,7 +50,7 @@ class Page extends AbstractEntity implements
      *
      * @var Collection<PageNews>
      */
-    protected $newsList;
+    protected Collection $newsList;
 
     /**
      * @ORM\OneToMany(targetEntity="PageMainBanner", mappedBy="page", orphanRemoval=true)
@@ -68,7 +58,7 @@ class Page extends AbstractEntity implements
      *
      * @var Collection<PageMainBanner>
      */
-    protected $mainBanners;
+    protected Collection $mainBanners;
 
     public function __construct(int $id)
     {

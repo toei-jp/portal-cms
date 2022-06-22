@@ -23,41 +23,22 @@ class File extends AbstractEntity
      * @ORM\Id
      * @ORM\Column(type="integer", options={"unsigned"=true})
      * @ORM\GeneratedValue
-     *
-     * @var int
      */
-    protected $id;
+    protected int $id;
 
-    /**
-     * @ORM\Column(type="string", unique=true)
-     *
-     * @var string
-     */
-    protected $name;
+    /** @ORM\Column(type="string", unique=true) */
+    protected string $name;
 
-    /**
-     * @ORM\Column(type="string", name="original_name")
-     *
-     * @var string
-     */
-    protected $originalName;
+    /** @ORM\Column(type="string", name="original_name") */
+    protected string $originalName;
 
-    /**
-     * @ORM\Column(type="string", name="mime_type")
-     *
-     * @var string
-     */
-    protected $mimeType;
+    /** @ORM\Column(type="string", name="mime_type") */
+    protected string $mimeType;
 
-    /**
-     * @ORM\Column(type="integer", options={"unsigned"=true})
-     *
-     * @var int
-     */
-    protected $size;
+    /** @ORM\Column(type="integer", options={"unsigned"=true}) */
+    protected int $size;
 
-    /** @var string */
-    protected static $blobContainer = 'file';
+    protected static string $blobContainer = 'file';
 
     public function __construct()
     {

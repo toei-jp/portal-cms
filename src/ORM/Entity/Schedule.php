@@ -26,67 +26,43 @@ class Schedule extends AbstractEntity
      * @ORM\Id
      * @ORM\Column(type="integer", options={"unsigned"=true})
      * @ORM\GeneratedValue
-     *
-     * @var int
      */
-    protected $id;
+    protected int $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="Title")
      * @ORM\JoinColumn(name="title_id", referencedColumnName="id", nullable=false, onDelete="RESTRICT")
-     *
-     * @var Title
      */
-    protected $title;
+    protected Title $title;
 
-    /**
-     * @ORM\Column(type="date", name="start_date")
-     *
-     * @var DateTime
-     */
-    protected $startDate;
+    /** @ORM\Column(type="date", name="start_date") */
+    protected DateTime $startDate;
 
-    /**
-     * @ORM\Column(type="date", name="end_date")
-     *
-     * @var DateTime
-     */
-    protected $endDate;
+    /** @ORM\Column(type="date", name="end_date") */
+    protected DateTime $endDate;
 
-    /**
-     * @ORM\Column(type="datetime", name="public_start_dt")
-     *
-     * @var DateTime
-     */
-    protected $publicStartDt;
+    /** @ORM\Column(type="datetime", name="public_start_dt") */
+    protected DateTime $publicStartDt;
 
-    /**
-     * @ORM\Column(type="datetime", name="public_end_dt")
-     *
-     * @var DateTime
-     */
-    protected $publicEndDt;
+    /** @ORM\Column(type="datetime", name="public_end_dt") */
+    protected DateTime $publicEndDt;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     *
-     * @var string|null
-     */
-    protected $remark;
+    /** @ORM\Column(type="text", nullable=true) */
+    protected ?string $remark = null;
 
     /**
      * @ORM\OneToMany(targetEntity="ShowingFormat", mappedBy="schedule", orphanRemoval=true)
      *
      * @var Collection<ShowingFormat>
      */
-    protected $showingFormats;
+    protected Collection $showingFormats;
 
     /**
      * @ORM\OneToMany(targetEntity="ShowingTheater", mappedBy="schedule", orphanRemoval=true)
      *
      * @var Collection<ShowingTheater>
      */
-    protected $showingTheaters;
+    protected Collection $showingTheaters;
 
     public function __construct()
     {

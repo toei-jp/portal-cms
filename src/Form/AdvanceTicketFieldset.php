@@ -11,14 +11,13 @@ use Laminas\Validator;
 
 class AdvanceTicketFieldset extends Fieldset implements InputFilterProviderInterface
 {
-    /** @var bool */
-    protected $isTheaterUser;
+    protected bool $isTheaterUser;
 
     /** @var array<int, string> */
-    protected $typeChoices;
+    protected array $typeChoices;
 
     /** @var array<int, string> */
-    protected $specialGiftStockChoices;
+    protected array $specialGiftStockChoices;
 
     public function __construct(bool $isTheaterUser)
     {

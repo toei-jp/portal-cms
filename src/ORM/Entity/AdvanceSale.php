@@ -27,47 +27,33 @@ class AdvanceSale extends AbstractEntity
      * @ORM\Id
      * @ORM\Column(type="integer", options={"unsigned"=true})
      * @ORM\GeneratedValue
-     *
-     * @var int
      */
-    protected $id;
+    protected int $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="Theater")
      * @ORM\JoinColumn(name="theater_id", referencedColumnName="id", nullable=false, onDelete="RESTRICT")
-     *
-     * @var Theater
      */
-    protected $theater;
+    protected Theater $theater;
 
     /**
      * @ORM\ManyToOne(targetEntity="Title")
      * @ORM\JoinColumn(name="title_id", referencedColumnName="id", nullable=false, onDelete="RESTRICT")
-     *
-     * @var Title
      */
-    protected $title;
+    protected Title $title;
 
-    /**
-     * @ORM\Column(type="date", name="publishing_expected_date", nullable=true)
-     *
-     * @var DateTime|null
-     */
-    protected $publishingExpectedDate;
+    /** @ORM\Column(type="date", name="publishing_expected_date", nullable=true) */
+    protected ?DateTime $publishingExpectedDate = null;
 
-    /**
-     * @ORM\Column(type="string", name="publishing_expected_date_text", nullable=true)
-     *
-     * @var string|null
-     */
-    protected $publishingExpectedDateText;
+    /** @ORM\Column(type="string", name="publishing_expected_date_text", nullable=true) */
+    protected ?string $publishingExpectedDateText = null;
 
     /**
      * @ORM\OneToMany(targetEntity="AdvanceTicket", mappedBy="advanceSale", indexBy="id")
      *
      * @var Collection<AdvanceTicket>
      */
-    protected $advanceTickets;
+    protected Collection $advanceTickets;
 
     public function __construct()
     {

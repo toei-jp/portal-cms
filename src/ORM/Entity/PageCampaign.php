@@ -22,33 +22,23 @@ class PageCampaign extends AbstractEntity
      * @ORM\Id
      * @ORM\Column(type="integer", options={"unsigned"=true})
      * @ORM\GeneratedValue
-     *
-     * @var int
      */
-    protected $id;
+    protected int $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="Campaign", inversedBy="pages")
      * @ORM\JoinColumn(name="campaign_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
-     *
-     * @var Campaign
      */
-    protected $campaign;
+    protected Campaign $campaign;
 
     /**
      * @ORM\ManyToOne(targetEntity="Page", inversedBy="campaigns")
      * @ORM\JoinColumn(name="page_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
-     *
-     * @var Page
      */
-    protected $page;
+    protected Page $page;
 
-    /**
-     * @ORM\Column(type="smallint", name="display_order", options={"unsigned"=true})
-     *
-     * @var int
-     */
-    protected $displayOrder;
+    /** @ORM\Column(type="smallint", name="display_order", options={"unsigned"=true}) */
+    protected int $displayOrder;
 
     public function __construct()
     {

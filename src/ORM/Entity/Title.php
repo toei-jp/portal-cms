@@ -29,112 +29,60 @@ class Title extends AbstractEntity
      * @ORM\Id
      * @ORM\Column(type="integer", options={"unsigned"=true})
      * @ORM\GeneratedValue
-     *
-     * @var int
      */
-    protected $id;
+    protected int $id;
 
     /**
      * @ORM\OneToOne(targetEntity="File")
      * @ORM\JoinColumn(name="image_file_id", referencedColumnName="id", nullable=true, onDelete="RESTRICT")
-     *
-     * @var File|null
      */
-    protected $image;
+    protected ?File $image = null;
 
-    /**
-     * @ORM\Column(name="chever_code", type="string", length=100, unique=true, nullable=true)
-     *
-     * @var string|null
-     */
-    protected $cheverCode;
+    /** @ORM\Column(name="chever_code", type="string", length=100, unique=true, nullable=true) */
+    protected ?string $cheverCode = null;
 
-    /**
-     * @ORM\Column(type="string")
-     *
-     * @var string
-     */
-    protected $name;
+    /** @ORM\Column(type="string") */
+    protected string $name;
 
-    /**
-     * @ORM\Column(type="string", name="name_kana", nullable=true)
-     *
-     * @var string|null
-     */
-    protected $nameKana;
+    /** @ORM\Column(type="string", name="name_kana", nullable=true) */
+    protected ?string $nameKana = null;
 
-    /**
-     * @ORM\Column(type="string", name="sub_title", nullable=true)
-     *
-     * @var string|null
-     */
-    protected $subTitle;
+    /** @ORM\Column(type="string", name="sub_title", nullable=true) */
+    protected ?string $subTitle = null;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     *
-     * @var string|null
-     */
-    protected $credit;
+    /** @ORM\Column(type="string", nullable=true) */
+    protected ?string $credit = null;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     *
-     * @var string|null
-     */
-    protected $catchcopy;
+    /** @ORM\Column(type="text", nullable=true) */
+    protected ?string $catchcopy = null;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     *
-     * @var string|null
-     */
-    protected $introduction;
+    /** @ORM\Column(type="text", nullable=true) */
+    protected ?string $introduction = null;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     *
-     * @var string|null
-     */
-    protected $director;
+    /** @ORM\Column(type="string", nullable=true) */
+    protected ?string $director = null;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     *
-     * @var string|null
-     */
-    protected $cast;
+    /** @ORM\Column(type="string", nullable=true) */
+    protected ?string $cast = null;
 
-    /**
-     * @ORM\Column(type="date", name="publishing_expected_date", nullable=true)
-     *
-     * @var DateTime|null
-     */
-    protected $publishingExpectedDate;
+    /** @ORM\Column(type="date", name="publishing_expected_date", nullable=true) */
+    protected ?DateTime $publishingExpectedDate = null;
 
-    /**
-     * @ORM\Column(type="string", name="official_site", nullable=true)
-     *
-     * @var string|null
-     */
-    protected $officialSite;
+    /** @ORM\Column(type="string", name="official_site", nullable=true) */
+    protected ?string $officialSite = null;
 
-    /**
-     * @ORM\Column(type="smallint", nullable=true, options={"unsigned"=true})
-     *
-     * @var int|null
-     */
-    protected $rating;
+    /** @ORM\Column(type="smallint", nullable=true, options={"unsigned"=true}) */
+    protected ?int $rating = null;
 
     /**
      * @ORM\Column(type="json", nullable=true)
      *
      * @var array<int>|null
      */
-    protected $universal;
+    protected ?array $universal = null;
 
     /** @var array<int, string> */
-    protected static $ratingTypes = [
+    protected static array $ratingTypes = [
         self::RATING_G    => 'G',
         self::RATING_PG12 => 'PG12',
         self::RATING_R15  => 'R15+',
@@ -142,7 +90,7 @@ class Title extends AbstractEntity
     ];
 
     /** @var array<int, string> */
-    protected static $universalTypes = [
+    protected static array $universalTypes = [
         '1' => '音声上映',
         '2' => '字幕上映',
     ];

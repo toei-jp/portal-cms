@@ -25,81 +25,55 @@ class News extends AbstractEntity
     public const CATEGORY_TOPICS = 1;
 
     /** @var array<int, string> */
-    public static $categories = [self::CATEGORY_TOPICS => 'トピックス'];
+    public static array $categories = [self::CATEGORY_TOPICS => 'トピックス'];
 
     /**
      * @ORM\Id
      * @ORM\Column(type="integer", options={"unsigned"=true})
      * @ORM\GeneratedValue
-     *
-     * @var int
      */
-    protected $id;
+    protected int $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="Title")
      * @ORM\JoinColumn(name="title_id", referencedColumnName="id", nullable=true, onDelete="RESTRICT")
-     *
-     * @var Title|null
      */
-    protected $title;
+    protected ?Title $title = null;
 
     /**
      * @ORM\OneToOne(targetEntity="File")
      * @ORM\JoinColumn(name="image_file_id", referencedColumnName="id", nullable=false, onDelete="RESTRICT")
-     *
-     * @var File
      */
-    protected $image;
+    protected File $image;
 
-    /**
-     * @ORM\Column(type="smallint", options={"unsigned"=true})
-     *
-     * @var int
-     */
-    protected $category;
+    /** @ORM\Column(type="smallint", options={"unsigned"=true}) */
+    protected int $category;
 
-    /**
-     * @ORM\Column(type="string")
-     *
-     * @var string
-     */
-    protected $headline;
+    /** @ORM\Column(type="string") */
+    protected string $headline;
 
-    /**
-     * @ORM\Column(type="text")
-     *
-     * @var string
-     */
-    protected $body;
+    /** @ORM\Column(type="text") */
+    protected string $body;
 
-    /**
-     * @ORM\Column(type="datetime", name="start_dt")
-     *
-     * @var DateTime
-     */
-    protected $startDt;
+    /** @ORM\Column(type="datetime", name="start_dt") */
+    protected DateTime $startDt;
 
-    /**
-     * @ORM\Column(type="datetime", name="end_dt")
-     *
-     * @var DateTime
-     */
-    protected $endDt;
+    /** @ORM\Column(type="datetime", name="end_dt") */
+    protected DateTime $endDt;
 
     /**
      * @ORM\OneToMany(targetEntity="PageNews", mappedBy="news")
      *
      * @var Collection<PageNews>
      */
-    protected $pages;
+    protected Collection $pages;
 
     /**
      * @ORM\OneToMany(targetEntity="TheaterNews", mappedBy="news")
      *
      * @var Collection<TheaterNews>
      */
-    protected $theaters;
+    protected Collection $theaters;
 
     public function __construct()
     {

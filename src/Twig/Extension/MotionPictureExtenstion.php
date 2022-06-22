@@ -10,7 +10,7 @@ use Twig\TwigFunction;
 class MotionPictureExtenstion extends AbstractExtension
 {
     /** @var array<string, mixed> */
-    protected $settings;
+    protected array $settings;
 
     /**
      * @param array<string, mixed> $settings
