@@ -9,27 +9,18 @@ use MicrosoftAzure\Storage\Blob\BlobRestProxy;
 use Mockery;
 use Mockery\LegacyMockInterface;
 use Mockery\MockInterface;
-use ReflectionClass;
+use PHPUnit\Framework\TestCase;
+use Twig\TwigFunction;
 
-final class AzureStorageExtensionTest extends BaseTestCase
+/**
+ * @coversDefaultClass \App\Twig\Extension\AzureStorageExtension
+ */
+final class AzureStorageExtensionTest extends TestCase
 {
-    /**
-     * @return MockInterface&LegacyMockInterface&AzureStorageExtension
-     */
-    protected function createTargetMock()
-    {
-        return Mockery::mock(AzureStorageExtension::class);
-    }
-
-    protected function createTargetReflection(): ReflectionClass
-    {
-        return new ReflectionClass(AzureStorageExtension::class);
-    }
-
     /**
      * @return MockInterface&LegacyMockInterface&BlobRestProxy
      */
-    protected function crateBlobRestProxyMock()
+    protected function createBlobRestProxyMock()
     {
         return Mockery::mock(BlobRestProxy::class);
     }
@@ -37,32 +28,33 @@ final class AzureStorageExtensionTest extends BaseTestCase
     /**
      * @test
      */
-    public function testConstruct(): void
+    public function testGetFunctionsReturnArray(): void
     {
-        $targetMock        = $this->createTargetMock();
-        $blobRestProxyMock = $this->crateBlobRestProxyMock();
-        $publicEndpoint    = 'http://example.com';
+        $extension = new AzureStorageExtension($this->createBlobRestProxyMock());
 
-        // execute constructor
-        $targetRef      = $this->createTargetReflection();
-        $constructorRef = $targetRef->getConstructor();
-        $constructorRef->invoke($targetMock, $blobRestProxyMock, $publicEndpoint);
+        $functions = $extension->getFunctions();
 
-        // test property "client"
-        $clientPropertyRef = $targetRef->getProperty('client');
-        $clientPropertyRef->setAccessible(true);
-        $this->assertEquals(
-            $blobRestProxyMock,
-            $clientPropertyRef->getValue($targetMock)
-        );
+        $this->assertIsArray($functions);
 
-        // test property "publicEndpoint"
-        $publicEndpointPropertyRef = $targetRef->getProperty('publicEndpoint');
-        $publicEndpointPropertyRef->setAccessible(true);
-        $this->assertEquals(
-            $publicEndpoint,
-            $publicEndpointPropertyRef->getValue($targetMock)
-        );
+        foreach ($functions as $function) {
+            $this->assertInstanceOf(TwigFunction::class, $function);
+        }
+    }
+
+    /**
+     * @test
+     */
+    public function testGetFunctionsMatchFunctionName(): void
+    {
+        $expectedNames = ['blob_url'];
+        $extension     = new AzureStorageExtension($this->createBlobRestProxyMock());
+
+        $functions = $extension->getFunctions();
+        $names     = array_map(static fn ($func): string => $func->getName(), $functions);
+
+        foreach ($expectedNames as $expected) {
+            $this->assertContains($expected, $names);
+        }
     }
 
     /**
@@ -72,25 +64,16 @@ final class AzureStorageExtensionTest extends BaseTestCase
      */
     public function testBlobUrlHasPublicEndpoint(): void
     {
-        $targetMock = $this->createTargetMock();
-        $targetMock->makePartial();
-
-        $targetRef = $this->createTargetReflection();
-
-        $publicEndpointPropertyRef = $targetRef->getProperty('publicEndpoint');
-        $publicEndpointPropertyRef->setAccessible(true);
-
-        $publicEndpoint = 'http://example.com';
-        $publicEndpointPropertyRef->setValue($targetMock, $publicEndpoint);
-
+        $extension = new AzureStorageExtension(
+            $this->createBlobRestProxyMock(),
+            'https://public.example.com'
+        );
         $container = 'test';
         $blob      = 'sample.txt';
 
-        // execute
-        $result = $targetMock->blobUrl($container, $blob);
-        $this->assertStringContainsString($publicEndpoint, $result);
-        $this->assertStringContainsString($container, $result);
-        $this->assertStringContainsString($blob, $result);
+        $result = $extension->blobUrl($container, $blob);
+
+        $this->assertEquals('https://public.example.com/test/sample.txt', $result);
     }
 
     /**
@@ -102,30 +85,18 @@ final class AzureStorageExtensionTest extends BaseTestCase
     {
         $container = 'test';
         $blob      = 'sample.txt';
-        $url       = 'http://storage.example.com/' . $container . '/' . $blob;
+        $url       = 'https://storage.example.com/' . $container . '/' . $blob;
 
-        $targetMock = $this->createTargetMock();
-        $targetMock->makePartial();
-
-        $blobRestProxyMock = $this->crateBlobRestProxyMock();
+        $blobRestProxyMock = $this->createBlobRestProxyMock();
         $blobRestProxyMock
             ->shouldReceive('getBlobUrl')
             ->once()
             ->with($container, $blob)
             ->andReturn($url);
+        $extension = new AzureStorageExtension($blobRestProxyMock);
 
-        $targetRef = $this->createTargetReflection();
+        $result = $extension->blobUrl($container, $blob);
 
-        $clientPropertyRef = $targetRef->getProperty('client');
-        $clientPropertyRef->setAccessible(true);
-        $clientPropertyRef->setValue($targetMock, $blobRestProxyMock);
-
-        $publicEndpointPropertyRef = $targetRef->getProperty('publicEndpoint');
-        $publicEndpointPropertyRef->setAccessible(true);
-        $publicEndpointPropertyRef->setValue($targetMock, null);
-
-        // execute
-        $result = $targetMock->blobUrl($container, $blob);
         $this->assertEquals($url, $result);
     }
 }

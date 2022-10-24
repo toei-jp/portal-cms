@@ -22,7 +22,7 @@
 <script src="/js/api.js"></script>
 <script src="/js/common.js"></script>
 <script src="/js/polyfill.js"></script>
-<script src="/js/title/import.js?v=20210405"></script>
+<script src="/js/title/import.js?v=20221024"></script>
 {% endblock %}
 
 {% block container %}
@@ -80,5 +80,6 @@
     </div>
 </div>
 <input type="hidden" name="API_ENDPOINT" value="{{ mp_api_endpoint() }}">
+<input type="hidden" name="API_PROJECT_ID" value="{{ mp_api_project_id() }}">
 {% include 'include/loader.html.twig' %}
 {% endblock %}

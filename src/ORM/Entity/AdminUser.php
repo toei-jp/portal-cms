@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\ORM\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use RuntimeException;
 
 /**
  * AdminUser entity class
@@ -62,6 +63,17 @@ class AdminUser extends AbstractEntity
         return self::$groups;
     }
 
+    public static function encryptPassword(string $password): string
+    {
+        $encrypted = password_hash($password, PASSWORD_BCRYPT);
+
+        if ($encrypted === false) {
+            throw new RuntimeException('Failed password hash.');
+        }
+
+        return $encrypted;
+    }
+
     public function getId(): int
     {
         return $this->id;
@@ -94,7 +106,7 @@ class AdminUser extends AbstractEntity
 
     public function setPassword(string $password): void
     {
-        $this->password = password_hash($password, PASSWORD_BCRYPT);
+        $this->password = self::encryptPassword($password);
     }
 
     public function getGroup(): int

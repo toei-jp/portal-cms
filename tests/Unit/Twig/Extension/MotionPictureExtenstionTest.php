@@ -5,47 +5,58 @@ declare(strict_types=1);
 namespace Tests\Unit\Twig\Extension;
 
 use App\Twig\Extension\MotionPictureExtenstion;
-use Mockery;
-use Mockery\LegacyMockInterface;
-use Mockery\MockInterface;
-use ReflectionClass;
+use PHPUnit\Framework\TestCase;
+use Twig\TwigFunction;
 
-final class MotionPictureExtenstionTest extends BaseTestCase
+/**
+ * @coversDefaultClass \App\Twig\Extension\MotionPictureExtenstion
+ */
+final class MotionPictureExtenstionTest extends TestCase
 {
-    /**
-     * @return MockInterface&LegacyMockInterface&MotionPictureExtenstion
-     */
-    protected function createTargetMock()
-    {
-        return Mockery::mock(MotionPictureExtenstion::class);
-    }
+    protected const SETTINGS_API_ENDPOINT = 'https://api.example.com';
 
-    protected function createTargetReflection(): ReflectionClass
+    protected MotionPictureExtenstion $extension;
+
+    protected function setUp(): void
     {
-        return new ReflectionClass(MotionPictureExtenstion::class);
+        $settings = [
+            'api_endpoint' => self::SETTINGS_API_ENDPOINT,
+            'api_project_id' => 'project_example',
+        ];
+
+        $this->extension = new MotionPictureExtenstion($settings);
     }
 
     /**
      * @test
      */
-    public function testConstruct(): void
+    public function testGetFunctionsReturnArray(): void
     {
-        $targetMock = $this->createTargetMock();
-        $settings   = ['foo' => 'bar'];
+        $functions = $this->extension->getFunctions();
 
-        $targetRef = $this->createTargetReflection();
+        $this->assertIsArray($functions);
 
-        // execute constructor
-        $constructorRef = $targetRef->getConstructor();
-        $constructorRef->invoke($targetMock, $settings);
+        foreach ($functions as $function) {
+            $this->assertInstanceOf(TwigFunction::class, $function);
+        }
+    }
 
-        // test property "settings"
-        $settingsPropertyRef = $targetRef->getProperty('settings');
-        $settingsPropertyRef->setAccessible(true);
-        $this->assertEquals(
-            $settings,
-            $settingsPropertyRef->getValue($targetMock)
-        );
+    /**
+     * @test
+     */
+    public function testGetFunctionsMatchFunctionName(): void
+    {
+        $expectedNames = [
+            'mp_api_endpoint',
+            'mp_api_project_id',
+        ];
+
+        $functions = $this->extension->getFunctions();
+        $names     = array_map(static fn ($func): string => $func->getName(), $functions);
+
+        foreach ($expectedNames as $expected) {
+            $this->assertContains($expected, $names);
+        }
     }
 
     /**
@@ -53,16 +64,14 @@ final class MotionPictureExtenstionTest extends BaseTestCase
      */
     public function testGetApiEndpoint(): void
     {
-        $targetMock = $this->createTargetMock();
-        $targetMock->makePartial();
-        $settings = ['api_endpoint' => 'example.com/api'];
+        $this->assertEquals(self::SETTINGS_API_ENDPOINT, $this->extension->getApiEndpoint());
+    }
 
-        $targetRef = $this->createTargetReflection();
-
-        $settingsPropertyRef = $targetRef->getProperty('settings');
-        $settingsPropertyRef->setAccessible(true);
-        $settingsPropertyRef->setValue($targetMock, $settings);
-
-        $this->assertEquals($settings['api_endpoint'], $targetMock->getApiEndpoint());
+    /**
+     * @test
+     */
+    public function testGetApiProjectId(): void
+    {
+        $this->assertEquals('project_example', $this->extension->getApiProjectId());
     }
 }

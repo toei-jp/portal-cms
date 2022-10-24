@@ -139,6 +139,7 @@ $settings['api'] = [
 // MotionPicture
 $settings['mp'] = [
     'api_endpoint' => getenv('APPSETTING_MP_API_ENDPOINT'),
+    'api_project_id' => getenv('APPSETTING_MP_API_PROJECT_ID'),
 ];
 
 return $settings;

@@ -2,9 +2,7 @@
  * title/import.js
  */
 var API_ENDPOINT;
-var PROJECT_ID = (/development/.test(location.host)) ? 'toei-development'
-    : (/test/.test(location.host)) ? 'toei-test'
-        : (/production/.test(location.host)) ? 'toei-production' : 'toei-development';
+var PROJECT_ID;
 var TIMEZONE = 9; // JST Timezone
 
 /**
@@ -171,6 +169,7 @@ function importTitles() {
 
 $(function () {
     API_ENDPOINT = $('input[name=API_ENDPOINT]').val();
+    PROJECT_ID = $('input[name=API_PROJECT_ID]').val();
     var $form = $('form[name="cinerino_title_find"]');
     $form.find('.datetimepicker').datetimepicker(datepickerOption);
     $form.find('button').click(function () {

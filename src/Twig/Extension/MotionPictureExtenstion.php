@@ -9,15 +9,16 @@ use Twig\TwigFunction;
 
 class MotionPictureExtenstion extends AbstractExtension
 {
-    /** @var array<string, mixed> */
-    protected array $settings;
+    protected string $apiEndpoint;
+    protected string $apiProjectId;
 
     /**
      * @param array<string, mixed> $settings
      */
     public function __construct(array $settings)
     {
-        $this->settings = $settings;
+        $this->apiEndpoint  = $settings['api_endpoint'];
+        $this->apiProjectId = $settings['api_project_id'];
     }
 
     /**
@@ -25,11 +26,19 @@ class MotionPictureExtenstion extends AbstractExtension
      */
     public function getFunctions(): array
     {
-        return [new TwigFunction('mp_api_endpoint', [$this, 'getApiEndpoint'])];
+        return [
+            new TwigFunction('mp_api_endpoint', [$this, 'getApiEndpoint']),
+            new TwigFunction('mp_api_project_id', [$this, 'getApiProjectId']),
+        ];
     }
 
     public function getApiEndpoint(): string
     {
-        return $this->settings['api_endpoint'];
+        return $this->apiEndpoint;
+    }
+
+    public function getApiProjectId(): string
+    {
+        return $this->apiProjectId;
     }
 }
