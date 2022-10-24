@@ -19,7 +19,10 @@ final class MotionPictureExtenstionTest extends TestCase
 
     protected function setUp(): void
     {
-        $settings = ['api_endpoint' => self::SETTINGS_API_ENDPOINT];
+        $settings = [
+            'api_endpoint' => self::SETTINGS_API_ENDPOINT,
+            'api_project_id' => 'project_example',
+        ];
 
         $this->extension = new MotionPictureExtenstion($settings);
     }
@@ -43,7 +46,10 @@ final class MotionPictureExtenstionTest extends TestCase
      */
     public function testGetFunctionsMatchFunctionName(): void
     {
-        $expectedNames = ['mp_api_endpoint'];
+        $expectedNames = [
+            'mp_api_endpoint',
+            'mp_api_project_id',
+        ];
 
         $functions = $this->extension->getFunctions();
         $names     = array_map(static fn ($func): string => $func->getName(), $functions);
@@ -59,5 +65,13 @@ final class MotionPictureExtenstionTest extends TestCase
     public function testGetApiEndpoint(): void
     {
         $this->assertEquals(self::SETTINGS_API_ENDPOINT, $this->extension->getApiEndpoint());
+    }
+
+    /**
+     * @test
+     */
+    public function testGetApiProjectId(): void
+    {
+        $this->assertEquals('project_example', $this->extension->getApiProjectId());
     }
 }
