@@ -21,9 +21,6 @@ toei-jp (Organizations) > portal-cms (Projects) > Project Settings > Environment
 
 | Name | Value |
 |:---|:---|
-|AZURE_TENANT |Azure テナントID [circleci/azure-cli orb](https://circleci.com/developer/orbs/orb/circleci/azure-cli) |
-|AZURE_USERNAME |Azure ユーザ名 [circleci/azure-cli orb](https://circleci.com/developer/orbs/orb/circleci/azure-cli) |
-|AZURE_PASSWORD |Azure パスワード [circleci/azure-cli orb](https://circleci.com/developer/orbs/orb/circleci/azure-cli) |
-|AZURE_TENANT_DEV |Azure テナントID (開発用) [circleci/azure-cli orb](https://circleci.com/developer/orbs/orb/circleci/azure-cli) |
-|AZURE_USERNAME_DEV |Azure ユーザ名 (開発用) [circleci/azure-cli orb](https://circleci.com/developer/orbs/orb/circleci/azure-cli) |
-|AZURE_PASSWORD_DEV |Azure パスワード (開発用) [circleci/azure-cli orb](https://circleci.com/developer/orbs/orb/circleci/azure-cli) |
+| GCLOUD_SERVICE_KEY_DEVELOPMENT | Googleプロジェクトのフルサービス・キーJSONファイル （development用） |
+| GOOGLE_COMPUTE_REGION_DEVELOPMENT | gcloud CLI のデフォルトとして設定する Google compute region （development用） |
+| GOOGLE_PROJECT_ID_DEVELOPMENT | gcloud CLIのデフォルトとして設定するGoogleプロジェクトID （development用） |

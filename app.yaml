@@ -1,0 +1,14 @@
+runtime: php74
+
+runtime_config:
+  document_root: ./public
+
+handlers:
+  - url: /css
+    static_dir: public/css
+
+  - url: /js
+    static_dir: public/js
+
+  - url: .*
+    script: auto
