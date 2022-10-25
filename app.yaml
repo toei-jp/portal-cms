@@ -13,6 +13,9 @@ includes:
 env_variables:
   APPSETTING_VIEW_CACHE_DIR: /tmp/view
 
+  APPSETTING_DOCTRINE_CACHE: filesystem
+  APPSETTING_DOCTRINE_FILESYSTEM_CACHE_DIR: /tmp/doctrine
+
 handlers:
   - url: /css
     static_dir: public/css
