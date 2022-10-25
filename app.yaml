@@ -6,6 +6,9 @@ runtime_config:
 includes:
 - .gcp/env.yaml
 
+env_variables:
+  APPSETTING_VIEW_CACHE_DIR: /tmp/view
+
 handlers:
   - url: /css
     static_dir: public/css
