@@ -16,7 +16,7 @@
     },
     "require": {
         "php": "~7.4",
-        "blue32a/monolog-azure-blob": "^0.2.0",
+        "blue32a/monolog-google-cloud-logging": "^1.0",
         "doctrine/orm": "~2.7.4",
         "guzzlehttp/guzzle": "^6.5",
         "intervention/image": "^2.5",
