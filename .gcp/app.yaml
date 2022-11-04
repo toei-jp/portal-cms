@@ -25,6 +25,3 @@ handlers:
 
   - url: /js
     static_dir: public/js
-
-  - url: .*
-    script: auto
