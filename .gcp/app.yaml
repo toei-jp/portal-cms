@@ -30,3 +30,8 @@ handlers:
 
   - url: /js
     static_dir: public/js
+
+  - url: .*
+    script: auto
+    secure: always
+    redirect_http_response_code: 301
