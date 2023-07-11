@@ -10,68 +10,85 @@ use Twig\TwigFunction;
 
 /**
  * @coversDefaultClass \App\Twig\Extension\MotionPictureExtenstion
+ * @testdox モーションピクチャーのサービスに関するTwig拡張機能
  */
 final class MotionPictureExtenstionTest extends TestCase
 {
-    protected const SETTINGS_API_ENDPOINT = 'https://api.example.com';
-
-    protected MotionPictureExtenstion $extension;
-
-    protected function setUp(): void
+    /**
+     * @param array{'api_endpoint'?: string, 'api_project_id'?: string} $params
+     */
+    private function factoryMotionPictureExtenstion(array $params = []): MotionPictureExtenstion
     {
-        $settings = [
-            'api_endpoint' => self::SETTINGS_API_ENDPOINT,
-            'api_project_id' => 'project_example',
-        ];
+        $params['api_endpoint']   ??= 'https://example.com';
+        $params['api_project_id'] ??= 'hogefuga';
 
-        $this->extension = new MotionPictureExtenstion($settings);
+        return new MotionPictureExtenstion($params);
     }
 
     /**
+     * @covers ::getFunctions
+     * @dataProvider functionNameDataProvider
      * @test
      */
-    public function testGetFunctionsReturnArray(): void
+    public function 決まった名称のtwigヘルパー関数が含まれる(string $name): void
     {
-        $functions = $this->extension->getFunctions();
+        // Arrange
+        $sut = $this->factoryMotionPictureExtenstion();
 
-        $this->assertIsArray($functions);
+        // Act
+        $functions = $sut->getFunctions();
+
+        // Assert
+        $functionNames = [];
 
         foreach ($functions as $function) {
             $this->assertInstanceOf(TwigFunction::class, $function);
+            $functionNames[] = $function->getName();
         }
+
+        $this->assertContains($name, $functionNames);
     }
 
     /**
-     * @test
+     * @return array<array{string}>
      */
-    public function testGetFunctionsMatchFunctionName(): void
+    public function functionNameDataProvider(): array
     {
-        $expectedNames = [
-            'mp_api_endpoint',
-            'mp_api_project_id',
+        return [
+            ['mp_api_endpoint'],
+            ['mp_api_project_id'],
         ];
-
-        $functions = $this->extension->getFunctions();
-        $names     = array_map(static fn ($func): string => $func->getName(), $functions);
-
-        foreach ($expectedNames as $expected) {
-            $this->assertContains($expected, $names);
-        }
     }
 
     /**
+     * @covers ::getApiEndpoint
      * @test
      */
-    public function testGetApiEndpoint(): void
+    public function APIのエンドポイントを取得する(): void
     {
-        $this->assertEquals(self::SETTINGS_API_ENDPOINT, $this->extension->getApiEndpoint());
+        // Arrange
+        $sut = $this->factoryMotionPictureExtenstion(['api_endpoint' => 'https://api.example.com']);
+
+        // Act
+        $result = $sut->getApiEndpoint();
+
+        // Assert
+        $this->assertSame('https://api.example.com', $result);
     }
 
     /**
+     * @covers ::getApiProjectId
      * @test
      */
-    public function testGetApiProjectId(): void
+    public function APIのプロジェクトIDを取得する(): void
     {
-        $this->assertEquals('project_example', $this->extension->getApiProjectId());
+        // Arrange
+        $sut = $this->factoryMotionPictureExtenstion(['api_project_id' => 'hoge_puroject']);
+
+        // Act
+        $result = $sut->getApiProjectId();
+
+        // Assert
+        $this->assertSame('hoge_puroject', $result);
     }
 }
